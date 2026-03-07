@@ -82,7 +82,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                 <div className="max-w-4xl mx-auto bg-white dark:bg-midnight-900 rounded-2xl shadow-2xl dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-midnight-700 overflow-hidden">
                     {/* Header */}
                     <div className="p-6 pb-4 flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-electric/10 flex items-center justify-center text-electric shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-raly-accent/20 flex items-center justify-center text-raly-primary shrink-0">
                             <Cookie size={24} />
                         </div>
                         <div className="flex-1">
@@ -122,7 +122,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                                             onClick={() => togglePreference('analytics_storage')}
                                             className={cn(
                                                 "w-12 h-6 rounded-full transition-colors relative",
-                                                preferences.analytics_storage === 'granted' ? "bg-electric" : "bg-gray-300 dark:bg-midnight-600"
+                                                preferences.analytics_storage === 'granted' ? "bg-raly-primary" : "bg-gray-300 dark:bg-midnight-600"
                                             )}
                                         >
                                             <div className={cn(
@@ -146,7 +146,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                                             }}
                                             className={cn(
                                                 "w-12 h-6 rounded-full transition-colors relative",
-                                                preferences.ad_storage === 'granted' ? "bg-electric" : "bg-gray-300 dark:bg-midnight-600"
+                                                preferences.ad_storage === 'granted' ? "bg-raly-primary" : "bg-gray-300 dark:bg-midnight-600"
                                             )}
                                         >
                                             <div className={cn(
@@ -159,7 +159,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                                     {/* Privacy Link */}
                                     <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                                         <Shield size={12} />
-                                        Read our <a href="/en/privacy" className="text-electric hover:underline">Privacy Policy</a>
+                                        Read our <a href="/en/privacy" className="text-raly-primary hover:underline">Privacy Policy</a>
                                     </p>
                                 </div>
                             </motion.div>
@@ -191,14 +191,14 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                         {showDetails ? (
                             <button
                                 onClick={handleSavePreferences}
-                                className="px-6 py-2.5 text-sm font-bold text-white bg-electric rounded-xl hover:bg-electric/90 transition-colors shadow-lg shadow-electric/20"
+                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors shadow-md shadow-raly-primary/20"
                             >
                                 Save Preferences
                             </button>
                         ) : (
                             <button
                                 onClick={handleAcceptAll}
-                                className="px-6 py-2.5 text-sm font-bold text-white bg-electric rounded-xl hover:bg-electric/90 transition-colors shadow-lg shadow-electric/20"
+                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors shadow-md shadow-raly-primary/20"
                             >
                                 Accept All
                             </button>

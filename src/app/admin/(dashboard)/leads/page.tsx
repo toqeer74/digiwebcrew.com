@@ -1,6 +1,6 @@
 import { getLeads } from "@/lib/actions/lead-actions";
 import { LeadsTable } from "@/components/admin/leads-table";
-import { LeadsHeader } from "@/components/admin/leads-header";
+import { PageHeader } from "@/components/admin/page-header";
 import { ArrowRight, AlertCircle, ShieldAlert, WifiOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -85,7 +85,11 @@ export default async function LeadsPage({
 
   return (
     <div className="p-6 lg:p-10 space-y-6">
-      <LeadsHeader />
+      <PageHeader
+        label="Contacts"
+        title="Leads"
+        description="Contacts and opportunities stored in MongoDB."
+      />
 
       <LeadsTable leads={leads} />
 

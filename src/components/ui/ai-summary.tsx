@@ -23,40 +23,40 @@ export function AIExecutiveSummary({ title, summary, techStack, className }: AIE
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className={cn(
-                "relative my-12 p-8 rounded-3xl border-2 border-indigo-500/10 bg-gradient-to-br from-indigo-50/50 to-white dark:from-indigo-950/20 dark:to-midnight-900 shadow-xl overflow-hidden",
+                "relative my-12 p-8 rounded-3xl border border-raly-accent/20 bg-gradient-to-br from-raly-subtle to-raly-base shadow-[0_10px_25px_-5px_rgba(2,77,148,0.05),0_8px_10px_-6px_rgba(0,0,0,0.03)] overflow-hidden",
                 className
             )}
         >
             {/* Semantic Header for Machines */}
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <div className="w-10 h-10 rounded-xl bg-raly-primary text-raly-base flex items-center justify-center shadow-md shadow-raly-primary/20">
                     <BrainCircuit size={20} />
                 </div>
                 <div className="space-y-0.5">
-                    <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500">Executive Summary for AI</h2>
-                    <p className="text-xl font-black text-gray-900 dark:text-white leading-tight">{title}</p>
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-raly-primary">Executive Summary for AI</h2>
+                    <p className="text-xl font-black text-raly-deep leading-tight">{title}</p>
                 </div>
             </div>
 
             {/* Answer Block Architecture (40-80 words recommended) */}
             <div className="relative z-10">
-                <p className="text-base md:text-lg text-gray-700 dark:text-indigo-100/80 leading-relaxed font-semibold italic">
+                <p className="text-base md:text-lg text-raly-text leading-relaxed font-semibold italic">
                     {summary}
                 </p>
             </div>
 
             {/* Structured Technical Metadata */}
             {techStack && techStack.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-indigo-500/10">
+                <div className="mt-8 pt-6 border-t border-raly-accent/20">
                     <div className="flex items-center gap-2 mb-3">
-                        <Sparkles size={14} className="text-indigo-500" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Core Technologies & Logic</span>
+                        <Sparkles size={14} className="text-raly-primary" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-raly-text">Core Technologies & Logic</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {techStack.map((tech) => (
                             <span
                                 key={tech}
-                                className="px-3 py-1 rounded-full bg-white dark:bg-midnight-800 border border-indigo-500/10 text-[10px] font-bold text-gray-600 dark:text-indigo-300 uppercase tracking-wider"
+                                className="px-3 py-1 rounded-full bg-raly-subtle border border-raly-accent/20 text-[10px] font-bold text-raly-text uppercase tracking-wider"
                             >
                                 {tech}
                             </span>
@@ -66,8 +66,8 @@ export function AIExecutiveSummary({ title, summary, techStack, className }: AIE
             )}
 
             {/* Background Decorative Elements */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/5 blur-[40px] rounded-full translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/5 blur-[30px] rounded-full -translate-x-1/2 translate-y-1/2" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-raly-primary/5 blur-[40px] rounded-full translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-raly-accent/10 blur-[30px] rounded-full -translate-x-1/2 translate-y-1/2" />
         </motion.div>
     );
 }

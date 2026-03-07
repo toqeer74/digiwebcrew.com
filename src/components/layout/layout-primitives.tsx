@@ -7,7 +7,7 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Container({ children, className, ...props }: ContainerProps) {
   return (
     <div 
-      className={cn("mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className)} 
+      className={cn("container", className)} 
       {...props}
     >
       {children}
@@ -23,7 +23,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export function Section({ children, className, container = true, ...props }: SectionProps) {
   return (
     <section 
-      className={cn("py-16 md:py-24 lg:py-32 overflow-hidden", className)} 
+      className={cn("py-20 md:py-24 lg:py-28 overflow-hidden", className)} 
       {...props}
     >
       {container ? <Container>{children}</Container> : children}

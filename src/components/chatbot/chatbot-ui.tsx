@@ -89,7 +89,7 @@ export function ChatbotUI() {
                                 setIsOpen(true);
                                 initializeChat();
                             }}
-                            className="w-14 h-14 rounded-2xl bg-indigo-600 text-white shadow-[0_15px_35px_-5px_rgba(79,70,229,0.5)] flex items-center justify-center hover:bg-indigo-700 transition-all border border-white/20 group relative"
+                            className="w-14 h-14 rounded-2xl bg-raly-primary text-white shadow-[0_15px_35px_-5px_rgba(2,77,148,0.35)] flex items-center justify-center hover:bg-raly-primary/95 transition-all border border-white/20 group relative"
                         >
                             <Sparkles className="absolute -top-1 -right-1 text-yellow-400 fill-yellow-400 animate-pulse" size={14} />
                             <MessageSquare size={24} className="drop-shadow-md" />
@@ -104,7 +104,7 @@ export function ChatbotUI() {
                             className="w-[330px] h-[550px] bg-white/70 backdrop-blur-3xl border border-white/40 rounded-[2rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden relative"
                         >
                             {/* Header */}
-                            <div className="p-4 px-5 flex items-center justify-between bg-gradient-to-r from-indigo-600/90 to-violet-700/90 backdrop-blur-md relative z-20">
+                            <div className="p-4 px-5 flex items-center justify-between bg-gradient-to-r from-raly-primary/95 to-[#0a4f8f]/95 backdrop-blur-md relative z-20">
                                 <div className="flex items-center gap-2.5">
                                     <div className="w-9 h-9 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center shadow-inner">
                                         <Zap size={18} className="text-white fill-white" />
@@ -114,7 +114,7 @@ export function ChatbotUI() {
                                             <h3 className="text-white font-black tracking-tighter uppercase text-[12px] leading-tight">
                                                 DWC AI
                                             </h3>
-                                            <ShieldCheck size={11} className="text-indigo-200" />
+                                            <ShieldCheck size={11} className="text-raly-accent" />
                                         </div>
                                         <div className="flex items-center gap-1 mt-0.5">
                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
@@ -154,7 +154,7 @@ export function ChatbotUI() {
                                     <motion.div
                                         initial={{ opacity: 0, x: -5 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="flex gap-2 items-center text-indigo-600/30 font-black text-[9px] ml-11 uppercase tracking-widest pt-1"
+                                        className="flex gap-2 items-center text-raly-primary/30 font-black text-[9px] ml-11 uppercase tracking-widest pt-1"
                                     >
                                         <Loader2 size={10} className="animate-spin" />
                                         Thinking...
@@ -172,11 +172,11 @@ export function ChatbotUI() {
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         placeholder="Type your message..."
-                                        className="w-full h-11 pl-5 pr-12 bg-white/60 border border-white/80 rounded-2xl outline-none shadow-sm focus:ring-4 focus:ring-indigo-600/5 focus:bg-white transition-all text-[12px] font-bold placeholder:text-muted-foreground/40"
+                                        className="w-full h-11 pl-5 pr-12 bg-white/60 border border-white/80 rounded-2xl outline-none shadow-sm focus:ring-4 focus:ring-raly-primary/10 focus:bg-white transition-all text-[12px] font-bold placeholder:text-muted-foreground/40"
                                     />
                                     <button
                                         disabled={loading || !input.trim()}
-                                        className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/20 hover:scale-110 active:scale-95 disabled:opacity-30 transition-all"
+                                        className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-raly-primary text-white flex items-center justify-center shadow-md shadow-raly-primary/20 hover:scale-110 active:scale-95 disabled:opacity-30 transition-all"
                                     >
                                         <Send size={14} />
                                     </button>

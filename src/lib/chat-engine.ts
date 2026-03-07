@@ -3,9 +3,13 @@ import { IChatSession, IChatMessage, ChatMode } from "./models/chat";
 import { generateSystemPrompt } from "./prompts";
 import { Lead } from "./models/lead";
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient() {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        throw new Error("OPENAI_API_KEY is not configured");
+    }
+    return new OpenAI({ apiKey });
+}
 
 export async function processChatMessage(session: IChatSession, userMessage: string) {
     // 1. Log user message
@@ -34,17 +38,24 @@ export async function processChatMessage(session: IChatSession, userMessage: str
         content: m.content
     }));
 
-    const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini", // Cost-effective & fast
-        messages: [
-            { role: "system", content: systemPrompt },
-            ...history as any
-        ],
-        max_tokens: 150,
-        temperature: 0.7,
-    });
+    let assistantReply = "I'm sorry, I'm having trouble processing that right now.";
+    try {
+        const openai = getOpenAIClient();
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini", // Cost-effective & fast
+            messages: [
+                { role: "system", content: systemPrompt },
+                ...history as any
+            ],
+            max_tokens: 150,
+            temperature: 0.7,
+        });
 
-    const assistantReply = response.choices[0].message.content || "I'm sorry, I'm having trouble processing that right now.";
+        assistantReply = response.choices[0].message.content || assistantReply;
+    } catch (err) {
+        console.error("OpenAI Chat Completion Error:", err);
+        throw err;
+    }
 
     // 5. Log assistant message
     session.messages.push({

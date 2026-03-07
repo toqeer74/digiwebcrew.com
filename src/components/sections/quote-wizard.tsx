@@ -12,11 +12,12 @@ interface QuoteWizardProps {
   dict: any;
   isRtl: boolean;
   locale: string;
+  preselectedService?: string;
 }
 
 const STORAGE_KEY = "quote_wizard_draft";
 
-export function QuoteWizard({ dict, isRtl, locale }: QuoteWizardProps) {
+export function QuoteWizard({ dict, isRtl, locale, preselectedService }: QuoteWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDone, setIsDone] = useState(false);
@@ -30,7 +31,7 @@ export function QuoteWizard({ dict, isRtl, locale }: QuoteWizardProps) {
   ];
 
   const [formData, setFormData] = useState<Partial<QuoteFormData>>({
-    serviceCategory: "",
+    serviceCategory: preselectedService || "",
     serviceInterest: "",
     projectType: "new build",
     budgetRange: "",
@@ -40,6 +41,13 @@ export function QuoteWizard({ dict, isRtl, locale }: QuoteWizardProps) {
     message: "",
     honeypot: "",
   });
+
+  // Set initial step based on preselection
+  useEffect(() => {
+    if (preselectedService) {
+      setCurrentStep(1); // Skip to subservice step if category is preselected
+    }
+  }, [preselectedService]);
 
   // Load Draft
   useEffect(() => {
@@ -73,7 +81,7 @@ export function QuoteWizard({ dict, isRtl, locale }: QuoteWizardProps) {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    const result = await submitQuote(formData as QuoteFormData);
+    const result = await submitQuote({ ...formData, locale } as QuoteFormData);
     setIsSubmitting(false);
     if (result.success) {
       setIsDone(true);

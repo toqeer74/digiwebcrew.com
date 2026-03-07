@@ -100,7 +100,77 @@ export async function addLeadNote(id: string, note: string) {
       $push: {
         events: {
           type: "NoteAdded",
-          meta: { note },
+          meta: { note, author: session.user?.email },
+          at: new Date()
+        },
+        notes: {
+          content: note,
+          author: session.user?.name || session.user?.email || "Admin",
+          createdAt: new Date(),
+          type: "note"
+        }
+      }
+    },
+    { new: true }
+  );
+  revalidatePath(`/admin/leads/${id}`);
+  return JSON.parse(JSON.stringify(lead));
+}
+
+export async function addTask(id: string, task: { title: string; dueAt: Date; priority?: "low" | "medium" | "high" }) {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error("Unauthorized");
+
+  await connectToDatabase();
+  const lead = await Lead.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        tasks: {
+          title: task.title,
+          dueAt: task.dueAt,
+          priority: task.priority || "medium",
+          done: false,
+          createdAt: new Date()
+        }
+      }
+    },
+    { new: true }
+  );
+  revalidatePath(`/admin/leads/${id}`);
+  return JSON.parse(JSON.stringify(lead));
+}
+
+export async function completeTask(leadId: string, taskIndex: number) {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error("Unauthorized");
+
+  await connectToDatabase();
+  const lead = await Lead.findById(leadId);
+  if (lead?.tasks[taskIndex]) {
+    lead.tasks[taskIndex].done = true;
+    await lead.save();
+  }
+  revalidatePath(`/admin/leads/${leadId}`);
+  return JSON.parse(JSON.stringify(lead));
+}
+
+export async function updateLeadScore(id: string, newScore: number, reason?: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error("Unauthorized");
+
+  await connectToDatabase();
+  const newTier = newScore >= 60 ? "HOT" : newScore >= 30 ? "WARM" : "COLD";
+
+  const lead = await Lead.findByIdAndUpdate(
+    id,
+    {
+      leadScore: newScore,
+      leadTier: newTier,
+      $push: {
+        events: {
+          type: "ScoreUpdated",
+          meta: { newScore, newTier, reason, updatedBy: session.user?.email },
           at: new Date()
         }
       }
@@ -108,6 +178,7 @@ export async function addLeadNote(id: string, note: string) {
     { new: true }
   );
   revalidatePath(`/admin/leads/${id}`);
+  revalidatePath("/admin/analytics");
   return JSON.parse(JSON.stringify(lead));
 }
 

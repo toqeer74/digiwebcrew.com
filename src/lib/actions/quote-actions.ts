@@ -3,6 +3,7 @@
 import { connectToDatabase } from "@/lib/db";
 import { Lead } from "@/lib/models/lead";
 import { QuoteSchema, QuoteFormData } from "@/types/quote";
+import { sendEmail, templateNewLeadNotification, templateQuoteConfirmation } from "@/lib/email-service";
 
 async function triggerAutomation(lead: any) {
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
@@ -77,8 +78,25 @@ export async function submitQuote(data: QuoteFormData) {
     // 3. Trigger Automation (n8n Bridge)
     await triggerAutomation(newLead);
 
-    // 4. Mock Email Trigger
-    console.log(`[SIMULATION] Sending notification to admin about new ${tier} lead: ${validatedData.email}`);
+    // 4. Send Emails
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@digiwebcrew.com";
+    const locale = validatedData.locale || "en";
+
+    // Send admin notification
+    await sendEmail({
+      to: adminEmail,
+      subject: `🎯 New ${tier} Lead: ${validatedData.fullName}`,
+      html: templateNewLeadNotification(newLead.toObject()),
+    });
+
+    // Send client confirmation
+    await sendEmail({
+      to: validatedData.email,
+      subject: "Thank You for Your Quote Request",
+      html: templateQuoteConfirmation(newLead.toObject(), locale),
+    });
+
+    console.log(`[QUOTE] Lead created and emails sent`);
 
     return {
       success: true,

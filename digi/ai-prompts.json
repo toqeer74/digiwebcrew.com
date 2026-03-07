@@ -1,0 +1,144 @@
+{
+  "version": "1.0",
+  "description": "AI Prompt Templates for DigiWebCrew Content Generation",
+  "prompts": {
+    "blog_generation": {
+      "name": "Blog Post Generation",
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 2500,
+      "system_prompt": "You are an expert content writer for Digital Web Crew, a premium web development agency. Create comprehensive, SEO-optimized blog posts that provide value to readers.",
+      "user_prompt_template": "Create a blog post about {{topic}}.\n\nTarget keywords: {{keywords}}\nWord count: {{wordCount}}\nTone: {{tone}}\n\nRequirements:\n1. Compelling introduction (150-200 words)\n2. Use H2 headings for main sections\n3. Include H3 subheadings for detailed breakdowns\n4. Add practical examples and case studies\n5. Conclude with actionable takeaways\n\nSEO Requirements:\n- Include target keywords naturally in first 100 words\n- Use keywords in at least 2 H2 headings\n- Maintain keyword density of 1-2%\n- Include internal link suggestions in format [LINK: anchor text]\n\nOutput Format:\n- Title (SEO-optimized, under 60 characters)\n- Meta description (under 160 characters)\n- Full article with markdown formatting\n- Suggested tags (5-8 relevant tags)",
+      "variables": ["topic", "keywords", "wordCount", "tone"]
+    },
+    "landing_page": {
+      "name": "Landing Page Copy",
+      "model": "gpt-4",
+      "temperature": 0.8,
+      "max_tokens": 2000,
+      "system_prompt": "You are a conversion copywriter for a premium web development agency. Create persuasive, high-converting landing page copy.",
+      "user_prompt_template": "Create landing page copy for {{service}}.\n\nTarget Audience: {{audience}}\nValue Proposition: {{valueProp}}\n\nSections to Include:\n1. Hero Section - Attention-grabbing headline, subheadline with benefit, primary CTA button, trust indicators\n2. Problem Section - Pain points of target audience, empathetic copy\n3. Solution Section - Service features (3-4 key features), benefits for each feature\n4. Social Proof - Testimonial quotes, case study highlights, client logos\n5. CTA Section - Compelling final offer, urgency element, contact form or button\n\nConversion Optimization:\n- Use power words and action verbs\n- Include scarcity/urgency where appropriate\n- Address objections preemptively\n- Multiple CTAs throughout the page\n\nOutput:\n- Section-by-section copy\n- CTA button text options\n- Supporting copy variations",
+      "variables": ["service", "audience", "valueProp"]
+    },
+    "seo_metadata": {
+      "name": "SEO Metadata Generation",
+      "model": "gpt-4",
+      "temperature": 0.5,
+      "max_tokens": 500,
+      "system_prompt": "You are an SEO specialist. Create optimized metadata for web pages.",
+      "user_prompt_template": "Generate SEO metadata for the following content:\n\nContent: {{content}}\nTarget Keywords: {{keywords}}\nPage Type: {{pageType}}\n\nOutput:\n- Title tag (50-60 characters)\n- Meta description (150-160 characters)\n- Open Graph title\n- Open Graph description\n- Recommended H1 tag\n- 5-10 relevant keywords",
+      "variables": ["content", "keywords", "pageType"]
+    },
+    "internal_links": {
+      "name": "Internal Link Suggestions",
+      "model": "gpt-4",
+      "temperature": 0.3,
+      "max_tokens": 800,
+      "system_prompt": "You are an SEO expert specializing in internal linking strategies.",
+      "user_prompt_template": "Analyze this content and suggest relevant internal links.\n\nContent: {{content}}\nAvailable posts: {{existingPosts}}\n\nReturn JSON array with suggestions containing:\n- slug (target post slug)\n- anchorText (natural anchor text)\n- relevanceScore (0-1)\n- context (why this link is relevant)",
+      "variables": ["content", "existingPosts"],
+      "response_format": "json"
+    },
+    "chatbot_response": {
+      "name": "Chatbot Response Generation",
+      "model": "gpt-4",
+      "temperature": 0.6,
+      "max_tokens": 300,
+      "system_prompt": "You are a helpful assistant for Digital Web Crew, a premium web development agency. Be professional, friendly, and concise. If asked about pricing, guide users to schedule a consultation. If technical support is needed, offer to connect with the team.",
+      "user_prompt_template": "Conversation history: {{history}}\n\nUser message: {{message}}\n\nRespond naturally as a helpful assistant. Keep responses under 150 words.",
+      "variables": ["history", "message"]
+    },
+    "content_outline": {
+      "name": "Content Outline Generation",
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 1000,
+      "system_prompt": "You are a content strategist. Create detailed content outlines.",
+      "user_prompt_template": "Create a detailed outline for a {{contentType}} about \"{{topic}}\".\n\nTarget keywords: {{keywords}}\nTone: {{tone}}\n\nInclude:\n- Compelling H1 title\n- 4-6 H2 sections with descriptions\n- Key points for each section\n- Suggested word count per section\n- Internal link opportunities",
+      "variables": ["contentType", "topic", "keywords", "tone"]
+    },
+    "email_sequence": {
+      "name": "Email Sequence Generation",
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 1500,
+      "system_prompt": "You are an email marketing specialist. Create engaging email sequences.",
+      "user_prompt_template": "Create a {{sequenceType}} email sequence for {{audience}}.\n\nGoal: {{goal}}\nNumber of emails: {{emailCount}}\n\nFor each email include:\n- Subject line (multiple options)\n- Preview text\n- Email body copy\n- Call-to-action\n- Recommended send time\n\nTone should be {{tone}}.",
+      "variables": ["sequenceType", "audience", "goal", "emailCount", "tone"]
+    },
+    "social_media": {
+      "name": "Social Media Content",
+      "model": "gpt-4",
+      "temperature": 0.8,
+      "max_tokens": 600,
+      "system_prompt": "You are a social media manager for a web development agency. Create engaging social content.",
+      "user_prompt_template": "Create social media content for {{platform}}.\n\nTopic: {{topic}}\nContent type: {{contentType}}\n\nOutput:\n- Main post copy\n- 3-5 hashtag suggestions\n- Image/graphics description\n- Call-to-action",
+      "variables": ["platform", "topic", "contentType"]
+    }
+  },
+  "workflows": {
+    "content_creation": {
+      "name": "AI Content Creation Workflow",
+      "steps": [
+        {
+          "step": 1,
+          "action": "generate_outline",
+          "prompt": "content_outline",
+          "output": "outline"
+        },
+        {
+          "step": 2,
+          "action": "generate_draft",
+          "prompt": "blog_generation",
+          "input_from": "outline",
+          "output": "draft"
+        },
+        {
+          "step": 3,
+          "action": "generate_metadata",
+          "prompt": "seo_metadata",
+          "input_from": "draft",
+          "output": "metadata"
+        },
+        {
+          "step": 4,
+          "action": "suggest_links",
+          "prompt": "internal_links",
+          "input_from": "draft",
+          "output": "links"
+        },
+        {
+          "step": 5,
+          "action": "save_to_review",
+          "output": "review_queue"
+        }
+      ]
+    },
+    "lead_nurture": {
+      "name": "Lead Nurture Email Workflow",
+      "steps": [
+        {
+          "step": 1,
+          "action": "generate_sequence",
+          "prompt": "email_sequence",
+          "output": "email_series"
+        },
+        {
+          "step": 2,
+          "action": "schedule_emails",
+          "delays": [0, 48, 96, 168, 336]
+        },
+        {
+          "step": 3,
+          "action": "monitor_engagement",
+          "metrics": ["open_rate", "click_rate", "reply_rate"]
+        },
+        {
+          "step": 4,
+          "action": "trigger_followup",
+          "condition": "email_opened > 0"
+        }
+      ]
+    }
+  }
+}

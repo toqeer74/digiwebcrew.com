@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
-// Database Configuration - Force Build Refresh v2
+// Database Configuration - Graceful handling for development
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable");
-}
+// Development mode flag
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 let cached = (global as any).mongoose;
 
@@ -15,19 +14,40 @@ if (!cached) {
 
 /**
  * Standard Database Connection Utility
+ * Gracefully handles connection failures in development
  */
 export async function connectToDatabase() {
+  // If no MongoDB URI is configured, return null in development
+  if (!MONGODB_URI) {
+    if (isDevelopment) {
+      console.warn("⚠️ MongoDB URI not configured. Running in database-less mode.");
+      return null;
+    }
+    throw new Error("Please define the MONGODB_URI environment variable");
+  }
+
+  // Return cached connection if available
   if (cached.conn) {
     return cached.conn;
   }
 
+  // Create new connection promise if not exists
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
+      bufferCommands: true, // Enable command buffering to prevent timing issues
+      serverSelectionTimeoutMS: 10000, // 10 second timeout
+      connectTimeoutMS: 10000,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
       return mongoose.connection;
+    }).catch((error) => {
+      console.error("❌ Database connection failed:", error.message);
+      if (isDevelopment) {
+        console.warn("⚠️ Continuing without database connection in development mode.");
+        return null;
+      }
+      throw error;
     });
   }
 
@@ -35,6 +55,10 @@ export async function connectToDatabase() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
+    if (isDevelopment) {
+      console.warn("⚠️ Database connection failed, continuing in development mode.");
+      return null;
+    }
     throw e;
   }
 

@@ -12,8 +12,8 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", ...props }, ref) => {
     const variantStyles = {
-      primary: "bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:bg-primary/90",
-      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      primary: "bg-raly-accent text-raly-primary shadow-md shadow-raly-primary/30 hover:bg-raly-accent/95",
+      secondary: "bg-raly-primary text-white shadow-md shadow-raly-primary/25 hover:bg-raly-primary/95",
       outline: "border border-white/10 bg-transparent hover:bg-white/5",
       ghost: "bg-transparent hover:bg-white/5",
       glass: "glass border-white/5 hover:bg-white/10 text-foreground",
@@ -29,10 +29,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
-        whileHover={{ y: -2 }}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
         className={cn(
-          "inline-flex items-center justify-center rounded-2xl font-semibold tracking-tight transition-all disabled:opacity-50 disabled:pointer-events-none outline-none focus:ring-2 focus:ring-primary/20",
+          "inline-flex items-center justify-center rounded-xl font-heading font-extrabold uppercase tracking-widest transition-all disabled:opacity-50 disabled:pointer-events-none outline-none focus:ring-2 focus:ring-raly-primary/20",
           variantStyles[variant],
           sizeStyles[size],
           className

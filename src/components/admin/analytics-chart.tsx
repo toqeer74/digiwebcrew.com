@@ -3,18 +3,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import { ArrowUpRight, Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getLeadTrends } from "@/lib/actions/analytics-actions";
 
-const data = [
-  { name: "Mon", value: 400 },
-  { name: "Tue", value: 300 },
-  { name: "Wed", value: 500 },
-  { name: "Thu", value: 450 },
-  { name: "Fri", value: 600 },
-  { name: "Sat", value: 550 },
-  { name: "Sun", value: 700 },
-];
+interface ChartData {
+  name: string;
+  leads: number;
+}
 
 export function AnalyticsChart() {
+  const [data, setData] = useState<ChartData[]>([]);
+
+  useEffect(() => {
+    getLeadTrends().then(setData);
+  }, []);
+
+  const totalLeads = data.reduce((sum, item) => sum + item.leads, 0);
+  const previousTotal = data.slice(0, -1).reduce((sum, item) => sum + item.leads, 0);
+  const trend = previousTotal > 0 ? ((totalLeads - previousTotal) / previousTotal * 100).toFixed(1) : "0.0";
   return (
     <Card className="rounded-2xl border-border bg-white dark:bg-midnight-900 shadow-sm overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between p-5 pb-1">
@@ -25,7 +31,7 @@ export function AnalyticsChart() {
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-500 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">
             <ArrowUpRight size={12} />
-            <span>+12.5%</span>
+            <span>+{trend}%</span>
           </div>
           <button className="w-8 h-8 rounded-lg hover:bg-secondary flex items-center justify-center transition-colors text-muted-foreground/40">
             <Calendar size={14} />
@@ -34,7 +40,7 @@ export function AnalyticsChart() {
       </CardHeader>
       <CardContent className="p-0">
         <div className="h-[240px] w-full mt-2">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={280} minHeight={240}>
             <AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -70,7 +76,7 @@ export function AnalyticsChart() {
               />
               <Area
                 type="monotone"
-                dataKey="value"
+                dataKey="leads"
                 stroke="#4F46E5"
                 strokeWidth={2}
                 fillOpacity={1}

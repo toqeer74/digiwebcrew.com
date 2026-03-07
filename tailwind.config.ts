@@ -12,14 +12,23 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1170px",
       },
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
+        sans: ["var(--font-body)", "sans-serif"],
+        heading: ["var(--font-heading)", "sans-serif"],
       },
       colors: {
+        raly: {
+          primary: "#024d94",
+          accent: "#f8d171",
+          text: "#555555",
+          base: "#ffffff",
+          subtle: "#fafafa",
+          deep: "#02407b",
+        },
         // Digi Web Crew Brand Colors
         midnight: {
           DEFAULT: '#0F172A',
@@ -44,6 +53,49 @@ const config: Config = {
           DEFAULT: '#3B82F6',
           light: '#60A5FA',
           dark: '#2563EB',
+        },
+        brand: {
+          navy: {
+            DEFAULT: "#0A0A0F",
+            light: "#1A1A2E",
+            dark: "#050508",
+          },
+          blue: {
+            DEFAULT: "#0082FF",
+            dark: "#0066CC",
+            light: "#4DA3FF",
+            50: "#E6F4FF",
+            100: "#B3DEFF",
+            200: "#80C8FF",
+            300: "#4DA3FF",
+            400: "#1A8CFF",
+            500: "#0082FF",
+            600: "#0066CC",
+            700: "#004D99",
+            800: "#003366",
+            900: "#001A33",
+          },
+          slate: "#1A1A2E",
+          steel: "#2D2D44",
+          graphite: "#4A4A5A",
+          silver: "#8A8A9A",
+          mist: "#B8B8C4",
+          success: {
+            DEFAULT: "#00C853",
+            light: "#E6F9EE",
+          },
+          warning: {
+            DEFAULT: "#FFB300",
+            light: "#FFF5E0",
+          },
+          error: {
+            DEFAULT: "#FF3D71",
+            light: "#FFE8EE",
+          },
+          info: {
+            DEFAULT: "#00B0FF",
+            light: "#E6F7FF",
+          },
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

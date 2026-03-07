@@ -1,10 +1,9 @@
-import { Container, Section } from "@/components/layout/layout-primitives";
+import { Container } from "@/components/layout/layout-primitives";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Check, Info, Zap, Crown, BarChart3, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getDictionary } from "@/lib/get-dictionary";
-import { AnimatedSection } from "@/components/AnimatedSection";
 import Link from "next/link";
 
 const pricingTiers = [
@@ -20,8 +19,7 @@ const pricingTiers = [
     ],
     popular: false,
     icon: Zap,
-    color: "text-blue-500",
-    bg: "bg-blue-500/10"
+    color: "from-blue-500 to-cyan-500"
   },
   {
     id: "enterprise",
@@ -35,8 +33,7 @@ const pricingTiers = [
     ],
     popular: true,
     icon: Crown,
-    color: "text-electric",
-    bg: "bg-electric/10"
+    color: "from-indigo-500 to-purple-500"
   },
   {
     id: "retainer",
@@ -50,15 +47,14 @@ const pricingTiers = [
     ],
     popular: false,
     icon: BarChart3,
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10"
+    color: "from-emerald-500 to-teal-500"
   }
 ];
 
 export default async function PricingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
-  const isRtl = locale === 'ar' || locale === 'ur';
+  const isRtl = locale === "ar" || locale === "ur";
 
   const tierLocales = {
     mvp: { name: "Standard MVP", desc: "Perfect for startups needing a fast, high-quality market entry.", cta: "Start MVP" },
@@ -67,100 +63,90 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-midnight-950" dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col min-h-screen" dir={isRtl ? "rtl" : "ltr"}>
       <Navbar dict={dict} locale={locale} />
-      <main className="flex-1 pt-32 pb-20">
+      <main className="flex-1 pt-60 pb-20">
         <Container>
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-20 md:mb-32">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-electric/10 text-electric text-xs font-bold uppercase tracking-widest mb-6">
-              Transparent Allocation
-            </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-900 dark:text-white">
-              Surgical <br />
-              <span className="text-electric">Investment</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
-              {dict.pricing.description}
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
-            {pricingTiers.map((tier, i) => (
-              <AnimatedSection
-                key={tier.id}
-                delay={i * 0.1}
-                className={cn(
-                  "group relative p-10 rounded-[2.5rem] bg-gray-50 dark:bg-midnight-900 border flex flex-col transition-all duration-500 hover:scale-[1.02]",
-                  tier.popular ? "border-electric shadow-2xl scale-105 z-10" : "border-gray-100 dark:border-midnight-800 hover:border-electric/30"
-                )}
-              >
-                {tier.popular && (
-                  <div className="absolute top-0 right-10 -translate-y-1/2 bg-electric text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl">
-                    {dict.pricing.mostChosen}
-                  </div>
-                )}
-
-                <div className="mb-10">
-                  <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500", tier.bg, tier.color)}>
-                    <tier.icon size={28} />
-                  </div>
-                  <h3 className="text-2xl font-black mb-3 tracking-tight text-gray-900 dark:text-white">{(tierLocales as any)[tier.id].name}</h3>
-                  <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-5xl font-black tracking-tighter text-gray-900 dark:text-white">{tier.price}</span>
-                    {tier.id === "retainer" && <span className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">{dict.pricing.startingAt}</span>}
-                  </div>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed">
-                    {(tierLocales as any)[tier.id].desc}
-                  </p>
-                </div>
-
-                <div className="space-y-5 mb-12 flex-1">
-                  {tier.features.map(feature => (
-                    <div key={feature} className="flex items-start gap-4">
-                      <div className="mt-1 w-5 h-5 rounded-full bg-electric/10 flex items-center justify-center shrink-0">
-                        <Check size={10} className="text-electric" strokeWidth={4} />
-                      </div>
-                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300 tracking-tight">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Link
-                  href={`/${locale}/quote`}
-                  className={cn(
-                    "w-full py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg",
-                    tier.popular
-                      ? "bg-electric text-white hover:bg-blue-600"
-                      : "bg-white dark:bg-midnight-800 border-gray-200 dark:border-midnight-700 hover:border-electric/50 text-gray-900 dark:text-white"
-                  )}
-                >
-                  {(tierLocales as any)[tier.id].cta}
-                  <ArrowRight size={14} />
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="bg-gray-900 dark:bg-white rounded-[3rem] p-16 mb-32 text-center relative overflow-hidden group">
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-electric/10 blur-[100px] rounded-full group-hover:bg-electric/20 transition-colors duration-1000" />
-
-            <div className="max-w-2xl mx-auto space-y-8 relative z-10 text-white dark:text-gray-900">
-              <div className="w-16 h-16 rounded-2xl bg-electric/20 flex items-center justify-center mx-auto text-electric animate-bounce">
-                <Info size={32} />
+          <div className="w-full max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
+                Transparent Allocation
               </div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight">{dict.pricing.customTitle}</h2>
-              <p className="text-xl opacity-70 font-medium leading-relaxed">
-                {dict.pricing.customDesc}
-              </p>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+                Surgical <span className="text-primary">Investment</span>
+              </h1>
+              <p className="text-lg text-muted-foreground">{dict.pricing.description}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pricingTiers.map((tier) => {
+                const Icon = tier.icon;
+                return (
+                  <div
+                    key={tier.id}
+                    className={cn(
+                      "group relative p-6 rounded-2xl border transition-all duration-300 bg-background hover:shadow-xl hover:scale-105 border-border hover:border-primary/50",
+                      tier.popular && "ring-2 ring-primary/20"
+                    )}
+                  >
+                    {tier.popular && (
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-primary text-primary-foreground">
+                        {dict.pricing.mostChosen}
+                      </span>
+                    )}
+
+                    <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br text-white shadow-lg", tier.color)}>
+                      <Icon size={22} />
+                    </div>
+
+                    <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
+                      {(tierLocales as any)[tier.id].name}
+                    </h3>
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <p className="text-2xl font-bold tracking-tight">{tier.price}</p>
+                      {tier.id === "retainer" && <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{dict.pricing.startingAt}</span>}
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">{(tierLocales as any)[tier.id].desc}</p>
+
+                    <div className="space-y-2 mb-5">
+                      {tier.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Check size={13} className="text-primary" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+
+                    <Link
+                      href={`/${locale}/quote`}
+                      className={cn(
+                        "flex items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                        tier.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-secondary text-primary hover:bg-secondary/80"
+                      )}
+                    >
+                      <span>{(tierLocales as any)[tier.id].cta}</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-12 p-6 rounded-2xl bg-secondary/30 border border-border">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3">
+                <Info size={20} />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight mb-2">{dict.pricing.customTitle}</h2>
+              <p className="text-sm text-muted-foreground mb-4">{dict.pricing.customDesc}</p>
               <Link
                 href={`/${locale}/contact`}
-                className="inline-flex items-center gap-3 py-5 px-10 rounded-2xl bg-electric text-white font-black text-xs uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all shadow-2xl"
+                className="inline-flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
               >
                 {dict.pricing.customCta}
                 <ArrowRight size={16} />
               </Link>
             </div>
-          </AnimatedSection>
+          </div>
         </Container>
       </main>
       <Footer dict={dict} locale={locale} />

@@ -31,16 +31,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic Service routes
   const serviceEntries = locales.flatMap(locale => 
-    serviceCatalog.flatMap(cat => [
-      {
-        url: `${baseUrl}/${locale}/services/${cat.slug}`,
-        lastModified: new Date(),
-      },
-      ...cat.subServices.map(sub => ({
-        url: `${baseUrl}/${locale}/services/${cat.slug}/${sub.slug}`,
-        lastModified: new Date(),
-      }))
-    ])
+    serviceCatalog.map(cat => ({
+      url: `${baseUrl}/${locale}/services/category/${cat.slug}`,
+      lastModified: new Date(),
+    }))
   );
 
   // Dynamic Tech routes

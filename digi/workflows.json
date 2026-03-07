@@ -1,0 +1,375 @@
+{
+  "version": "1.0",
+  "description": "Workflow Definitions for DigiWebCrew Platform",
+  "workflows": {
+    "content_publishing": {
+      "id": "content-publishing",
+      "name": "Content Publishing Workflow",
+      "description": "End-to-end workflow for creating and publishing content",
+      "triggers": ["manual", "scheduled", "api"],
+      "steps": [
+        {
+          "id": "topic-research",
+          "name": "Topic Research",
+          "description": "AI analyzes trends and suggests high-value topics",
+          "automation": "ai",
+          "estimated_time": "5 minutes"
+        },
+        {
+          "id": "outline-generation",
+          "name": "Outline Generation",
+          "description": "AI creates comprehensive content outline",
+          "automation": "ai",
+          "estimated_time": "3 minutes"
+        },
+        {
+          "id": "draft-creation",
+          "name": "Draft Creation",
+          "description": "AI generates full content draft",
+          "automation": "ai",
+          "estimated_time": "10 minutes"
+        },
+        {
+          "id": "human-review",
+          "name": "Human Review",
+          "description": "Editor reviews and edits content",
+          "automation": "manual",
+          "estimated_time": "30 minutes",
+          "assignee_role": "editor"
+        },
+        {
+          "id": "seo-optimization",
+          "name": "SEO Optimization",
+          "description": "AI enhances metadata and keyword density",
+          "automation": "ai",
+          "estimated_time": "5 minutes"
+        },
+        {
+          "id": "approval",
+          "name": "Content Approval",
+          "description": "Final approval before publishing",
+          "automation": "manual",
+          "estimated_time": "10 minutes",
+          "assignee_role": "admin"
+        },
+        {
+          "id": "publish",
+          "name": "Publish",
+          "description": "Content is published to the website",
+          "automation": "automatic",
+          "estimated_time": "1 minute"
+        },
+        {
+          "id": "promotion",
+          "name": "Social Promotion",
+          "description": "Auto-promote on social media channels",
+          "automation": "automatic",
+          "estimated_time": "2 minutes"
+        }
+      ]
+    },
+    "lead_capture": {
+      "id": "lead-capture",
+      "name": "Lead Capture & Nurturing Workflow",
+      "description": "Automated lead capture and nurturing process",
+      "triggers": ["form_submission", "chat_completion", "resource_download"],
+      "steps": [
+        {
+          "id": "lead-creation",
+          "name": "Lead Creation",
+          "description": "Create lead record in database",
+          "automation": "automatic",
+          "estimated_time": "instant"
+        },
+        {
+          "id": "crm-sync",
+          "name": "CRM Synchronization",
+          "description": "Sync lead to HubSpot CRM",
+          "automation": "automatic",
+          "estimated_time": "5 seconds"
+        },
+        {
+          "id": "segmentation",
+          "name": "Lead Segmentation",
+          "description": "Auto-assign tags and segments",
+          "automation": "automatic",
+          "estimated_time": "2 seconds",
+          "rules": [
+            {
+              "condition": "company_size > 500",
+              "action": "tag_enterprise"
+            },
+            {
+              "condition": "source == 'chatbot'",
+              "action": "tag_chatbot_qualified"
+            },
+            {
+              "condition": "budget == 'enterprise'",
+              "action": "priority_high"
+            }
+          ]
+        },
+        {
+          "id": "welcome-email",
+          "name": "Welcome Email",
+          "description": "Send immediate welcome email",
+          "automation": "automatic",
+          "estimated_time": "1 minute",
+          "delay": 0
+        },
+        {
+          "id": "sales-alert",
+          "name": "Sales Team Alert",
+          "description": "Notify sales team of high-value leads",
+          "automation": "automatic",
+          "estimated_time": "instant",
+          "condition": "priority == 'high' || budget >= 'large'"
+        },
+        {
+          "id": "nurture-sequence",
+          "name": "Nurture Email Sequence",
+          "description": "Enroll in drip campaign",
+          "automation": "automatic",
+          "estimated_time": "ongoing",
+          "sequence": [
+            { "delay_hours": 48, "template": "case-studies" },
+            { "delay_hours": 96, "template": "services-overview" },
+            { "delay_hours": 168, "template": "consultation-offer" },
+            { "delay_hours": 336, "template": "final-followup" }
+          ]
+        }
+      ]
+    },
+    "chatbot_conversation": {
+      "id": "chatbot-conversation",
+      "name": "Chatbot Conversation Flow",
+      "description": "Intelligent chatbot conversation handling",
+      "triggers": ["user_message"],
+      "steps": [
+        {
+          "id": "intent-detection",
+          "name": "Intent Detection",
+          "description": "Analyze user message for intent",
+          "automation": "ai",
+          "estimated_time": "500ms"
+        },
+        {
+          "id": "route-decision",
+          "name": "Route Decision",
+          "description": "Determine response path",
+          "automation": "automatic",
+          "branches": [
+            {
+              "condition": "confidence > 0.8",
+              "path": "rule-based-response"
+            },
+            {
+              "condition": "confidence <= 0.8",
+              "path": "ai-generated-response"
+            }
+          ]
+        },
+        {
+          "id": "generate-response",
+          "name": "Generate Response",
+          "description": "Create appropriate response",
+          "automation": "ai",
+          "estimated_time": "1-2 seconds"
+        },
+        {
+          "id": "log-conversation",
+          "name": "Log Conversation",
+          "description": "Store conversation for analytics",
+          "automation": "automatic",
+          "estimated_time": "100ms"
+        },
+        {
+          "id": "check-escalation",
+          "name": "Check Escalation",
+          "description": "Determine if human handoff needed",
+          "automation": "automatic",
+          "escalation_triggers": [
+            "user_requests_human",
+            "sentiment_negative",
+            "complex_technical_issue",
+            "sales_ready_signal"
+          ]
+        }
+      ]
+    },
+    "seo_optimization": {
+      "id": "seo-optimization",
+      "name": "SEO Optimization Workflow",
+      "description": "Automated SEO analysis and optimization",
+      "triggers": ["content_save", "scheduled", "manual"],
+      "steps": [
+        {
+          "id": "content-analysis",
+          "name": "Content Analysis",
+          "description": "Analyze content for SEO factors",
+          "automation": "automatic",
+          "checks": [
+            "keyword_density",
+            "title_optimization",
+            "meta_description",
+            "heading_structure",
+            "internal_links",
+            "readability_score",
+            "content_length"
+          ]
+        },
+        {
+          "id": "generate-suggestions",
+          "name": "Generate Suggestions",
+          "description": "AI generates improvement suggestions",
+          "automation": "ai",
+          "estimated_time": "10 seconds"
+        },
+        {
+          "id": "calculate-score",
+          "name": "Calculate SEO Score",
+          "description": "Compute overall SEO health score",
+          "automation": "automatic",
+          "scoring": {
+            "title_optimization": 15,
+            "meta_description": 10,
+            "keyword_usage": 20,
+            "heading_structure": 15,
+            "internal_links": 15,
+            "readability": 15,
+            "content_length": 10
+          }
+        },
+        {
+          "id": "auto-fix",
+          "name": "Auto-Fix Issues",
+          "description": "Apply automatic fixes where possible",
+          "automation": "ai",
+          "auto_fixable": [
+            "meta_description_length",
+            "title_tag_optimization",
+            "alt_text_generation"
+          ]
+        },
+        {
+          "id": "report-generation",
+          "name": "Generate Report",
+          "description": "Create SEO analysis report",
+          "automation": "automatic",
+          "output": "dashboard_update"
+        }
+      ]
+    },
+    "deployment": {
+      "id": "deployment",
+      "name": "CI/CD Deployment Workflow",
+      "description": "Automated testing and deployment pipeline",
+      "triggers": ["push_to_main", "push_to_develop", "manual"],
+      "steps": [
+        {
+          "id": "lint-check",
+          "name": "Lint Check",
+          "description": "Run ESLint for code quality",
+          "automation": "automatic",
+          "estimated_time": "1 minute",
+          "command": "npm run lint"
+        },
+        {
+          "id": "type-check",
+          "name": "TypeScript Check",
+          "description": "Verify TypeScript types",
+          "automation": "automatic",
+          "estimated_time": "1 minute",
+          "command": "npx tsc --noEmit"
+        },
+        {
+          "id": "unit-tests",
+          "name": "Unit Tests",
+          "description": "Run Jest unit tests",
+          "automation": "automatic",
+          "estimated_time": "3 minutes",
+          "command": "npm run test:unit",
+          "coverage_threshold": 80
+        },
+        {
+          "id": "integration-tests",
+          "name": "Integration Tests",
+          "description": "Run integration tests",
+          "automation": "automatic",
+          "estimated_time": "5 minutes",
+          "command": "npm run test:integration"
+        },
+        {
+          "id": "build",
+          "name": "Build Application",
+          "description": "Create production build",
+          "automation": "automatic",
+          "estimated_time": "3 minutes",
+          "command": "npm run build"
+        },
+        {
+          "id": "deploy",
+          "name": "Deploy",
+          "description": "Deploy to target environment",
+          "automation": "automatic",
+          "estimated_time": "2 minutes",
+          "environments": {
+            "develop": "staging",
+            "main": "production"
+          }
+        },
+        {
+          "id": "smoke-tests",
+          "name": "Smoke Tests",
+          "description": "Verify deployment health",
+          "automation": "automatic",
+          "estimated_time": "2 minutes",
+          "condition": "branch == 'main'"
+        },
+        {
+          "id": "notify",
+          "name": "Notification",
+          "description": "Send deployment notification",
+          "automation": "automatic",
+          "channels": ["slack", "email"]
+        }
+      ]
+    }
+  },
+  "automation_rules": {
+    "lead_scoring": {
+      "rules": [
+        { "action": "visited_pricing", "score": 10 },
+        { "action": "downloaded_resource", "score": 5 },
+        { "action": "chatbot_completed", "score": 15 },
+        { "action": "email_opened", "score": 2 },
+        { "action": "email_clicked", "score": 5 },
+        { "action": "time_on_site_3min", "score": 5 },
+        { "action": "return_visit", "score": 8 }
+      ],
+      "thresholds": {
+        "cold": 0,
+        "warm": 15,
+        "hot": 30,
+        "sales_ready": 50
+      }
+    },
+    "email_triggers": {
+      "welcome_sequence": {
+        "trigger": "lead_created",
+        "delay": 0,
+        "template": "welcome"
+      },
+      "abandoned_chat": {
+        "trigger": "chat_abandoned",
+        "delay": 600,
+        "template": "chat-followup"
+      },
+      "re_engagement": {
+        "trigger": "no_activity_30days",
+        "delay": 2592000,
+        "template": "re-engagement"
+      }
+    }
+  }
+}

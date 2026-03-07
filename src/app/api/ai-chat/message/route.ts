@@ -28,7 +28,21 @@ export async function POST(req: NextRequest) {
             isConverted: session.isConverted
         });
     } catch (error) {
+        if (error instanceof Error && error.message.includes("OPENAI_API_KEY")) {
+            return NextResponse.json(
+                { success: false, error: "OPENAI_API_KEY is missing or not configured" },
+                { status: 500 }
+            );
+        }
         console.error("AI Chat Message Error:", error);
-        return NextResponse.json({ success: false, error: "Message processing failed" }, { status: 500 });
+        const detail = error instanceof Error ? error.message : undefined;
+        return NextResponse.json(
+            {
+                success: false,
+                error: "Message processing failed",
+                ...(process.env.NODE_ENV !== "production" && detail ? { detail } : {})
+            },
+            { status: 500 }
+        );
     }
 }

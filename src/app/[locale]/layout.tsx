@@ -1,28 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Suspense } from "react";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { getDictionary } from "@/lib/get-dictionary";
 import { MotionProvider } from "@/components/MotionProvider";
 import { PageTransition } from "@/components/ui/page-transition";
-import { TrackingProvider } from "@/lib/analytics";
-import { ConsentBanner } from "@/components/ui/consent-banner";
-import { Suspense } from "react";
 import { ChatbotUI } from "@/components/chatbot/chatbot-ui";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: 'swap',
-  preload: true
-});
-
-const outfit = Inter({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  display: 'swap',
-  preload: true
-});
+import { ConsentBanner } from "@/components/ui/consent-banner";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -98,40 +82,20 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "Digi Web Crew",
-              "url": "https://digiwebcrew.com/",
-              "logo": "https://digiwebcrew.com/logo.png",
-              "founder": {
-                "@type": "Person",
-                "name": "Toqeer Shafique",
-                "sameAs": [
-                  "https://pk.linkedin.com/in/toqeer-shafique",
-                  "https://github.com/toqeer74",
-                  "https://www.upwork.com/freelancers/toqeer",
-                  "https://www.fiverr.com/toqeer486",
-                  "https://www.freelancer.pk/u/toqeer74"
-                ]
-              },
-              "description": "Specialized development of high-performance web applications and technical SEO strategies."
-            })
+            __html: '{"@context":"https://schema.org","@type":"Organization","name":"Digi Web Crew","url":"https://digiwebcrew.com/","logo":"https://digiwebcrew.com/logo.png","founder":{"@type":"Person","name":"Toqeer Shafique","sameAs":["https://pk.linkedin.com/in/toqeer-shafique","https://github.com/toqeer74","https://www.upwork.com/freelancers/toqeer","https://www.fiverr.com/toqeer486","https://www.freelancer.pk/u/toqeer74"]},"description":"Specialized development of high-performance web applications and technical SEO strategies."}'
           }}
         />
       </head>
-      <body className={cn(inter.variable, outfit.variable, "font-sans antialiased bg-background text-foreground transition-all duration-300 font-medium")}>
-        <TrackingProvider>
-          <MotionProvider>
-            <PageTransition>
-              <Suspense fallback={null}>
-                {children}
-              </Suspense>
-            </PageTransition>
-            <ChatbotUI />
-          </MotionProvider>
-          <ConsentBanner />
-        </TrackingProvider>
+      <body className="font-sans antialiased bg-raly-base dark:bg-midnight-950 text-foreground transition-all duration-300 font-medium">
+        <MotionProvider>
+          <PageTransition>
+            <Suspense fallback={null}>
+              {children}
+            </Suspense>
+          </PageTransition>
+          <ChatbotUI />
+        </MotionProvider>
+        <ConsentBanner />
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800;900&display=swap');
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
@@ -5,8 +6,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
+
+  /* Raleway as the site-wide font */
+  --font-body: 'Raleway', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-heading: 'Raleway', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
@@ -60,6 +65,13 @@
   --color-electric-light: #60A5FA;
   --color-electric-dark: #2563EB;
 
+  --color-raly-primary: #024d94;
+  --color-raly-accent: #f8d171;
+  --color-raly-text: #555555;
+  --color-raly-base: #ffffff;
+  --color-raly-subtle: #fafafa;
+  --color-raly-deep: #02407b;
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -67,26 +79,26 @@
 
 @layer base {
   :root {
-    --background: 240 50% 98%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 33.3%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 33.3%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 217 91% 60%; /* #3B82F6 - Electric Blue */
+    --popover-foreground: 0 0% 33.3%;
+    --primary: 209 97% 29%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 40% 96%;
     --secondary-foreground: 240 10% 10%;
     --muted: 240 40% 96%;
     --muted-foreground: 240 10% 45%;
-    --accent: 217 91% 60%; /* Matching Electric Blue Accent */
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 89% 71%;
+    --accent-foreground: 209 97% 29%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     --border: 240 30% 92%;
     --input: 240 30% 92%;
     --ring: 255 70% 65%;
-    --radius: 2rem;
+    --radius: 1.5rem;
 
     /* Elite Accents - Soft Aesthetic V3 */
     --brand-indigo: 217 91% 60%; /* Updated to Electric Blue */
@@ -110,7 +122,7 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
     
-    --primary: 217 91% 60%; /* #3B82F6 - Electric Blue */
+    --primary: 209 97% 29%;
     --primary-foreground: 210 40% 98%;
     
     --secondary: 217 33% 17%;
@@ -119,32 +131,30 @@
     --muted: 217 33% 17%;
     --muted-foreground: 215 20.2% 65.1%;
     
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 45 89% 71%;
+    --accent-foreground: 209 97% 29%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 217 91% 60%; /* Electric Blue ring */
+    --ring: 45 89% 71%;
   }
 }
 
-@layer utilities {
+@layer components {
   .glass {
+    @apply backdrop-blur-md backdrop-saturate-180 border rounded-lg;
     background: var(--glass-background);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
+    border-color: var(--glass-border);
     box-shadow: 0 10px 30px 0 var(--glass-shadow);
   }
 
   .glass-morphism {
+    @apply backdrop-blur-md backdrop-saturate-180 border rounded-lg;
     background: var(--glass-background);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
+    border-color: var(--glass-border);
     box-shadow: 0 10px 40px 0 var(--glass-shadow);
     background-image: linear-gradient(
       135deg,
@@ -155,16 +165,13 @@
   }
 
   .glass-card {
+    @apply border border-border rounded-2xl relative overflow-hidden;
     background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    position: relative;
-    overflow: hidden;
     box-shadow: 0 20px 50px -15px rgba(100, 100, 255, 0.08);
   }
 
   .text-gradient {
-    background: linear-gradient(to bottom right, #8B5CF6, #A78BFA);
+    background: linear-gradient(to bottom right, var(--color-raly-primary), var(--color-raly-accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -238,6 +245,17 @@
   }
 }
 
+@layer base {
+  /* Apply site-wide fonts */
+  html, body {
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+  }
+}
 /* Custom Scrollbar for High-Tech Aesthetic */
 ::-webkit-scrollbar {
   width: 10px;
@@ -249,5 +267,12 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-midnight-700 rounded-full border-2 border-background hover:bg-midnight-600 transition-colors;
+}
+
+/* Simple Container Class */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 

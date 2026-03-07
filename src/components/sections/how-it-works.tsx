@@ -13,7 +13,7 @@ const icons = [Search, PenTool, Code2, Rocket, HeartHandshake];
 const colors = [
     "bg-blue-500",
     "bg-purple-600",
-    "bg-indigo-500",
+    "bg-raly-primary",
     "bg-amber-500",
     "bg-emerald-500"
 ];
@@ -21,7 +21,7 @@ const colors = [
 const connectorColors = [
     "stroke-blue-400",
     "stroke-purple-400",
-    "stroke-indigo-400",
+    "stroke-raly-primary",
     "stroke-amber-400"
 ];
 
@@ -32,7 +32,7 @@ export function HowItWorks({ dict }: HowItWorksProps) {
         title: stepsData[key].title,
         desc: stepsData[key].desc,
         Icon: icons[index] || Code2,
-        color: colors[index] || "bg-indigo-500",
+        color: colors[index] || "bg-raly-primary",
     }));
 
     return (

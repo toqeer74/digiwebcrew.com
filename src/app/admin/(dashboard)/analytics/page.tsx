@@ -5,6 +5,7 @@ import { Users, Target, Zap, TrendingUp, ArrowUpRight, ArrowDownRight, Download,
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/admin/page-header";
 
 export default async function AnalyticsPage() {
     // Fetch real data
@@ -15,34 +16,22 @@ export default async function AnalyticsPage() {
     ]);
 
     const stats = [
-        { label: "Total Projects", value: "124", change: "+12.5%", trending: "up", icon: FolderKanban },
-        { label: "Deployed", value: "98%", change: "+5.2%", trending: "up", icon: Rocket },
-        { label: "Avg. Response", value: "1.2h", change: "-18%", trending: "down", icon: Clock },
-        { label: "Win Rate", value: "24.5%", change: "+2.1%", trending: "up", icon: TrendingUp },
+        { label: "Total Intake", value: statsData.totalLeads.toString(), change: "+12.5%", trending: "up", icon: FolderKanban },
+        { label: "Hot Leads", value: statsData.hotLeads.toString(), change: "+5.2%", trending: "up", icon: Rocket },
+        { label: "Avg Quality", value: `${statsData.avgHotScore}%`, change: "-18%", trending: "down", icon: Clock },
+        { label: "New Leads", value: statsData.newLeads.toString(), change: "+2.1%", trending: "up", icon: TrendingUp },
     ];
 
     return (
         <div className="space-y-6 pb-10 w-full">
-            {/* Greeting Section */}
-            <div className="flex flex-col gap-4">
-                <div>
-                    <p className="text-[10px] font-black text-muted-foreground/40 mb-1 uppercase tracking-[0.2em]">Operations Suite: Analytics</p>
-                    <h1 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">Terminal: <span className="text-indigo-600">Active</span></h1>
-                    <p className="text-sm text-muted-foreground/60 italic mt-1 font-medium">Neural engine sync complete. Projected growth: <span className="text-emerald-500 font-black">+14%</span></p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-1">
-                    <button className="h-9 px-5 rounded-xl bg-indigo-600 text-white text-[9px] font-black uppercase tracking-widest shadow-lg shadow-indigo-600/20 flex items-center gap-2 hover:scale-105 transition-all outline-none">
-                        <Zap size={12} fill="currentColor" />
-                        Ask Intelligence
-                    </button>
-                    {["Sprint Logs", "Resource Map", "Integrations"].map((label) => (
-                        <button key={label} className="h-9 px-5 rounded-xl bg-white dark:bg-midnight-900 border border-border text-foreground text-[9px] font-black uppercase tracking-widest shadow-sm hover:bg-secondary transition-all outline-none">
-                            {label}
-                        </button>
-                    ))}
-                </div>
-            </div>
+            <PageHeader
+                label="Operations Suite"
+                title="Analytics"
+                highlight="Active"
+                description="Neural engine sync complete. Projected growth: "
+                descriptionHighlight="+14%"
+                icon={<Users />}
+            />
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -77,52 +66,34 @@ export default async function AnalyticsPage() {
             <AnalyticsChart />
 
             {/* Widgets Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Left Column - Main Tasks */}
-                <div className="lg:col-span-8 space-y-4">
+            <div className="grid grid-cols-1 gap-8 items-start">
+                {/* Category Distribution */}
+                <div className="space-y-4">
                     <Card className="rounded-2xl border-border bg-white dark:bg-midnight-900 shadow-sm overflow-hidden">
                         <CardHeader className="flex flex-row items-center justify-between p-5 pb-2">
                             <div className="flex items-center gap-3">
                                 <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-midnight-800 text-indigo-600 flex items-center justify-center shadow-inner">
-                                    <CheckSquare size={16} />
+                                    <Target size={16} />
                                 </div>
                                 <div>
-                                    <CardTitle className="text-base font-black">Active Engineering Sprints</CardTitle>
-                                    <p className="text-[7px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mt-0.5">Q1 2026 ROADMAP</p>
+                                    <CardTitle className="text-base font-black">Service Category Distribution</CardTitle>
+                                    <p className="text-[7px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mt-0.5">Lead intake by service type</p>
                                 </div>
                             </div>
                         </CardHeader>
                         <CardContent className="p-5 pt-2">
                             <div className="space-y-3">
-                                <div className="space-y-2">
-                                    {[
-                                        { name: "E-commerce Platform MVP", priority: "High", due: "Due Today", color: "rose" },
-                                        { name: "API Gateway Integration", priority: "Medium", due: "3 days left", color: "amber" },
-                                        { name: "Dashboard UI Redesign", priority: "Low", due: "1 week left", color: "blue" }
-                                    ].map((task, i) => (
-                                        <div key={i} className="flex items-center justify-between p-3 px-4 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-colors group cursor-pointer border border-transparent hover:border-border">
-                                            <div className="flex items-center gap-3">
-                                                <div className={cn("w-2 h-2 rounded-full",
-                                                    task.color === "rose" ? "bg-rose-500 shadow-lg shadow-rose-500/20" :
-                                                        task.color === "amber" ? "bg-amber-500 shadow-lg shadow-amber-500/20" : "bg-blue-500 shadow-lg shadow-blue-500/20"
-                                                )} />
-                                                <span className="font-bold text-[11px] text-gray-700 dark:text-gray-200">{task.name}</span>
-                                            </div>
-                                            <div className="flex items-center gap-6">
-                                                <span className={cn("px-2.5 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest",
-                                                    task.priority === "High" ? "bg-rose-500 text-white" :
-                                                        task.priority === "Medium" ? "bg-amber-500 text-white" : "bg-blue-500 text-white"
-                                                )}>{task.priority}</span>
-                                                <span className="text-[8px] font-bold text-muted-foreground/60">{task.due}</span>
-                                            </div>
+                                {distribution.map((item: any, i: number) => (
+                                    <div key={i} className="flex items-center justify-between p-3 px-4 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-colors group cursor-pointer border border-transparent hover:border-border">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-2 h-2 rounded-full bg-indigo-500 shadow-lg shadow-indigo-500/20" />
+                                            <span className="font-bold text-[11px] text-gray-700 dark:text-gray-200">{item.name}</span>
                                         </div>
-                                    ))}
-                                </div>
-
-                                <button className="flex items-center gap-2 text-primary text-[8px] font-black uppercase tracking-widest mt-4 hover:translate-x-1 transition-transform">
-                                    <ArrowRight size={10} />
-                                    Access Task Control
-                                </button>
+                                        <div className="flex items-center gap-6">
+                                            <span className="px-2.5 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest bg-indigo-500 text-white">{item.value}</span>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </CardContent>
                     </Card>
@@ -157,9 +128,9 @@ export default async function AnalyticsPage() {
                         </CardContent>
                     </Card>
                 </div>
+            </div>
 
-                {/* Right Column - Secondary Widgets */}
-                <div className="lg:col-span-4 space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <Card className="rounded-2xl border-border bg-white dark:bg-midnight-900 shadow-sm p-5">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
@@ -220,7 +191,6 @@ export default async function AnalyticsPage() {
                         </div>
                     </Card>
                 </div>
-            </div>
 
             {/* Forecast Footer */}
             <div className="p-8 px-10 rounded-[2.5rem] bg-indigo-950 text-white flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden group border border-white/5">

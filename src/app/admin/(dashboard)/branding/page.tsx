@@ -1,12 +1,19 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload, Image, Trash2, Check, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+type BrandingConfig = {
+    siteName: string;
+    primaryColor: string;
+    logoDataUrl: string;
+};
 
 export default function BrandingPage() {
     const [logo, setLogo] = useState<string | null>(null);
@@ -15,31 +22,71 @@ export default function BrandingPage() {
     const [isUploading, setIsUploading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [loadError, setLoadError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const load = async () => {
+            try {
+                const res = await fetch("/api/admin/branding", { cache: "no-store" });
+                if (!res.ok) {
+                    setLoadError("Failed to load branding settings");
+                    return;
+                }
+                const data = await res.json();
+                if (data?.config) {
+                    const config = data.config as BrandingConfig;
+                    setSiteName(config.siteName || "Software Lab");
+                    setPrimaryColor(config.primaryColor || "#7C3AED");
+                    setLogo(config.logoDataUrl || null);
+                }
+            } catch (e) {
+                setLoadError("Failed to load branding settings");
+            }
+        };
+        load();
+    }, []);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             setIsUploading(true);
-            // Simulate upload delay
-            setTimeout(() => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setLogo(reader.result as string);
-                    setIsUploading(false);
-                };
-                reader.readAsDataURL(file);
-            }, 500);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setLogo(reader.result as string);
+                setIsUploading(false);
+            };
+            reader.onerror = () => {
+                setIsUploading(false);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
     const handleSave = async () => {
         setIsSaving(true);
-        // Simulate save delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setIsSaving(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2000);
+        try {
+            const res = await fetch("/api/admin/branding", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    siteName,
+                    primaryColor,
+                    logoDataUrl: logo || "",
+                } satisfies BrandingConfig),
+            });
+
+            if (!res.ok) {
+                throw new Error("Save failed");
+            }
+
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
+        } catch (e) {
+            setSaved(false);
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const handleRemoveLogo = () => {
@@ -50,18 +97,25 @@ export default function BrandingPage() {
     };
 
     return (
-        <div className="space-y-8 pb-12">
+        <div className="space-y-8 pb-12 p-6 lg:p-8">
             {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight text-foreground">Branding</h1>
-                <p className="text-sm text-muted-foreground mt-1">Customize your site's logo, name, and appearance.</p>
+            <div className="flex flex-col gap-4 mb-6">
+                <div>
+                    <p className="text-[10px] font-black text-muted-foreground/40 mb-1 uppercase tracking-[0.2em]">Customization Suite</p>
+                    <h1 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">Branding: <span className="text-raly-accent">Configuration</span></h1>
+                    <p className="text-sm text-muted-foreground/60 italic mt-1 font-medium">Manage site <span className="text-raly-accent font-black">identity</span> and appearance</p>
+                </div>
             </div>
+
+            {loadError && (
+                <div className="text-xs font-bold text-rose-500 uppercase tracking-widest">{loadError}</div>
+            )}
 
             {/* Logo Upload Section */}
             <Card className="rounded-2xl border-border bg-white shadow-sm">
                 <CardHeader className="pb-4">
                     <CardTitle className="text-lg font-bold flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-lg bg-raly-accent/10 text-raly-accent flex items-center justify-center">
                             <Image size={18} />
                         </div>
                         Site Logo

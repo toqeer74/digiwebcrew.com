@@ -3,9 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, BarChart3, Users, CheckSquare,
-  Settings, LogOut, FileText, Palette,
-  Sparkles, MessageSquare
+  LayoutDashboard,
+  Users,
+  MessageSquare,
+  FileText,
+  Settings,
+  Palette,
+  Bot,
+  FileStack,
+  Activity,
+  Shield,
+  BarChart3,
+  Sparkles,
+  CheckSquare,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
@@ -15,9 +26,13 @@ const navItems = [
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "Leads", href: "/admin/leads", icon: Users },
   { name: "AI Assistant", href: "/admin/ai-assistant", icon: Sparkles },
+  { name: "Drafts", href: "/admin/drafts", icon: FileText },
+  { name: "Workflow Runs", href: "/admin/workflow-runs", icon: FileStack },
   { name: "Chats", href: "/admin/chats", icon: MessageSquare },
   { name: "Tasks", href: "/admin/tasks", icon: CheckSquare },
   { name: "Branding", href: "/admin/branding", icon: Palette },
+  { name: "Docs", href: "/admin/docs", icon: FileText },
+  { name: "Audit", href: "/admin/audit", icon: Shield },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

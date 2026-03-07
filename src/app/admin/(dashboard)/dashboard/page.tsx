@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,42 +11,60 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { getDashboardStats } from "@/lib/actions/dashboard-actions";
+import Link from "next/link";
+import { PageHeader } from "@/components/admin/page-header";
+
+interface DashboardData {
+    leadCount: number;
+    chatCount: number;
+    draftCount: number;
+    brandingConfig: any;
+    recentLeads: Array<{ name: string; industry: string; budget: string; intent: string }>;
+    recentEvents: Array<{ title: string; time: string; type: string }>;
+}
 
 export default function DashboardPage() {
-    const stats = [
+    const [data, setData] = React.useState<DashboardData | null>(null);
+    
+    React.useEffect(() => {
+        getDashboardStats().then(setData);
+    }, []);
+
+    const stats = data ? [
         {
-            label: "AI Visibility",
-            value: "84.2",
-            change: "+8.4",
-            trending: "up",
+            label: "Leads",
+            value: String(data.leadCount),
+            change: "Total",
+            trending: "up" as const,
+            icon: Users,
+            color: "from-raly-primary to-raly-deep"
+        },
+        {
+            label: "Chats",
+            value: String(data.chatCount),
+            change: "Sessions",
+            trending: "up" as const,
             icon: Sparkles,
-            color: "from-blue-500 to-indigo-600"
+            color: "from-raly-accent to-raly-primary"
         },
         {
-            label: "Lead Velocity",
-            value: "1.2d",
-            change: "-0.3d",
-            trending: "up",
-            icon: Clock,
-            color: "from-emerald-500 to-teal-600"
+            label: "Drafts",
+            value: String(data.draftCount),
+            change: "AI Generated",
+            trending: "up" as const,
+            icon: Layout,
+            color: "from-raly-accent/80 to-raly-primary"
         },
         {
-            label: "System Latency",
-            value: "28ms",
-            change: "-4ms",
-            trending: "down",
-            icon: Cpu,
-            color: "from-amber-500 to-orange-600"
-        },
-        {
-            label: "Inbound Intent",
-            value: "High",
-            change: "Top 5%",
-            trending: "up",
+            label: "Site Name",
+            value: data.brandingConfig?.siteName || "Software Lab",
+            change: "Branding",
+            trending: "up" as const,
             icon: Target,
-            color: "from-purple-500 to-pink-600"
+            color: "from-raly-deep to-raly-primary"
         },
-    ];
+    ] : [];
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -64,53 +83,13 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen w-full pb-10 space-y-4 lg:space-y-6">
-            {/* Premium Header Experience */}
-            <div className="relative w-full overflow-hidden rounded-3xl bg-indigo-950 p-5 md:p-6 lg:p-8 shadow-2xl border border-white/5">
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-                    <div className="space-y-2">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white/80 text-[10px] font-black uppercase tracking-widest"
-                        >
-                            <Sparkles size={12} className="text-electric" />
-                            System Terminal v4.0
-                        </motion.div>
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-3xl md:text-4xl font-black text-white tracking-tight leading-tight"
-                        >
-                            Terminal: <span className="text-electric">Operational</span>
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-lg text-white/50 font-medium italic"
-                        >
-                            Neural engine active. Ready for high-scale deployment.
-                        </motion.p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-4">
-                        <button className="group relative h-11 px-6 rounded-xl bg-electric text-white text-[10px] font-black uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-electric/25">
-                            <span className="relative z-10 flex items-center gap-2">
-                                <Zap size={14} fill="currentColor" />
-                                Master Control
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                        </button>
-                        <button className="h-11 px-6 rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">
-                            Export
-                        </button>
-                    </div>
-                </div>
-
-                {/* Abstract Background Decoration */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-electric/20 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2" />
-            </div>
+            <PageHeader
+                label="System Console"
+                title="Terminal"
+                highlight="Operational"
+                description="Neural engine active. Ready for high-scale deployment."
+                icon={<Sparkles />}
+            />
 
             {/* Stats Experience */}
             <motion.div
@@ -224,12 +203,7 @@ export default function DashboardPage() {
                         </CardHeader>
                         <CardContent className="p-4 pt-1">
                             <div className="space-y-3">
-                                {[
-                                    { title: "New high-intent lead", time: "2 min ago", type: "success" },
-                                    { title: "Sprint deployment successful", time: "45 min ago", type: "system" },
-                                    { title: "Server usage spike detected", time: "1h ago", type: "warning" },
-                                    { title: "Inbound quote requested", time: "3h ago", type: "success" }
-                                ].map((event, i) => (
+                                {data?.recentEvents?.map((event, i) => (
                                     <div key={i} className="flex gap-3 group/item">
                                         <div className="relative pt-1 flex flex-col items-center">
                                             <div className={cn(
@@ -237,7 +211,7 @@ export default function DashboardPage() {
                                                 event.type === "success" ? "bg-emerald-500" :
                                                     event.type === "warning" ? "bg-amber-500" : "bg-electric"
                                             )} />
-                                            {i !== 3 && <div className="w-[1px] flex-1 bg-white/10 mt-1.5 mb-1.5" />}
+                                            {i !== (data?.recentEvents?.length || 0) - 1 && <div className="w-[1px] flex-1 bg-white/10 mt-1.5 mb-1.5" />}
                                         </div>
                                         <div className="pb-3 text-left">
                                             <p className="text-[11px] font-bold text-white group-hover/item:text-electric transition-colors leading-tight">{event.title}</p>
@@ -271,20 +245,18 @@ export default function DashboardPage() {
                                 </div>
                                 <div>
                                     <h2 className="text-sm font-bold text-gray-900 dark:text-white">Unified Lead Intake</h2>
-                                    <p className="text-[7px] font-black uppercase tracking-[0.2em] text-gray-400 mt-0.5">LinkedIn • GitHub • Upwork</p>
+                                    <p className="text-[7px] font-black uppercase tracking-[0.2em] text-gray-400 mt-0.5">Recent Leads</p>
                                 </div>
                             </div>
-                            <Button variant="outline" className="h-7 px-2 rounded-xl text-[7px] font-black uppercase tracking-widest border-gray-100 dark:border-midnight-800">
-                                View CRM
-                            </Button>
+                            <Link href="/admin/leads">
+                                <Button variant="outline" className="h-7 px-2 rounded-xl text-[7px] font-black uppercase tracking-widest border-gray-100 dark:border-midnight-800">
+                                    View CRM
+                                </Button>
+                            </Link>
                         </CardHeader>
                         <CardContent className="p-4 pt-1">
                             <div className="space-y-2">
-                                {[
-                                    { name: "Alpha Dynamics", industry: "SaaS", budget: "$15K", intent: "Critical" },
-                                    { name: "Zephyr Labs", industry: "AI/ML", budget: "$45K", intent: "High" },
-                                    { name: "Nexus Fintech", industry: "Banking", budget: "$32K", intent: "Explo" }
-                                ].map((lead, i) => (
+                                {data?.recentLeads?.map((lead, i) => (
                                     <div key={i} className="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/50 dark:bg-midnight-950/50 border border-transparent hover:border-gray-100 transition-all cursor-pointer group">
                                         <div className="flex items-center gap-2">
                                             <div className="w-7 h-7 rounded-lg bg-white dark:bg-midnight-900 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-electric transition-colors">
@@ -302,8 +274,8 @@ export default function DashboardPage() {
                                             </div>
                                             <div className={cn(
                                                 "px-2 py-0.5 rounded-full text-[6px] font-black uppercase tracking-widest",
-                                                lead.intent === "Critical" ? "bg-rose-500 text-white" :
-                                                    lead.intent === "High" ? "bg-amber-500 text-white" : "bg-blue-500 text-white"
+                                                lead.intent === "HOT" ? "bg-rose-500 text-white" :
+                                                    lead.intent === "WARM" ? "bg-amber-500 text-white" : "bg-blue-500 text-white"
                                             )}>
                                                 {lead.intent}
                                             </div>

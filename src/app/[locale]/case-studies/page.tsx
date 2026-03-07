@@ -1,6 +1,8 @@
 import { CaseStudiesLibrary } from "@/components/sections/case-studies-library";
+import { getCaseStudies } from "@/lib/content-engine";
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const studies = await getCaseStudies();
   return (
     <div className="pt-24 min-h-screen bg-white dark:bg-midnight-950">
       <div className="py-20 bg-gray-50 dark:bg-midnight-900 border-b border-gray-100 dark:border-midnight-800">
@@ -13,7 +15,7 @@ export default function CaseStudiesPage() {
           </p>
         </div>
       </div>
-      <CaseStudiesLibrary />
+      <CaseStudiesLibrary studies={studies} />
     </div>
   );
 }

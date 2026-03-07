@@ -1,17 +1,42 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
+import { connectToDatabase } from "@/lib/db";
+import { Setting } from "@/lib/models/setting";
 
-// In a production app, this would be stored in a database
-// For now, we'll use a simple in-memory store (persists per server instance)
-let trackingConfig = {
-    gtm_id: process.env.NEXT_PUBLIC_GTM_ID || '',
-    ga4_id: process.env.NEXT_PUBLIC_GA4_ID || '',
-    meta_pixel_id: process.env.NEXT_PUBLIC_META_PIXEL_ID || '',
-    meta_access_token: process.env.META_ACCESS_TOKEN || '',
-    linkedin_partner_id: process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID || '',
-    google_ads_id: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || '',
+type TrackingConfig = {
+    gtm_id: string;
+    ga4_id: string;
+    meta_pixel_id: string;
+    meta_access_token: string;
+    linkedin_partner_id: string;
+    google_ads_id: string;
 };
 
+const DEFAULT_TRACKING_CONFIG: TrackingConfig = {
+    gtm_id: process.env.NEXT_PUBLIC_GTM_ID || "",
+    ga4_id: process.env.NEXT_PUBLIC_GA4_ID || "",
+    meta_pixel_id: process.env.NEXT_PUBLIC_META_PIXEL_ID || "",
+    meta_access_token: process.env.META_ACCESS_TOKEN || "",
+    linkedin_partner_id: process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID || "",
+    google_ads_id: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "",
+};
+
+async function getTrackingConfig(): Promise<TrackingConfig> {
+    await connectToDatabase();
+    const doc = await Setting.findOne({ key: "admin.tracking" }).lean();
+    const value = (doc?.value || {}) as Partial<TrackingConfig>;
+    return { ...DEFAULT_TRACKING_CONFIG, ...value };
+}
+
 export async function GET() {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
+
+    const trackingConfig = await getTrackingConfig();
+
     // Return config with masked secrets
     return NextResponse.json({
         config: {
@@ -24,7 +49,13 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
+
     try {
+        const trackingConfig = await getTrackingConfig();
         const body = await request.json();
 
         // Validate the incoming data
@@ -50,14 +81,12 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // Update the config
-        trackingConfig = {
-            ...trackingConfig,
-            ...updatedConfig,
-        };
-
-        // In production, you would save this to a database here
-        // Example: await db.settings.upsert({ key: 'tracking', value: trackingConfig });
+        await connectToDatabase();
+        await Setting.findOneAndUpdate(
+            { key: "admin.tracking" },
+            { $set: { value: { ...trackingConfig, ...updatedConfig } } },
+            { upsert: true, new: true }
+        );
 
         return NextResponse.json({
             success: true,

@@ -1,98 +1,186 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { MessageSquare, Users, Phone, Video, Search, Filter, Terminal } from "lucide-react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
+import { connectToDatabase } from "@/lib/db";
+import ChatSession from "@/lib/models/chat";
 import { Card } from "@/components/ui/card";
+import { MessageSquare, Terminal } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { PageHeader } from "@/components/admin/page-header";
 
-export default function ChatsPage() {
-    const contacts = [
-        { name: "Asjid Imtiaz", status: "online", lastMsg: "Let's review the AI logic map.", time: "2m ago" },
-        { name: "Toqeer Shafique", status: "away", lastMsg: "The lead score logic is updated.", time: "1h ago" },
-        { name: "Support Hub", status: "online", lastMsg: "New inquiry from TechCorp.", time: "5h ago" },
-    ];
+type SearchParams = Promise<{ session?: string }>;
+
+async function getSessions() {
+    // Quick development mode check
+    if (!process.env.MONGODB_URI) {
+        return [];
+    }
+
+    const db = await connectToDatabase();
+    if (!db) {
+        return [];
+    }
+
+    const sessions = await ChatSession.find(
+        {},
+        {
+            sessionId: 1,
+            mode: 1,
+            leadScore: 1,
+            isConverted: 1,
+            isClosed: 1,
+            metadata: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            messages: { $slice: -1 },
+        }
+    )
+        .sort({ updatedAt: -1 })
+        .lean();
+
+    return sessions as any[];
+}
+
+async function getSessionById(sessionId: string) {
+    await connectToDatabase();
+    const session = await ChatSession.findOne({ sessionId }).lean();
+    return session as any | null;
+}
+
+export default async function ChatsPage({
+    searchParams,
+}: {
+    searchParams: SearchParams;
+}) {
+    const session = await getServerSession(authOptions);
+    if (!session) redirect("/admin/login");
+
+    const { session: selectedSessionId } = await searchParams;
+    const sessions = await getSessions();
+
+    const selected = selectedSessionId ? await getSessionById(selectedSessionId) : null;
 
     return (
         <div className="h-[calc(100vh-16rem)] flex flex-col gap-8">
-            <div className="shrink-0">
-                <h1 className="text-4xl font-black tracking-tight text-gray-900 uppercase">Unified <span className="text-electric">Chats</span></h1>
-                <p className="text-lg font-bold text-gray-400 mt-2 italic flex items-center gap-2">
-                    <Terminal size={18} />
-                    Secure Communication Protocol Active.
-                </p>
-            </div>
+            <PageHeader
+                label="Communication Suite"
+                title="Chats"
+                highlight="Sessions"
+                description="Real-time chat sessions"
+                descriptionHighlight=""
+                icon={<Terminal />}
+            />
 
             <div className="flex-1 flex gap-8 min-h-0">
-                {/* Sidebar: Contacts */}
-                <div className="w-80 flex flex-col gap-6 shrink-0">
-                    <div className="relative">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                        <input
-                            type="text"
-                            placeholder="Search conversations..."
-                            className="w-full h-12 pl-12 pr-4 bg-white border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-electric/10 transition-all font-bold text-sm"
-                        />
-                    </div>
-
-                    <Card className="flex-1 rounded-[2.5rem] border-gray-100 bg-white shadow-sm overflow-hidden flex flex-col p-6">
+                <div className="w-96 flex flex-col gap-6 shrink-0 min-h-0">
+                    <Card className="flex-1 rounded-[2.5rem] border-gray-100 bg-white shadow-sm overflow-hidden flex flex-col p-6 min-h-0">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="font-bold text-sm uppercase tracking-widest text-gray-400 px-2">Recent</h3>
-                            <Filter size={14} className="text-gray-400 cursor-pointer hover:text-electric" />
+                            <h3 className="font-bold text-sm uppercase tracking-widest text-gray-400 px-2">Sessions</h3>
+                            <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">
+                                {sessions.length} total
+                            </div>
                         </div>
+
                         <div className="space-y-2 overflow-y-auto flex-1 custom-scrollbar">
-                            {contacts.map((contact, i) => (
-                                <div key={i} className="flex items-center gap-4 p-4 rounded-3xl hover:bg-gray-50 transition-all cursor-pointer group">
-                                    <div className="relative">
-                                        <div className="w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400 text-lg font-black uppercase">
-                                            {contact.name.charAt(0)}
-                                        </div>
-                                        {contact.status === "online" && (
-                                            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full" />
+                            {sessions.map((s) => {
+                                const last = Array.isArray(s.messages) && s.messages.length > 0 ? s.messages[0] : null;
+                                const active = selectedSessionId === s.sessionId;
+                                const title = s.metadata?.contactInfo?.email || s.metadata?.contactInfo?.name || s.sessionId;
+
+                                return (
+                                    <Link
+                                        key={s.sessionId}
+                                        href={{ query: { session: s.sessionId } }}
+                                        className={cn(
+                                            "block p-4 rounded-3xl transition-all border",
+                                            active
+                                                ? "bg-electric/5 border-electric/20 shadow-sm"
+                                                : "bg-white border-transparent hover:bg-gray-50 hover:border-gray-100"
                                         )}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex justify-between items-center mb-1">
-                                            <span className="font-bold text-sm text-gray-900">{contact.name}</span>
-                                            <span className="text-[9px] font-bold text-gray-400 uppercase">{contact.time}</span>
+                                    >
+                                        <div className="flex justify-between items-start gap-4">
+                                            <div className="min-w-0">
+                                                <div className="font-black text-sm text-gray-900 truncate">{title}</div>
+                                                <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 mt-1">
+                                                    {s.mode} • score {s.leadScore}
+                                                </div>
+                                                <div className="text-xs text-muted-foreground/70 font-medium truncate mt-2">
+                                                    {last ? `${last.role}: ${last.content}` : "No messages yet"}
+                                                </div>
+                                            </div>
+                                            <div className="text-[9px] font-bold text-gray-400 uppercase shrink-0">
+                                                {s.updatedAt ? new Date(s.updatedAt).toLocaleDateString() : ""}
+                                            </div>
                                         </div>
-                                        <p className="text-xs text-gray-400 font-medium truncate italic">"{contact.lastMsg}"</p>
-                                    </div>
+                                    </Link>
+                                );
+                            })}
+
+                            {sessions.length === 0 && (
+                                <div className="text-center py-16 text-muted-foreground/60">
+                                    <div className="text-xs font-black uppercase tracking-widest">No chat sessions</div>
+                                    <div className="text-xs font-medium mt-2">Start one from the public chatbot to see it here.</div>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </Card>
                 </div>
 
-                {/* Chat Area */}
-                <Card className="flex-1 rounded-[3rem] border-gray-100 bg-white shadow-sm overflow-hidden flex flex-col relative group">
+                <Card className="flex-1 rounded-[3rem] border-gray-100 bg-white shadow-sm overflow-hidden flex flex-col relative min-h-0">
                     <div className="absolute inset-0 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]" />
 
-                    <div className="p-8 border-b border-gray-50 flex items-center justify-between relative z-10 bg-white/50 backdrop-blur-md">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-gray-900 flex items-center justify-center text-white font-black uppercase">A</div>
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-900 leading-none">Asjid Imtiaz</h3>
-                                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mt-1">Active Now</p>
+                    {!selected ? (
+                        <div className="flex-1 p-12 flex flex-col items-center justify-center text-center opacity-60 relative z-10">
+                            <div className="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center text-gray-300 mb-8 border border-white">
+                                <MessageSquare size={40} />
+                            </div>
+                            <h3 className="text-2xl font-black text-gray-400 uppercase tracking-tight">Select a <span className="text-electric">Session</span></h3>
+                            <p className="max-w-xs text-gray-400 font-bold mt-4 italic">Pick a session from the left to view the message timeline.</p>
+                        </div>
+                    ) : (
+                        <div className="flex-1 flex flex-col min-h-0 relative z-10">
+                            <div className="p-8 border-b border-gray-50 bg-white/50 backdrop-blur-md">
+                                <div className="flex items-center justify-between gap-6">
+                                    <div className="min-w-0">
+                                        <div className="text-lg font-black text-gray-900 truncate">{selected.sessionId}</div>
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 mt-1">
+                                            {selected.mode} • score {selected.leadScore} • {selected.isConverted ? "converted" : "not converted"}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto p-8 space-y-4">
+                                {(selected.messages || []).map((m: any, idx: number) => (
+                                    <div
+                                        key={idx}
+                                        className={cn(
+                                            "max-w-3xl rounded-2xl border p-4",
+                                            m.role === "user"
+                                                ? "ml-auto bg-gray-50 border-gray-100"
+                                                : m.role === "assistant"
+                                                    ? "mr-auto bg-electric/5 border-electric/10"
+                                                    : "mx-auto bg-white border-gray-100"
+                                        )}
+                                    >
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">
+                                            {m.role} {m.timestamp ? `• ${new Date(m.timestamp).toLocaleString()}` : ""}
+                                        </div>
+                                        <div className="text-sm font-medium text-gray-900 mt-2 whitespace-pre-wrap">
+                                            {m.content}
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {(selected.messages || []).length === 0 && (
+                                    <div className="text-center py-16 text-muted-foreground/60">
+                                        <div className="text-xs font-black uppercase tracking-widest">No messages</div>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <button className="w-12 h-12 rounded-xl border border-gray-100 flex items-center justify-center text-gray-400 hover:text-electric transition-colors"><Phone size={20} /></button>
-                            <button className="w-12 h-12 rounded-xl border border-gray-100 flex items-center justify-center text-gray-400 hover:text-electric transition-colors"><Video size={20} /></button>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 p-12 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
-                        <div className="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center text-gray-300 mb-8 border border-white">
-                            <MessageSquare size={40} />
-                        </div>
-                        <h3 className="text-2xl font-black text-gray-400 uppercase tracking-tight">Select a Secure <span className="text-electric">Channel</span></h3>
-                        <p className="max-w-xs text-gray-400 font-bold mt-4 italic">Encrypted communication channel with team members and leads.</p>
-                    </div>
-
-                    <div className="p-8 relative z-10 bg-white/50 backdrop-blur-md">
-                        <div className="h-16 bg-gray-50 border border-gray-100 rounded-2xl px-8 flex items-center">
-                            <p className="text-gray-300 font-black text-xs uppercase tracking-widest italic">Encrypted Transmission Blocked in Preview...</p>
-                        </div>
-                    </div>
+                    )}
                 </Card>
             </div>
         </div>

@@ -12,6 +12,7 @@ export const QuoteSchema = z.object({
   message: z.string().min(10, "Please provide some project details (min 10 chars)"),
   techPreference: z.string().optional(),
   referral: z.string().optional(),
+  locale: z.string().optional().default("en"),
   honeypot: z.string().max(0, "Bot detected").optional(),
 });
 

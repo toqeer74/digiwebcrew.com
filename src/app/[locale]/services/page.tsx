@@ -1,9 +1,8 @@
+import { Container } from "@/components/layout/layout-primitives";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import ServiceDomainsOverview from "@/components/sections/service-domains-overview";
 import { getDictionary } from "@/lib/get-dictionary";
-import ServicesHubClient from "@/components/sections/services-hub-client";
-import { Container } from "@/components/layout/layout-primitives";
-import { AIExecutiveSummary } from "@/components/ui/ai-summary";
 
 export default async function ServicesHub({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -38,15 +37,10 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
         }}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 pt-60 pb-20">
         <Container>
-          <AIExecutiveSummary
-            title="Service Architecture & Intelligence"
-            summary="Our service ecosystem is engineered for technical authority. We bridge the gap between human-centric UI and machine-centric semantic structures, ensuring your project is visible to both search crawlers and AI answer engines. Every module is optimized for performance, security, and information gain."
-            techStack={["Microservices", "Serverless Architecture", "Semantic SEO", "RAG Systems", "Core Web Vitals"]}
-          />
+          <ServiceDomainsOverview dict={dict} locale={locale} />
         </Container>
-        <ServicesHubClient dict={dict} locale={locale} />
       </main>
       <Footer dict={dict} locale={locale} />
     </div>

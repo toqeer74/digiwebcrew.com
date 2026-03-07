@@ -1,19 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bell, Check, Clock, ShieldAlert, Zap, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { getNotifications, markNotificationAsRead } from "@/lib/actions/notification-actions";
 
-const notifications = [
-    { id: 1, type: "SYSTEM", title: "Lead Protocol Synced", body: "SDAF Inquiry intelligence mapped successfully.", time: new Date(), read: false },
-    { id: 2, type: "ALERT", title: "High Priority Lead", body: "New HOT lead detected in Intake Pipeline.", time: new Date(Date.now() - 3600000), read: false },
-    { id: 3, type: "INFO", title: "AI Assistant Online", body: "Neural logic maps updated for Q1 protocol.", time: new Date(Date.now() - 7200000), read: true },
-];
+interface Notification {
+  id: string;
+  type: string;
+  title: string;
+  body: string;
+  time: Date;
+  read: boolean;
+}
 
 export function NotificationPopover() {
     const [isOpen, setIsOpen] = useState(false);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+
+    useEffect(() => {
+        getNotifications().then(setNotifications);
+    }, []);
+
+    const handleMarkAsRead = async (id: string) => {
+        await markNotificationAsRead(id);
+        setNotifications(prev =>
+            prev.map(n => n.id === id ? { ...n, read: true } : n)
+        );
+    };
+
+    const unreadCount = notifications.filter(n => !n.read).length;
 
     return (
         <div className="relative">
@@ -22,9 +40,9 @@ export function NotificationPopover() {
                 className="w-12 h-12 rounded-full bg-white border border-border flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-primary transition-all relative group shadow-sm z-50"
             >
                 <Bell size={22} className={cn("transition-transform", isOpen && "rotate-12")} />
-                {notifications.filter(n => !n.read).length > 0 && (
+                {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 bg-rose-500 text-white text-[10px] font-black rounded-full border-2 border-white shadow-sm flex items-center justify-center animate-in zoom-in duration-300">
-                        {notifications.filter(n => !n.read).length}
+                        {unreadCount}
                     </span>
                 )}
             </button>
@@ -45,7 +63,7 @@ export function NotificationPopover() {
                             <div className="p-8 border-b border-border bg-gray-50/50">
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900">Intelligence Feed</h3>
-                                    <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">3 NEW</span>
+                                    <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">{unreadCount} NEW</span>
                                 </div>
                             </div>
 
@@ -53,6 +71,7 @@ export function NotificationPopover() {
                                 {notifications.map((notif) => (
                                     <div
                                         key={notif.id}
+                                        onClick={() => !notif.read && handleMarkAsRead(notif.id)}
                                         className={cn(
                                             "p-6 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer group",
                                             !notif.read && "bg-blue-50/30"

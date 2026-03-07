@@ -7,7 +7,15 @@ import { Button } from "@/components/ui/button";
 
 async function getTasks() {
   try {
-    await connectToDatabase();
+    // Quick development mode check
+    if (!process.env.MONGODB_URI) {
+      return [];
+    }
+
+    const db = await connectToDatabase();
+    if (!db) {
+      return [];
+    }
 
     // Find leads and safely process tasks
     const leads = await Lead.find({ "tasks.done": false }).lean();
@@ -108,16 +116,19 @@ export default async function TasksPage() {
   }
 
   return (
-    <div className="p-12 space-y-12 pb-20">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+    <div className="p-6 lg:p-8 space-y-12 pb-20">
+      <div className="flex flex-col gap-4">
         <div>
-          <h1 className="text-4xl font-black tracking-tight text-foreground">Operations Queue</h1>
-          <p className="text-sm font-bold text-muted-foreground/50 mt-2 uppercase tracking-widest">Manage and execute pending laboratory task protocols</p>
+          <p className="text-[10px] font-black text-muted-foreground/40 mb-1 uppercase tracking-[0.2em]">Operations Suite</p>
+          <h1 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">Tasks: <span className="text-raly-accent">Queue</span></h1>
+          <p className="text-sm text-muted-foreground/60 italic mt-1 font-medium">Manage pending <span className="text-raly-accent font-black\">task</span> protocols</p>
         </div>
-        <Button variant="outline" className="px-8 h-12 rounded-full border-border text-[10px] font-black uppercase tracking-widest hover:bg-secondary transition-all">
-          <CheckCircle2 size={16} className="mr-2" />
-          Clear Completed
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button className="h-9 px-5 rounded-xl bg-raly-accent text-white text-[9px] font-black uppercase tracking-widest shadow-lg shadow-raly-accent/20 hover:scale-105 transition-all">
+            <CheckCircle2 size={14} className="mr-2" />
+            Clear Completed
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6">

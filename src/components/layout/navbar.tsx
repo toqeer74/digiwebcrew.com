@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Search } from "lucide-react";
 import { FaGithub, FaTwitter, FaDiscord } from "react-icons/fa";
 import { cn } from "@/lib/utils";
-import { Container } from "./layout-primitives";
 import { DarkModeToggle } from "../dark-mode-toggle";
 
 interface NavbarProps {
@@ -39,7 +38,7 @@ export function Navbar({ dict, locale }: NavbarProps) {
 
   return (
     <header className="fixed top-6 left-0 right-0 z-50">
-      <Container className="flex justify-center">
+      <div className="container flex justify-center">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -53,8 +52,8 @@ export function Navbar({ dict, locale }: NavbarProps) {
             <Link href={`/${locale}`} className="flex items-center gap-3 group">
               <div className="w-10 h-10 bg-gradient-to-br from-gray-900 to-black rounded-full flex items-center justify-center border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.5)] group-hover:scale-105 transition-all duration-300 relative overflow-hidden">
                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="w-5 h-5 rounded-full border-[2px] border-electric/80 flex items-center justify-center shadow-[0_0_12px_rgba(59,130,246,0.4)]">
-                  <div className="w-2 h-2 rounded-full bg-electric shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
+                <div className="w-5 h-5 rounded-full border-[2px] border-raly-accent/90 flex items-center justify-center shadow-[0_0_12px_rgba(248,209,113,0.35)]">
+                  <div className="w-2 h-2 rounded-full bg-raly-accent shadow-[0_0_8px_rgba(248,209,113,0.55)]" />
                 </div>
               </div>
             </Link>
@@ -117,7 +116,7 @@ export function Navbar({ dict, locale }: NavbarProps) {
             </button>
           </div>
         </motion.div>
-      </Container>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

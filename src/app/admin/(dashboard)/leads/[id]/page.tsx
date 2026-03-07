@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { LeadDetailsClient } from "@/components/admin/lead-details-client";
 
 export default async function LeadDetailPage({
    params,
@@ -230,6 +231,14 @@ export default async function LeadDetailPage({
                </Card>
             </div>
          </div>
+
+         {/* Client-side CRM Features */}
+         <LeadDetailsClient 
+            leadId={id}
+            initialNotes={lead.notes || []}
+            initialTasks={tasks}
+            initialStatus={lead.status || "NEW"}
+         />
       </div>
    );
 }

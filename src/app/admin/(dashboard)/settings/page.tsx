@@ -7,6 +7,7 @@ import {
   ChevronRight, ExternalLink
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { PageHeader } from "@/components/admin/page-header";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -139,59 +140,11 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-midnight-950 dark:via-midnight-900 dark:to-midnight-950">
-      {/* Header section */}
-      <div className="bg-white dark:bg-midnight-900 border-b border-gray-200/50 dark:border-midnight-700/50">
-        <div className="p-8 pb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-electric via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl shadow-electric/30">
-                  <Sparkles className="text-white" size={28} />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white dark:border-midnight-900 flex items-center justify-center">
-                  <Check size={10} className="text-white" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">
-                  Command Center
-                </h1>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">
-                  System configuration & tracking infrastructure
-                </p>
-              </div>
-            </div>
-
-            {/* Tab Switcher */}
-            <div className="flex items-center gap-2 p-1.5 bg-gray-100 dark:bg-midnight-800 rounded-xl">
-              <button
-                onClick={() => setActiveTab('tracking')}
-                className={cn(
-                  "px-5 py-2.5 rounded-lg text-sm font-bold transition-all",
-                  activeTab === 'tracking'
-                    ? "bg-white dark:bg-midnight-700 text-gray-900 dark:text-white shadow-lg"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                )}
-              >
-                <BarChart3 size={16} className="inline mr-2" />
-                Tracking & Pixels
-              </button>
-              <button
-                onClick={() => setActiveTab('system')}
-                className={cn(
-                  "px-5 py-2.5 rounded-lg text-sm font-bold transition-all",
-                  activeTab === 'system'
-                    ? "bg-white dark:bg-midnight-700 text-gray-900 dark:text-white shadow-lg"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                )}
-              >
-                <Server size={16} className="inline mr-2" />
-                System Status
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        label="System"
+        title="Command Center"
+        description="System configuration & tracking infrastructure"
+      />
 
       <div className="p-8 pt-6">
         <AnimatePresence mode="wait">

@@ -13,10 +13,10 @@ interface CardProps {
 export function Card({ children, className, animate = true }: CardProps) {
   const cardClasses = cn(
     "relative w-full h-full transition-all duration-500",
-    "rounded-[2.5rem] overflow-hidden",
+    "rounded-3xl overflow-hidden",
     // Only apply default bg/border if not provided in className
-    !className?.includes("bg-") && "bg-white dark:bg-midnight-900 border border-border shadow-sm hover:shadow-xl",
-    "hover:-translate-y-2",
+    !className?.includes("bg-") && "bg-white dark:bg-midnight-900 border border-[rgba(229,231,235,0.5)] shadow-[0_10px_25px_-5px_rgba(2,77,148,0.05),0_8px_10px_-6px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_35px_-10px_rgba(2,77,148,0.10),0_10px_15px_-6px_rgba(0,0,0,0.05)]",
+    "hover:-translate-y-1",
     className
   );
 
@@ -46,7 +46,7 @@ export function CardHeader({ children, className }: { children: React.ReactNode;
 }
 
 export function CardTitle({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <h3 className={cn("text-xl font-bold tracking-tight text-white", className)}>{children}</h3>;
+  return <h3 className={cn("font-heading text-xl font-extrabold tracking-tight text-raly-primary", className)}>{children}</h3>;
 }
 
 export function CardDescription({ children, className }: { children: React.ReactNode; className?: string }) {

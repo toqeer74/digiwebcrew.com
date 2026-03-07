@@ -18,6 +18,12 @@ export interface ILead extends Document {
   leadScore: number;
   leadTier: "HOT" | "WARM" | "COLD";
   status: "NEW" | "CONTACTED" | "QUALIFIED" | "PROPOSAL" | "WON" | "LOST" | "SPAM";
+  notes: Array<{
+    content: string;
+    author: string;
+    type: "note" | "internal" | "follow-up";
+    createdAt: Date;
+  }>;
   events: Array<{
     type: string;
     at: Date;
@@ -27,6 +33,7 @@ export interface ILead extends Document {
     title: string;
     dueAt: Date;
     done: boolean;
+    priority?: "low" | "medium" | "high";
     createdAt: Date;
   }>;
   createdAt: Date;
@@ -56,6 +63,14 @@ const LeadSchema: Schema = new Schema(
       enum: ["NEW", "CONTACTED", "QUALIFIED", "PROPOSAL", "WON", "LOST", "SPAM"], 
       default: "NEW" 
     },
+    notes: [
+      {
+        content: { type: String, required: true },
+        author: { type: String, default: "Admin" },
+        type: { type: String, enum: ["note", "internal", "follow-up"], default: "note" },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     events: [
       {
         type: { type: String },
@@ -68,6 +83,7 @@ const LeadSchema: Schema = new Schema(
         title: { type: String },
         dueAt: { type: Date },
         done: { type: Boolean, default: false },
+        priority: { type: String, enum: ["low", "medium", "high"], default: "medium" },
         createdAt: { type: Date, default: Date.now },
       },
     ],
