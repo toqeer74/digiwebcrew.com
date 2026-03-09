@@ -6,6 +6,14 @@ import { ChatSession } from "@/lib/models/chat";
 import { ContentDraft } from "@/lib/models/content-draft";
 import { Setting } from "@/lib/models/setting";
 
+const EMPTY_PIPELINE: Record<"NEW" | "CONTACTED" | "QUALIFIED" | "PROPOSAL" | "WON", number> = {
+  NEW: 0,
+  CONTACTED: 0,
+  QUALIFIED: 0,
+  PROPOSAL: 0,
+  WON: 0,
+};
+
 export async function getDashboardStats() {
   try {
     // Quick development mode check
@@ -14,6 +22,7 @@ export async function getDashboardStats() {
         leadCount: 0,
         chatCount: 0,
         draftCount: 0,
+        statusPipeline: { ...EMPTY_PIPELINE },
         brandingConfig: { siteName: "Software Lab" },
         recentLeads: [],
         recentEvents: [
@@ -30,6 +39,7 @@ export async function getDashboardStats() {
         leadCount: 0,
         chatCount: 0,
         draftCount: 0,
+        statusPipeline: { ...EMPTY_PIPELINE },
         brandingConfig: { siteName: "Software Lab" },
         recentLeads: [],
         recentEvents: [
@@ -38,11 +48,12 @@ export async function getDashboardStats() {
       };
     }
 
-    const [leadCount, chatCount, draftCount, branding] = await Promise.all([
+    const [leadCount, chatCount, draftCount, branding, pipeline] = await Promise.all([
       Lead.countDocuments(),
       ChatSession.countDocuments(),
       ContentDraft.countDocuments(),
       Setting.findOne({ key: "admin.branding" }).lean(),
+      Lead.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
     ]);
 
     const recentLeads = await Lead.find()
@@ -84,11 +95,18 @@ export async function getDashboardStats() {
       .slice(0, 4);
 
     const brandingConfig = (branding?.value as any) || {};
+    const statusPipeline = { ...EMPTY_PIPELINE };
+    for (const entry of pipeline as Array<{ _id?: string; count?: number }>) {
+      if (entry?._id && entry._id in statusPipeline) {
+        statusPipeline[entry._id as keyof typeof statusPipeline] = entry.count || 0;
+      }
+    }
 
     return {
       leadCount,
       chatCount,
       draftCount,
+      statusPipeline,
       brandingConfig,
       recentLeads: recentLeads.map((l: any) => ({
         name: l.fullName || "Unknown",
@@ -103,6 +121,7 @@ export async function getDashboardStats() {
       leadCount: 0,
       chatCount: 0,
       draftCount: 0,
+      statusPipeline: { ...EMPTY_PIPELINE },
       brandingConfig: {},
       recentLeads: [],
       recentEvents: [],
