@@ -1,6 +1,4 @@
 import { Container, Section } from "@/components/layout/layout-primitives";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -16,7 +14,7 @@ import { localePath } from "@/lib/locale-path";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
   const { slug, locale } = await params;
   const post = await getBlogPost(slug);
-  
+
   if (!post) return {};
 
   return {
@@ -53,62 +51,58 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   return (
-    <div className="flex flex-col min-h-screen" dir={isRtl ? 'rtl' : 'ltr'}>
-      <Navbar dict={dict} locale={locale} />
-      <main className="flex-1 pt-32">
-        <article>
-            <Container className="max-w-4xl">
-                {/* Header */}
-                <header className="mb-12">
-                    <Link 
-                        href={localePath(locale, "/blog")} 
-                        className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8"
-                    >
-                        <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />
-                        {dict.blog.back}
-                    </Link>
-                    
-                    <div className="flex items-center gap-3 mb-6">
-                        <span className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
-                            {post.category}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                            <Clock size={12} />
-                            5 {dict.common.readTime}
-                        </div>
-                    </div>
+    <main className="flex-1 pt-32">
+      <article>
+        <Container className="max-w-4xl">
+          {/* Header */}
+          <header className="mb-12">
+            <Link
+              href={localePath(locale, "/blog")}
+              className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8"
+            >
+              <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />
+              {dict.blog.back}
+            </Link>
 
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-8">
-                        {post.title}
-                    </h1>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                {post.category}
+              </span>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+                <Clock size={12} />
+                5 {dict.common.readTime}
+              </div>
+            </div>
 
-                    <div className="flex items-center gap-6 pb-12 border-b">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-primary">
-                                <User size={20} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-bold leading-none mb-1">{post.author}</p>
-                                <p className="text-xs text-muted-foreground">Lab Engineer</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                            <Calendar size={14} />
-                            {format(new Date(post.date), "MMMM dd, yyyy")}
-                        </div>
-                    </div>
-                </header>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-8">
+              {post.title}
+            </h1>
 
-                {/* Content */}
-                <div className="prose dark:prose-invert prose-zinc max-w-none pb-32">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {post.content}
-                    </ReactMarkdown>
+            <div className="flex items-center gap-6 pb-12 border-b">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-primary">
+                  <User size={20} />
                 </div>
-            </Container>
-        </article>
-      </main>
-      <Footer dict={dict} locale={locale} />
-    </div>
+                <div>
+                  <p className="text-sm font-bold leading-none mb-1">{post.author}</p>
+                  <p className="text-xs text-muted-foreground">Lab Engineer</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Calendar size={14} />
+                {format(new Date(post.date), "MMMM dd, yyyy")}
+              </div>
+            </div>
+          </header>
+
+          {/* Content */}
+          <div className="prose dark:prose-invert prose-zinc max-w-none pb-32">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
+          </div>
+        </Container>
+      </article>
+    </main>
   );
 }

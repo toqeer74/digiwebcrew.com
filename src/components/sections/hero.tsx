@@ -12,12 +12,12 @@ interface HeroProps {
 }
 
 const trustedCompanies = [
-  "Company A",
-  "Company B",
-  "Company C",
-  "Company D",
-  "Startup X",
-  "Enterprise Y",
+  "TechFlow",
+  "Global Legal Partners",
+  "Apex Clinics",
+  "Elevate SaaS",
+  "ProHome Services",
+  "Nexus Consulting",
 ];
 
 const heroHeadline = [
@@ -50,7 +50,7 @@ const headlineLine = {
 
 export function Hero({ dict, locale }: HeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] pt-24 pb-20 dark:bg-[#0A0A0F]">
+    <section className="relative min-h-screen w-full overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] pt-20 pb-12 dark:bg-[#0A0A0F]">
       {/* Gradient mesh orbs background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="hidden dark:block absolute top-[-10%] left-[5%] h-[600px] w-[600px] rounded-full bg-[rgba(var(--site-primary-rgb),0.12)] blur-[130px]" />
@@ -59,7 +59,7 @@ export function Hero({ dict, locale }: HeroProps) {
       </div>
 
       <Container className="relative z-10">
-        <div className="flex flex-col items-center justify-center text-center min-h-[80vh]">
+        <div className="flex flex-col items-center justify-center text-center min-h-[70vh]">
           {/* Main Headline */}
           <motion.h1
             variants={headlineContainer}
@@ -83,7 +83,7 @@ export function Hero({ dict, locale }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mx-auto mb-12 max-w-lg text-[0.9rem] leading-relaxed text-slate-600 dark:text-[#94A3B8] sm:text-[0.95rem] md:text-base"
+            className="mx-auto mb-10 max-w-lg text-[0.9rem] leading-relaxed text-slate-600 dark:text-[#94A3B8] sm:text-[0.95rem] md:text-base"
           >
             We design and build custom digital systems that help growth-focused businesses launch faster, convert better, and automate lead capture with websites, funnels, SEO, and AI-powered workflows.
           </motion.p>
@@ -99,16 +99,21 @@ export function Hero({ dict, locale }: HeroProps) {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href={localePath(locale, "/book-consultation")}
-                className="bg-[var(--site-primary)] text-white px-8 py-3 rounded-lg shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] hover:bg-[var(--site-primary-hover)] font-body font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 whitespace-nowrap dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]"
+                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-body font-bold text-white shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-all duration-300 hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]"
               >
-                Book Consultation
-                <ArrowRight size={18} />
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
               <Link
                 href={localePath(locale, "/quote")}
-                className="border border-slate-300 bg-[var(--site-primary)] px-8 py-3 font-body font-medium text-[var(--site-primary-dark-text)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-all duration-200 whitespace-nowrap hover:bg-[var(--site-primary-hover)] dark:border-[#1E1E2E] dark:text-[#F8F8FF] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]"
+                className="group relative inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-body font-bold text-slate-950 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-white dark:border-[#1E1E2E] dark:bg-[#13131E] dark:text-[#F8F8FF] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.06)] dark:hover:bg-[#1a1a2e]"
               >
-                Get Custom Project Scope
+                <span>Get Quote</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-200/50 ring-1 ring-slate-300/50 transition-transform duration-300 group-hover:translate-x-1 dark:bg-white/5 dark:ring-white/10">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
             </div>
 

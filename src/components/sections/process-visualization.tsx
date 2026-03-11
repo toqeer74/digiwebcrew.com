@@ -43,25 +43,22 @@ const sprintItems: Array<{
   label: string;
   status: "todo" | "doing" | "review" | "done";
 }> = [
-  { label: "Home hero", status: "done" },
-  { label: "Services mega menu", status: "doing" },
-  { label: "Pricing blocks", status: "review" },
-  { label: "Process timeline", status: "doing" },
-  { label: "Case studies grid", status: "todo" },
-  { label: "About story", status: "todo" },
-  { label: "Contact form", status: "review" },
-  { label: "Book consultation", status: "doing" },
-  { label: "SEO landing", status: "todo" },
-  { label: "AI chatbots", status: "todo" },
-  { label: "Performance pass", status: "review" },
-  { label: "Launch checklist", status: "todo" }
-];
+    { label: "Logic Mapping", status: "done" },
+    { label: "UI Prototypes", status: "done" },
+    { label: "API Architecture", status: "doing" },
+    { label: "Database Schema", status: "doing" },
+    { label: "Backend Dev", status: "doing" },
+    { label: "Frontend Logic", status: "review" },
+    { label: "QA Integration", status: "todo" },
+    { label: "Final Review", status: "review" },
+    { label: "Launch Polish", status: "todo" }
+  ];
 
 export function ProcessVisualization() {
   return (
-    <section className="py-24 bg-white dark:bg-[#0A0A0F]">
+    <section className="py-12 lg:py-16 bg-white dark:bg-[#0A0A0F]">
       <Container>
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -118,7 +115,7 @@ export function ProcessVisualization() {
               </div>
             </div>
 
-            <div className="absolute -bottom-10 right-0 w-[86%] max-w-[420px] rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_24px_70px_-52px_rgba(15,23,42,0.45)] backdrop-blur-lg sm:-bottom-12 sm:p-6 lg:-right-6 dark:border-[#123040] dark:bg-[#07131C]/72 dark:shadow-[0_28px_80px_-58px_rgba(0,0,0,0.9)]">
+            <div className="absolute -bottom-10 right-0 w-[86%] max-w-[420px] rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_32px_80px_-40px_rgba(15,23,42,0.5)] backdrop-blur-lg sm:-bottom-12 sm:p-6 lg:-right-6 dark:border-[#123040] dark:bg-[#07131C]/72 dark:shadow-[0_42px_100px_-50px_rgba(0,0,0,0.95)]">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-display font-extrabold text-slate-900 dark:text-[#F8FBFF]">
                   Sprint Board
@@ -127,13 +124,13 @@ export function ProcessVisualization() {
                   Live
                 </span>
               </div>
-              <div className="mt-4 grid grid-cols-4 gap-3">
+              <div className="mt-4 grid grid-cols-3 gap-3">
                 {sprintItems.map((item) => (
                   <div
                     key={item.label}
                     className={cn(
-                      "flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-2",
-                      "dark:border-[#123040] dark:bg-[#0C1822]"
+                      "flex h-10 items-center gap-2 rounded-xl border border-slate-100 bg-white px-2 shadow-sm",
+                      "dark:border-[#1A2E3C] dark:bg-[#0C1822] dark:shadow-none"
                     )}
                   >
                     <span
@@ -146,7 +143,7 @@ export function ProcessVisualization() {
                       )}
                       aria-hidden="true"
                     />
-                    <span className="min-w-0 truncate text-[11px] font-semibold text-slate-700 dark:text-[#CFE2F2]">
+                    <span className="min-w-0 text-[11px] font-semibold text-slate-700 dark:text-[#CFE2F2]">
                       {item.label}
                     </span>
                   </div>

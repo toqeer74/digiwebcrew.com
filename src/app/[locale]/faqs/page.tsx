@@ -1,7 +1,6 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
@@ -100,70 +99,78 @@ export default async function FAQsPage({
   const isRtl = locale === "ar" || locale === "ur";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0A0F]" dir={isRtl ? "rtl" : "ltr"}>
-      <Navbar dict={dict} locale={locale} />
-      <main className="flex-1 pt-32 pb-24">
-        <Container>
-          <div className="max-w-5xl mx-auto space-y-8">
-            <AnimatedSection className="text-center">
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
-                Frequently Asked Questions
-              </h1>
-              <p className="text-lg text-[#94A3B8] mb-6">
-                Answers to common questions about services, pricing, process, fit, and what it is like to work with Digital Web Crew.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                  Book Consultation
-                </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                  Get Custom Project Scope
-                </Link>
-              </div>
-            </AnimatedSection>
+    <main className="flex-1 pt-32 pb-24">
+      <Container>
+        <div className="max-w-5xl mx-auto space-y-8">
+          <AnimatedSection className="text-center">
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-lg text-[#94A3B8] mb-6">
+              Answers to common questions about services, pricing, process, fit, and what it is like to work with Digital Web Crew.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-8 py-4 transition-all duration-300 hover:bg-[#1a1a2e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+                <span>Get Quote</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
+          </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Clear Answers for Businesses Comparing the Right Next Step</h2>
-              <p className="text-[#94A3B8] mb-3">Choosing the right digital partner usually comes with a lot of questions.</p>
-              <p className="text-[#94A3B8] mb-3">
-                You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out. This page answers the most common questions businesses ask before starting a project with Digital Web Crew.
-              </p>
-              <p className="text-[#94A3B8]">
-                If you still need help after reviewing the answers below, the next best step is to book a consultation or submit a custom project scope.
-              </p>
-            </AnimatedSection>
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Clear Answers for Businesses Comparing the Right Next Step</h2>
+            <p className="text-[#94A3B8] mb-3">Choosing the right digital partner usually comes with a lot of questions.</p>
+            <p className="text-[#94A3B8] mb-3">
+              You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out. This page answers the most common questions businesses ask before starting a project with Digital Web Crew.
+            </p>
+            <p className="text-[#94A3B8]">
+              If you still need help after reviewing the answers below, the next best step is to book a consultation or submit a custom project scope.
+            </p>
+          </AnimatedSection>
 
-            {groups.map((group, groupIdx) => (
-              <AnimatedSection key={group.heading} delay={groupIdx * 0.03}>
-                <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">{group.heading}</h2>
-                <Accordion
-                  items={group.items.map(([title, content], itemIdx) => ({
-                    value: `${group.heading}-${itemIdx}`,
-                    title,
-                    content,
-                  }))}
-                />
-              </AnimatedSection>
-            ))}
-
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Still Have Questions About the Right Next Step?</h2>
-              <p className="text-[#94A3B8] mb-6">
-                If you need help deciding what fits your business, the next step is simple. Book a consultation or submit your project scope and move forward with more clarity.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                  Book Consultation
-                </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                  Get Custom Project Scope
-                </Link>
-              </div>
+          {groups.map((group, groupIdx) => (
+            <AnimatedSection key={group.heading} delay={groupIdx * 0.03}>
+              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">{group.heading}</h2>
+              <Accordion
+                items={group.items.map(([title, content], itemIdx) => ({
+                  value: `${group.heading}-${itemIdx}`,
+                  title,
+                  content,
+                }))}
+              />
             </AnimatedSection>
-          </div>
-        </Container>
-      </main>
-      <Footer dict={dict} locale={locale} />
-    </div>
+          ))}
+
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Still Have Questions About the Right Next Step?</h2>
+            <p className="text-[#94A3B8] mb-6">
+              If you need help deciding what fits your business, the next step is simple. Book a consultation or submit your project scope and move forward with more clarity.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold px-8 py-4 transition-all duration-300 hover:bg-white/5 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+                <span>Get Quote</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </Container>
+    </main>
   );
 }

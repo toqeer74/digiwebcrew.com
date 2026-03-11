@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import React from "react";
 
 interface PageHeaderProps {
@@ -34,7 +34,7 @@ export function PageHeader({
             {breadcrumb.map((item, idx) => (
               <span key={`${item.label}-${idx}`}>
                 {item.href ? <Link href={item.href} className="hover:text-slate-600">{item.label}</Link> : item.label}
-                {idx < breadcrumb.length - 1 ? " › " : ""}
+                {idx < breadcrumb.length - 1 ? " � " : ""}
               </span>
             ))}
           </div>

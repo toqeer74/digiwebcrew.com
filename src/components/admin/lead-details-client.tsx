@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -175,7 +175,7 @@ export function LeadDetailsClient({
                   <div className="flex-1">
                     <p className={`text-sm font-medium ${task.done ? "line-through text-slate-400" : "text-slate-900"}`}>{task.title}</p>
                     <p className="text-xs text-slate-500 mt-1">
-                      Due: {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : "-"} · 
+                      Due: {task.dueAt ? new Date(task.dueAt).toLocaleDateString() : "-"} � 
                       <span className={`ml-1 ${task.priority === "high" ? "text-red-700" : task.priority === "medium" ? "text-amber-700" : "text-slate-600"}`}>
                         {(task.priority || "medium").toUpperCase()}
                       </span>

@@ -31,10 +31,10 @@ const features = [
 
 export function FeaturesRow() {
   return (
-    <section className="border-b border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-24 dark:border-[#1E1E2E] dark:bg-[#0A0A0F]">
+    <section className="border-b border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-12 lg:py-16 dark:border-[#1E1E2E] dark:bg-[#0A0A0F]">
       <Container>
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--site-primary)]" />
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">

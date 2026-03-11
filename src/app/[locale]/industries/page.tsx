@@ -1,7 +1,6 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
@@ -137,125 +136,133 @@ export default async function IndustriesPage({
   const isRtl = locale === "ar" || locale === "ur";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0A0F]" dir={isRtl ? "rtl" : "ltr"}>
-      <Navbar dict={dict} locale={locale} />
-      <main className="flex-1 pt-32 pb-24">
-        <Container>
-          <div className="max-w-5xl mx-auto space-y-8">
-            <AnimatedSection className="text-center">
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
-                Built for Industries Where Trust, Lead Quality, and Digital Performance Matter
-              </h1>
-              <p className="text-lg text-[#94A3B8] mb-6">
-                We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling across industries where digital performance has a direct impact on results.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                  Book Consultation
-                </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                  Get Custom Project Scope
-                </Link>
-              </div>
-            </AnimatedSection>
+    <main className="flex-1 pt-32 pb-24">
+      <Container>
+        <div className="max-w-5xl mx-auto space-y-8">
+          <AnimatedSection className="text-center">
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
+              Built for Industries Where Trust, Lead Quality, and Digital Performance Matter
+            </h1>
+            <p className="text-lg text-[#94A3B8] mb-6">
+              We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling across industries where digital performance has a direct impact on results.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-8 py-4 transition-all duration-300 hover:bg-[#1a1a2e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+                <span>Get Quote</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
+          </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A Better Fit for Businesses That Need More Than a Basic Online Presence</h2>
-              <p className="text-[#94A3B8] mb-3">
-                Not every industry needs the same kind of digital system.
-              </p>
-              <p className="text-[#94A3B8] mb-3">
-                Some businesses need stronger trust at first impression. Others need better local visibility, cleaner booking flow, more focused service pages, or better handling of incoming leads. Digital Web Crew works best with industries where these things have a clear effect on growth.
-              </p>
-              <p className="text-[#94A3B8]">
-                That means businesses where the website is not just there to exist online. It needs to support credibility, attract the right traffic, guide people toward action, and make the next step easier.
-              </p>
-            </AnimatedSection>
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A Better Fit for Businesses That Need More Than a Basic Online Presence</h2>
+            <p className="text-[#94A3B8] mb-3">
+              Not every industry needs the same kind of digital system.
+            </p>
+            <p className="text-[#94A3B8] mb-3">
+              Some businesses need stronger trust at first impression. Others need better local visibility, cleaner booking flow, more focused service pages, or better handling of incoming leads. Digital Web Crew works best with industries where these things have a clear effect on growth.
+            </p>
+            <p className="text-[#94A3B8]">
+              That means businesses where the website is not just there to exist online. It needs to support credibility, attract the right traffic, guide people toward action, and make the next step easier.
+            </p>
+          </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Why Industry Fit Changes the Right Solution</h2>
-              <p className="text-[#94A3B8] mb-3">
-                A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company.
-              </p>
-              <p className="text-[#94A3B8]">
-                The right website, landing page, SEO, or automation setup depends on how the business sells, how customers search, what creates trust, and what action matters most. That is why the work should be shaped around the business model and the decision-making path behind it. Digital Web Crew focuses on industries where stronger digital systems can make a real difference in inquiries, bookings, consultations, and long-term growth.
-              </p>
-            </AnimatedSection>
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Why Industry Fit Changes the Right Solution</h2>
+            <p className="text-[#94A3B8] mb-3">
+              A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company.
+            </p>
+            <p className="text-[#94A3B8]">
+              The right website, landing page, SEO, or automation setup depends on how the business sells, how customers search, what creates trust, and what action matters most. That is why the work should be shaped around the business model and the decision-making path behind it. Digital Web Crew focuses on industries where stronger digital systems can make a real difference in inquiries, bookings, consultations, and long-term growth.
+            </p>
+          </AnimatedSection>
 
-            {industrySections.map((section, idx) => (
-              <AnimatedSection key={section.heading} delay={idx * 0.04} className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">{section.heading}</h2>
-                <p className="text-[#94A3B8] mb-4">{section.body}</p>
-                <p className="text-[#94A3B8] mb-3">Digital Web Crew helps these businesses with:</p>
-                <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-                  {section.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-                <p className="text-[#94A3B8]">{section.closing}</p>
-              </AnimatedSection>
-            ))}
-
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Other Strong-Fit Businesses</h2>
-              <p className="text-[#94A3B8] mb-3">
-                While the industries above are our strongest fit, we can also work with other businesses that depend on trust, qualified leads, a better digital presence, and more structured systems.
-              </p>
-              <p className="text-[#94A3B8] mb-3">The best fit usually comes down to this:</p>
+          {industrySections.map((section, idx) => (
+            <AnimatedSection key={section.heading} delay={idx * 0.04} className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">{section.heading}</h2>
+              <p className="text-[#94A3B8] mb-4">{section.body}</p>
+              <p className="text-[#94A3B8] mb-3">Digital Web Crew helps these businesses with:</p>
               <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-                <li>the business values quality and clarity</li>
-                <li>the website or digital setup plays a real role in growth</li>
-                <li>there is a serious business need behind the project</li>
-                <li>the scope and budget support custom work</li>
+                {section.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
               </ul>
-              <p className="text-[#94A3B8]">
-                If your business depends on trust, visibility, inquiries, or structured lead flow, there is a good chance we can help.
-              </p>
+              <p className="text-[#94A3B8]">{section.closing}</p>
             </AnimatedSection>
+          ))}
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Different Industries Need Different Service Mixes</h2>
-              <p className="text-[#94A3B8] mb-3">
-                Some businesses need a full website rebuild. Others need landing pages, SEO support, or a better lead handling setup. The right combination depends on the business model, the customer journey, and where the biggest gaps are today.
-              </p>
-              <p className="text-[#94A3B8] mb-3">
-                That is why Digital Web Crew does not force every client into the same service path. We help define the right mix based on what will actually support the business best.
-              </p>
-              <p className="text-[#94A3B8] mb-3">This may include:</p>
-              <ul className="list-disc list-inside space-y-2 text-[#94A3B8]">
-                <li>custom website development</li>
-                <li>conversion funnels and landing pages</li>
-                <li>SEO and growth support</li>
-                <li>chatbot and automation systems</li>
-                <li>ongoing support and improvement work</li>
-              </ul>
-            </AnimatedSection>
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Other Strong-Fit Businesses</h2>
+            <p className="text-[#94A3B8] mb-3">
+              While the industries above are our strongest fit, we can also work with other businesses that depend on trust, qualified leads, a better digital presence, and more structured systems.
+            </p>
+            <p className="text-[#94A3B8] mb-3">The best fit usually comes down to this:</p>
+            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
+              <li>the business values quality and clarity</li>
+              <li>the website or digital setup plays a real role in growth</li>
+              <li>there is a serious business need behind the project</li>
+              <li>the scope and budget support custom work</li>
+            </ul>
+            <p className="text-[#94A3B8]">
+              If your business depends on trust, visibility, inquiries, or structured lead flow, there is a good chance we can help.
+            </p>
+          </AnimatedSection>
 
-            <AnimatedSection>
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About Industry Fit</h2>
-              <Accordion items={faqItems} />
-            </AnimatedSection>
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Different Industries Need Different Service Mixes</h2>
+            <p className="text-[#94A3B8] mb-3">
+              Some businesses need a full website rebuild. Others need landing pages, SEO support, or a better lead handling setup. The right combination depends on the business model, the customer journey, and where the biggest gaps are today.
+            </p>
+            <p className="text-[#94A3B8] mb-3">
+              That is why Digital Web Crew does not force every client into the same service path. We help define the right mix based on what will actually support the business best.
+            </p>
+            <p className="text-[#94A3B8] mb-3">This may include:</p>
+            <ul className="list-disc list-inside space-y-2 text-[#94A3B8]">
+              <li>custom website development</li>
+              <li>conversion funnels and landing pages</li>
+              <li>SEO and growth support</li>
+              <li>chatbot and automation systems</li>
+              <li>ongoing support and improvement work</li>
+            </ul>
+          </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">
-                Need a Digital System Built Around Your Industry and Business Goals?
-              </h2>
-              <p className="text-[#94A3B8] mb-6">
-                If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope. Book a consultation or submit your project details to get started.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                  Book Consultation
-                </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                  Get Custom Project Scope
-                </Link>
-              </div>
-            </AnimatedSection>
-          </div>
-        </Container>
-      </main>
-      <Footer dict={dict} locale={locale} />
-    </div>
+          <AnimatedSection>
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About Industry Fit</h2>
+            <Accordion items={faqItems} />
+          </AnimatedSection>
+
+          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">
+              Need a Digital System Built Around Your Industry and Business Goals?
+            </h2>
+            <p className="text-[#94A3B8] mb-6">
+              If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope. Book a consultation or submit your project details to get started.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold px-8 py-4 transition-all duration-300 hover:bg-white/5 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+                <span>Get Quote</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </Container>
+    </main>
   );
 }

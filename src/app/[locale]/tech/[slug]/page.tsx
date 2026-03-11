@@ -1,14 +1,12 @@
 import { techLabs } from "@/lib/services-data";
 import { TechTemplate } from "@/components/sections/tech-template";
 import { getDictionary } from "@/lib/get-dictionary";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { notFound } from "next/navigation";
 
-export default async function TechPage({ 
-  params 
-}: { 
-  params: Promise<{ locale: string; slug: string }> 
+export default async function TechPage({
+  params
+}: {
+  params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params;
   const dict = await getDictionary(locale);
@@ -18,15 +16,11 @@ export default async function TechPage({
   if (!tech) notFound();
 
   return (
-    <div className="flex flex-col min-h-screen" dir={isRtl ? 'rtl' : 'ltr'}>
-      <Navbar dict={dict} locale={locale} />
-      <TechTemplate 
-        tech={tech} 
-        dict={dict} 
-        locale={locale} 
-      />
-      <Footer dict={dict} locale={locale} />
-    </div>
+    <TechTemplate
+      tech={tech}
+      dict={dict}
+      locale={locale}
+    />
   );
 }
 

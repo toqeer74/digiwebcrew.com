@@ -6,6 +6,8 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { MotionProvider } from "@/components/MotionProvider";
 import { PageTransition } from "@/components/ui/page-transition";
 import { ChatbotUI } from "@/components/chatbot/chatbot-ui";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import { ConsentBanner } from "@/components/ui/consent-banner";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
@@ -77,6 +79,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const dict = await getDictionary(locale);
   const isRtl = locale === 'ar' || locale === 'ur';
   const branding = await getPublicBrandingConfig();
   const brandingVars = deriveBrandingVars(branding.primaryColor);
@@ -113,8 +116,9 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="bg-background text-foreground font-sans font-medium antialiased transition-colors duration-300">
+      <body className="bg-background text-foreground font-sans font-medium antialiased transition-colors duration-300 pt-16">
         <ThemeProvider>
+          <Navbar dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
           <MotionProvider>
             <PageTransition>
               <Suspense fallback={null}>
@@ -123,6 +127,7 @@ export default async function RootLayout({
             </PageTransition>
             <ChatbotUI />
           </MotionProvider>
+          <Footer dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
         </ThemeProvider>
         <ConsentBanner />
       </body>

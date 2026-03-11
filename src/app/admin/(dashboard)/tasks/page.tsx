@@ -1,4 +1,4 @@
-﻿import { connectToDatabase } from "@/lib/db";
+import { connectToDatabase } from "@/lib/db";
 import { Lead } from "@/lib/models/lead";
 import { TasksClient } from "@/components/admin/tasks-client";
 import { PageHeader } from "@/components/admin/page-header";

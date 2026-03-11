@@ -13,9 +13,11 @@ import { AnimatePresence, motion } from "framer-motion";
 interface NavbarProps {
   dict: any;
   locale: string;
+  siteName?: string;
+  logoDataUrl?: string;
 }
 
-export function Navbar({ locale }: NavbarProps) {
+export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
@@ -71,13 +73,17 @@ export function Navbar({ locale }: NavbarProps) {
   const mobileServiceItems = megaGroups.flatMap((g) => g.items);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#0A0A0F]/80 backdrop-blur-md border-b border-[#1E1E2E] relative">
-      <div className="h-full px-6 md:px-12 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#0A0A0F]/80 backdrop-blur-md border-b border-[#1E1E2E]">
+      <div className="container mx-auto h-full px-6 md:px-8 flex items-center justify-between">
         <Link href={localePath(locale, "/")} className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-violet-400 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">D</span>
-          </div>
-          <span className="text-[#F8F8FF] font-display font-bold hidden sm:inline">Digital Web Crew</span>
+          {logoDataUrl ? (
+            <img src={logoDataUrl} alt={siteName || "Logo"} className="h-8 w-auto object-contain" />
+          ) : (
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--site-primary)] to-[var(--site-primary-soft)] flex items-center justify-center">
+              <span className="text-white font-bold text-sm">{siteName ? siteName.charAt(0) : "D"}</span>
+            </div>
+          )}
+          <span className="text-[#F8F8FF] font-display font-bold hidden sm:inline">{siteName || "Digital Web Crew"}</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6">
@@ -121,7 +127,7 @@ export function Navbar({ locale }: NavbarProps) {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <button 
+          <button
             onClick={toggleTheme}
             className="p-2 rounded-md border border-[#1E1E2E] text-[#94A3B8] hover:text-[#F8F8FF] hover:bg-[#13131E] transition-colors"
             aria-label="Toggle theme"
@@ -131,7 +137,7 @@ export function Navbar({ locale }: NavbarProps) {
           <a href="#" className="text-[#94A3B8] hover:text-[#F8F8FF]"><FaLinkedin size={14} /></a>
           <a href="#" className="text-[#94A3B8] hover:text-[#F8F8FF]"><FaXTwitter size={14} /></a>
           <a href="#" className="text-[#94A3B8] hover:text-[#F8F8FF]"><FaGithub size={14} /></a>
-          <Link href={localePath(locale, "/book-consultation")} className="px-4 py-2 rounded-md bg-[#6366F1] text-white text-sm font-semibold hover:bg-[#6366F1]/90">
+          <Link href={localePath(locale, "/book-consultation")} className="px-4 py-2 rounded-full bg-[#6366F1] text-white text-sm font-semibold hover:bg-[#6366F1]/90 shadow-[0_10px_20px_-10px_rgba(99,102,241,0.4)] transition-all">
             Book Consultation
           </Link>
         </div>
@@ -205,47 +211,49 @@ export function Navbar({ locale }: NavbarProps) {
         )}
       </AnimatePresence>
 
-      {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 border-t border-[#1E1E2E] bg-[#0F0F18] px-6 py-6 overflow-y-auto">
-          <div className="space-y-2">
-            {navLinks.map((link) => (
-              <Link key={link.label} href={link.href} className="block py-3 text-base text-[#94A3B8] hover:text-[#F8F8FF]" onClick={() => setMobileOpen(false)}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="pt-6 mt-6 border-t border-[#1E1E2E]">
-            <p className="text-xs text-[#94A3B8] uppercase tracking-widest mb-2">Services</p>
-            <div className="space-y-1">
-              {mobileServiceItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="block py-2 text-sm text-[#94A3B8] hover:text-[#F8F8FF]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
+      {
+        mobileOpen && (
+          <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 border-t border-[#1E1E2E] bg-[#0F0F18] px-6 py-6 overflow-y-auto">
+            <div className="space-y-2">
+              {navLinks.map((link) => (
+                <Link key={link.label} href={link.href} className="block py-3 text-base text-[#94A3B8] hover:text-[#F8F8FF]" onClick={() => setMobileOpen(false)}>
+                  {link.label}
                 </Link>
               ))}
             </div>
+            <div className="pt-6 mt-6 border-t border-[#1E1E2E]">
+              <p className="text-xs text-[#94A3B8] uppercase tracking-widest mb-2">Services</p>
+              <div className="space-y-1">
+                {mobileServiceItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="block py-2 text-sm text-[#94A3B8] hover:text-[#F8F8FF]"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="pt-6 space-y-2 border-t border-[#1E1E2E] mt-6">
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setMobileOpen(false);
+                }}
+                className="w-full px-4 py-2 rounded-md border border-[#1E1E2E] text-[#94A3B8] hover:text-[#F8F8FF] hover:bg-[#13131E] text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
+              >
+                {isDark ? <Sun size={14} /> : <Moon size={14} />}
+                {isDark ? "Light Mode" : "Dark Mode"}
+              </button>
+              <Link href={localePath(locale, "/book-consultation")} className="block w-full px-4 py-2 rounded-full bg-[#6366F1] text-white text-sm text-center font-semibold" onClick={() => setMobileOpen(false)}>
+                Book Consultation
+              </Link>
+            </div>
           </div>
-          <div className="pt-6 space-y-2 border-t border-[#1E1E2E] mt-6">
-            <button
-              onClick={() => {
-                toggleTheme();
-                setMobileOpen(false);
-              }}
-              className="w-full px-4 py-2 rounded-md border border-[#1E1E2E] text-[#94A3B8] hover:text-[#F8F8FF] hover:bg-[#13131E] text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
-            >
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
-              {isDark ? "Light Mode" : "Dark Mode"}
-            </button>
-            <Link href={localePath(locale, "/book-consultation")} className="block w-full px-4 py-2 rounded-md bg-[#6366F1] text-white text-sm text-center font-semibold" onClick={() => setMobileOpen(false)}>
-              Book Consultation
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
+        )
+      }
+    </header >
   );
 }

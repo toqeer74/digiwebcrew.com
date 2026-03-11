@@ -64,62 +64,62 @@ export function ServiceTemplate({
     <div className="bg-[#0A0A0F] min-h-screen pt-32 pb-24">
       <Container>
         {/* Hero Section */}
-        <div className="flex flex-col lg:flex-row gap-16 items-start mb-24">
-          <div className="lg:w-1/2 space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/20 text-[#6366F1] text-xs font-family font-bold uppercase tracking-widest"
-            >
-              <IconComponent size={14} />
-              Specialized Laboratory
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-tight"
-            >
-              {displayTitle} <br />
-              <span className="text-raly-primary">{displaySubtitle}</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed"
-            >
-              {displayDescription}
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap gap-4"
-            >
-              <button className="px-8 py-4 bg-raly-accent text-raly-primary font-extrabold text-sm uppercase tracking-wider rounded-xl hover:scale-105 active:scale-95 transition-all shadow-md shadow-raly-primary/30 flex items-center gap-3">
-                {ctaText}
-                <ArrowRight size={18} />
-              </button>
-            </motion.div>
-          </div>
+        <div className="flex flex-col items-center text-center mb-24 max-w-4xl mx-auto space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/20 text-[#6366F1] text-xs font-family font-bold uppercase tracking-widest"
+          >
+            <IconComponent size={14} />
+            Specialized Laboratory
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.1]"
+          >
+            {displayTitle} <br />
+            <span className="text-raly-primary">{displaySubtitle}</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed max-w-2xl"
+          >
+            {displayDescription}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-wrap gap-6 justify-center"
+          >
+            <button className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)]">
+              <span>{ctaText}</span>
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </button>
+          </motion.div>
+        </div>
 
-          <div className="lg:w-1/2 grid grid-cols-2 gap-4">
-            {displayFeatures.map((feature: string, idx: number) => (
-              <motion.div
-                key={feature}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * idx }}
-                className="p-6 bg-gray-50 dark:bg-midnight-900 rounded-2xl border border-gray-100 dark:border-midnight-800"
-              >
-                <div className="w-10 h-10 rounded-lg bg-raly-accent/20 flex items-center justify-center text-raly-primary mb-4">
-                  <CheckCircle2 size={20} />
-                </div>
-                <p className="font-bold text-gray-900 dark:text-white">{feature}</p>
-              </motion.div>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+          {displayFeatures.map((feature: string, idx: number) => (
+            <motion.div
+              key={feature}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 * idx }}
+              className="site-card p-6 flex flex-col items-center text-center"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-raly-accent/20 flex items-center justify-center text-raly-primary mb-6 shadow-sm">
+                <CheckCircle2 size={24} />
+              </div>
+              <p className="font-bold text-gray-900 dark:text-white text-lg">{feature}</p>
+            </motion.div>
+          ))}
         </div>
 
         {/* Answer Engine Optimization (AEO) Layer */}
@@ -133,26 +133,26 @@ export function ServiceTemplate({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
           <Link
             href="/services"
-            className="group p-8 rounded-[2rem] bg-raly-subtle dark:bg-midnight-900 border border-[rgba(229,231,235,0.5)] dark:border-midnight-800 hover:border-raly-primary/30 transition-all"
+            className="site-card p-10 group transition-all"
           >
-            <div className="flex justify-between items-start mb-4">
-              <FlaskConical className="text-raly-primary" size={24} />
-              <ArrowRight className="text-gray-300 group-hover:text-raly-primary transition-all group-hover:translate-x-1" size={20} />
+            <div className="flex justify-between items-start mb-6">
+              <FlaskConical className="text-[#6366F1]" size={32} />
+              <ArrowRight className="text-slate-400 dark:text-gray-300 group-hover:text-[#6366F1] transition-all group-hover:translate-x-2" size={24} />
             </div>
-            <h4 className="text-lg font-black text-gray-900 dark:text-white mb-2">Technical Laboratory</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Explore the full engineering cluster and micro-service definitions.</p>
+            <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Technical Laboratory</h4>
+            <p className="text-lg text-slate-600 dark:text-gray-400 leading-relaxed">Explore the full engineering cluster and micro-service definitions.</p>
           </Link>
 
           <Link
             href="/tech"
-            className="group p-8 rounded-[2rem] bg-raly-primary text-white border border-white/10 hover:border-raly-accent/40 transition-all"
+            className="site-card p-10 group transition-all border-[#6366F1]/20 bg-[#6366F1]/5"
           >
-            <div className="flex justify-between items-start mb-4">
-              <ExternalLink className="text-raly-accent" size={24} />
-              <ArrowRight className="text-white/20 group-hover:text-raly-accent transition-all group-hover:translate-x-1" size={20} />
+            <div className="flex justify-between items-start mb-6">
+              <ExternalLink className="text-[#6366F1]" size={32} />
+              <ArrowRight className="text-slate-400 dark:text-white/20 group-hover:text-[#6366F1] transition-all group-hover:translate-x-2" size={24} />
             </div>
-            <h4 className="text-lg font-black mb-2">View Evidence</h4>
-            <p className="text-sm text-white/40">Inspect live proof-of-work and industrial outcomes in our global library.</p>
+            <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-3">View Evidence</h4>
+            <p className="text-lg text-slate-600 dark:text-gray-400 leading-relaxed">Inspect live proof-of-work and industrial outcomes in our global library.</p>
           </Link>
         </div>
 

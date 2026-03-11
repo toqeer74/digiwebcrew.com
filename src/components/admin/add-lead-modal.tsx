@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { X, User, Mail, Briefcase, DollarSign, Send, Loader2 } from "lucide-react";

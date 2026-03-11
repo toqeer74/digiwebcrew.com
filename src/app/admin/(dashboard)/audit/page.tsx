@@ -1,4 +1,4 @@
-﻿import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Activity, User, AlertCircle, CheckCircle, Shield, Download } from "lucide-react";
 import { AuditLog } from "@/lib/models/audit-log";
