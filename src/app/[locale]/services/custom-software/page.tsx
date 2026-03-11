@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/layout/layout-primitives";
 import { QuoteWizard } from "@/components/sections/quote-wizard";
 import { getDictionary } from "@/lib/get-dictionary";
