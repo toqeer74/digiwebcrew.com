@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useToolTracking, useFormTracking } from "@/lib/tracking-hooks";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { localePath } from "@/lib/locale-path";
 
 interface CalculatorInputs {
   platform: "Web" | "Mobile" | "Both";
@@ -17,7 +18,7 @@ interface CalculatorInputs {
 
 export function AIProjectCalculator() {
   const params = useParams();
-  const locale = params?.locale || "en";
+  const locale = typeof params?.locale === "string" ? params.locale : "en";
   const [inputs, setInputs] = useState<CalculatorInputs>({
     platform: "Web",
     pages: 10,
@@ -63,31 +64,34 @@ export function AIProjectCalculator() {
     alert("PDF generation functionality is being developed. Your estimate: " + hours + " hours, " + weeks + " weeks, $" + estimatedCost.toLocaleString());
   };
 
+  const sliderTrack = "#dbe4f0";
+  const sliderTrackDark = "#1B2C3D";
+
   return (
-    <div className="relative bg-[#13131E] rounded-3xl p-8 md:p-10 border border-[#1E1E2E] shadow-lg">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-12 h-12 rounded-2xl bg-[#6366F1]/10 flex items-center justify-center">
-          <Calculator size={24} className="text-[#6366F1]" />
+    <div className="relative h-full rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(27,40,57,0.98),rgba(12,20,33,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.35)] bg-[rgba(var(--site-primary-rgb),0.08)] dark:border-[#4A86C8] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_-18px_rgba(17,75,151,0.24)]">
+          <Calculator size={20} className="text-[var(--site-primary)] dark:text-[#6EA3E6]" />
         </div>
         <div>
-          <h3 className="text-2xl font-display font-black text-[#F8F8FF] tracking-tight">AI Project Calculator</h3>
-          <p className="text-sm text-[#94A3B8] font-body font-medium">Get an instant scope estimate</p>
+          <h3 className="text-xl font-display font-black tracking-tight text-slate-950 dark:text-[#F8F8FF]">AI Project Calculator</h3>
+          <p className="text-sm font-body font-medium text-slate-600 dark:text-[#94A3B8]">Get an instant scope estimate</p>
         </div>
       </div>
 
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <label className="text-sm font-body font-bold text-[#F8F8FF] uppercase tracking-wider">Platform</label>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-xs font-body font-bold uppercase tracking-wider text-slate-900 dark:text-[#F8F8FF]">Platform</label>
           <div className="grid grid-cols-3 gap-3">
             {(["Web", "Mobile", "Both"] as const).map((platform) => (
               <button
                 key={platform}
                 onClick={() => setInputs({ ...inputs, platform })}
                 className={cn(
-                  "px-4 py-3 rounded-xl font-bold text-sm transition-all border-2",
+                  "px-4 py-2.5 rounded-xl font-bold text-sm transition-all border-2",
                   inputs.platform === platform
-                    ? "bg-[#6366F1] text-white border-[#6366F1] shadow-sm"
-                    : "bg-[#13131E]/30 text-[#94A3B8] border-[#1E1E2E] hover:border-[#6366F1]/50"
+                    ? "border-[#3A6FB8] bg-[#114B97] text-white shadow-[0_10px_24px_-12px_rgba(0,0,0,0.24)] dark:shadow-[0_10px_24px_-12px_rgba(17,75,151,0.55)]"
+                    : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.45)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#D5DEEB] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:hover:border-[#4A86C8]"
                 )}
               >
                 {platform}
@@ -96,10 +100,10 @@ export function AIProjectCalculator() {
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-body font-bold text-[#F8F8FF] uppercase tracking-wider">Number of Pages/Views</label>
-            <span className="text-2xl font-black text-[#6366F1]">{inputs.pages}</span>
+            <label className="text-xs font-body font-bold uppercase tracking-wider text-slate-900 dark:text-[#F8F8FF]">Number of Pages/Views</label>
+            <span className="text-xl font-black text-[var(--site-primary)] dark:text-[#6EA3E6]">{inputs.pages}</span>
           </div>
           <input
             type="range"
@@ -107,16 +111,16 @@ export function AIProjectCalculator() {
             max="100"
             value={inputs.pages}
             onChange={(e) => setInputs({ ...inputs, pages: parseInt(e.target.value) })}
-            className="w-full h-3 bg-[#13131E]/30 rounded-full appearance-none cursor-pointer slider"
-            style={{ background: `linear-gradient(to right, #6366F1 0%, #6366F1 ${inputs.pages}%, #1E1E2E ${inputs.pages}%, #1E1E2E 100%)` }}
+            className="w-full h-2 appearance-none rounded-full bg-[#10202C] cursor-pointer slider"
+            style={{ background: `linear-gradient(to right, #114B97 0%, #114B97 ${inputs.pages}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} ${inputs.pages}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} 100%)` }}
           />
-          <div className="flex justify-between text-xs text-[#94A3B8] font-body"><span>1</span><span>50</span><span>100</span></div>
+          <div className="flex justify-between text-xs font-body text-slate-500 dark:text-[#94A3B8]"><span>1</span><span>50</span><span>100</span></div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-body font-bold text-[#F8F8FF] uppercase tracking-wider">Complexity</label>
-            <span className="text-sm font-black text-[#6366F1]">{complexityLabels[inputs.complexity]}</span>
+            <label className="text-xs font-body font-bold uppercase tracking-wider text-slate-900 dark:text-[#F8F8FF]">Complexity</label>
+            <span className="text-sm font-black text-[var(--site-primary)] dark:text-[#6EA3E6]">{complexityLabels[inputs.complexity]}</span>
           </div>
           <input
             type="range"
@@ -125,16 +129,16 @@ export function AIProjectCalculator() {
             step="0.3"
             value={inputs.complexity}
             onChange={(e) => setInputs({ ...inputs, complexity: parseFloat(e.target.value) })}
-            className="w-full h-3 bg-[#13131E]/30 rounded-full appearance-none cursor-pointer slider"
-            style={{ background: `linear-gradient(to right, #6366F1 0%, #6366F1 ${((inputs.complexity - 1) / 1.5) * 100}%, #1E1E2E ${((inputs.complexity - 1) / 1.5) * 100}%, #1E1E2E 100%)` }}
+            className="w-full h-2 appearance-none rounded-full bg-[#10202C] cursor-pointer slider"
+            style={{ background: `linear-gradient(to right, #114B97 0%, #114B97 ${((inputs.complexity - 1) / 1.5) * 100}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} ${((inputs.complexity - 1) / 1.5) * 100}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} 100%)` }}
           />
-          <div className="flex justify-between text-xs text-[#94A3B8] font-body"><span>Simple</span><span>Standard</span><span>Enterprise</span></div>
+          <div className="flex justify-between text-xs font-body text-slate-500 dark:text-[#94A3B8]"><span>Simple</span><span>Standard</span><span>Enterprise</span></div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-body font-bold text-[#F8F8FF] uppercase tracking-wider">API Integrations</label>
-            <span className="text-2xl font-black text-[#6366F1]">{inputs.apiIntegrations}</span>
+            <label className="text-xs font-body font-bold uppercase tracking-wider text-slate-900 dark:text-[#F8F8FF]">API Integrations</label>
+            <span className="text-xl font-black text-[var(--site-primary)] dark:text-[#6EA3E6]">{inputs.apiIntegrations}</span>
           </div>
           <input
             type="range"
@@ -142,10 +146,10 @@ export function AIProjectCalculator() {
             max="20"
             value={inputs.apiIntegrations}
             onChange={(e) => setInputs({ ...inputs, apiIntegrations: parseInt(e.target.value) })}
-            className="w-full h-3 bg-[#13131E]/30 rounded-full appearance-none cursor-pointer slider"
-            style={{ background: `linear-gradient(to right, #6366F1 0%, #6366F1 ${(inputs.apiIntegrations / 20) * 100}%, #1E1E2E ${(inputs.apiIntegrations / 20) * 100}%, #1E1E2E 100%)` }}
+            className="w-full h-2 appearance-none rounded-full bg-[#10202C] cursor-pointer slider"
+            style={{ background: `linear-gradient(to right, #114B97 0%, #114B97 ${(inputs.apiIntegrations / 20) * 100}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} ${(inputs.apiIntegrations / 20) * 100}%, ${typeof document === "undefined" ? sliderTrackDark : sliderTrack} 100%)` }}
           />
-          <div className="flex justify-between text-xs text-[#94A3B8] font-body"><span>0</span><span>10</span><span>20</span></div>
+          <div className="flex justify-between text-xs font-body text-slate-500 dark:text-[#94A3B8]"><span>0</span><span>10</span><span>20</span></div>
         </div>
 
         <button
@@ -156,7 +160,7 @@ export function AIProjectCalculator() {
               trackCalculatorComplete({ estimatedHours: hours, platform: inputs.platform, complexity: inputs.complexity });
             }
           }}
-          className="w-full py-4 bg-[#6366F1] hover:bg-[#6366F1]/90 text-white font-display font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-[#6366F1]/30 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
+          className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-3 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] active:scale-95 dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]"
         >
           <Zap size={18} />
           {showResults ? "Update Estimate" : "Calculate Project Scope"}
@@ -164,38 +168,38 @@ export function AIProjectCalculator() {
       </div>
 
       {showResults && (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 pt-8 border-t border-[#1E1E2E] space-y-6">
-          <div className="bg-gradient-to-br from-[#6366F1]/10 to-[#6366F1]/5 rounded-2xl p-6 border border-[#6366F1]/20">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6 border-t border-[#123040] pt-8">
+          <div className="rounded-2xl border border-slate-200 bg-white/96 p-6 shadow-[0_18px_36px_-24px_rgba(0,0,0,0.12)] dark:border-[#3A6FB833] dark:bg-[linear-gradient(180deg,rgba(22,36,52,0.98),rgba(12,20,32,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_40px_-30px_rgba(17,75,151,0.18)]">
             <div className="text-center mb-6">
-              <p className="text-sm font-body font-bold text-[#94A3B8] uppercase tracking-widest mb-2">Estimated Build Time</p>
-              <div className="flex items-baseline justify-center gap-2"><span className="text-5xl font-black text-[#6366F1]">{hours}</span><span className="text-2xl font-display font-bold text-[#F8F8FF]">hours</span></div>
-              <p className="text-lg font-display font-bold text-[#94A3B8] mt-2">~ {weeks} weeks at 40h/week</p>
+              <p className="text-sm font-body font-bold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-2">Estimated Build Time</p>
+              <div className="flex items-baseline justify-center gap-2"><span className="text-5xl font-black text-[var(--site-primary)] dark:text-[#6EA3E6]">{hours}</span><span className="text-2xl font-display font-bold text-slate-950 dark:text-[#F8F8FF]">hours</span></div>
+              <p className="text-lg font-display font-bold text-slate-500 dark:text-[#94A3B8] mt-2">~ {weeks} weeks at 40h/week</p>
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="text-center p-3 bg-[#13131E]/70 rounded-xl"><Code size={20} className="text-[#6366F1] mx-auto mb-2" /><p className="text-xs font-body font-bold text-[#94A3B8] uppercase tracking-wider mb-1">Pages</p><p className="text-lg font-black text-[#F8F8FF]">{inputs.pages * 12}h</p></div>
-              <div className="text-center p-3 bg-[#13131E]/70 rounded-xl"><Zap size={20} className="text-[#6366F1] mx-auto mb-2" /><p className="text-xs font-body font-bold text-[#94A3B8] uppercase tracking-wider mb-1">Complexity</p><p className="text-lg font-black text-[#F8F8FF]">{Math.round(inputs.complexity * 40)}h</p></div>
-              <div className="text-center p-3 bg-[#13131E]/70 rounded-xl"><Server size={20} className="text-[#6366F1] mx-auto mb-2" /><p className="text-xs font-body font-bold text-[#94A3B8] uppercase tracking-wider mb-1">APIs</p><p className="text-lg font-black text-[#F8F8FF]">{inputs.apiIntegrations * 15}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Code size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Pages</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.pages * 12}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Zap size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Complexity</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{Math.round(inputs.complexity * 40)}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Server size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">APIs</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.apiIntegrations * 15}h</p></div>
             </div>
 
-            <div className="text-center py-4 bg-[#13131E] rounded-xl border border-[#1E1E2E]">
-              <p className="text-xs font-body font-bold text-[#94A3B8] uppercase tracking-widest mb-1">Estimated Investment</p>
-              <p className="text-3xl font-black text-[#F8F8FF]">${estimatedCost.toLocaleString()}</p>
-              <p className="text-xs text-[#94A3B8] font-body mt-1">Based on $75/hour average rate</p>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 py-4 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+              <p className="text-xs font-body font-bold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-1">Estimated Investment</p>
+              <p className="text-3xl font-black text-slate-950 dark:text-[#F8F8FF]">${estimatedCost.toLocaleString()}</p>
+              <p className="text-xs font-body text-slate-500 dark:text-[#94A3B8] mt-1">Based on $75/hour average rate</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
-            <button onClick={handleDownloadPDF} className="w-full py-4 bg-[#13131E] border border-[#1E1E2E] text-[#F8F8FF] font-display font-black text-sm uppercase tracking-wider rounded-xl transition-all hover:bg-[#1E1E2E]/70 flex items-center justify-center gap-3">
+            <button onClick={handleDownloadPDF} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#123040] bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] py-4 text-sm font-display font-black uppercase tracking-wider text-[#F8F8FF] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all hover:border-[#4A86C8] hover:bg-[linear-gradient(180deg,rgba(24,38,54,0.98),rgba(12,21,34,0.98))]">
               <Download size={18} /> Download Tech Breakdown
             </button>
 
-            <Link href={`/${locale}/quote`} className="w-full py-4 bg-[#6366F1] text-white font-display font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-[#6366F1]/30 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
+            <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-4 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] active:scale-95 dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
               <Zap size={18} /> Request Industrial Quote
             </Link>
           </div>
 
-          <p className="text-xs text-center text-[#94A3B8] font-body">This is an AI-generated estimate. Actual scope may vary based on specific requirements.</p>
+          <p className="text-xs text-center font-body text-slate-500 dark:text-[#94A3B8]">This is an AI-generated estimate. Actual scope may vary based on specific requirements.</p>
         </motion.div>
       )}
 
@@ -205,20 +209,27 @@ export function AIProjectCalculator() {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #024d94;
+          background: #114b97;
           cursor: pointer;
-          box-shadow: 0 2px 6px rgba(2, 77, 148, 0.35);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
         .slider::-moz-range-thumb {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #024d94;
+          background: #114b97;
           cursor: pointer;
           border: none;
-          box-shadow: 0 2px 6px rgba(2, 77, 148, 0.35);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+        :global(.dark) .slider::-webkit-slider-thumb {
+          box-shadow: 0 2px 8px rgba(17, 75, 151, 0.6);
+        }
+        :global(.dark) .slider::-moz-range-thumb {
+          box-shadow: 0 2px 8px rgba(17, 75, 151, 0.6);
         }
       `}</style>
     </div>
   );
 }
+

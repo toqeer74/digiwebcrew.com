@@ -10,6 +10,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { locales } from "@/types/i18n";
 import { getCaseStudies, getCaseStudy } from "@/lib/content-engine";
 import { Metadata } from "next";
+import { localePath } from "@/lib/locale-path";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -54,7 +55,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <main className="flex-1 pt-32">
         <Container>
             <Link 
-                href={`/${locale}/case-studies`} 
+                href={localePath(locale, "/case-studies")} 
                 className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-12"
             >
                 <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />

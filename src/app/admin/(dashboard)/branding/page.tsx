@@ -8,17 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Upload, Image, Trash2, Check, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/page-header";
 import { toast } from "sonner";
-
-type BrandingConfig = {
-  siteName: string;
-  primaryColor: string;
-  logoDataUrl: string;
-};
+import { DEFAULT_BRANDING_CONFIG } from "@/lib/branding-shared";
+import type { BrandingConfig } from "@/lib/branding-shared";
 
 export default function BrandingPage() {
   const [logo, setLogo] = useState<string | null>(null);
-  const [siteName, setSiteName] = useState("Software Lab");
-  const [primaryColor, setPrimaryColor] = useState("#7C3AED");
+  const [siteName, setSiteName] = useState(DEFAULT_BRANDING_CONFIG.siteName);
+  const [primaryColor, setPrimaryColor] = useState(DEFAULT_BRANDING_CONFIG.primaryColor);
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -37,8 +33,8 @@ export default function BrandingPage() {
         const data = await res.json();
         if (data?.config) {
           const config = data.config as BrandingConfig;
-          setSiteName(config.siteName || "Software Lab");
-          setPrimaryColor(config.primaryColor || "#7C3AED");
+          setSiteName(config.siteName || DEFAULT_BRANDING_CONFIG.siteName);
+          setPrimaryColor(config.primaryColor || DEFAULT_BRANDING_CONFIG.primaryColor);
           setLogo(config.logoDataUrl || null);
         }
       } catch {
@@ -197,7 +193,7 @@ export default function BrandingPage() {
               <Label htmlFor="primary-color" className="text-xs font-medium text-slate-600">Primary Color</Label>
               <div className="flex items-center gap-3">
                 <input type="color" id="primary-color" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} className="h-10 w-12 cursor-pointer rounded-lg border border-slate-200 bg-white" />
-                <Input value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} className="h-10 flex-1 rounded-lg border-slate-200" placeholder="#7C3AED" />
+                <Input value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} className="h-10 flex-1 rounded-lg border-slate-200" placeholder={DEFAULT_BRANDING_CONFIG.primaryColor} />
               </div>
             </div>
           </div>

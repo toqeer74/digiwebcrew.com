@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { serviceCatalog } from "@/lib/services-data";
 import { submitQuote } from "@/lib/actions/quote-actions";
 import type { QuoteFormData } from "@/types/quote";
+import { localePath } from "@/lib/locale-path";
 
 interface LegacyQuoteWizardProps {
   dict: any;
@@ -92,7 +93,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
         <p className="text-xl text-muted-foreground mb-10 max-w-md mx-auto leading-relaxed">{dict.quote.wizard.successDesc}</p>
         <button
           onClick={() => {
-            window.location.href = `/${locale}`;
+            window.location.href = localePath(locale, "/");
           }}
           className="group inline-flex h-16 items-center justify-center rounded-full bg-primary px-10 font-black text-xs text-primary-foreground uppercase tracking-widest transition-all hover:scale-105 active:scale-95"
         >

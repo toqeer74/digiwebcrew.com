@@ -6,6 +6,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Check, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 export default async function ThankYouPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -35,11 +36,11 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
   ];
 
   const secondaryLinks = [
-    { label: "View Services", href: `/${locale}/services` },
-    { label: "View Pricing", href: `/${locale}/pricing` },
-    { label: "View Full Process", href: `/${locale}/process` },
-    { label: "Explore Industries", href: `/${locale}/industries` },
-    { label: "Back to Home", href: `/${locale}` },
+    { label: "View Services", href: localePath(locale, "/services") },
+    { label: "View Pricing", href: localePath(locale, "/pricing") },
+    { label: "View Full Process", href: localePath(locale, "/process") },
+    { label: "Explore Industries", href: localePath(locale, "/industries") },
+    { label: "Back to Home", href: localePath(locale, "/") },
   ];
 
   const faqItems = [
@@ -100,14 +101,14 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href={`/${locale}/book-consultation`}
+                  href={localePath(locale, "/book-consultation")}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
                 >
                   Book Consultation
                   <ArrowRight size={20} />
                 </Link>
                 <Link
-                  href={`/${locale}`}
+                  href={localePath(locale, "/")}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Back to Home
@@ -157,7 +158,7 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
                 ))}
               </ul>
               <Link
-                href={`/${locale}/book-consultation`}
+                href={localePath(locale, "/book-consultation")}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
               >
                 Book Consultation
@@ -205,14 +206,14 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href={`/${locale}/book-consultation`}
+                  href={localePath(locale, "/book-consultation")}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
                 >
                   Book Consultation
                   <ArrowRight size={20} />
                 </Link>
                 <Link
-                  href={`/${locale}`}
+                  href={localePath(locale, "/")}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Back to Home

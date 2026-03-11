@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, Code2, ShoppingCart, Globe, Settings, Smartphone, Zap, Shield, Database } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { localePath } from "@/lib/locale-path";
 
 interface ServiceSelectionProps {
   dict: any;
@@ -71,7 +72,7 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
           return (
             <Link
               key={service.id}
-              href={`/${locale}${service.href}`}
+              href={localePath(locale, service.href)}
               className="group"
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
@@ -157,7 +158,7 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
           Contact us for a free consultation and we'll help you find the perfect solution
         </p>
         <Link
-          href={`/${locale}/contact`}
+          href={localePath(locale, "/contact")}
           className="inline-flex items-center gap-2 px-6 py-2 bg-[#6366F1] text-[#F8F8FF] rounded-lg hover:bg-[#6366F1]/90 transition-colors"
         >
           Get Consultation

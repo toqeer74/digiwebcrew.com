@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Container } from "../layout/layout-primitives";
+import { localePath } from "@/lib/locale-path";
 
 interface CtaBannerProps {
   dict: any;
@@ -12,20 +13,20 @@ interface CtaBannerProps {
 
 export function CtaBanner({ dict, locale }: CtaBannerProps) {
   return (
-    <section className="py-20 bg-[#0A0A0F]">
+    <section className="bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-20 dark:bg-[#0A0A0F]">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-2xl p-12 md:p-16 text-center bg-gradient-to-br from-indigo-900/40 to-violet-900/30 border border-indigo-500/20"
+          className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 text-center shadow-[0_20px_44px_-28px_rgba(15,23,42,0.18)] md:p-16 dark:border-indigo-500/20 dark:bg-gradient-to-br dark:from-indigo-900/40 dark:to-violet-900/30"
         >
           {/* Decorative orb */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[80px]"
+              className="h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] dark:bg-indigo-600/10"
             />
           </div>
 
@@ -35,9 +36,9 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-6"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1"
             >
-              <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+              <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">
                 Ready to Transform?
               </span>
             </motion.div>
@@ -47,10 +48,10 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-5xl font-display font-bold text-[#F8F8FF] mb-6 leading-tight"
+              className="mb-6 text-3xl font-display font-bold leading-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl"
             >
               Let's Build Something<br />
-              <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[var(--site-primary)] to-[#6ea3e6] bg-clip-text text-transparent">
                 Extraordinary Together
               </span>
             </motion.h2>
@@ -60,7 +61,7 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-[#94A3B8] max-w-2xl mx-auto mb-10 font-body leading-relaxed"
+              className="mx-auto mb-10 max-w-2xl font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]"
             >
               Join hundreds of companies trusting us with their mission-critical infrastructure. Get started today with a custom scope assessment.
             </motion.p>
@@ -74,13 +75,13 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               <Link
-                href={`/${locale}/quote`}
-                className="bg-[#6366F1] hover:bg-[#6366F1]/90 text-white px-8 py-4 rounded-lg font-body font-semibold transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap"
+                href={localePath(locale, "/quote")}
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[var(--site-primary)] px-8 py-4 font-body font-semibold text-white transition-all duration-200 hover:bg-[var(--site-primary-hover)]"
               >
                 Get Custom Scope
                 <ArrowRight size={20} />
               </Link>
-              <button className="border border-[#6366F1]/30 text-[#F8F8FF] hover:bg-[#6366F1]/10 px-8 py-4 rounded-lg font-body font-semibold transition-all duration-200 whitespace-nowrap">
+              <button className="whitespace-nowrap rounded-full border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-white/80 px-8 py-4 font-body font-semibold text-slate-950 transition-all duration-200 hover:bg-[rgba(var(--site-primary-rgb),0.08)] dark:bg-transparent dark:text-[#F8F8FF] dark:hover:bg-[#6366F1]/10">
                 Schedule Call
               </button>
             </motion.div>

@@ -5,10 +5,13 @@ import { usePathname } from "next/navigation";
 import { Container } from "@/components/layout/layout-primitives";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
+import { defaultLocale, locales } from "@/types/i18n";
+import { localePath } from "@/lib/locale-path";
 
 export default function NotFound() {
   const pathname = usePathname();
-  const locale = pathname?.split('/')[1] || 'en';
+  const firstSegment = pathname?.split("/")[1];
+  const locale = locales.includes(firstSegment as any) ? firstSegment : defaultLocale;
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
@@ -39,7 +42,7 @@ export default function NotFound() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
-              href={`/${locale}`}
+              href={localePath(locale, "/")}
               className="group flex items-center gap-3 h-14 px-8 rounded-full bg-[#6366F1] text-[#F8F8FF] font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-[#6366F1]/25"
             >
               <Home size={18} />

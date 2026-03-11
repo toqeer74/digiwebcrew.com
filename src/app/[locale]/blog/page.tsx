@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { getDictionary } from "@/lib/get-dictionary";
 import { cn } from "@/lib/utils";
+import { localePath } from "@/lib/locale-path";
 
 export default async function BlogPage({ 
   params,
@@ -45,7 +46,7 @@ export default async function BlogPage({
             {categories.map((c) => (
               <Link
                 key={c}
-                href={`/${locale}/blog${c === "ALL" ? "" : `?cat=${c.toLowerCase()}`}`}
+                href={localePath(locale, `/blog${c === "ALL" ? "" : `?cat=${c.toLowerCase()}`}`)}
                 className={cn(
                   "px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all border",
                   activeCat === c 
@@ -62,7 +63,7 @@ export default async function BlogPage({
             {filteredPosts.map((post) => (
               <Link 
                 key={post.slug} 
-                href={`/${locale}/blog/${post.slug}`}
+                href={localePath(locale, `/blog/${post.slug}`)}
                 className="group flex flex-col bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all active:scale-[0.98]"
               >
                 <div className="aspect-[16/10] bg-secondary/50 relative overflow-hidden">

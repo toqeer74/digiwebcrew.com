@@ -14,7 +14,7 @@ export default async function DashboardPage() {
     { label: "Leads", value: data.leadCount },
     { label: "Chats", value: data.chatCount },
     { label: "Drafts", value: data.draftCount },
-    { label: "Site Name", value: data.brandingConfig?.siteName || "Software Lab" },
+    { label: "Site Name", value: data.brandingConfig?.siteName || "Digi Web Crew" },
   ];
 
   return (

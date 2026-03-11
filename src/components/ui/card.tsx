@@ -12,10 +12,9 @@ interface CardProps {
 
 export function Card({ children, className, animate = true }: CardProps) {
   const cardClasses = cn(
-    "relative w-full h-full transition-all duration-300",
-    "rounded-xl overflow-hidden",
+    "site-card site-card-interactive relative h-full w-full",
     // Only apply default bg/border if not provided in className
-    !className?.includes("bg-") && "bg-white border border-slate-200 shadow-sm hover:shadow-md",
+    className?.includes("bg-") && "border-none bg-transparent shadow-none",
     className
   );
 
@@ -45,11 +44,11 @@ export function CardHeader({ children, className }: { children: React.ReactNode;
 }
 
 export function CardTitle({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <h3 className={cn("font-heading text-xl font-extrabold tracking-tight text-raly-primary", className)}>{children}</h3>;
+  return <h3 className={cn("font-heading text-xl font-extrabold tracking-tight text-slate-950 dark:text-white", className)}>{children}</h3>;
 }
 
 export function CardDescription({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <p className={cn("text-xs font-medium tracking-tight text-muted-foreground/80 mt-1", className)}>{children}</p>;
+  return <p className={cn("mt-1 text-xs font-medium tracking-tight text-slate-500 dark:text-[#b7cadb]", className)}>{children}</p>;
 }
 
 export function CardContent({ children, className }: { children: React.ReactNode; className?: string }) {

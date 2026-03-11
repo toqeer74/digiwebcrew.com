@@ -159,7 +159,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                                     {/* Privacy Link */}
                                     <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                                         <Shield size={12} />
-                                        Read our <a href="/en/privacy" className="text-raly-primary hover:underline">Privacy Policy</a>
+                                        Read our <a href="/privacy" className="text-raly-primary hover:underline">Privacy Policy</a>
                                     </p>
                                 </div>
                             </motion.div>

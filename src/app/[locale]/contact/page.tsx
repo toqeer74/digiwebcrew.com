@@ -7,6 +7,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { createLead } from "@/lib/actions/lead-actions";
+import { localePath } from "@/lib/locale-path";
 
 const whatToInclude = [
   "what type of business you run",
@@ -107,7 +108,7 @@ export default async function ContactPage({
       status: "NEW",
     });
 
-    redirect(`/${locale}/thank-you`);
+    redirect(localePath(locale, "/thank-you"));
   }
 
   return (
@@ -125,13 +126,13 @@ export default async function ContactPage({
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href={`/${locale}/book-consultation`}
+                  href={localePath(locale, "/book-consultation")}
                   className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
                 >
                   Book Consultation
                 </Link>
                 <Link
-                  href={`/${locale}/quote`}
+                  href={localePath(locale, "/quote")}
                   className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Get Custom Project Scope
@@ -160,7 +161,7 @@ export default async function ContactPage({
                   <p className="text-sm text-[#94A3B8] mb-4">
                     Best for businesses that already have a clear project need and want to discuss goals, scope, and next steps directly.
                   </p>
-                  <Link href={`/${locale}/book-consultation`} className="text-[#6366F1] font-semibold">
+                  <Link href={localePath(locale, "/book-consultation")} className="text-[#6366F1] font-semibold">
                     Book Consultation
                   </Link>
                 </div>
@@ -169,7 +170,7 @@ export default async function ContactPage({
                   <p className="text-sm text-[#94A3B8] mb-4">
                     Best for businesses that want help defining the right service mix, project priorities, timeline, and budget before booking a call.
                   </p>
-                  <Link href={`/${locale}/quote`} className="text-[#6366F1] font-semibold">
+                  <Link href={localePath(locale, "/quote")} className="text-[#6366F1] font-semibold">
                     Get Custom Project Scope
                   </Link>
                 </div>
@@ -266,13 +267,13 @@ export default async function ContactPage({
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href={`/${locale}/book-consultation`}
+                  href={localePath(locale, "/book-consultation")}
                   className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
                 >
                   Book Consultation
                 </Link>
                 <Link
-                  href={`/${locale}/quote`}
+                  href={localePath(locale, "/quote")}
                   className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Get Custom Project Scope

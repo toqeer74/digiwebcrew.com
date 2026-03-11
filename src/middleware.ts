@@ -14,7 +14,14 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/admin') // Admin usually stays non-localized or custom
   ) {
-    return;
+    return NextResponse.next();
+  }
+
+  // 1.5 Redirect explicit default-locale prefix (/en/...) to the prefixless URL.
+  if (pathname === `/${defaultLocale}` || pathname.startsWith(`/${defaultLocale}/`)) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(`/${defaultLocale}`, '') || '/';
+    return NextResponse.redirect(url);
   }
 
   // 2. Check if the pathname already has a supported locale
@@ -24,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
   // 3. If pathname has locale, serve it
   if (pathnameHasLocale) {
-    return NextResponse.rewrite(request.nextUrl);
+    return NextResponse.next();
   }
 
   // 4. If no locale, redirect to default locale (en) without prefix

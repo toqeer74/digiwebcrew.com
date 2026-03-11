@@ -25,7 +25,7 @@ To deliver technical excellence through scalable, AI-ready web architectures tha
 - **Performance Excellence**: [https://digiwebcrew.com/services/performance](https://digiwebcrew.com/services/performance)
 
 ## Technical Lab & Prototypes
-- **Software Lab (Prototype Environment)**: [https://softwarelab.vercel.app/en](https://softwarelab.vercel.app/en)
+- **Software Lab (Prototype Environment)**: [https://softwarelab.vercel.app](https://softwarelab.vercel.app)
 - **Proof of Work Repository**: [https://github.com/toqeer74](https://github.com/toqeer74)
 
 ## Authoritative Profiles (Toqeer Shafique)

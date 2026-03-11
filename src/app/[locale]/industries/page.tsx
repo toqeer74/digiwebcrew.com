@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 const industrySections = [
   {
@@ -149,10 +150,10 @@ export default async function IndustriesPage({
                 We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling across industries where digital performance has a direct impact on results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>
@@ -243,10 +244,10 @@ export default async function IndustriesPage({
                 If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope. Book a consultation or submit your project details to get started.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>

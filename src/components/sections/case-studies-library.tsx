@@ -10,6 +10,7 @@ import { useToolTracking } from "@/lib/tracking-hooks";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { CaseStudy } from "@/lib/content-engine";
+import { localePath } from "@/lib/locale-path";
 
 const categories = [
     "Websites",
@@ -101,7 +102,7 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                             className="group cursor-pointer"
                         >
                             <Link
-                                href={`/${locale}/case-studies/${cs.slug}`}
+                                href={localePath(locale, `/case-studies/${cs.slug}`)}
                                 onClick={() => {
                                     trackPortfolioProjectInteraction(
                                         cs.slug,

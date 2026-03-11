@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 const coreServices = [
   { name: "Custom Website Development", desc: "Premium websites built for credibility, performance, and long-term business growth.", cta: "Explore Website Development", href: "/services/custom-software", price: "Starting at $3,500" },
@@ -37,74 +38,76 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const isRtl = locale === "ar" || locale === "ur";
+  const sectionCardClass = "site-card p-8";
+  const interactiveCardClass = "site-card site-card-interactive p-6";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0A0F]" dir={isRtl ? "rtl" : "ltr"}>
+    <div className="flex min-h-screen flex-col bg-background" dir={isRtl ? "rtl" : "ltr"}>
       <Navbar dict={dict} locale={locale} />
       <main className="flex-1 pt-32 pb-24">
         <Container>
           <div className="max-w-5xl mx-auto space-y-8">
             <AnimatedSection className="text-center">
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
+              <h1 className="mb-4 text-4xl font-black tracking-tight text-slate-950 dark:text-white md:text-6xl">
                 Services Built to Strengthen Growth, Conversion, and Digital Performance
               </h1>
-              <p className="text-lg text-[#94A3B8] mb-6">
+              <p className="site-card-muted mb-6 text-lg">
                 Digital Web Crew helps growth-focused businesses build custom websites, funnels, SEO systems, and AI automation designed to improve credibility, generate qualified leads, and support smarter customer acquisition.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">More Than a Website. A Smarter Digital System.</h2>
-              <p className="text-[#94A3B8]">Most businesses do not just need a nicer design. They need a stronger digital system that helps them attract attention, convert traffic, improve visibility, and handle leads more efficiently.</p>
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">More Than a Website. A Smarter Digital System.</h2>
+              <p className="site-card-muted">Most businesses do not just need a nicer design. They need a stronger digital system that helps them attract attention, convert traffic, improve visibility, and handle leads more efficiently.</p>
             </AnimatedSection>
 
             <AnimatedSection>
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Core Services</h2>
+              <h2 className="site-card-title mb-4 text-2xl font-bold">Core Services</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {coreServices.map((s) => (
-                  <div key={s.name} className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-6">
-                    <h3 className="text-xl font-semibold text-[#F8F8FF] mb-2">{s.name}</h3>
-                    <p className="text-[#94A3B8] mb-3">{s.desc}</p>
-                    <p className="text-sm text-[#94A3B8] mb-4">{s.price}</p>
-                    <Link href={`/${locale}${s.href}`} className="text-[#6366F1] font-semibold">{s.cta}</Link>
+                  <div key={s.name} className={interactiveCardClass}>
+                    <h3 className="site-card-title mb-2 text-xl font-semibold">{s.name}</h3>
+                    <p className="site-card-muted mb-3">{s.desc}</p>
+                    <p className="site-card-muted mb-4 text-sm">{s.price}</p>
+                    <Link href={localePath(locale, s.href)} className="site-card-accent font-semibold">{s.cta}</Link>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Related Capabilities</h2>
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">Related Capabilities</h2>
               <div className="flex flex-wrap gap-2">
                 {related.map((r) => (
-                  <span key={r} className="px-3 py-2 rounded-full border border-[#1E1E2E] text-sm text-[#94A3B8]">{r}</span>
+                  <span key={r} className="site-card-muted rounded-full border site-card-divider px-3 py-2 text-sm">{r}</span>
                 ))}
               </div>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">A Service Structure Built Around Real Business Needs</h2>
-              <p className="text-[#94A3B8] mb-3">
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">A Service Structure Built Around Real Business Needs</h2>
+              <p className="site-card-muted mb-3">
                 Many agencies separate design, development, SEO, and automation into disconnected services. That often creates inconsistency, weak execution, and missed growth opportunities.
               </p>
-              <p className="text-[#94A3B8] mb-3">
+              <p className="site-card-muted mb-3">
                 Digital Web Crew uses a more connected approach. We help businesses build digital systems where website structure, conversion flow, search visibility, and lead handling work together more effectively.
               </p>
-              <p className="text-[#94A3B8]">
+              <p className="site-card-muted">
                 That means you can start with the service you need now and expand into the right support over time without rebuilding everything from scratch.
               </p>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Best Fit Clients</h2>
-              <p className="text-[#94A3B8] mb-3">
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">Best Fit Clients</h2>
+              <p className="site-card-muted mb-3">
                 Our services are best suited for businesses that depend on trust, inquiries, consultations, calls, bookings, or ongoing lead flow.
               </p>
-              <p className="text-[#94A3B8] mb-3">We are especially well aligned with:</p>
-              <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
+              <p className="site-card-muted mb-3">We are especially well aligned with:</p>
+              <ul className="site-card-muted mb-4 list-inside list-disc space-y-2">
                 <li>law firms</li>
                 <li>clinics, dental practices, and med spas</li>
                 <li>home service businesses</li>
@@ -112,42 +115,42 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                 <li>SaaS and B2B service companies</li>
                 <li>education and training businesses</li>
               </ul>
-              <p className="text-[#94A3B8]">
+              <p className="site-card-muted">
                 These are the kinds of businesses that benefit most from stronger digital presentation, better conversion systems, clearer SEO foundations, and smarter automation.
               </p>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">How We Work</h2>
-              <p className="text-[#94A3B8] mb-4">Discover - Scope - Build - Launch & Grow</p>
-              <Link href={`/${locale}/process`} className="text-[#6366F1] font-semibold">View Full Process</Link>
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">How We Work</h2>
+              <p className="site-card-muted mb-4">Discover - Scope - Build - Launch & Grow</p>
+              <Link href={localePath(locale, "/process")} className="site-card-accent font-semibold">View Full Process</Link>
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Starting Investment Levels</h2>
-              <ul className="space-y-2 text-[#94A3B8] mb-4">
+            <AnimatedSection className={sectionCardClass}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">Starting Investment Levels</h2>
+              <ul className="site-card-muted mb-4 space-y-2">
                 <li>Custom Website Development - Starting at $3,500</li>
                 <li>Conversion Funnels & Landing Pages - Starting at $2,000</li>
                 <li>AI Chatbots & Automation - Starting at $2,500</li>
                 <li>SEO & Growth Retainers - Starting at $1,000/month</li>
               </ul>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href={`/${locale}/pricing`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg text-center">View Pricing</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg text-center">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/pricing")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg text-center">View Pricing</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg text-center">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
 
             <AnimatedSection>
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Common Questions</h2>
+              <h2 className="site-card-title mb-4 text-2xl font-bold">Common Questions</h2>
               <Accordion items={faq} />
             </AnimatedSection>
 
-            <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-              <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Need Help Choosing the Right Service Mix?</h2>
-              <p className="text-[#94A3B8] mb-6">Whether you already know what you need or want help defining the right direction, we can help you map out the next step.</p>
+            <AnimatedSection className={`${sectionCardClass} text-center`}>
+              <h2 className="site-card-title mb-3 text-2xl font-bold">Need Help Choosing the Right Service Mix?</h2>
+              <p className="site-card-muted mb-6">Whether you already know what you need or want help defining the right direction, we can help you map out the next step.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
           </div>

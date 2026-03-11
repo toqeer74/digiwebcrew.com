@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 const supportingPoints = [
   "Built for businesses that need more than a basic website",
@@ -101,8 +102,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
 
@@ -169,7 +170,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A Clear and Practical Approach</h2>
               <p className="text-[#94A3B8] mb-4">We keep the process structured so projects stay aligned with business goals and actual priorities.</p>
               <p className="text-[#94A3B8] mb-5">We start by understanding the business and the problem that needs to be solved. From there, we define the right scope, build the system carefully, and support the next stage after launch where needed.</p>
-              <Link href={`/${locale}/process`} className="text-[#6366F1] font-semibold">View Full Process</Link>
+              <Link href={localePath(locale, "/process")} className="text-[#6366F1] font-semibold">View Full Process</Link>
             </AnimatedSection>
 
             <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
@@ -187,8 +188,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Looking for a Stronger Digital Partner?</h2>
               <p className="text-[#94A3B8] mb-6">If your business needs more than a basic website and you want a clearer, more capable digital system, we can help define the right next step.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
           </div>

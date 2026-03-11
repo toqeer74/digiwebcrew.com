@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 const supportPoints = [
   "Clear project direction from the start",
@@ -120,8 +121,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
 
@@ -207,8 +208,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
               <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Want a Clearer Path From Idea to Launch?</h2>
               <p className="text-[#94A3B8] mb-6">If you want a project that is shaped around business goals, clear scope, and practical execution, the next step is simple.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
               </div>
             </AnimatedSection>
           </div>

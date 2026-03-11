@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Allow: /en/
 Allow: /ur/
+Allow: /ar/
 Sitemap: https://digiwebcrew.com/sitemap.xml
 
 # Specific AI Crawler Directives

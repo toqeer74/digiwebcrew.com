@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Suspense } from "react";
 import "../globals.css";
-import { cn } from "@/lib/utils";
 import { getDictionary } from "@/lib/get-dictionary";
 import { MotionProvider } from "@/components/MotionProvider";
 import { PageTransition } from "@/components/ui/page-transition";
 import { ChatbotUI } from "@/components/chatbot/chatbot-ui";
 import { ConsentBanner } from "@/components/ui/consent-banner";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
+import { localePath } from "@/lib/locale-path";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: dict.meta.ogTitle,
       description: dict.meta.ogDesc,
-      url: `/${locale}`,
+      url: localePath(locale, "/"),
       siteName: "Digi Web Crew",
       locale: locale,
       type: "website",
@@ -46,11 +48,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: ['/og-image.png'],
     },
     alternates: {
-      canonical: `/${locale}`,
+      canonical: localePath(locale, "/"),
       languages: {
-        'en': '/en',
-        'ur': '/ur',
-        'ar': '/ar',
+        en: localePath("en", "/"),
+        ur: localePath("ur", "/"),
+        ar: localePath("ar", "/"),
       },
     },
     robots: {
@@ -76,10 +78,34 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   const isRtl = locale === 'ar' || locale === 'ur';
+  const branding = await getPublicBrandingConfig();
+  const brandingVars = deriveBrandingVars(branding.primaryColor);
 
   return (
-    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className="scroll-smooth">
+    <html
+      lang={locale}
+      dir={isRtl ? 'rtl' : 'ltr'}
+      className="scroll-smooth"
+      suppressHydrationWarning
+      style={brandingVars as CSSProperties}
+    >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => {
+              try {
+                const savedTheme = localStorage.getItem("theme");
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
+                const html = document.documentElement;
+                html.classList.toggle("dark", isDark);
+                html.classList.toggle("light", !isDark);
+                html.setAttribute("data-theme", isDark ? "dark" : "light");
+                html.style.colorScheme = isDark ? "dark" : "light";
+              } catch {}
+            })();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -87,7 +113,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased bg-[#0A0A0F] dark:bg-white text-[#F8F8FF] dark:text-[#1E293B] transition-all duration-300 font-medium">
+      <body className="bg-background text-foreground font-sans font-medium antialiased transition-colors duration-300">
         <ThemeProvider>
           <MotionProvider>
             <PageTransition>

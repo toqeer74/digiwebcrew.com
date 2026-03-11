@@ -6,6 +6,7 @@ import { CheckCircle2, ChevronLeft, ChevronRight, Loader2, Send } from "lucide-r
 import { cn } from "@/lib/utils";
 import { submitQuote } from "@/lib/actions/quote-actions";
 import type { QuoteFormData } from "@/types/quote";
+import { localePath } from "@/lib/locale-path";
 
 type ScopeFormData = {
   needHelp: string;
@@ -271,7 +272,7 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
         <p className="mb-7 text-[#94A3B8]">Thank you. Your project scope details have been received.</p>
         <button
           onClick={() => {
-            window.location.href = `/${locale}/thank-you`;
+            window.location.href = localePath(locale, "/thank-you");
           }}
           className="inline-flex items-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 font-semibold text-white"
         >
@@ -555,4 +556,3 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
     </div>
   );
 }
-

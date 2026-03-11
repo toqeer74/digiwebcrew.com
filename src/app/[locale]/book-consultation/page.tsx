@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { localePath } from "@/lib/locale-path";
 
 const discussionPoints = [
   "what your business needs help with",
@@ -109,7 +110,7 @@ export default async function BookConsultationPage({
                   Book Consultation
                 </a>
                 <Link
-                  href={`/${locale}/quote`}
+                  href={localePath(locale, "/quote")}
                   className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Get Custom Project Scope
@@ -212,7 +213,7 @@ export default async function BookConsultationPage({
                 That option helps gather the key details around your business, goals, service needs, timeline, and budget so the project direction becomes easier to define.
               </p>
               <Link
-                href={`/${locale}/quote`}
+                href={localePath(locale, "/quote")}
                 className="inline-flex items-center justify-center px-6 py-3 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
               >
                 Get Custom Project Scope
@@ -239,7 +240,7 @@ export default async function BookConsultationPage({
                   Book Consultation
                 </a>
                 <Link
-                  href={`/${locale}/quote`}
+                  href={localePath(locale, "/quote")}
                   className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors"
                 >
                   Get Custom Project Scope

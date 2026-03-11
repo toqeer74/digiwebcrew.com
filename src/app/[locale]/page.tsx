@@ -7,12 +7,12 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { Hero } from "@/components/sections/hero";
 import { FeaturesRow } from "@/components/sections/features-row";
-import { ServicesOverview } from "@/components/sections/services-overview";
 import { AIProjectCalculator } from "@/components/tools/ai-project-calculator";
 import { ServiceConfigurator } from "@/components/tools/service-configurator";
 import { ProcessVisualization } from "@/components/sections/process-visualization";
 import { TechStackDisplay } from "@/components/sections/tech-stack-display";
 import { Testimonials } from "@/components/sections/testimonials";
+import { localePath } from "@/lib/locale-path";
 
 const capabilities = [
   "WordPress Development",
@@ -48,9 +48,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const isRtl = locale === "ar" || locale === "ur";
+  const homeCardClass = "site-card site-card-interactive p-8";
+  const homeCardTitleClass = "site-card-title mb-3 text-2xl font-bold";
+  const homeCardTextClass = "site-card-muted mb-4 text-[15px] leading-7 dark:text-[#D7E3EF]";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0A0F] text-[#F8F8FF]" dir={isRtl ? "rtl" : "ltr"}>
+    <div className="flex min-h-screen flex-col bg-background text-foreground" dir={isRtl ? "rtl" : "ltr"}>
       <Navbar dict={dict} locale={locale} />
       <main className="flex-1">
         <section className="relative">
@@ -59,23 +62,22 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
         <FeaturesRow />
 
-        <ServicesOverview dict={dict} />
-
         <ProcessVisualization />
 
-        <section className="py-24 bg-[#6366F1]/5 border-y border-[#1E1E2E]">
+        <section className="py-16 bg-white border-y border-slate-200 dark:bg-[#0A0A0F] dark:border-[#1E1E2E]">
           <Container>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-start">
-              <div className="space-y-8">
-                <div className="space-y-4">
-                  <h2 className="text-4xl font-black text-[#F8F8FF] tracking-tight leading-tight">
-                    Architect Your <span className="text-[#6366F1]">Enterprise</span> Future
-                  </h2>
-                  <p className="text-lg text-[#94A3B8]">{dict.hero.description}</p>
-                </div>
+            <div className="max-w-4xl mx-auto text-center space-y-3 mb-8">
+              <h2 className="text-3xl xl:text-4xl font-black text-slate-950 tracking-tight leading-tight dark:text-[#F8F8FF]">
+                Architect Your <span className="text-[var(--site-primary)]">Enterprise</span> Future
+              </h2>
+              <p className="text-base xl:text-lg text-slate-600 dark:text-[#94A3B8]">{dict.hero.description}</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              <div className="space-y-6">
                 <AIProjectCalculator />
               </div>
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <ServiceConfigurator />
               </div>
             </div>
@@ -85,22 +87,22 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <TechStackDisplay />
         <Testimonials />
 
-        <section className="pt-32 pb-24 bg-gradient-to-b from-[#0A0A0F] to-[#0F0F18] border-b border-[#1E1E2E]">
+        <section className="border-b border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] pt-12 pb-14 md:pt-16 md:pb-18 dark:border-[#1E1E2E] dark:bg-gradient-to-b dark:from-[#0A0A0F] dark:to-[#0F0F18]">
           <Container>
             <div className="max-w-5xl mx-auto text-center space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-[#6366F1]">Digital Growth Systems</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 dark:bg-[#6366F1]/10 dark:border-[#6366F1]/30">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--site-primary)]" />
+                <span className="text-xs font-semibold uppercase tracking-widest text-[var(--site-primary)]">Digital Growth Systems</span>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+              <h1 className="text-4xl font-bold tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-6xl lg:text-7xl">
                 Custom Websites, Funnels & AI Automation That Turn Traffic Into Qualified Leads
               </h1>
-              <p className="text-lg text-[#94A3B8] max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-lg text-slate-600 dark:text-[#94A3B8]">
                 We design and build custom digital systems that help growth-focused businesses improve visibility, capture better leads, and scale with more confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg text-center">Book Consultation</Link>
-                <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg text-center">Get Custom Project Scope</Link>
+                <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[var(--site-primary)] text-white font-bold rounded-lg text-center shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-colors hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]">Book Consultation</Link>
+                <Link href={localePath(locale, "/quote")} className="rounded-lg border border-slate-300 bg-[var(--site-primary)] px-8 py-4 text-center font-bold text-[var(--site-primary-dark-text)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-colors hover:bg-[var(--site-primary-hover)] dark:border-[#1E1E2E] dark:text-white dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]">Get Custom Project Scope</Link>
               </div>
             </div>
           </Container>
@@ -109,57 +111,41 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <section className="pt-24 pb-24">
           <Container>
             <div className="max-w-6xl mx-auto space-y-8">
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Built for Businesses That Need More Than Just a Website</h2>
-                <p className="text-[#94A3B8]">Digital Web Crew helps businesses build stronger digital foundations through custom websites, funnel systems, SEO improvements, and AI-powered automation.</p>
-              </AnimatedSection>
-
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Core Services Built for Growth</h2>
-                <p className="text-[#94A3B8] mb-4">Our services are structured to help businesses attract attention, convert traffic, improve visibility, and streamline lead handling.</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Link href={`/${locale}/services/custom-software`} className="border border-[#1E1E2E] rounded-lg p-4 bg-[#0F0F18]"><h3 className="font-semibold mb-1">Custom Website Development</h3><p className="text-sm text-[#94A3B8] mb-2">Premium websites built for credibility, performance, and long-term business growth.</p><span className="text-[#6366F1] text-sm font-semibold">Explore Website Development</span></Link>
-                  <Link href={`/${locale}/services/conversion-funnels`} className="border border-[#1E1E2E] rounded-lg p-4 bg-[#0F0F18]"><h3 className="font-semibold mb-1">Conversion Funnels & Landing Pages</h3><p className="text-sm text-[#94A3B8] mb-2">Focused page systems designed to turn traffic into inquiries, consultations, bookings, and qualified leads.</p><span className="text-[#6366F1] text-sm font-semibold">Explore Funnels & Landing Pages</span></Link>
-                  <Link href={`/${locale}/services/ai-chatbots-automation`} className="border border-[#1E1E2E] rounded-lg p-4 bg-[#0F0F18]"><h3 className="font-semibold mb-1">AI Chatbots & Automation</h3><p className="text-sm text-[#94A3B8] mb-2">AI-powered workflows that help capture leads, qualify interest, improve response speed, and reduce manual follow-up.</p><span className="text-[#6366F1] text-sm font-semibold">Explore AI Automation</span></Link>
-                  <Link href={`/${locale}/services/seo-growth-retainers`} className="border border-[#1E1E2E] rounded-lg p-4 bg-[#0F0F18]"><h3 className="font-semibold mb-1">SEO & Growth Retainers</h3><p className="text-sm text-[#94A3B8] mb-2">Ongoing SEO, optimization, updates, and performance support designed to improve visibility and keep your digital systems moving forward.</p><span className="text-[#6366F1] text-sm font-semibold">Explore SEO & Growth</span></Link>
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Built for More Than Basic Websites</h2>
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>Built for More Than Basic Websites</h2>
                 <div className="flex flex-wrap gap-2 mb-3">
                   {capabilities.map((c) => (
-                    <span key={c} className="px-3 py-2 rounded-full border border-[#1E1E2E] text-sm text-[#94A3B8]">{c}</span>
+                    <span key={c} className="rounded-full border border-slate-200 px-3 py-2 text-sm text-slate-600 dark:border-[color:rgba(var(--site-primary-rgb),0.22)] dark:bg-[rgba(var(--site-primary-rgb),0.06)] dark:text-[#C2D2E1]">{c}</span>
                   ))}
                 </div>
-                <p className="text-[#94A3B8]">Whether you need a focused website project or a broader digital growth system, we can shape the right service mix around your goals.</p>
+                <p className={homeCardTextClass}>Whether you need a focused website project or a broader digital growth system, we can shape the right service mix around your goals.</p>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Built for High-Value, Growth-Focused Industries</h2>
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>Built for High-Value, Growth-Focused Industries</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
                   {industries.map((i) => (
-                    <div key={i} className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-4 py-3 text-[#94A3B8]">{i}</div>
+                    <div key={i} className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-slate-600 dark:border-[color:rgba(var(--site-primary-rgb),0.22)] dark:bg-[rgba(var(--site-primary-rgb),0.05)] dark:text-[#D7E3EF]">{i}</div>
                   ))}
                 </div>
-                <Link href={`/${locale}/industries`} className="text-[#6366F1] font-semibold">View Industries We Serve</Link>
+                <Link href={localePath(locale, "/industries")} className="site-card-accent font-semibold">View Industries We Serve</Link>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Selected Work</h2>
-                <p className="text-[#94A3B8] mb-4">From custom websites to automation workflows, our work is built to support real business objectives with stronger design, clearer structure, and better digital performance.</p>
-                <Link href={`/${locale}/case-studies`} className="text-[#6366F1] font-semibold">View Work</Link>
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>Selected Work</h2>
+                <p className={homeCardTextClass}>From custom websites to automation workflows, our work is built to support real business objectives with stronger design, clearer structure, and better digital performance.</p>
+                <Link href={localePath(locale, "/case-studies")} className="site-card-accent font-semibold">View Work</Link>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">A Clear Process from Strategy to Launch</h2>
-                <p className="text-[#94A3B8] mb-4">Discover - Scope - Build - Launch & Grow</p>
-                <Link href={`/${locale}/process`} className="text-[#6366F1] font-semibold">View Full Process</Link>
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>A Clear Process from Strategy to Launch</h2>
+                <p className={homeCardTextClass}>Discover - Scope - Build - Launch & Grow</p>
+                <Link href={localePath(locale, "/process")} className="site-card-accent font-semibold">View Full Process</Link>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">AI Where It Actually Improves Growth</h2>
-                <ul className="space-y-2 text-[#94A3B8]">
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>AI Where It Actually Improves Growth</h2>
+                <ul className="site-card-muted space-y-2 text-[15px] leading-7 dark:text-[#D7E3EF]">
                   <li>AI chat for first-response support</li>
                   <li>Automation for lead capture and routing</li>
                   <li>Workflow systems that reduce manual tasks</li>
@@ -167,34 +153,34 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 </ul>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-3">Starting Pricing</h2>
-                <ul className="space-y-2 text-[#94A3B8] mb-4">
+              <AnimatedSection className={homeCardClass}>
+                <h2 className={homeCardTitleClass}>Starting Pricing</h2>
+                <ul className="site-card-muted mb-6 space-y-2 text-[15px] leading-7 dark:text-[#D7E3EF]">
                   <li>Custom Website Development - Starting at $3,500</li>
                   <li>Conversion Funnels & Landing Pages - Starting at $2,000</li>
                   <li>AI Chatbots & Automation - Starting at $2,500</li>
                   <li>SEO & Growth Retainers - Starting at $1,000/month</li>
                 </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href={`/${locale}/pricing`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg text-center">View Pricing</Link>
-                  <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg text-center">Get Custom Project Scope</Link>
+                  <Link href={localePath(locale, "/pricing")} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg text-center">View Pricing</Link>
+                  <Link href={localePath(locale, "/quote")} className="rounded-lg border border-slate-300 bg-white/90 px-8 py-4 text-center font-bold text-slate-950 dark:border-[color:rgba(var(--site-primary-rgb),0.28)] dark:bg-[rgba(var(--site-primary-rgb),0.06)] dark:text-[#F8F8FF]">Get Custom Project Scope</Link>
                 </div>
               </AnimatedSection>
 
               <AnimatedSection>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Frequently Asked Questions</h2>
                 <Accordion items={faq} />
                 <div className="mt-4">
-                  <Link href={`/${locale}/faqs`} className="text-[#6366F1] font-semibold">View All FAQs</Link>
+                  <Link href={localePath(locale, "/faqs")} className="text-[#6366F1] font-semibold">View All FAQs</Link>
                 </div>
               </AnimatedSection>
 
-              <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-                <h2 className="text-2xl font-bold mb-3">Ready to Build a Smarter Growth System?</h2>
-                <p className="text-[#94A3B8] mb-6">Whether you need a custom website, stronger landing pages, SEO support, or AI automation, we can help you define the right next step.</p>
+              <AnimatedSection className={`${homeCardClass} text-center`}>
+                <h2 className={homeCardTitleClass}>Ready to Build a Smarter Growth System?</h2>
+                <p className="site-card-muted mb-6 text-[15px] leading-7 dark:text-[#D7E3EF]">Whether you need a custom website, stronger landing pages, SEO support, or AI automation, we can help you define the right next step.</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link href={`/${locale}/book-consultation`} className="px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg">Book Consultation</Link>
-                  <Link href={`/${locale}/quote`} className="px-8 py-4 border border-[#1E1E2E] text-[#F8F8FF] font-bold rounded-lg">Get Custom Project Scope</Link>
+                  <Link href={localePath(locale, "/book-consultation")} className="px-8 py-4 bg-[var(--site-primary)] text-white font-bold rounded-lg shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-colors hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]">Book Consultation</Link>
+                  <Link href={localePath(locale, "/quote")} className="rounded-lg border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-[color:rgba(var(--site-primary-rgb),0.28)] dark:bg-[rgba(var(--site-primary-rgb),0.06)] dark:text-[#F8F8FF]">Get Custom Project Scope</Link>
                 </div>
               </AnimatedSection>
             </div>

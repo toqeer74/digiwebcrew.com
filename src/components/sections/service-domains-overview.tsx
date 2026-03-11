@@ -4,7 +4,7 @@ import { serviceDomains } from "@/lib/services-data";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { ArrowRight, Sparkle, Globe, Smartphone, ShoppingCart, Zap, Code2, Server, FileText, Wrench } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { localePath } from "@/lib/locale-path";
 
 const iconMap: Record<string, React.ComponentType<any>> = {
   "Globe": Globe,
@@ -20,17 +20,17 @@ const iconMap: Record<string, React.ComponentType<any>> = {
 export default function ServiceDomainsOverview({ dict, locale }: { dict: any; locale: string }) {
   return (
     <>
-      <AnimatedSection className="text-center max-w-3xl mx-auto mb-20 md:mb-40 bg-[#0A0A0F] py-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-6">
-            <Sparkle size={16} strokeWidth={2.5} className="text-[#6366F1] animate-pulse" />
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+      <AnimatedSection className="mx-auto mb-20 max-w-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-16 text-center dark:bg-[#0A0A0F] md:mb-40">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1">
+            <Sparkle size={16} strokeWidth={2.5} className="animate-pulse text-[var(--site-primary)]" />
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">
               Service Architecture
             </span>
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-8 leading-tight text-[#F8F8FF]">
+          <h1 className="mb-8 text-5xl font-display font-bold leading-tight tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-7xl lg:text-8xl">
             Services Built to Strengthen Growth, Conversion, and Digital Performance
           </h1>
-          <p className="text-lg md:text-xl text-[#94A3B8] font-body leading-relaxed max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8] md:text-xl">
             {dict.services.hubDesc}
           </p>
         </AnimatedSection>
@@ -44,35 +44,35 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
               return (
                 <Link
                   key={domain.slug}
-                  href={`/${locale}/services/${domain.slug}`}
+                  href={localePath(locale, `/services/${domain.slug}`)}
                 >
                   <AnimatedSection
                     delay={i * 0.1}
-                    className="h-full p-6 rounded-lg group cursor-pointer transition-all duration-300 border border-[#1E1E2E] hover:border-[#6366F1]/50 bg-[#13131E] hover:shadow-[0_0_30px_rgba(99,102,241,0.1)] overflow-hidden relative"
+                    className="relative h-full cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white/96 p-6 shadow-[0_16px_32px_-24px_rgba(15,23,42,0.18)] transition-all duration-300 hover:border-[color:rgba(var(--site-primary-rgb),0.35)] hover:shadow-[0_20px_40px_-24px_rgba(15,23,42,0.18)] dark:border-[#1E1E2E] dark:bg-[#13131E] dark:hover:shadow-[0_20px_40px_-24px_rgba(var(--site-primary-rgb),0.18)]"
                   >
                     {/* Decorative background */}
-                    <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-10 bg-[#6366F1] blur-2xl rounded-full transition-opacity duration-500" />
+                    <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[var(--site-primary)] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-10" />
                     
                     <div className="relative z-10">
                       {/* Icon */}
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 bg-[#6366F1]/10 text-[#6366F1]">
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[rgba(var(--site-primary-rgb),0.08)] text-[var(--site-primary)] transition-all duration-300 group-hover:scale-110">
                         <Icon size={24} strokeWidth={2} />
                       </div>
 
                       {/* Content */}
-                      <h3 className="text-lg font-display font-bold tracking-tight mb-2 text-[#F8F8FF] group-hover:text-[#6366F1] transition-colors">
+                      <h3 className="mb-2 text-lg font-display font-bold tracking-tight text-slate-950 transition-colors group-hover:text-[var(--site-primary)] dark:text-[#F8F8FF]">
                         {domain.title}
                       </h3>
-                      <p className="text-sm text-[#94A3B8] font-body leading-relaxed mb-6">
+                      <p className="mb-6 font-body text-sm leading-relaxed text-slate-600 dark:text-[#94A3B8]">
                         {domain.description}
                       </p>
 
                       {/* Service Count */}
-                      <div className="flex items-center justify-between pt-4 border-t border-[#1E1E2E]">
-                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#94A3B8]">
+                      <div className="flex items-center justify-between pt-2">
+                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8]">
                           {domain.categories.length} Service{domain.categories.length !== 1 ? 's' : ''}
                         </span>
-                        <ArrowRight size={16} className="text-[#6366F1] group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={16} className="text-[var(--site-primary)] transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
                   </AnimatedSection>
@@ -84,22 +84,22 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
 
         {/* Premium CTA Section */}
         <AnimatedSection>
-          <div className="relative p-12 md:p-20 rounded-2xl bg-gradient-to-br from-indigo-900/40 to-violet-900/30 border border-indigo-500/20 overflow-hidden group">
+          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 shadow-[0_20px_44px_-28px_rgba(15,23,42,0.18)] dark:border-indigo-500/20 dark:bg-gradient-to-br dark:from-indigo-900/40 dark:to-violet-900/30 md:p-20">
             {/* Decorative orb */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/10 blur-[100px] rounded-full opacity-50 group-hover:opacity-70 transition-opacity duration-700" />
+            <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] opacity-50 blur-[100px] transition-opacity duration-700 group-hover:opacity-70 dark:bg-indigo-600/10" />
 
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
               <div className="max-w-2xl">
-                <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-4 text-[#F8F8FF]">
+                <h2 className="mb-4 text-3xl font-display font-bold tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl">
                   {dict.services.customSolution}
                 </h2>
-                <p className="text-lg text-[#94A3B8] font-body leading-relaxed">
+                <p className="font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]">
                   {dict.services.customSolutionDesc}
                 </p>
               </div>
               <Link
-                href={`/${locale}/quote`}
-                className="flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-[#6366F1] hover:bg-[#6366F1]/90 text-white font-body font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0"
+                href={localePath(locale, "/quote")}
+                className="flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[var(--site-primary)] px-8 py-3 font-body font-semibold text-white transition-all duration-200 hover:bg-[var(--site-primary-hover)]"
               >
                 <span>{dict.services.getQuote}</span>
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />

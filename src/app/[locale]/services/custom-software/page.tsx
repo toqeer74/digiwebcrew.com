@@ -5,6 +5,7 @@ import { QuoteWizard } from "@/components/sections/quote-wizard";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Link from "next/link";
+import { localePath } from "@/lib/locale-path";
 
 const legacyFeatures = [
   "Enterprise Architecture",
@@ -59,7 +60,7 @@ export default async function CustomSoftwarePage({
                 <a href="#custom-software-scope" className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Start Custom Software Scope
                 </a>
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Book Consultation
                 </Link>
               </div>
@@ -114,7 +115,7 @@ export default async function CustomSoftwarePage({
                 {webDevRelatedServices.map((service) => (
                   <Link
                     key={service.href}
-                    href={`/${locale}${service.href}`}
+                    href={localePath(locale, service.href)}
                     className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-4 py-3 text-[#94A3B8] hover:text-[#F8F8FF] hover:border-[#6366F1]/50 transition-colors"
                   >
                     {service.label}
@@ -122,7 +123,7 @@ export default async function CustomSoftwarePage({
                 ))}
               </div>
               <Link
-                href={`/${locale}/services`}
+                href={localePath(locale, "/services")}
                 className="inline-flex items-center justify-center px-6 py-3 bg-[#6366F1] text-white font-semibold rounded-lg hover:bg-[#6366F1]/90 transition-colors"
               >
                 View All Services

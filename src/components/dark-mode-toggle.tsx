@@ -7,31 +7,29 @@ import { Sun, Moon } from "lucide-react";
 export function DarkModeToggle() {
     const [darkMode, setDarkMode] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const applyTheme = (isDark: boolean) => {
+        const html = document.documentElement;
+        html.classList.toggle("dark", isDark);
+        html.classList.toggle("light", !isDark);
+        html.setAttribute("data-theme", isDark ? "dark" : "light");
+        html.style.colorScheme = isDark ? "dark" : "light";
+    };
 
     // Initial setup: check system preference and localStorage
     useEffect(() => {
         setMounted(true);
-        const isDark = localStorage.getItem("darkMode") === "true" ||
-            (!localStorage.getItem("darkMode") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        const savedTheme = localStorage.getItem("theme");
+        const isDark = savedTheme ? savedTheme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
 
         setDarkMode(isDark);
-        if (isDark) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
+        applyTheme(isDark);
     }, []);
 
     const toggleDarkMode = () => {
         const newDarkMode = !darkMode;
         setDarkMode(newDarkMode);
-        localStorage.setItem("darkMode", String(newDarkMode));
-
-        if (newDarkMode) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
+        localStorage.setItem("theme", newDarkMode ? "dark" : "light");
+        applyTheme(newDarkMode);
     };
 
     // Prevent hydration mismatch

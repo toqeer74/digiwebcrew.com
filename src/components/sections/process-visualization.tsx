@@ -15,52 +15,60 @@ const stages = [
   {
     icon: Search,
     title: "Discovery & Logic Mapping",
-    description: "Deep dive into business logic, user journeys, and technical architecture.",
-    color: "bg-[#6366F1]",
-    delay: 0.1
+    description: "Deep dive into business logic, user journeys, and technical architecture."
   },
   {
     icon: PenTool,
     title: "High-Fidelity Prototyping",
-    description: "Creating interactive blueprints to validate UX before coding starts.",
-    color: "bg-[#6366F1]",
-    delay: 0.2
+    description: "Interactive blueprints to validate UX and user flows before development."
   },
   {
     icon: Code2,
     title: "Agile Development Sprints",
-    description: "Clean, scalable code delivered in iterative cycles with regular demos.",
-    color: "bg-[#6366F1]",
-    delay: 0.3
+    description: "Scalable code shipped in iterative cycles with clear demos and milestones."
   },
   {
     icon: CheckCircle2,
     title: "Automated QA Testing",
-    description: "Comprehensive unit, integration, and performance testing protocols.",
-    color: "bg-[#6366F1]",
-    delay: 0.4
+    description: "Unit, integration, and performance testing to ensure reliability at launch."
   },
   {
     icon: Rocket,
     title: "Deployment & Scaling",
-    description: "Production launch with active monitoring and performance optimization.",
-    color: "bg-[#6366F1]",
-    delay: 0.5
+    description: "Go-live, monitoring, and optimization for speed, security, and growth."
   }
+];
+
+const sprintItems: Array<{
+  label: string;
+  status: "todo" | "doing" | "review" | "done";
+}> = [
+  { label: "Home hero", status: "done" },
+  { label: "Services mega menu", status: "doing" },
+  { label: "Pricing blocks", status: "review" },
+  { label: "Process timeline", status: "doing" },
+  { label: "Case studies grid", status: "todo" },
+  { label: "About story", status: "todo" },
+  { label: "Contact form", status: "review" },
+  { label: "Book consultation", status: "doing" },
+  { label: "SEO landing", status: "todo" },
+  { label: "AI chatbots", status: "todo" },
+  { label: "Performance pass", status: "review" },
+  { label: "Launch checklist", status: "todo" }
 ];
 
 export function ProcessVisualization() {
   return (
-    <section className="py-24 bg-[#0A0A0F] overflow-hidden">
+    <section className="py-24 bg-white dark:bg-[#0A0A0F]">
       <Container>
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold uppercase tracking-widest mb-4 border border-[#6366F1]/30"
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.22)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] animate-pulse dark:bg-[var(--site-primary-soft)]" />
             Our Methodology
           </motion.div>
           <motion.h2
@@ -68,82 +76,145 @@ export function ProcessVisualization() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-black text-[#F8F8FF] tracking-tight mb-6"
+            className="text-4xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-6 dark:text-[#F8F8FF]"
           >
             Engineering Excellence, <br />
-            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">By Design</span>
+            <span className="text-[var(--site-primary-soft)]">By Design</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-[#94A3B8] font-body font-medium"
+            className="text-lg text-slate-600 font-body font-medium dark:text-[#B7CADB]"
           >
             A proven 5-stage framework that transforms complex challenges into scalable, production-ready digital assets.
           </motion.p>
         </div>
 
-        <div className="relative">
-          <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-[#1E1E2E] -translate-y-1/2 -z-10" />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {stages.map((stage, idx) => (
-              <motion.div
-                key={stage.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: stage.delay, type: "spring", stiffness: 100 }}
-                className="group relative"
-              >
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-8xl font-black text-[#6366F1]/10 -z-10 transition-colors group-hover:text-[#6366F1]/20">
-                  {idx + 1}
-                </div>
-
-                <div className="bg-[#13131E] rounded-3xl p-8 border border-[#1E1E2E] shadow-sm hover:border-[#6366F1]/40 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[#6366F1]/10 flex flex-col items-center text-center h-full">
-                  <div className={cn(
-                    "w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-6 shadow-sm",
-                    stage.color
-                  )}>
-                    <stage.icon size={32} />
-                  </div>
-                  <h4 className="text-xl font-display font-bold text-[#F8F8FF] mb-4 line-tight">
-                    {stage.title}
-                  </h4>
-                  <p className="text-sm text-[#94A3B8] font-body leading-relaxed">
-                    {stage.description}
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, x: -18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="relative mb-16 lg:mb-0"
+          >
+            <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.16),transparent_55%),linear-gradient(180deg,#ffffff,rgba(248,250,252,0.75))] shadow-[0_28px_80px_-48px_rgba(15,23,42,0.45)] dark:border-[#123040] dark:bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.28),transparent_55%),linear-gradient(180deg,rgba(8,14,20,0.92),rgba(8,14,20,0.72))] dark:shadow-[0_38px_90px_-56px_rgba(0,0,0,0.85)]">
+              <div className="aspect-[4/3] w-full" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.9),transparent_55%)] dark:bg-[linear-gradient(90deg,rgba(2,7,11,0.82),transparent_55%)]" />
+              <div className="absolute inset-0 p-7 sm:p-10">
+                <div className="max-w-[270px]">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-[#9FB3C6]">
+                    Project Workspace
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-extrabold tracking-tight text-slate-900 dark:text-[#F8FBFF]">
+                    Clear milestones.<br />Fast feedback loops.
+                  </h3>
+                  <p className="mt-3 text-sm font-body font-medium text-slate-600 dark:text-[#B7CADB]">
+                    Visual prototypes, sprint demos, and QA reports—all in one streamlined flow.
                   </p>
                 </div>
+              </div>
+            </div>
 
-                {idx < stages.length - 1 && (
-                  <div className="lg:hidden flex justify-center py-4">
-                    <div className="w-0.5 h-8 bg-[#1E1E2E]" />
+            <div className="absolute -bottom-10 right-0 w-[86%] max-w-[420px] rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_24px_70px_-52px_rgba(15,23,42,0.45)] backdrop-blur-lg sm:-bottom-12 sm:p-6 lg:-right-6 dark:border-[#123040] dark:bg-[#07131C]/72 dark:shadow-[0_28px_80px_-58px_rgba(0,0,0,0.9)]">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-display font-extrabold text-slate-900 dark:text-[#F8FBFF]">
+                  Sprint Board
+                </p>
+                <span className="rounded-full border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-[rgba(var(--site-primary-rgb),0.10)] px-2.5 py-1 text-[11px] font-semibold text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
+                  Live
+                </span>
+              </div>
+              <div className="mt-4 grid grid-cols-4 gap-3">
+                {sprintItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className={cn(
+                      "flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-2",
+                      "dark:border-[#123040] dark:bg-[#0C1822]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "h-2 w-2 rounded-full",
+                        item.status === "done" && "bg-emerald-500/80",
+                        item.status === "doing" && "bg-[var(--site-primary)]",
+                        item.status === "review" && "bg-amber-500/80",
+                        item.status === "todo" && "bg-slate-300 dark:bg-[#2A3A46]"
+                      )}
+                      aria-hidden="true"
+                    />
+                    <span className="min-w-0 truncate text-[11px] font-semibold text-slate-700 dark:text-[#CFE2F2]">
+                      {item.label}
+                    </span>
                   </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="absolute left-[58%] top-[52%] hidden -translate-y-1/2 lg:block">
+              <div className="rounded-full border border-[color:rgba(var(--site-primary-rgb),0.28)] bg-[rgba(var(--site-primary-rgb),0.10)] px-4 py-2 text-xs font-semibold text-[var(--site-primary)] shadow-[0_16px_50px_-38px_rgba(0,0,0,0.22)] backdrop-blur-md dark:text-[var(--site-primary-soft)] dark:shadow-[0_16px_50px_-38px_rgba(var(--site-primary-rgb),0.55)]">
+                Start with Discovery
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
+          >
+            <div className="relative">
+              <div className="pointer-events-none absolute left-[18px] top-1 bottom-1 w-px bg-slate-200 dark:bg-[#123040]" aria-hidden="true" />
+              <ol className="space-y-10">
+                {stages.map((stage, idx) => {
+                  const Icon = stage.icon;
+                  const isActive = idx === 0;
+                  return (
+                    <li key={stage.title} className="relative pl-12">
+                      <div className="absolute left-[18px] top-2 -translate-x-1/2" aria-hidden="true">
+                        <span
+                          className={cn(
+                            "grid h-9 w-9 place-items-center rounded-xl border shadow-[0_14px_30px_-18px_rgba(15,23,42,0.35)]",
+                            isActive
+                              ? "border-[color:rgba(var(--site-primary-rgb),0.38)] bg-[rgba(var(--site-primary-rgb),0.14)] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]"
+                              : "border-slate-200 bg-white text-slate-500 dark:border-[#123040] dark:bg-[#0C1822] dark:text-[#9FB3C6]"
+                          )}
+                        >
+                          <Icon size={16} />
+                        </span>
+                      </div>
+
+                      <div>
+                        <p className="text-base font-display font-extrabold text-slate-900 dark:text-[#F8FBFF]">
+                          {stage.title}
+                        </p>
+                        <p className="mt-1 text-sm font-body font-medium text-slate-600 dark:text-[#B7CADB]">
+                          {stage.description}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+
+            <div className="mt-12">
+              <div className="inline-flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-[#123040] dark:bg-[#0C1822] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-6">
+                <p className="text-sm font-body font-bold text-slate-600 dark:text-[#94A3B8]">
+                  Ready to initiate the first stage?
+                </p>
+                <button className="rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-[var(--site-primary)] px-7 py-3 text-sm font-display font-extrabold uppercase tracking-widest text-white transition-all shadow-[0_14px_34px_-18px_rgba(0,0,0,0.26)] hover:bg-[var(--site-primary-hover)] active:scale-95 dark:shadow-[0_14px_34px_-18px_rgba(var(--site-primary-rgb),0.62)]">
+                  Start Discovery Phase
+                </button>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.7 }}
-          className="mt-20 text-center"
-        >
-          <div className="inline-block p-1 rounded-2xl bg-[#13131E] border border-[#1E1E2E]">
-            <div className="flex flex-col md:flex-row items-center gap-6 px-8 py-4">
-              <p className="text-sm font-body font-bold text-[#94A3B8]">
-                Ready to initiate the first stage?
-              </p>
-              <button className="px-8 py-3 bg-[#6366F1] text-white font-display font-extrabold text-sm rounded-xl hover:scale-105 active:scale-95 transition-all shadow-sm uppercase tracking-widest">
-                Start Discovery Phase
-              </button>
-            </div>
-          </div>
-        </motion.div>
       </Container>
     </section>
   );

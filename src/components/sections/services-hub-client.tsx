@@ -8,6 +8,7 @@ import { ArrowRight, Sparkle, Filter, Code2, Globe, ShoppingCart, Zap } from "lu
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { localePath } from "@/lib/locale-path";
 
 export default function ServicesHub({ dict, locale }: { dict: any; locale: string }) {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -66,7 +67,7 @@ export default function ServicesHub({ dict, locale }: { dict: any; locale: strin
               title={service.title}
               description={service.description}
               iconName={service.iconName}
-              href={`/${locale}/services/${service.slug}`}
+              href={localePath(locale, `/services/${service.slug}`)}
               index={i}
             />
           ))}
@@ -98,7 +99,7 @@ export default function ServicesHub({ dict, locale }: { dict: any; locale: strin
                     {tech.description}
                   </p>
                   <Link
-                    href={`/${locale}/tech/${tech.slug}`}
+                    href={localePath(locale, `/tech/${tech.slug}`)}
                     className="flex h-16 items-center justify-center rounded-xl bg-[#13131E] text-[#F8F8FF] font-display font-extrabold text-[11px] uppercase tracking-[0.2em] transition-all hover:border-[#6366F1]/50 hover:scale-[1.02] active:scale-95 border border-[#1E1E2E] shadow-sm hover:shadow-[#6366F1]/10"
                   >
                     View Tech Laboratory
@@ -125,7 +126,7 @@ export default function ServicesHub({ dict, locale }: { dict: any; locale: strin
                 </p>
               </div>
               <Link
-                href={`/${locale}/quote`}
+                href={localePath(locale, "/quote")}
                 className="group flex h-20 items-center justify-center rounded-xl bg-white text-[#0A0A0F] font-display font-extrabold text-[13px] px-12 uppercase tracking-[0.2em] transition-all hover:bg-gray-50 hover:scale-[1.02] active:scale-95 border border-white shadow-xl shadow-[#6366F1]/10 whitespace-nowrap"
               >
                 <span>{dict.services.getQuote}</span>

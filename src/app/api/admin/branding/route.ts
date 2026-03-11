@@ -3,18 +3,7 @@ import { connectToDatabase } from "@/lib/db";
 import { Setting } from "@/lib/models/setting";
 import { requireAdminSession } from "@/lib/auth-middleware";
 import { logAudit } from "@/lib/audit";
-
-type BrandingConfig = {
-  siteName: string;
-  primaryColor: string;
-  logoDataUrl: string;
-};
-
-const DEFAULT_BRANDING_CONFIG: BrandingConfig = {
-  siteName: "Software Lab",
-  primaryColor: "#7C3AED",
-  logoDataUrl: "",
-};
+import { BrandingConfig, DEFAULT_BRANDING_CONFIG } from "@/lib/branding-shared";
 
 async function getBrandingConfig(): Promise<BrandingConfig> {
   await connectToDatabase();

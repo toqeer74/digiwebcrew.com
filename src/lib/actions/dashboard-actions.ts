@@ -23,7 +23,7 @@ export async function getDashboardStats() {
         chatCount: 0,
         draftCount: 0,
         statusPipeline: { ...EMPTY_PIPELINE },
-        brandingConfig: { siteName: "Software Lab" },
+        brandingConfig: { siteName: "Digi Web Crew" },
         recentLeads: [],
         recentEvents: [
           { title: "Database connection disabled in development", time: "Just now", type: "info" }
@@ -40,7 +40,7 @@ export async function getDashboardStats() {
         chatCount: 0,
         draftCount: 0,
         statusPipeline: { ...EMPTY_PIPELINE },
-        brandingConfig: { siteName: "Software Lab" },
+        brandingConfig: { siteName: "Digi Web Crew" },
         recentLeads: [],
         recentEvents: [
           { title: "Database connection unavailable", time: "Just now", type: "warning" }

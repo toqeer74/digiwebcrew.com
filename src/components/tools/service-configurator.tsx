@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { useToolTracking, useFormTracking } from "@/lib/tracking-hooks";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { localePath } from "@/lib/locale-path";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -28,7 +29,7 @@ interface ConfigValues {
 
 export function ServiceConfigurator() {
   const params = useParams();
-  const locale = params?.locale || "en";
+  const locale = typeof params?.locale === "string" ? params.locale : "en";
   const [step, setStep] = useState<Step>(1);
   const [config, setConfig] = useState<ConfigValues>({
     tier: "Standard",
@@ -52,7 +53,7 @@ export function ServiceConfigurator() {
       case 1:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-            <div className="flex items-center gap-3 mb-6"><Layers className="text-[#6366F1]" /><h4 className="text-lg font-bold text-[#F8F8FF]">Project Tier</h4></div>
+            <div className="mb-6 flex items-center gap-3"><Layers className="text-[var(--site-primary)] dark:text-[#6EA3E6]" /><h4 className="text-lg font-bold text-slate-950 dark:text-[#F8F8FF]">Project Tier</h4></div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {(["MVP", "Standard", "Enterprise"] as const).map((tier) => (
                 <button
@@ -60,11 +61,11 @@ export function ServiceConfigurator() {
                   onClick={() => setConfig({ ...config, tier })}
                   className={cn(
                     "p-6 rounded-2xl border-2 text-left transition-all",
-                    config.tier === tier ? "border-[#6366F1] bg-[#6366F1]/5 ring-4 ring-[#6366F1]/10" : "border-[#1E1E2E] hover:border-[#6366F1]/30"
+                    config.tier === tier ? "border-[#3A6FB8] bg-white ring-4 ring-[#114B97]/15 text-slate-950 shadow-[0_12px_24px_-18px_rgba(0,0,0,0.18)] dark:bg-[linear-gradient(180deg,rgba(23,37,53,0.98),rgba(11,19,31,0.99))] dark:text-inherit dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" : "border-slate-300 bg-slate-50 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:hover:border-[#4A86C8] dark:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
                   )}
                 >
-                  <p className="font-black text-xl mb-2 text-[#F8F8FF]">{tier}</p>
-                  <p className="text-xs text-[#94A3B8]">
+                  <p className="mb-2 text-xl font-black text-slate-950 dark:text-[#F8F8FF]">{tier}</p>
+                  <p className="text-xs text-slate-600 dark:text-[#94A3B8]">
                     {tier === "MVP" && "Rapid launch focus"}
                     {tier === "Standard" && "Scale & performance"}
                     {tier === "Enterprise" && "Complex infrastructure"}
@@ -77,7 +78,7 @@ export function ServiceConfigurator() {
       case 2:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-            <div className="flex items-center gap-3 mb-6"><Settings className="text-[#6366F1]" /><h4 className="text-lg font-bold text-[#F8F8FF]">Tech Stack</h4></div>
+            <div className="mb-6 flex items-center gap-3"><Settings className="text-[var(--site-primary)] dark:text-[#6EA3E6]" /><h4 className="text-lg font-bold text-slate-950 dark:text-[#F8F8FF]">Tech Stack</h4></div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {["Next.js", "Django", "Tailwind CSS", "PostgreSQL", "AWS", "Python", "React Native", "Docker"].map((tech) => (
                 <button
@@ -88,7 +89,7 @@ export function ServiceConfigurator() {
                   }}
                   className={cn(
                     "p-4 rounded-xl border text-sm font-bold transition-all flex items-center justify-between",
-                    config.stack.includes(tech) ? "border-[#6366F1] bg-[#6366F1] text-[#F8F8FF]" : "border-[#1E1E2E] text-[#94A3B8]"
+                    config.stack.includes(tech) ? "border-[#3A6FB8] bg-[#114B97] text-white" : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#D5DEEB] dark:hover:border-[#4A86C8]"
                   )}
                 >
                   {tech}
@@ -101,7 +102,7 @@ export function ServiceConfigurator() {
       case 3:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-            <div className="flex items-center gap-3 mb-6"><Shield className="text-[#6366F1]" /><h4 className="text-lg font-bold text-[#F8F8FF]">Security & Compliance</h4></div>
+            <div className="mb-6 flex items-center gap-3"><Shield className="text-[var(--site-primary)] dark:text-[#6EA3E6]" /><h4 className="text-lg font-bold text-slate-950 dark:text-[#F8F8FF]">Security & Compliance</h4></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {["SSL Encryption", "JWT Auth", "Two-Factor Auth", "SOC2 Compliance", "HIPAA Ready", "GDPR Guard"].map((sec) => (
                 <button
@@ -112,10 +113,10 @@ export function ServiceConfigurator() {
                   }}
                   className={cn(
                     "p-4 rounded-xl border text-sm font-bold transition-all flex items-center gap-3",
-                    config.security.includes(sec) ? "border-[#6366F1] bg-[#6366F1]/5 text-[#6366F1]" : "border-[#1E1E2E] text-[#94A3B8]"
+                    config.security.includes(sec) ? "border-[#3A6FB8] bg-white text-[var(--site-primary)] dark:bg-[linear-gradient(180deg,rgba(23,37,53,0.98),rgba(11,19,31,0.99))] dark:text-[#6EA3E6]" : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#D5DEEB] dark:hover:border-[#4A86C8]"
                   )}
                 >
-                  <div className={cn("w-5 h-5 rounded border flex items-center justify-center", config.security.includes(sec) ? "bg-[#6366F1] border-[#6366F1] text-[#F8F8FF]" : "border-[#1E1E2E]")}>
+                  <div className={cn("flex h-5 w-5 items-center justify-center rounded border", config.security.includes(sec) ? "border-[#3A6FB8] bg-[#114B97] text-white" : "border-slate-300 bg-slate-100 dark:border-[#123040] dark:bg-[#10202C]")}>
                     {config.security.includes(sec) && <CheckCircle2 size={12} />}
                   </div>
                   {sec}
@@ -127,21 +128,21 @@ export function ServiceConfigurator() {
       case 4:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-            <div className="flex items-center gap-3 mb-6"><FileText className="text-[#6366F1]" /><h4 className="text-lg font-bold text-[#F8F8FF]">Review Your Scope</h4></div>
-            <div className="bg-[#13131E]/40 p-6 rounded-2xl border border-[#1E1E2E]">
+            <div className="mb-6 flex items-center gap-3"><FileText className="text-[var(--site-primary)] dark:text-[#6EA3E6]" /><h4 className="text-lg font-bold text-slate-950 dark:text-[#F8F8FF]">Review Your Scope</h4></div>
+            <div className="rounded-2xl border border-slate-200 bg-white/96 p-6 shadow-[0_18px_36px_-24px_rgba(0,0,0,0.12)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(22,36,52,0.98),rgba(12,20,32,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_40px_-30px_rgba(17,75,151,0.18)]">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <p className="text-xs font-black text-[#94A3B8] uppercase tracking-widest mb-2">Project Architecture</p>
-                  <p className="text-xl font-black text-[#F8F8FF] mb-4">{config.tier} Infrastructure</p>
-                  <p className="text-xs font-black text-[#94A3B8] uppercase tracking-widest mb-2">Technical Core</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-2">Project Architecture</p>
+                  <p className="text-xl font-black text-slate-950 dark:text-[#F8F8FF] mb-4">{config.tier} Infrastructure</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-2">Technical Core</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {config.stack.map((s) => (
-                      <span key={s} className="px-2 py-1 bg-[#6366F1]/10 text-[#6366F1] rounded text-[10px] font-bold uppercase">{s}</span>
+                      <span key={s} className="rounded px-2 py-1 text-[10px] font-bold uppercase bg-[rgba(var(--site-primary-rgb),0.1)] text-[var(--site-primary)] dark:bg-[#114B97]/12 dark:text-[#6EA3E6]">{s}</span>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-black text-[#94A3B8] uppercase tracking-widest mb-2">Security Standard</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-2">Security Standard</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {config.security.map((s) => (
                       <span key={s} className="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded text-[10px] font-bold uppercase">{s}</span>
@@ -152,18 +153,18 @@ export function ServiceConfigurator() {
             </div>
 
             <div className="pt-6 space-y-4">
-              <button
+            <button
                 onClick={() => {
                   trackPdfDownload({ documentName: "Custom_Service_Config", documentType: "scope_pdf" });
                   trackConfiguratorComplete({ tier: config.tier, stack: config.stack, maintenance: config.maintenance });
                 }}
-                className="w-full py-4 bg-[#13131E] text-[#F8F8FF] font-black text-sm uppercase tracking-wider rounded-xl transition-all border border-[#1E1E2E] hover:bg-[#1E1E2E] hover:border-[#6366F1]/50 flex items-center justify-center gap-3"
+                className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-300 bg-white py-4 text-sm font-black uppercase tracking-wider text-slate-950 transition-all hover:border-[color:rgba(var(--site-primary-rgb),0.4)] hover:bg-slate-50 dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#F8F8FF] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] dark:hover:border-[#4A86C8] dark:hover:bg-[linear-gradient(180deg,rgba(24,38,54,0.98),rgba(12,21,34,0.98))]"
               >
                 <FileText size={18} />
                 Download Scope PDF
               </button>
 
-              <Link href={`/${locale}/quote`} className="w-full py-4 bg-[#6366F1] text-[#F8F8FF] font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-sm hover:scale-[1.02] hover:shadow-[#6366F1]/30 flex items-center justify-center gap-3">
+              <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-4 text-sm font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
                 <Mail size={18} />
                 Initiate Industrial Quote
               </Link>
@@ -174,27 +175,27 @@ export function ServiceConfigurator() {
   };
 
   return (
-    <div className="bg-[#13131E] rounded-3xl p-8 md:p-10 border border-[#1E1E2E] shadow-lg overflow-hidden">
-      <div className="flex items-center gap-2 mb-10">
+    <div className="h-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(27,40,57,0.98),rgba(12,20,33,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7">
+      <div className="flex items-center gap-2 mb-7">
         {[1, 2, 3, 4].map((s) => (
-          <div key={s} className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", s <= step ? "bg-[#6366F1]" : "bg-[#6366F1]/20")} />
+          <div key={s} className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", s <= step ? "bg-[#114B97]" : "bg-[#123040]")} />
         ))}
       </div>
 
-      <div className="min-h-[400px]"><AnimatePresence mode="wait">{renderStep()}</AnimatePresence></div>
+      <div className="min-h-[300px]"><AnimatePresence mode="wait">{renderStep()}</AnimatePresence></div>
 
-      <div className="mt-10 flex items-center justify-between border-t border-[#1E1E2E] pt-8">
+      <div className="mt-6 flex items-center justify-between border-t border-[#123040] pt-6">
         <button
           onClick={prevStep}
           disabled={step === 1}
-          className={cn("flex items-center gap-2 text-sm font-bold transition-all", step === 1 ? "opacity-0 pointer-events-none" : "text-[#94A3B8] hover:text-[#F8F8FF]")}
+          className={cn("flex items-center gap-2 text-sm font-bold transition-all", step === 1 ? "pointer-events-none opacity-0" : "text-slate-500 hover:text-slate-950 dark:text-[#94A3B8] dark:hover:text-[#F8F8FF]")}
         >
           <ChevronLeft size={18} />
           Back
         </button>
 
         {step < 4 && (
-          <button onClick={nextStep} className="px-8 py-3 bg-[#6366F1] text-[#F8F8FF] font-extrabold text-sm rounded-xl shadow-sm hover:shadow-[#6366F1]/30 hover:scale-105 transition-all flex items-center gap-2 uppercase tracking-widest">
+          <button onClick={nextStep} className="flex items-center gap-2 rounded-full border border-[#3A6FB8] bg-[#114B97] px-8 py-3 text-sm font-extrabold uppercase tracking-widest text-white shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] transition-all hover:scale-105 hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
             Inhale Strategy
             <ChevronRight size={18} />
           </button>
@@ -203,3 +204,4 @@ export function ServiceConfigurator() {
     </div>
   );
 }
+

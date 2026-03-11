@@ -12,36 +12,47 @@ const ThemeContext = createContext<ThemeContextType>({
   toggleTheme: () => {},
 });
 
+const THEME_STORAGE_KEY = "theme";
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    // Get initial theme from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const shouldBeDark = savedTheme ? savedTheme === "dark" : prefersDark;
-    
-    setIsDark(shouldBeDark);
-    applyTheme(shouldBeDark);
-  }, []);
-
   const applyTheme = (dark: boolean) => {
     const html = document.documentElement;
-    if (dark) {
-      html.classList.add("dark");
-      html.removeAttribute("data-theme");
-    } else {
-      html.classList.remove("dark");
-      html.setAttribute("data-theme", "light");
-    }
+    html.classList.toggle("dark", dark);
+    html.classList.toggle("light", !dark);
+    html.setAttribute("data-theme", dark ? "dark" : "light");
+    html.style.colorScheme = dark ? "dark" : "light";
   };
+
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const shouldBeDark = savedTheme ? savedTheme === "dark" : prefersDark;
+
+    setIsDark(shouldBeDark);
+    applyTheme(shouldBeDark);
+
+    if (savedTheme) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsDark(event.matches);
+      applyTheme(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const toggleTheme = () => {
     const newDarkMode = !isDark;
     setIsDark(newDarkMode);
-    localStorage.setItem("theme", newDarkMode ? "dark" : "light");
+    localStorage.setItem(THEME_STORAGE_KEY, newDarkMode ? "dark" : "light");
     applyTheme(newDarkMode);
   };
 

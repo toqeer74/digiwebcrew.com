@@ -35,24 +35,25 @@ export function ServiceCard({
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: index * 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
       className={cn(
-        "group relative p-8 rounded-3xl bg-[#13131E] border border-[#1E1E2E] transition-all duration-500 shadow-sm hover:shadow-lg hover:shadow-[#6366F1]/10 hover:-translate-y-1 overflow-hidden flex flex-col items-center text-center h-full",
-        isHighlighted && "ring-4 ring-[#6366F1]/10 border-[#6366F1]/40 z-10"
+        "site-card site-card-interactive group relative flex h-full flex-col p-8 text-left duration-500",
+        isHighlighted &&
+          "z-10 border-[color:rgba(var(--site-primary-rgb),0.34)] ring-4 ring-[rgba(var(--site-primary-rgb),0.08)] dark:border-[color:rgba(var(--site-primary-rgb),0.42)] dark:ring-[rgba(var(--site-primary-rgb),0.14)]"
       )}
     >
-      <div className="w-16 h-16 rounded-2xl bg-[#6366F1]/10 flex items-center justify-center mb-6 text-[#6366F1] transition-all duration-500 group-hover:scale-110 group-hover:bg-[#6366F1] group-hover:text-white group-hover:rotate-6 shadow-sm">
+      <div className="site-card-icon mb-8 flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:bg-[rgba(var(--site-primary-rgb),0.14)]">
         <Icon size={32} strokeWidth={1.5} />
       </div>
 
-      <h3 className="text-xl font-display font-bold mb-4 tracking-tight text-[#F8F8FF] group-hover:text-[#6366F1] transition-colors leading-tight">
+      <h3 className="site-card-title mb-4 text-[2rem] font-display font-bold leading-tight tracking-tight">
         {title}
       </h3>
 
-      <p className="text-sm text-[#94A3B8] font-body mb-8 leading-relaxed font-medium flex-1">
+      <p className="site-card-muted mb-10 flex-1 font-body text-[1.05rem] font-medium leading-relaxed">
         {description}
       </p>
 
-      <div className="mt-auto relative z-20">
-        <span className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#6366F1]/10 text-[#6366F1] font-display font-bold text-xs uppercase tracking-widest group-hover:bg-[#6366F1] group-hover:text-white group-hover:scale-105 transition-all border border-[#6366F1]/30 group-hover:border-[#6366F1]">
+      <div className="relative z-20 mt-auto pt-2">
+        <span className="site-card-accent inline-flex items-center gap-2 text-sm font-display font-semibold uppercase tracking-[0.2em]">
           <span>Explore</span>
           <ArrowRight size={14} strokeWidth={2.5} />
         </span>
@@ -60,7 +61,7 @@ export function ServiceCard({
 
       <Link href={href} className="absolute inset-0 z-10" aria-label={`Explore ${title}`} />
 
-      <div className="absolute inset-0 bg-gradient-to-br from-[#6366F1]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24 bg-[radial-gradient(circle_at_bottom,rgba(var(--site-primary-rgb),0.3),transparent_68%)] opacity-70 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
     </motion.div>
   );
 }

@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { locales } from '@/types/i18n';
 import { serviceCatalog, techLabs } from '@/lib/services-data';
 import { getBlogPosts, getCaseStudies } from '@/lib/content-engine';
+import { localePath } from '@/lib/locale-path';
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://software-lab.com';
 
@@ -10,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const studies = await getCaseStudies();
 
   const routes = [
-    '',
+    '/',
     '/services',
     '/tech',
     '/process',
@@ -24,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes for each locale
   const staticEntries = locales.flatMap(locale => 
     routes.map(route => ({
-      url: `${baseUrl}/${locale}${route}`,
+      url: `${baseUrl}${localePath(locale, route)}`,
       lastModified: new Date(),
     }))
   );
@@ -32,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic Service routes
   const serviceEntries = locales.flatMap(locale => 
     serviceCatalog.map(cat => ({
-      url: `${baseUrl}/${locale}/services/category/${cat.slug}`,
+      url: `${baseUrl}${localePath(locale, `/services/category/${cat.slug}`)}`,
       lastModified: new Date(),
     }))
   );
@@ -40,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic Tech routes
   const techEntries = locales.flatMap(locale => 
     techLabs.map(lab => ({
-      url: `${baseUrl}/${locale}/tech/${lab.slug}`,
+      url: `${baseUrl}${localePath(locale, `/tech/${lab.slug}`)}`,
       lastModified: new Date(),
     }))
   );
@@ -48,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic Blog routes
   const blogEntries = locales.flatMap(locale => 
     posts.map(post => ({
-      url: `${baseUrl}/${locale}/blog/${post.slug}`,
+      url: `${baseUrl}${localePath(locale, `/blog/${post.slug}`)}`,
       lastModified: new Date(),
     }))
   );
@@ -56,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic Case Study routes
   const studyEntries = locales.flatMap(locale => 
     studies.map(study => ({
-      url: `${baseUrl}/${locale}/case-studies/${study.slug}`,
+      url: `${baseUrl}${localePath(locale, `/case-studies/${study.slug}`)}`,
       lastModified: new Date(),
     }))
   );

@@ -2,51 +2,49 @@
 
 import { Code2, Zap, Rocket, Palette, ArrowRight } from "lucide-react";
 import { Container } from "../layout/layout-primitives";
-import { cn } from "@/lib/utils";
-
 const features = [
   {
     icon: Code2,
-    title: "Full-Stack Development",
-    description: "Complete end-to-end solutions with modern tech stack",
-    category: "Full-Stack",
+    title: "Custom Website Development",
+    description: "Premium websites built for credibility, performance, and long-term business growth.",
+    category: "WEB DEVELOPMENT",
   },
   {
     icon: Zap,
-    title: "AI/ML Solutions",
-    description: "Leverage machine learning for intelligent automation",
-    category: "AI/ML",
+    title: "Conversion Funnels & Landing Pages",
+    description: "Focused page systems designed to turn traffic into inquiries, bookings, and qualified leads.",
+    category: "FUNNELS",
   },
   {
     icon: Rocket,
-    title: "DevOps & Infrastructure",
-    description: "Scalable cloud infrastructure and CI/CD pipelines",
-    category: "DevOps",
+    title: "AI Chatbots & Automation",
+    description: "AI-powered workflows that improve response speed and reduce manual follow-up.",
+    category: "AI AUTOMATION",
   },
   {
     icon: Palette,
-    title: "Premium Design",
-    description: "Beautiful, responsive interfaces that delight users",
-    category: "Design",
+    title: "SEO & Growth Retainers",
+    description: "Ongoing SEO, optimization, updates, and performance support to improve visibility.",
+    category: "SEO & GROWTH",
   },
 ];
 
 export function FeaturesRow() {
   return (
-    <section className="py-24 bg-[#0A0A0F] border-b border-[#1E1E2E]">
+    <section className="border-b border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-24 dark:border-[#1E1E2E] dark:bg-[#0A0A0F]">
       <Container>
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--site-primary)]" />
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">
               Our Services
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-[#F8F8FF] tracking-tight mb-6">
+          <h2 className="mb-6 text-4xl font-display font-bold tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl">
             Enterprise Solutions
           </h2>
-          <p className="text-lg text-[#94A3B8] font-body leading-relaxed">
+          <p className="font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]">
             Comprehensive services designed to transform your business with cutting-edge technology.
           </p>
         </div>
@@ -58,31 +56,31 @@ export function FeaturesRow() {
             return (
               <div
                 key={i}
-                className="group relative p-6 rounded-xl bg-[#13131E] border border-[#1E1E2E] hover:border-[#6366F1]/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.1)] flex flex-col h-full"
+                className="site-card site-card-interactive group relative flex h-full flex-col p-6"
               >
                 {/* Icon Circle */}
-                <div className="w-10 h-10 rounded-lg bg-[#6366F1]/10 flex items-center justify-center mb-4 text-[#6366F1] group-hover:bg-[#6366F1]/20 transition-colors">
+                <div className="site-card-icon mb-4 flex h-10 w-10 items-center justify-center rounded-lg transition-colors group-hover:bg-[rgba(var(--site-primary-rgb),0.14)]">
                   <Icon size={20} strokeWidth={2} />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-display font-bold text-[#F8F8FF] mb-2">
+                <h3 className="site-card-title mb-2 text-lg font-display font-bold">
                   {feature.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-[#94A3B8] font-body leading-relaxed flex-grow">
+                <p className="site-card-muted flex-grow font-body text-sm leading-relaxed">
                   {feature.description}
                 </p>
 
                 {/* Category Tag - appears at bottom */}
-                <div className="mt-6 pt-6 border-t border-[#1E1E2E] flex items-center justify-between">
-                  <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+                <div className="mt-6 pt-2 flex items-center justify-between">
+                  <span className="site-card-accent text-xs font-body font-semibold uppercase tracking-widest">
                     {feature.category}
                   </span>
                   <ArrowRight
                     size={16}
-                    className="text-[#6366F1] opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all duration-300"
+                    className="site-card-accent transform opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
                   />
                 </div>
               </div>

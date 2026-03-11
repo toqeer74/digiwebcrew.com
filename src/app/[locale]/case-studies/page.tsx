@@ -7,6 +7,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { CaseStudiesLibrary } from "@/components/sections/case-studies-library";
 import { getCaseStudies } from "@/lib/content-engine";
 import { getDictionary } from "@/lib/get-dictionary";
+import { localePath } from "@/lib/locale-path";
 
 const categories = [
   "Websites",
@@ -121,10 +122,10 @@ export default async function CaseStudiesPage({
                 Explore how Digital Web Crew approaches custom websites, landing pages, SEO support, automation, and connected digital systems built around real business goals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>
@@ -262,10 +263,10 @@ export default async function CaseStudiesPage({
                 If you need a website, landing page system, SEO support, automation, or a broader digital setup, the next step is to define the right scope for your business.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>
@@ -282,10 +283,10 @@ export default async function CaseStudiesPage({
                 If you want a website, funnel, SEO system, or automation setup built around real business goals, the next step is simple. Book a consultation or submit your project scope to get started.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>

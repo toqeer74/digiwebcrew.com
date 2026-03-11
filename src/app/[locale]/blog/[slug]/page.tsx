@@ -11,6 +11,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { locales } from "@/types/i18n";
 import { getBlogPosts, getBlogPost } from "@/lib/content-engine";
 import { Metadata } from "next";
+import { localePath } from "@/lib/locale-path";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -60,7 +61,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {/* Header */}
                 <header className="mb-12">
                     <Link 
-                        href={`/${locale}/blog`} 
+                        href={localePath(locale, "/blog")} 
                         className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8"
                     >
                         <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />

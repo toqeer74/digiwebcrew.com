@@ -7,6 +7,7 @@ import * as Icons from "lucide-react";
 import { ArrowRight, Zap, Target, ShieldCheck, Rocket, Heart, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { localePath } from "@/lib/locale-path";
 
 interface TechTemplateProps {
   tech: any;
@@ -44,7 +45,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                   {tech.description}
                 </p>
                 <Link
-                  href={`/${locale}/quote`}
+                  href={localePath(locale, "/quote")}
                   className="group flex h-16 items-center justify-center rounded-xl bg-white text-[#0A0A0F] font-display font-extrabold text-[13px] px-10 uppercase tracking-[0.2em] transition-all hover:bg-gray-50 hover:scale-[1.02] active:scale-95 border border-white shadow-lg shadow-[#6366F1]/10 w-max"
                 >
                   <span>Start a Tech Audit</span>
@@ -111,7 +112,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                 return (
                   <Link
                     key={serviceSlug}
-                    href={`/${locale}/services/${serviceSlug}`}
+                    href={localePath(locale, `/services/${serviceSlug}`)}
                     className="group p-8 rounded-[2.5rem] glass border border-[#1E1E2E]/50 flex items-center justify-between hover:border-[#6366F1]/50 transition-all"
                   >
                     <div>

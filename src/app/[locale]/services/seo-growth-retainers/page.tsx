@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { ServiceProcessSteps } from "@/components/sections/service-process-steps";
+import { localePath } from "@/lib/locale-path";
 
 const supportingPoints = [
   "Built for long-term visibility and growth",
@@ -144,10 +145,10 @@ export default async function SEOGrowthRetainersPage({
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>
@@ -285,7 +286,7 @@ export default async function SEOGrowthRetainersPage({
                   { title: "Improve", description: "We implement updates across SEO, content, structure, and website performance as needed." },
                   { title: "Monitor and Refine", description: "We continue improving over time based on progress, opportunities, and changing business needs." },
                 ]}
-                ctaHref={`/${locale}/process`}
+                ctaHref={localePath(locale, "/process")}
                 ctaLabel="View Full Process"
               />
             </AnimatedSection>
@@ -300,10 +301,10 @@ export default async function SEOGrowthRetainersPage({
                 Broader support, higher-content demands, and more advanced optimization work are scoped based on requirements.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>
@@ -320,10 +321,10 @@ export default async function SEOGrowthRetainersPage({
                 If your website is live but not improving, the right growth support can help you strengthen visibility, refine key pages, and create better long-term performance. Book a consultation or get a custom project scope to move forward.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={`/${locale}/book-consultation`} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
                   Book Consultation
                 </Link>
-                <Link href={`/${locale}/quote`} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
                   Get Custom Project Scope
                 </Link>
               </div>

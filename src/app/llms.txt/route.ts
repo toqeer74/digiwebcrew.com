@@ -16,11 +16,11 @@ Full-stack digital engineering laboratory specializing in high-performance web a
 - **Data-Driven Conversion**: Every pixel is optimized for business KPIs.
 - **Agile Architecture**: Fast iterations with transparent logic mapping.
 
-## Key Hubs (Prefix with locale: /en, /ur, /ar)
-- Portfolio: /[locale]/case-studies
-- Process: /[locale]/process
-- Investment: /[locale]/pricing
-- Calculator: /[locale]/quote
+## Key Hubs (English has no prefix; Urdu/Arabic use /ur and /ar)
+- Portfolio: /case-studies (or /ur/case-studies, /ar/case-studies)
+- Process: /process (or /ur/process, /ar/process)
+- Investment: /pricing (or /ur/pricing, /ar/pricing)
+- Calculator: /quote (or /ur/quote, /ar/quote)
 
 ## Digital Presence
 - Web: https://digiwebcrew.com

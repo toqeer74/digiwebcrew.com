@@ -25,20 +25,28 @@ const testimonials = [
   }
 ];
 
+const credentials = [
+  "Upwork Verified",
+  "Fiverr Pro",
+  "GitHub Verified",
+  "Clutch Reviewed",
+  "Top Rated Talent",
+];
+
 export function Testimonials() {
   return (
-    <section className="py-24 bg-[#0A0A0F] border-b border-[#1E1E2E]">
-      <Container>
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+    <section className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-16 md:py-20 dark:border-[#12202B] dark:bg-[#0B0F14]">
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_left,_rgba(17,75,151,0.08),_transparent_32%),linear-gradient(180deg,_rgba(255,255,255,0.2),_rgba(248,250,252,0.92))] dark:bg-[radial-gradient(circle_at_top_left,_rgba(6,182,212,0.14),_transparent_32%),radial-gradient(circle_at_85%_18%,_rgba(34,211,238,0.1),_transparent_22%),linear-gradient(180deg,_rgba(9,14,20,0.2),_rgba(9,14,20,0.92))]" />
+      <Container className="relative z-10">
+        <div className="relative text-center max-w-3xl mx-auto mb-14 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-6"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.22)] bg-white/88 px-3 py-1 backdrop-blur-md dark:border-[#0EA5B7]/30 dark:bg-[#0C1822]/80"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shadow-[0_0_10px_rgba(0,0,0,0.18)] dark:bg-[#06B6D4] dark:shadow-[0_0_10px_rgba(6,182,212,0.9)]" />
+            <span className="text-xs font-body font-semibold uppercase tracking-[0.24em] text-[var(--site-primary)] dark:text-[#67E8F9]">
               Trusted by Leaders
             </span>
           </motion.div>
@@ -47,17 +55,16 @@ export function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-bold text-[#F8F8FF] tracking-tight mb-6"
+            className="mb-6 text-4xl font-display font-bold tracking-tight text-slate-950 dark:text-[#F8FBFF] md:text-5xl"
           >
             What Our Clients Say
           </motion.h2>
-          <p className="text-lg text-[#94A3B8] font-body leading-relaxed">
+          <p className="text-lg leading-relaxed text-slate-600 dark:text-[#8EA3B8]">
             Hear from global leaders who trust Digi Web Crew for their mission-critical infrastructure.
           </p>
         </div>
 
-        {/* Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="relative mb-12 grid grid-cols-1 gap-8 md:mb-14 md:grid-cols-3">
           {testimonials.map((t, idx) => (
             <motion.div
               key={t.name}
@@ -65,31 +72,31 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-[#13131E] p-8 rounded-xl border border-[#1E1E2E] hover:border-[#6366F1]/30 transition-all duration-300 group relative"
+              className="site-card site-card-interactive group relative flex h-full flex-col p-8"
             >
-              {/* Quote icon */}
-              <div className="absolute top-6 right-8 opacity-20 group-hover:opacity-40 transition-opacity">
-                <Quote size={32} className="text-[#6366F1]" />
+              <div className="absolute right-8 top-7 opacity-30 transition-opacity group-hover:opacity-70">
+                <Quote size={28} className="text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]" />
               </div>
 
-              {/* Star rating */}
-              <div className="flex gap-1 mb-6">
+              <div className="mb-6 flex items-center gap-1">
                 {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} size={14} className="fill-[#22C55E] text-[#22C55E]" />
+                    <Star
+                    key={i}
+                    size={14}
+                    className="fill-[var(--site-primary)] text-[var(--site-primary)] drop-shadow-[0_0_8px_rgba(0,0,0,0.16)] dark:fill-[var(--site-primary-soft)] dark:text-[var(--site-primary-soft)] dark:drop-shadow-[0_0_10px_rgba(var(--site-primary-rgb),0.55)]"
+                  />
                 ))}
               </div>
 
-              {/* Quote text */}
-              <p className="text-[#94A3B8] font-body leading-relaxed mb-8 italic text-sm">
+              <p className="mb-8 flex-1 text-sm italic leading-7 text-slate-600 dark:text-[#C2D2E1]">
                 "{t.content}"
               </p>
 
-              {/* Author info */}
-              <div className="pt-6 border-t border-[#1E1E2E]">
-                <p className="text-[#F8F8FF] font-display font-bold text-sm leading-none mb-1">
+              <div className="pt-2">
+                <p className="mb-1 text-sm font-display font-semibold leading-none text-slate-950 dark:text-[#F8FBFF]">
                   {t.name}
                 </p>
-                <p className="text-[#6366F1] text-xs font-body font-semibold uppercase tracking-widest">
+                <p className="text-xs font-body font-medium uppercase tracking-[0.18em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
                   {t.role}
                 </p>
               </div>
@@ -97,36 +104,40 @@ export function Testimonials() {
           ))}
         </div>
 
-        {/* Logo Marquee / Trust Badges */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="py-8 border-y border-[#1E1E2E]"
+          className="relative py-6 md:py-7"
         >
-          <p className="text-xs uppercase tracking-widest text-[#94A3B8] font-body font-semibold text-center mb-6">
+          <p className="mb-6 text-center text-xs font-body font-semibold uppercase tracking-[0.28em] text-slate-500 dark:text-[#6B8299]">
             Verified Credentials
           </p>
-          <motion.div
-            animate={{ x: [0, -1920] }}
-            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-            className="flex gap-12 whitespace-nowrap"
-          >
-            {[...Array(2)].map((_, batch) => (
-              <div key={batch} className="flex gap-12">
-                <div className="px-6 py-3 border border-[#1E1E2E] rounded-lg bg-[#13131E]/50 text-[#94A3B8] text-xs font-body font-semibold uppercase tracking-widest whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity">
-                  Upwork Verified
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+              className="flex w-max gap-6 whitespace-nowrap"
+            >
+              {[0, 1].map((batch) => (
+                <div
+                  key={batch}
+                  aria-hidden={batch === 1}
+                  className="flex shrink-0 gap-6 pr-6"
+                >
+                  {credentials.map((credential) => (
+                    <div
+                      key={`${batch}-${credential}`}
+                      className="whitespace-nowrap rounded-full border border-slate-200 bg-white/95 px-6 py-3 text-xs font-body font-semibold uppercase tracking-[0.18em] text-[var(--site-primary)] shadow-[0_14px_28px_-20px_rgba(15,23,42,0.14)] transition-all hover:border-[color:rgba(var(--site-primary-rgb),0.4)] hover:text-[var(--site-primary-hover)] dark:border-[#1D4658] dark:bg-[#0C1822]/88 dark:text-[#A8C1D3] dark:shadow-[0_14px_28px_-20px_rgba(6,182,212,0.24)] dark:hover:border-[#67E8F966] dark:hover:text-[#67E8F9]"
+                    >
+                      {credential}
+                    </div>
+                  ))}
                 </div>
-                <div className="px-6 py-3 border border-[#1E1E2E] rounded-lg bg-[#13131E]/50 text-[#94A3B8] text-xs font-body font-semibold uppercase tracking-widest whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity">
-                  Fiverr Pro
-                </div>
-                <div className="px-6 py-3 border border-[#1E1E2E] rounded-lg bg-[#13131E]/50 text-[#94A3B8] text-xs font-body font-semibold uppercase tracking-widest whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity">
-                  GitHub Verified
-                </div>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
       </Container>
     </section>
