@@ -41,7 +41,7 @@ export function FeaturesRow() {
               Our Services
             </span>
           </div>
-          <h2 className="mb-6 text-4xl font-display font-bold tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl">
+          <h2 className="mb-6 text-4xl font-display font-black tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl">
             Enterprise Solutions
           </h2>
           <p className="font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]">

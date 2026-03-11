@@ -6,6 +6,8 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import { getDictionary } from "@/lib/get-dictionary";
 import { cn } from "@/lib/utils";
 import { localePath } from "@/lib/locale-path";
+import { AnimatedSection } from "@/components/AnimatedSection";
+
 
 export default async function BlogPage({
   params,
@@ -28,14 +30,29 @@ export default async function BlogPage({
     : allPosts.filter(p => p.category.toUpperCase() === activeCat);
 
   return (
-    <main className="flex-1 pt-32">
+    <main className="flex-1 pt-32 pb-24">
       <Container>
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h1 className="text-5xl font-bold tracking-tight mb-6">{dict.blog.hubTitle}</h1>
-          <p className="text-xl text-muted-foreground">
-            {dict.blog.hubDesc}
-          </p>
-        </div>
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Hero Section */}
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Insights & Strategy</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              Digital Systems <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Strategy & Insights.</span>
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+              Deep dives into digital infrastructure, website performance, lead generation funnels, and real-world automation systems.
+            </p>
+          </AnimatedSection>
+
 
         {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-20">
@@ -103,7 +120,9 @@ export default async function BlogPage({
             <p className="text-muted-foreground italic">No articles published yet. Check back soon!</p>
           </div>
         )}
+        </div>
       </Container>
     </main>
+
   );
 }

@@ -33,7 +33,7 @@ export function getBusinessContext() {
         agency_name: "Digi Web Crew",
         specialties: ["Custom Software", "Full-Stack Websites", "E-commerce", "Automation"],
         notable_tech: ["Next.js", "React Native", "Shopify", "n8n", "AI Integration"],
-        pricing_note: "Custom development starts at $2,500. Most enterprise projects are $10k - $50k.",
+        pricing_note: "Custom development starts at $3,500. Most enterprise projects are $10k - $50k.",
         ctas: {
             quote: "/quote",
             call: "https://calendly.com/digiwebcrew/strategy"

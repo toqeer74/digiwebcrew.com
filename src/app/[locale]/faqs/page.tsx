@@ -102,45 +102,60 @@ export default async function FAQsPage({
     <main className="flex-1 pt-32 pb-24">
       <Container>
         <div className="max-w-5xl mx-auto space-y-8">
-          <AnimatedSection className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">FAQs</span>
-            <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight mb-4 text-slate-950 dark:text-[#F8F8FF]">
-              Frequently Asked Questions
+          {/* Hero Section */}
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Knowledge Base</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              Frequently Asked <span className="text-[var(--site-primary)]">Questions.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-6 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
               Answers to common questions about services, pricing, process, fit, and what it is like to work with Digital Web Crew.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-10 py-5 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
+
+          <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 border-2 border-[var(--site-primary)]/10">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Clear Answers for Businesses Comparing the Right Next Step</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Choosing the right digital partner usually comes with a lot of questions.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">
-              You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out.
-            </p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">
-              If you still need help after reviewing the answers below, the next best step is to book a consultation or submit a custom project scope.
-            </p>
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Clear Answers for Businesses Comparing the Right Next Step</h2>
+            <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+              <p>Choosing the right digital partner usually comes with a lot of questions.</p>
+              <p>
+                You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out.
+              </p>
+              <p>
+                If you still need help after reviewing the answers below, the next best step is to book a consultation or submit a custom project scope.
+              </p>
+            </div>
           </AnimatedSection>
 
+
           {groups.map((group, groupIdx) => (
-            <AnimatedSection key={group.heading} delay={groupIdx * 0.03}>
-              <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">{group.heading}</h2>
+            <AnimatedSection key={group.heading} delay={groupIdx * 0.03} className="space-y-6">
+              <h2 className="text-2xl md:text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">{group.heading}</h2>
+
               <Accordion
                 items={group.items.map(([title, content], itemIdx) => ({
                   value: `${group.heading}-${itemIdx}`,

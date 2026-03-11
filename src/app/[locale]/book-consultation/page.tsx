@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { localePath } from "@/lib/locale-path";
+import { cn } from "@/lib/utils";
 
 const discussionPoints = [
   "what your business needs help with",
@@ -84,181 +85,214 @@ export default async function BookConsultationPage({
 }) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
-  const isRtl = locale === "ar" || locale === "ur";
+  const sectionCardClass = "site-card overflow-hidden relative p-8 lg:p-10";
+  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
+
 
   return (
     <main className="flex-1 pt-32 pb-24">
       <Container>
-        <div className="max-w-4xl mx-auto space-y-8">
-          <AnimatedSection className="text-center">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
-              Book a Consultation to Discuss the Right Next Step
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Hero Section */}
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Expert Advisor</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              Book a Consultation to Discuss <br className="hidden md:block" /> the Right <span className="text-[var(--site-primary)]">Next Step.</span>
             </h1>
-            <p className="text-lg text-[#94A3B8] mb-6">
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
               If you already have a project in mind and want to talk through goals, scope, timeline, and fit, book a consultation and let&apos;s discuss what your business needs.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="https://calendly.com/digiweb/consultation"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#6366F1] text-white font-bold rounded-full hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300"
+                rel="noopener noreferrer" 
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group"
               >
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </a>
               <Link
                 href={localePath(locale, "/quote")}
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-full hover:bg-[#1a1a2e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)] transition-all duration-300"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
               >
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-4 md:p-6">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Book Consultation</h2>
-            <p className="text-[#94A3B8] mb-4">
+
+          <AnimatedSection className={cn(sectionCardClass, "max-w-4xl mx-auto p-4 md:p-6")}>
+            {gradientTop}
+            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Select Your Time</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-6">
               Select a time directly in the scheduler below. If it does not load, use the direct booking link above.
             </p>
-            <div className="rounded-lg overflow-hidden border border-[#1E1E2E] bg-[#0F0F18]">
+            <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0A0A0F]">
               <iframe
                 title="Calendly Booking"
                 src="https://calendly.com/digiweb/consultation"
-                className="w-full min-h-[760px]"
+                className="w-full min-h-[760px] dark:invert dark:hue-rotate-180 dark:contrast-125"
               />
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A Direct Way to Start the Conversation</h2>
-            <p className="text-[#94A3B8] mb-3">
-              Some businesses already know they are ready to move forward. They may not have every detail finalized, but they know they need the right conversation to shape the next step.
-            </p>
-            <p className="text-[#94A3B8] mb-3">This consultation page is for that stage.</p>
-            <p className="text-[#94A3B8]">
-              If you want to discuss a custom website, landing page system, SEO support, automation setup, or a broader digital build, a consultation helps bring the project into clearer focus. It gives space to review the business need, talk through goals, identify the right service direction, and decide what makes sense next.
-            </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <AnimatedSection className={cn(sectionCardClass, "md:col-span-12 lg:col-span-8")}>
+              {gradientTop}
+              <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">Purpose</span>
+              <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">A Direct Way to Start the Conversation</h2>
+              <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+                <p>Some businesses already know they are ready to move forward. They may not have every detail finalized, but they know they need the right conversation to shape the next step.</p>
+                <p>This consultation page is for that stage.</p>
+                <p>If you want to discuss a custom website, landing page system, SEO support, automation setup, or a broader digital build, a consultation helps bring the project into clearer focus. It gives space to review the business need, talk through goals, identify the right service direction, and decide what makes sense next.</p>
+              </div>
+            </AnimatedSection>
+
+            <div className="md:col-span-12 lg:col-span-4 h-full">
+              <AnimatedSection className={cn(sectionCardClass, "h-full")}>
+                {gradientTop}
+                <span className="mb-4 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Discussion</span>
+                <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">What We Cover</h2>
+                <ul className="space-y-4">
+                  {discussionPoints.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 mt-1.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </AnimatedSection>
+            </div>
+          </div>
+
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <AnimatedSection className={sectionCardClass}>
+              {gradientTop}
+              <span className="mb-4 inline-block rounded-full bg-violet-50 dark:bg-violet-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Best Fit</span>
+              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Who Should Book</h2>
+              <ul className="space-y-3">
+                {shouldBook.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500 mt-1.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+
+            <AnimatedSection className={sectionCardClass}>
+              {gradientTop}
+              <span className="mb-4 inline-block rounded-full bg-amber-50 dark:bg-amber-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Preparation</span>
+              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">What Helps Before</h2>
+              <ul className="space-y-3">
+                {prepareItems.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500 mt-1.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+          </div>
+
+
+          <AnimatedSection className={sectionCardClass}>
+            {gradientTop}
+            <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">Outcome</span>
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">What Happens Next</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="space-y-4">
+                <p className="text-slate-600 dark:text-[#94A3B8] leading-relaxed">Once the consultation is booked, the next step is simple. You select a time, share the relevant details, and we review the information before the conversation.</p>
+                <ul className="space-y-4">
+                  {afterBooking.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8] font-bold">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 mt-1.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] leading-relaxed border-l border-slate-200 dark:border-white/10 pl-8 italic">
+                <p>Digital projects often go wrong when people skip the thinking stage and rush straight into execution.</p>
+                <p>A consultation helps avoid that. It creates a chance to look at the business need properly, discuss the options, and shape the right approach before time and money go into the wrong direction.</p>
+              </div>
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What We Can Cover in the Consultation</h2>
-            <p className="text-[#94A3B8] mb-4">The consultation is meant to help define the project with more clarity and direction.</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8]">
-              {discussionPoints.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Who Should Book a Consultation</h2>
-            <p className="text-[#94A3B8] mb-4">This path is best for businesses that:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              {shouldBook.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-[#94A3B8]">
-              If you are still very early and need help defining the project from scratch, the custom project scope form may be the better first step.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What Helps Before the Call</h2>
-            <p className="text-[#94A3B8] mb-4">
-              You do not need a perfect brief before booking. But a few details can make the conversation more useful.
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              {prepareItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-[#94A3B8]">Even if some of this is still unclear, the consultation can help bring structure to it.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What Happens Next</h2>
-            <p className="text-[#94A3B8] mb-3">Once the consultation is booked, the next step is simple.</p>
-            <p className="text-[#94A3B8] mb-3">
-              You select a time, share the relevant details, and we review the information before the conversation. From there, the call is used to understand the project, assess fit, and recommend the right direction.
-            </p>
-            <p className="text-[#94A3B8] mb-3">After the consultation, that may lead to:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              {afterBooking.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-[#94A3B8]">The purpose is to create clarity, not unnecessary back and forth.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Why a Consultation Helps</h2>
-            <p className="text-[#94A3B8] mb-3">
-              Digital projects often go wrong when people skip the thinking stage and rush straight into execution.
-            </p>
-            <p className="text-[#94A3B8]">
-              A consultation helps avoid that. It creates a chance to look at the business need properly, discuss the options, and shape the right approach before time and money go into the wrong direction. For many businesses, one clear conversation can save weeks of confusion later.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Need Help Defining the Project First?</h2>
-            <p className="text-[#94A3B8] mb-4">
+          <AnimatedSection className={cn(sectionCardClass, "bg-slate-950 text-white")}>
+            {gradientTop}
+            <h2 className="text-2xl font-display font-black mb-4 tracking-tight">Need Help Defining the Project First?</h2>
+            <p className="opacity-70 mb-8 max-w-2xl">
               If you are not ready to talk live yet and would rather explain your needs in a more structured way, the custom project scope path is a better fit.
-            </p>
-            <p className="text-[#94A3B8] mb-6">
-              That option helps gather the key details around your business, goals, service needs, timeline, and budget so the project direction becomes easier to define.
             </p>
             <Link
               href={localePath(locale, "/quote")}
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#6366F1] text-white font-bold rounded-full hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-[var(--site-primary)] text-white font-bold rounded-full hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all"
             >
               <span>Get Quote</span>
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300">
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </span>
             </Link>
           </AnimatedSection>
 
-          <AnimatedSection>
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About Booking a Consultation</h2>
-            <Accordion items={faqItems} />
+
+          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-[#0A0A0F] border-2 border-[var(--site-primary)]/10")}>
+            {gradientTop}
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Questions About Booking</h2>
+            <div className="max-w-3xl mx-auto text-left">
+              <Accordion items={faqItems} />
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Ready to Talk Through the Project?</h2>
-            <p className="text-[#94A3B8] mb-6">
+          <AnimatedSection className="site-card overflow-hidden relative text-center p-12 lg:p-16 border-2 border-[var(--site-primary)]/20 shadow-[0_40px_80px_-40px_rgba(var(--site-primary-rgb),0.3)]">
+            {gradientTop}
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Ready to Talk Through the Project?</h2>
+            <p className="text-xl text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl mx-auto">
               If you have a clear need and want to discuss the right direction, book a consultation and take the next step with more confidence.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="https://calendly.com/digiweb/consultation"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#6366F1] text-white font-bold rounded-full hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300"
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group"
               >
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </a>
               <Link
                 href={localePath(locale, "/quote")}
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-full hover:bg-[#13131e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)] transition-all duration-300"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
               >
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             </div>
           </AnimatedSection>
+
         </div>
       </Container>
     </main>

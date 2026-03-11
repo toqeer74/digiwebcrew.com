@@ -1,30 +1,112 @@
-import { ServiceTemplate } from "@/components/sections/service-template";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Container } from "@/components/layout/layout-primitives";
+import { getDictionary } from "@/lib/get-dictionary";
+import { AnimatedSection } from "@/components/AnimatedSection";
+import { localePath } from "@/lib/locale-path";
 
-export default function AutomationPage() {
-    return (
-        <ServiceTemplate
-            title="AI & Workflow"
-            subtitle="Automation Tools"
-            description="Internal dashboards, GPT integrations, and automated workflows that eliminate manual processing and save thousands of engineering hours."
-            iconName="Zap"
-            features={[
-                "GPT-4 Integrations",
-                "Workflow Automation",
-                "Custom Dashboards",
-                "Data Mining Pipelines"
-            ]}
-            techStack={[
-                { name: "Python", iconName: "SiPython", color: "text-[#3776AB]" },
-                { name: "OpenAI", iconName: "SiOpenai", color: "text-[#412991]" },
-                { name: "Django", iconName: "SiDjango", color: "text-[#092E20]" },
-                { name: "Docker", iconName: "SiDocker", color: "text-[#2496ED]" },
-            ]}
-            outcomes={[
-                "70% Manual Task Reduction",
-                "AI-Driven Logic Mapping",
-                "24/7 Automated Processing",
-                "Unified Control Panels"
-            ]}
-        />
-    );
+const coreFeatures = [
+  "GPT-4 Integrations",
+  "Workflow Automation",
+  "Custom Dashboards",
+  "Data Mining Pipelines",
+];
+
+const techStack = ["Python", "OpenAI", "Django", "Docker"];
+
+const outcomes = [
+  "70% Manual Task Reduction",
+  "AI-Driven Logic Mapping",
+  "24/7 Automated Processing",
+  "Unified Control Panels",
+];
+
+export default async function AutomationPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
+
+  return (
+    <main className="flex-1 pt-32 pb-24">
+      <Container>
+        <div className="max-w-6xl mx-auto space-y-24">
+          
+          {/* Hero Section */}
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Internal Ops Lab</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              AI & <span className="text-[var(--site-primary)]">Workflow</span> <br className="hidden md:block" /> Automation Tools.
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+              Internal dashboards, GPT integrations, and automated workflows that eliminate manual processing and save thousands of engineering hours.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <span>Get Quote</span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <AnimatedSection className="md:col-span-12 site-card p-10 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-orange-500 to-yellow-500" />
+              <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Internal Productivity</h2>
+              <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed mb-8 max-w-4xl">
+                We build the "glue" between your existing systems—creating custom pipelines that automate repetitive data entry, analysis, and communication tasks.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                {coreFeatures.map((f, i) => (
+                  <div key={i} className="flex flex-col gap-3 p-6 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 group">
+                    <div className="h-8 w-8 rounded-lg bg-[var(--site-primary)]/10 flex items-center justify-center text-[var(--site-primary)] font-black text-xs">
+                      0{i+1}
+                    </div>
+                    <span className="text-sm font-bold text-slate-700 dark:text-[#94A3B8]">{f}</span>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className="md:col-span-6 site-card p-10 relative overflow-hidden bg-slate-950 text-white flex flex-col justify-center">
+              <h3 className="text-xl font-display font-black mb-6 text-white/90">Automation Outcomes</h3>
+              <div className="space-y-4">
+                {outcomes.map(o => (
+                  <div key={o} className="flex items-center gap-3 text-sm font-bold text-slate-400">
+                    <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
+                    {o}
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+             <AnimatedSection className="md:col-span-6 site-card p-10 relative overflow-hidden border-dashed border-2 border-slate-200 dark:border-white/10 flex flex-col justify-center">
+              <h3 className="text-xl font-display font-black mb-6 text-slate-950 dark:text-[#F8F8FF]">Tool Stack</h3>
+              <div className="flex flex-wrap gap-2">
+                 {techStack.map(t => (
+                   <div key={t} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-center font-bold text-slate-600 dark:text-[#94A3B8] bg-white dark:bg-white/5 uppercase tracking-widest text-[10px]">
+                     {t}
+                   </div>
+                 ))}
+               </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </Container>
+    </main>
+  );
 }
+

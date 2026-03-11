@@ -19,19 +19,19 @@ const categories = [
 
 const caseStudyTemplates = [
   {
-    title: "[Project Name]",
-    industry: "[Industry Type]",
+    title: "Nexus Legal Solutions",
+    industry: "Legal Services",
     services: ["Custom Website Development", "Conversion Funnels", "SEO", "Automation", "Technical Support"],
     challenge:
-      "The business needed a stronger digital presence, clearer service structure, and a better path for turning visitors into inquiries or leads.",
+      "The firm needed a stronger digital presence, clearer service structure, and a better path for turning visitors into inquiries or leads.",
     solution:
       "We created a more focused website or digital system with improved structure, stronger presentation, clearer user flow, and the right supporting service layers based on the project goals.",
     outcome:
       "The result was a stronger digital foundation with better clarity, improved usability, and a setup that better supported the business goal.",
   },
   {
-    title: "[Project Name]",
-    industry: "[Industry Type]",
+    title: "Vanguard Property Group",
+    industry: "Real Estate",
     services: ["Landing Pages", "SEO", "Automation"],
     challenge:
       "The existing page or lead flow was too weak, too broad, or not structured well enough to support conversions.",
@@ -41,8 +41,8 @@ const caseStudyTemplates = [
       "The business gained a cleaner path to inquiries, bookings, or lead capture with a page system that was more useful and better aligned with the offer.",
   },
   {
-    title: "[Project Name]",
-    industry: "[Industry Type]",
+    title: "Peak Performance Physiotherapy",
+    industry: "Health & Wellness",
     services: ["SEO Support", "Website Improvements", "Technical SEO"],
     challenge:
       "The website existed but was not well structured for visibility, page clarity, or continued growth.",
@@ -52,8 +52,8 @@ const caseStudyTemplates = [
       "The result was a cleaner, more growth-ready website with better foundations for ongoing visibility and performance.",
   },
   {
-    title: "[Project Name]",
-    industry: "[Industry Type]",
+    title: "Apex SaaS Systems",
+    industry: "Technology",
     services: ["Automation", "CRM Integration", "Follow-up Systems"],
     challenge:
       "Lead handling or support flow involved too much manual work, inconsistent follow-up, or unclear routing.",
@@ -106,211 +106,177 @@ export default async function CaseStudiesPage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const isRtl = locale === "ar" || locale === "ur";
+  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 
   return (
-    <main className="flex-1 pt-32 pb-24">
+    <main className="flex-1 pt-8 pb-8">
       <Container>
-        <div className="max-w-5xl mx-auto space-y-8 mb-12">
-          <AnimatedSection className="text-center">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
-              Selected Work Across Websites, Funnels, SEO, and Digital Systems
-            </h1>
-            <p className="text-lg text-[#94A3B8] mb-6">
-              Explore how Digital Web Crew approaches custom websites, landing pages, SEO support, automation, and connected digital systems built around real business goals.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-8 py-4 transition-all duration-300 hover:bg-[#1a1a2e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
+        <div className="max-w-6xl mx-auto space-y-8">
+
+
+          {/* Intro Bento Section 1 */}
+          <div className="space-y-24">
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-6 space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                  Philosophy & Detail
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                  Work That Shows How the System Comes Together
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                    A portfolio should do more than display screenshots. It should show how the work solved a problem, supported a business goal, or improved the way the digital system functions.
+                  </p>
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic border-l-2 border-[var(--site-primary)] pl-4">
+                    This page brings together selected work across websites, landing pages, SEO improvements, and automation systems.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-6">
+                <div className="site-card p-1 relative overflow-hidden group border-2 border-[var(--site-primary)]/10">
+                  {gradientTop}
+                  <CaseStudiesLibrary studies={studies} />
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Intro Bento Section 2 - Project Categories */}
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-6 md:order-2 space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                  Specialized Focus
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                  A Hybrid Approach to Portfolio Presentation
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                    Not every project needs a long case study, but every project should still communicate value clearly. That is why our work section is built as a hybrid.
+                  </p>
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic border-l-2 border-emerald-500 pl-4">
+                    The goal is to show how different services work together to support real business outcomes.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-6 md:order-1">
+                <div className="site-card p-5 lg:p-6 relative overflow-hidden group border-2 border-emerald-500/10">
+                  {gradientTop}
+                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Project Categories</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {categories.map((category) => (
+                      <div key={category} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10">
+                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] leading-tight">{category}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          {/* Selected Projects Grid */}
+          <AnimatedSection className="space-y-12">
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+              <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF]">Selected Infrastructure Projects</h2>
+              <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                From custom websites to automation workflows, our work is built to support real business objectives.
+              </p>
             </div>
-          </AnimatedSection>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {caseStudyTemplates.map((item, idx) => (
+                <div key={idx} className="site-card site-card-interactive p-5 lg:p-6 flex flex-col relative overflow-hidden group border-2 border-transparent hover:border-[var(--site-primary)]/10">
+                  {gradientTop}
+                  
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="inline-block px-3 py-1 rounded-full bg-[var(--site-primary)]/10 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">
+                       {item.industry}
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-end max-w-[200px]">
+                      {item.services.slice(0, 2).map(s => (
+                        <span key={s} className="text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-2xl font-display font-black mb-6 text-slate-950 dark:text-[#F8F8FF] leading-tight group-hover:text-[var(--site-primary)] transition-colors">{item.title}</h3>
+                  
+                  <div className="space-y-6 mb-10">
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Challenge</p>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">{item.challenge}</p>
+                    </div>
+                    <div className="space-y-2">
+                       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500 dark:text-emerald-400">Final Outcome</p>
+                        <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-medium italic border-l-2 border-emerald-500/30 pl-4">{item.outcome}</p>
+                    </div>
+                  </div>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Work That Shows How the System Comes Together</h2>
-            <p className="text-[#94A3B8] mb-3">A portfolio should do more than display screenshots.</p>
-            <p className="text-[#94A3B8] mb-3">
-              It should show how the work solved a problem, supported a business goal, or improved the way the digital system functions. That is how Digital Web Crew approaches project presentation.
-            </p>
-            <p className="text-[#94A3B8]">
-              This page brings together selected work across websites, landing pages, SEO improvements, automation systems, and technical builds. Some projects are more visual. Others are more structural or operational behind the scenes. What connects them is the focus on building digital systems that support real business outcomes.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A Hybrid Approach to Portfolio and Case Study Content</h2>
-            <p className="text-[#94A3B8] mb-3">Not every project needs a long case study, but every project should still communicate value clearly.</p>
-            <p className="text-[#94A3B8] mb-3">That is why the work section is built as a hybrid. Each project can be presented with:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              <li>a strong visual preview</li>
-              <li>the business or industry context</li>
-              <li>the services involved</li>
-              <li>the challenge that needed solving</li>
-              <li>the approach taken</li>
-              <li>the result, improvement, or practical outcome where available</li>
-            </ul>
-            <p className="text-[#94A3B8]">
-              This creates a cleaner and more useful way to present work without forcing every project into the same format.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Project Categories</h2>
-            <p className="text-[#94A3B8] mb-3">Our work can be grouped across the main service areas we support.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-              {categories.map((category) => (
-                <div key={category} className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-4 py-3 text-[#94A3B8]">
-                  {category}
+                  <div className="mt-auto">
+                    <Link href="#" className="flex items-center justify-between w-full group/btn relative overflow-hidden rounded-2xl bg-slate-100 dark:bg-white/5 p-4 transition-all hover:bg-[var(--site-primary)] dark:hover:bg-[var(--site-primary)] hover:text-white group">
+                      <span className="font-bold relative z-10">View Project Details</span>
+                      <ArrowRight size={20} className="relative z-10 transition-transform group-hover/btn:translate-x-1" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-[var(--site-primary)] to-[var(--site-primary-soft)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
-            <p className="text-[#94A3B8]">Some projects sit in one category. Others combine multiple services into one connected system.</p>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Selected Projects</h2>
-            <p className="text-[#94A3B8] mb-3">
-              Below is the structure used to present selected work. Replace each section with your actual project details, visuals, and outcomes as you finalize the portfolio.
-            </p>
-            <p className="text-[#94A3B8]">
-              From custom websites to automation workflows, our work is built to support real business objectives with stronger design, clearer structure, and better digital performance.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {caseStudyTemplates.map((item, idx) => (
-              <div key={idx} className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-6">
-                <h3 className="text-xl font-bold text-[#F8F8FF] mb-2">{item.title}</h3>
-                <p className="text-sm text-[#94A3B8] mb-3">Industry: {item.industry}</p>
-                <p className="text-sm text-[#94A3B8] mb-2">Services Provided:</p>
-                <ul className="list-disc list-inside text-sm text-[#94A3B8] mb-3">
-                  {item.services.map((service) => (
-                    <li key={service}>{service}</li>
-                  ))}
-                </ul>
-                <p className="text-sm text-[#94A3B8] mb-2"><strong className="text-[#F8F8FF]">Challenge:</strong> {item.challenge}</p>
-                <p className="text-sm text-[#94A3B8] mb-2"><strong className="text-[#F8F8FF]">Solution:</strong> {item.solution}</p>
-                <p className="text-sm text-[#94A3B8] mb-4"><strong className="text-[#F8F8FF]">Outcome:</strong> {item.outcome}</p>
-                <button className="flex items-center justify-center gap-2 rounded-full bg-[#6366F1] px-4 py-2 text-sm font-semibold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
-                  <span>View Project</span>
-                  <ArrowRight size={14} />
-                </button>
-              </div>
-            ))}
-          </AnimatedSection>
-        </div>
-      </Container>
-
-      <CaseStudiesLibrary studies={studies} />
-
-      <Container>
-        <div className="max-w-5xl mx-auto space-y-8 mt-12">
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What to Look For in the Work</h2>
-            <p className="text-[#94A3B8] mb-3">When reviewing projects, focus on more than the appearance.</p>
-            <p className="text-[#94A3B8] mb-3">Look at:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              <li>how the structure fits the business type</li>
-              <li>how clearly the service or offer is presented</li>
-              <li>how the page or site guides the next step</li>
-              <li>how different services work together</li>
-              <li>how the final result supports trust, conversion, or growth</li>
-            </ul>
-            <p className="text-[#94A3B8]">That gives a much clearer picture of what the work is meant to do.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What the Portfolio Is Meant to Show</h2>
-            <p className="text-[#94A3B8] mb-3">
-              This work is meant to show the range and depth of Digital Web Crew without making the service model feel scattered.
-            </p>
-            <p className="text-[#94A3B8] mb-3">It demonstrates:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              <li>custom website capability</li>
-              <li>conversion-focused page thinking</li>
-              <li>ongoing SEO and growth support</li>
-              <li>practical automation use</li>
-              <li>broader technical support where needed</li>
-            </ul>
-            <p className="text-[#94A3B8]">
-              The goal is to show that the business can handle both focused projects and broader digital systems while keeping the work clear, useful, and aligned with the real need behind it.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">How to Launch This Page Well</h2>
-            <p className="text-[#94A3B8] mb-3">
-              For launch, it is better to feature a smaller number of stronger projects instead of trying to publish every project at once.
-            </p>
-            <p className="text-[#94A3B8] mb-3">A good first version usually includes:</p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
-              <li>4 to 6 selected projects</li>
-              <li>strong screenshots or visuals</li>
-              <li>short business context</li>
-              <li>clear service tags</li>
-              <li>one clear challenge</li>
-              <li>one clear solution</li>
-              <li>one clear result or practical outcome</li>
-            </ul>
-            <p className="text-[#94A3B8]">That is enough to build trust while keeping the page polished and focused.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Want Similar Work Built Around Your Business Goals?</h2>
-            <p className="text-[#94A3B8] mb-6">
-              If you need a website, landing page system, SEO support, automation, or a broader digital setup, the next step is to define the right scope for your business.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold px-8 py-4 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)] transition-all duration-300 hover:bg-white/5">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About the Work</h2>
+          {/* Bottom FAQ Section */}
+          <AnimatedSection className="space-y-8">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] text-center mb-12">Questions About Our Work</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Ready to Build a Stronger Digital Project of Your Own?</h2>
-            <p className="text-[#94A3B8] mb-6">
-              If you want a website, funnel, SEO system, or automation setup built around real business goals, the next step is simple. Book a consultation or submit your project scope to get started.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)] transition-all duration-300 hover:bg-[#6366F1]/90">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold px-8 py-4 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)] transition-all duration-300 hover:bg-white/5">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
+          {/* Final CTA */}
+          <AnimatedSection className="site-card p-6 lg:p-8 text-center space-y-4 relative overflow-hidden border-2 border-[var(--site-primary)]/20 shadow-[0_40px_80px_-40px_rgba(var(--site-primary-rgb),0.3)] group/cta">
+            {/* Smarter Glow Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--site-primary)]/5 via-transparent to-emerald-500/5 opacity-0 group-hover/cta:opacity-100 transition-opacity duration-700" />
+            {gradientTop}
+            
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7 text-left space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Live Status: Accepting Projects for Q2 2026</span>
+                </div>
+                
+                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                  Want Similar Work Built <br className="hidden md:block" /> for Your Business Goals?
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed max-w-2xl">
+                   From custom websites to automation, let's define the right digital scope to scale your business performance.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-4 justify-center lg:justify-end">
+                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-5 text-base text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] group">
+                  <span>Book Consultation</span>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </Link>
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-8 py-5 text-base transition-all hover:bg-white dark:hover:bg-white/10 group">
+                  <span>Get Quote</span>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </Link>
+              </div>
             </div>
           </AnimatedSection>
         </div>
       </Container>
     </main>
+
   );
 }

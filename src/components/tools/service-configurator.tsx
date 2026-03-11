@@ -10,7 +10,8 @@ import {
   ChevronRight,
   ChevronLeft,
   Mail,
-  FileText
+  FileText,
+  ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToolTracking, useFormTracking } from "@/lib/tracking-hooks";
@@ -61,7 +62,7 @@ export function ServiceConfigurator() {
                   onClick={() => setConfig({ ...config, tier })}
                   className={cn(
                     "p-6 rounded-2xl border-2 text-left transition-all",
-                    config.tier === tier ? "border-[#3A6FB8] bg-white ring-4 ring-[#114B97]/15 text-slate-950 shadow-[0_12px_24px_-18px_rgba(0,0,0,0.18)] dark:bg-[linear-gradient(180deg,rgba(23,37,53,0.98),rgba(11,19,31,0.99))] dark:text-inherit dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" : "border-slate-300 bg-slate-50 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:hover:border-[#4A86C8] dark:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                    config.tier === tier ? "border-[#3A6FB8] bg-white ring-4 ring-[#114B97]/15 text-slate-950 shadow-[0_12px_24px_-18px_rgba(0,0,0,0.18)] dark:bg-[linear-gradient(180deg,rgba(23,37,53,0.98),rgba(11,19,31,0.99))] dark:text-inherit dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" : "border-slate-300 bg-slate-50 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-500 dark:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
                   )}
                 >
                   <p className="mb-2 text-xl font-black text-slate-950 dark:text-[#F8F8FF]">{tier}</p>
@@ -89,7 +90,7 @@ export function ServiceConfigurator() {
                   }}
                   className={cn(
                     "p-4 rounded-xl border text-sm font-bold transition-all flex items-center justify-between",
-                    config.stack.includes(tech) ? "border-[#3A6FB8] bg-[#114B97] text-white" : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#D5DEEB] dark:hover:border-[#4A86C8]"
+                    config.stack.includes(tech) ? "border-[#3A6FB8] bg-[#114B97] text-white" : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.4)] dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200 dark:hover:border-slate-500"
                   )}
                 >
                   {tech}
@@ -164,9 +165,9 @@ export function ServiceConfigurator() {
                 Download Scope PDF
               </button>
 
-              <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-4 text-sm font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
-                <Mail size={18} />
+              <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[var(--site-primary)] bg-[var(--site-primary)] py-4 text-sm font-black uppercase tracking-wider text-white transition-all shadow-sm hover:bg-[var(--site-primary-hover)] active:scale-95">
                 Initiate Industrial Quote
+                <ArrowRight size={18} />
               </Link>
             </div>
           </motion.div>
@@ -175,7 +176,8 @@ export function ServiceConfigurator() {
   };
 
   return (
-    <div className="h-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(27,40,57,0.98),rgba(12,20,33,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7">
+    <div className="h-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-slate-800 dark:bg-slate-900/95 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7 relative">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
       <div className="flex items-center gap-2 mb-7">
         {[1, 2, 3, 4].map((s) => (
           <div key={s} className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", s <= step ? "bg-[#114B97]" : "bg-[#123040]")} />
@@ -184,7 +186,7 @@ export function ServiceConfigurator() {
 
       <div className="min-h-[300px]"><AnimatePresence mode="wait">{renderStep()}</AnimatePresence></div>
 
-      <div className="mt-6 flex items-center justify-between border-t border-[#123040] pt-6">
+      <div className="mt-6 flex items-center justify-between border-t border-slate-700 pt-6">
         <button
           onClick={prevStep}
           disabled={step === 1}
@@ -195,9 +197,9 @@ export function ServiceConfigurator() {
         </button>
 
         {step < 4 && (
-          <button onClick={nextStep} className="flex items-center gap-2 rounded-full border border-[#3A6FB8] bg-[#114B97] px-8 py-3 text-sm font-extrabold uppercase tracking-widest text-white shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] transition-all hover:scale-105 hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
+          <button onClick={nextStep} className="flex items-center gap-2 rounded-full border border-[var(--site-primary)] bg-[var(--site-primary)] px-8 py-3 text-sm font-extrabold uppercase tracking-widest text-white shadow-sm transition-all hover:bg-[var(--site-primary-hover)] active:scale-95">
             Inhale Strategy
-            <ChevronRight size={18} />
+            <ArrowRight size={18} />
           </button>
         )}
       </div>

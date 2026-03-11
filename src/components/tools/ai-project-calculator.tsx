@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Calculator, Download, Zap, Code, Server } from "lucide-react";
+import { Calculator, Download, ArrowRight, Code, Server } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToolTracking, useFormTracking } from "@/lib/tracking-hooks";
 import { useParams } from "next/navigation";
@@ -68,7 +68,8 @@ export function AIProjectCalculator() {
   const sliderTrackDark = "#1B2C3D";
 
   return (
-    <div className="relative h-full rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(27,40,57,0.98),rgba(12,20,33,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7">
+    <div className="relative h-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-6 shadow-[0_24px_54px_-32px_rgba(0,0,0,0.14)] dark:border-slate-800 dark:bg-slate-900/95 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(255,255,255,0.18),0_34px_64px_-30px_rgba(0,0,0,0.82),0_24px_48px_-22px_rgba(17,75,151,0.26)] md:p-7">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
       <div className="flex items-center gap-3 mb-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.35)] bg-[rgba(var(--site-primary-rgb),0.08)] dark:border-[#4A86C8] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_-18px_rgba(17,75,151,0.24)]">
           <Calculator size={20} className="text-[var(--site-primary)] dark:text-[#6EA3E6]" />
@@ -91,7 +92,7 @@ export function AIProjectCalculator() {
                   "px-4 py-2.5 rounded-xl font-bold text-sm transition-all border-2",
                   inputs.platform === platform
                     ? "border-[#3A6FB8] bg-[#114B97] text-white shadow-[0_10px_24px_-12px_rgba(0,0,0,0.24)] dark:shadow-[0_10px_24px_-12px_rgba(17,75,151,0.55)]"
-                    : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.45)] dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:text-[#D5DEEB] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:hover:border-[#4A86C8]"
+                    : "border-slate-300 bg-white text-slate-700 hover:border-[color:rgba(var(--site-primary-rgb),0.45)] dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:hover:border-slate-500"
                 )}
               >
                 {platform}
@@ -160,15 +161,15 @@ export function AIProjectCalculator() {
               trackCalculatorComplete({ estimatedHours: hours, platform: inputs.platform, complexity: inputs.complexity });
             }
           }}
-          className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-3 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] active:scale-95 dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]"
+          className="flex w-full items-center justify-center gap-3 rounded-full border border-[var(--site-primary)] bg-[var(--site-primary)] py-3 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-sm hover:bg-[var(--site-primary-hover)] active:scale-95"
         >
-          <Zap size={18} />
           {showResults ? "Update Estimate" : "Calculate Project Scope"}
+          <ArrowRight size={18} />
         </button>
       </div>
 
       {showResults && (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6 border-t border-[#123040] pt-8">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6 border-t border-slate-700 pt-8">
           <div className="rounded-2xl border border-slate-200 bg-white/96 p-6 shadow-[0_18px_36px_-24px_rgba(0,0,0,0.12)] dark:border-[#3A6FB833] dark:bg-[linear-gradient(180deg,rgba(22,36,52,0.98),rgba(12,20,32,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_40px_-30px_rgba(17,75,151,0.18)]">
             <div className="text-center mb-6">
               <p className="text-sm font-body font-bold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8] mb-2">Estimated Build Time</p>
@@ -177,9 +178,9 @@ export function AIProjectCalculator() {
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Code size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Pages</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.pages * 12}h</p></div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Zap size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Complexity</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{Math.round(inputs.complexity * 40)}h</p></div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Server size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">APIs</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.apiIntegrations * 15}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Code size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Pages</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.pages * 12}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><ArrowRight size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Complexity</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{Math.round(inputs.complexity * 40)}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Server size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">APIs</p><p className="text-lg font-black text-slate-950 dark:text-[#F8F8FF]">{inputs.apiIntegrations * 15}h</p></div>
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50 py-4 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
@@ -194,8 +195,9 @@ export function AIProjectCalculator() {
               <Download size={18} /> Download Tech Breakdown
             </button>
 
-            <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#3A6FB8] bg-[#114B97] py-4 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-[0_12px_30px_-10px_rgba(0,0,0,0.26)] hover:scale-[1.02] hover:bg-[#0E4287] hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.32)] active:scale-95 dark:shadow-[0_12px_30px_-10px_rgba(17,75,151,0.6)] dark:hover:shadow-[0_16px_36px_-10px_rgba(17,75,151,0.72)]">
-              <Zap size={18} /> Request Industrial Quote
+            <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[var(--site-primary)] bg-[var(--site-primary)] py-4 text-sm font-display font-black uppercase tracking-wider text-white transition-all shadow-sm hover:bg-[var(--site-primary-hover)] active:scale-95">
+              Request Industrial Quote
+              <ArrowRight size={18} />
             </Link>
           </div>
 

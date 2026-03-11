@@ -126,151 +126,165 @@ export default async function SEOGrowthRetainersPage({
     <main className="flex-1 pt-32 pb-24">
       <Container>
         <div className="max-w-5xl mx-auto space-y-8">
-          <AnimatedSection className="text-center">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-[#F8F8FF]">
-              SEO and Growth Support Built to Improve Visibility, Traffic, and Ongoing Performance
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Growth Lab</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              SEO & <span className="text-[var(--site-primary)]">Growth</span> Support <br className="hidden md:block" /> for Continued Performance.
             </h1>
-            <p className="text-lg text-[#94A3B8] mb-6">
-              We help businesses improve search visibility, strengthen website performance, and keep their digital systems moving forward through ongoing SEO, updates, and optimization support.
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+              We help businesses improve search visibility, strengthen website performance, and keep their digital systems moving forward through ongoing SEO and optimization.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
               {supportingPoints.map((point) => (
-                <div key={point} className="rounded-lg border border-[#1E1E2E] bg-[#13131E] px-4 py-3 text-sm text-[#94A3B8]">
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
                   {point}
                 </div>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                Book Consultation
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                Get Custom Project Scope
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <span>Get Quote</span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Launch Is Only the Start</h2>
-            <p className="text-[#94A3B8] mb-3">
-              A website can look strong on day one and still underperform over time if no one is improving it.
-            </p>
-            <p className="text-[#94A3B8] mb-3">
-              Digital Web Crew offers ongoing SEO and growth support for businesses that want better visibility, stronger page structure, more consistent updates, and continued improvement after launch.
-            </p>
-            <p className="text-[#94A3B8] mb-3">
-              This service is built for businesses that want their website to keep working as a real growth asset, not sit untouched after it goes live.
-            </p>
-            <p className="text-[#94A3B8]">
-              The focus is simple. Improve search performance, support lead generation, and keep the site aligned with business goals as things evolve.
-            </p>
+
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Launch Is Only the Start</h2>
+            <div className="space-y-6 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-4xl">
+              <p>
+                A website can look strong on day one and still underperform over time if no one is improving it.
+              </p>
+              <p>
+                Digital Web Crew offers ongoing SEO and growth support for businesses that want better visibility, stronger page structure, and continued improvement after launch.
+              </p>
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Who This Service Is Built For</h2>
-            <p className="text-[#94A3B8] mb-4">
+          <AnimatedSection className="site-card p-10 lg:p-12 border border-slate-200 dark:border-[#1E1E2E] rounded-xl relative overflow-hidden">
+             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-emerald-500 opacity-50" />
+            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">A More Practical Growth Retainer</h2>
+            <div className="space-y-6 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-4xl">
+              <p>
+                This service is not built around vague monthly activity or inflated promises.
+              </p>
+              <p>
+                It is meant for businesses that want real website improvement, stronger visibility, and ongoing support tied to how the site actually performs and develops over time. That means focusing on useful updates, search structure, content quality, and the parts of the website that support trust and lead generation.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Who This Service Is Built For</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
               SEO and growth support is a strong fit for businesses that depend on search visibility, local presence, service discovery, or ongoing website performance.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               {whoFor.map((item) => (
-                <li key={item}>{item}</li>
+                <div key={item} className="flex items-center gap-3 text-left p-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
+                  <span className="text-slate-700 dark:text-[#94A3B8] text-[15px] font-medium">{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What This Service Can Include</h2>
-            <p className="text-[#94A3B8] mb-4">
-              SEO and growth support can cover a mix of visibility work, content improvements, technical fixes, and ongoing website updates depending on what the business needs most.
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Core Growth Pillars</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
+              SEO and growth support can cover a mix of visibility work, content improvements, technical fixes, and ongoing website updates.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
               {serviceAreas.map((item) => (
-                <div key={item} className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-4 py-3 text-[#94A3B8]">
+                <div key={item} className="site-card flex items-center justify-center p-4 text-center text-sm font-semibold text-slate-700 dark:text-[#94A3B8] bg-slate-50/50 dark:bg-white/5">
                   {item}
                 </div>
               ))}
             </div>
-            <p className="text-[#94A3B8]">
-              Some businesses need focused SEO support. Others need a broader ongoing service that combines search, content, website updates, and conversion improvement.
-            </p>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What&apos;s Included in SEO and Growth Support</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-8 tracking-tight">What&apos;s Included</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {included.map(([title, desc]) => (
-                <div key={title} className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-4">
-                  <h3 className="font-semibold text-[#F8F8FF] mb-2">{title}</h3>
-                  <p className="text-sm text-[#94A3B8]">{desc}</p>
+                <div key={title} className="site-card p-8 flex flex-col items-center text-center bg-slate-50/50 dark:bg-white/5 border-2 border-transparent hover:border-[var(--site-primary)]/10 transition-all">
+                  <h3 className="font-display font-black text-xl text-slate-950 dark:text-[#F8F8FF] mb-4">{title}</h3>
+                  <p className="text-sm text-slate-600 dark:text-[#94A3B8] leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">What Ongoing SEO and Growth Support Can Fix</h2>
-            <p className="text-[#94A3B8] mb-4">
-              Many businesses have a decent website but still struggle with visibility, weak service pages, outdated content, or lack of consistent improvement. This service can help solve problems like:
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">What Growth Support Can Fix</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
+              Many businesses have a decent website but still struggle with visibility, weak service pages, or outdated content.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8] mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full mb-8">
               {problems.map((item) => (
-                <li key={item}>{item}</li>
+                <div key={item} className="flex items-center gap-3 text-left">
+                  <div className="h-1.5 w-1.5 rounded-full bg-red-500/50 shrink-0" />
+                  <span className="text-slate-600 dark:text-[#94A3B8] text-sm font-medium">{item}</span>
+                </div>
               ))}
-            </ul>
-            <p className="text-[#94A3B8]">
-              The goal is not just to add SEO tasks. It is to improve the parts of the website that affect visibility, trust, and performance.
-            </p>
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">How We Approach SEO and Growth Support</h2>
-            <p className="text-[#94A3B8] mb-3">We start by looking at the current state of the site.</p>
-            <p className="text-[#94A3B8] mb-3">
-              That means reviewing page structure, service presentation, search-readiness, content quality, and the areas most likely to affect visibility or user experience. From there, we set priorities based on what can make the biggest difference.
-            </p>
-            <p className="text-[#94A3B8] mb-3">
-              Some businesses need foundational cleanup. Others need ongoing support with content, local SEO, technical improvements, and page refinement over time.
-            </p>
-            <p className="text-[#94A3B8]">
-              We keep the work practical and tied to the business. Better pages, better structure, better visibility, and better support for growth.
-            </p>
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Strategy-First Optimization</h2>
+            <div className="space-y-6 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-4xl">
+              <p>We start by looking at the current state of the site.</p>
+              <p>
+                That means reviewing page structure, service presentation, search-readiness, content quality, and the areas most likely to affect visibility. We keep the work practical and tied to real business results.
+              </p>
+            </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Best Use Cases for This Service</h2>
-            <p className="text-[#94A3B8] mb-4">
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Best Use Cases</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
               This service works especially well for businesses that want their website to improve steadily instead of staying static.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-[#94A3B8]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               {bestUseCases.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">A More Practical Growth Retainer</h2>
-            <p className="text-[#94A3B8] mb-3">
-              This service is not built around vague monthly activity or inflated promises.
-            </p>
-            <p className="text-[#94A3B8]">
-              It is meant for businesses that want real website improvement, stronger visibility, and ongoing support tied to how the site actually performs and develops over time. That means focusing on useful updates, search structure, content quality, and the parts of the website that support trust and lead generation.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Related Services That Pair Well With SEO and Growth Support</h2>
-            <p className="text-[#94A3B8] mb-4">
-              Ongoing growth work becomes stronger when the website, page structure, and lead flow are built properly from the start.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {relatedServices.map((item) => (
-                <span key={item} className="px-3 py-2 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-sm text-[#94A3B8]">
-                  {item}
-                </span>
+                <div key={item} className="flex items-center gap-3 text-left">
+                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/50 shrink-0" />
+                  <span className="text-slate-600 dark:text-[#94A3B8] text-sm font-medium">{item}</span>
+                </div>
               ))}
             </div>
-            <p className="text-[#94A3B8]">These can be added into a broader project scope when the business needs a more complete growth system.</p>
+          </AnimatedSection>
+
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
+            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Related Protocol Support</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl leading-relaxed">Growth work becomes stronger when the website, page structure, and lead flow are built properly.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+              {relatedServices.map((item) => (
+                <div key={item} className="site-card p-4 rounded-xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-700 dark:text-[#94A3B8] text-center">
+                  {item}
+                </div>
+              ))}
+            </div>
           </AnimatedSection>
 
           <AnimatedSection>
@@ -287,44 +301,61 @@ export default async function SEOGrowthRetainersPage({
             />
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Starting Price</h2>
-            <p className="text-[#94A3B8] mb-3">
-              SEO and growth retainers vary based on website size, current condition, content needs, local competition, and the level of support required.
+          <AnimatedSection className="site-card p-12 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Starting Investment</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+              SEO and growth retainers vary based on website size, current condition, and the level of support required.
             </p>
-            <p className="text-xl font-bold text-[#F8F8FF] mb-2">SEO and Growth Retainers starting at $1,000 per month</p>
-            <p className="text-[#94A3B8] mb-6">
-              Broader support, higher-content demands, and more advanced optimization work are scoped based on requirements.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                Book Consultation
+            <div className="site-card p-8 mb-10 bg-slate-50/50 dark:bg-[#1A1A2E]/50 border-[var(--site-primary)]/20 border-2 w-full max-w-xl">
+              <p className="text-2xl md:text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">SEO & Growth Support starting at $1,000 per month</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                Get Custom Project Scope
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <span>Get Quote</span>
+                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </Link>
             </div>
           </AnimatedSection>
 
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About SEO and Growth Support</h2>
+            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About SEO and Growth Support</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-3">Need Ongoing Support to Improve Visibility and Keep Your Website Moving Forward?</h2>
-            <p className="text-[#94A3B8] mb-6">
+          <AnimatedSection className="site-card p-12 text-center flex flex-col items-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 leading-tight tracking-tight">Need Ongoing Support to Improve Visibility?</h2>
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
               If your website is live but not improving, the right growth support can help you strengthen visibility, refine key pages, and create better long-term performance. Book a consultation or get a custom project scope to move forward.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center px-8 py-4 bg-[#6366F1] text-white font-bold rounded-lg hover:bg-[#6366F1]/90 transition-colors">
-                Book Consultation
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+                <span>Book Consultation</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center px-8 py-4 border border-[#1E1E2E] bg-[#0F0F18] text-[#F8F8FF] font-bold rounded-lg hover:border-[#6366F1]/50 transition-colors">
-                Get Custom Project Scope
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <span>Get Quote</span>
+                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </Link>
             </div>
           </AnimatedSection>
+
         </div>
       </Container>
     </main>

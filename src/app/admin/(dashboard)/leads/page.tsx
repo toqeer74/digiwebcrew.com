@@ -39,10 +39,10 @@ export default async function LeadsPage({
     return (
       <div className="flex flex-col items-center justify-center min-h-[70vh] p-12 text-center text-foreground">
         <div className={cn(
-          "w-24 h-24 rounded-[2.5rem] flex items-center justify-center mb-10 shadow-2xl transition-all duration-700 animate-in fade-in zoom-in slide-in-from-bottom-8",
-          errorType === "CONFIG" ? "bg-amber-50 text-amber-500 shadow-amber-500/10" :
-            errorType === "CONNECTION" ? "bg-rose-50 text-rose-500 shadow-rose-500/10" :
-              "bg-gray-100 text-gray-500 shadow-gray-500/10"
+          "w-20 h-20 rounded-xl flex items-center justify-center mb-8 border",
+          errorType === "CONFIG" ? "bg-amber-50 text-amber-500 border-amber-100" :
+            errorType === "CONNECTION" ? "bg-rose-50 text-rose-500 border-rose-100" :
+              "bg-slate-50 text-slate-500 border-slate-200"
         )}>
           {errorType === "CONFIG" ? <ShieldAlert size={48} /> :
             errorType === "CONNECTION" ? <WifiOff size={48} /> :
@@ -55,24 +55,23 @@ export default async function LeadsPage({
               "Records Offline"}
         </h1>
 
-        <p className="max-w-lg text-sm font-bold text-muted-foreground/60 mt-6 uppercase tracking-[0.2em] leading-relaxed">
+        <p className="max-w-lg text-sm text-slate-500 mt-4 leading-relaxed">
           {errorType === "CONFIG" ? (
             <>
-              The <span className="text-amber-600">MONGODB_URI</span> environment variable is missing. Please define it in your <span className="font-black">Vercel Project Settings</span>.
+              The <span className="text-amber-600 font-semibold">MONGODB_URI</span> environment variable is missing. Please define it in your <span className="font-semibold">Vercel Project Settings</span>.
             </>
           ) : errorType === "CONNECTION" ? (
             <>
-              Connection rejected by the database. Ensure the <span className="text-rose-600">Vercel Deployment IP</span> is whitelisted (set to 0.0.0.0/0) in MongoDB Atlas.
+              Connection rejected by the database. Ensure the <span className="text-rose-600 font-semibold">Vercel Deployment IP</span> is whitelisted (set to 0.0.0.0/0) in MongoDB Atlas.
             </>
           ) : (
-            "The records database is currently unreachable. Please verify connectivity services and infrastructure health."
+            "The records database is currently unreachable. Please verify connectivity services."
           )}
         </p>
 
         {errorType === "CONNECTION" && (
-          <div className="mt-12 p-6 bg-rose-50/50 rounded-2xl border border-rose-100 max-w-md">
-            <p className="text-[10px] font-black text-rose-600/60 uppercase tracking-widest mb-2">Technical Warning</p>
-            <p className="text-xs text-rose-700/80 font-bold leading-relaxed">
+          <div className="mt-10 p-4 bg-rose-50/50 rounded-lg border border-rose-100 max-w-md">
+            <p className="text-xs text-rose-700 font-medium leading-relaxed">
               Whitelisting "0.0.0.0/0" in MongoDB Atlas Network Access is mandatory for serverless environments.
             </p>
           </div>

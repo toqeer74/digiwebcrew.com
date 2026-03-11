@@ -13,8 +13,8 @@
     --admin-warning: #f59e0b;
     --admin-danger: #ef4444;
     --admin-muted: #6b7280;
-    --admin-radius-lg: 0.75rem;
-    --admin-radius-xl: 1rem;
+    --admin-radius-lg: 0.375rem;
+    --admin-radius-xl: 0.5rem;
   }
 
   .admin-dashboard-shell {
@@ -32,11 +32,10 @@
   .admin-hero {
     position: relative;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: var(--admin-radius-lg);
     padding: 1.5rem;
     background: var(--admin-primary);
     color: #fff;
-    box-shadow: 0 10px 25px -10px rgba(99, 102, 241, 0.45);
   }
 
   .admin-hero::after {
@@ -113,25 +112,21 @@
   }
 
   .admin-card-hover {
-    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
   .admin-card-hover:hover {
-    border-color: rgba(99, 102, 241, 0.28);
-    box-shadow: 0 10px 25px -16px rgba(99, 102, 241, 0.45);
-    transform: translateY(-2px);
+    border-color: var(--admin-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   .admin-card-unified,
   .admin-card-unified.admin-card-premium,
   .admin-card-unified.admin-card-premium-inverse {
-    background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 251, 255, 0.96) 100%) !important;
-    border: 1px solid rgba(211, 220, 232, 0.9) !important;
-    border-radius: 1rem !important;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.9) inset,
-      0 12px 30px -22px rgba(15, 23, 42, 0.35),
-      0 24px 40px -32px rgba(99, 102, 241, 0.24) !important;
+    background: var(--admin-surface) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius-lg) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     backdrop-filter: none !important;
   }
 
@@ -144,17 +139,13 @@
   .dark .admin-card-unified,
   .dark .admin-card-unified.admin-card-premium,
   .dark .admin-card-unified.admin-card-premium-inverse {
-    background: linear-gradient(165deg, rgba(15, 23, 42, 0.84) 0%, rgba(15, 23, 42, 0.72) 100%) !important;
+    background: var(--admin-surface) !important;
     border-color: rgba(71, 85, 105, 0.75) !important;
   }
 
   .admin-card-unified.admin-card-hover:hover {
-    border-color: rgba(99, 102, 241, 0.34) !important;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.95) inset,
-      0 18px 34px -22px rgba(15, 23, 42, 0.38),
-      0 30px 48px -30px rgba(99, 102, 241, 0.28) !important;
-    transform: translateY(-2px);
+    border-color: var(--admin-border) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   }
 
   .admin-card-unified div[class*="rounded"][class*="items-center"][class*="justify-center"]:has(> svg) {
@@ -180,14 +171,9 @@
   .admin-card-premium {
     position: relative;
     isolation: isolate;
-    background:
-      linear-gradient(165deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 251, 255, 0.95) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.14);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.8) inset,
-      0 20px 35px -26px rgba(99, 102, 241, 0.5),
-      0 30px 60px -40px rgba(99, 102, 241, 0.3);
-    backdrop-filter: blur(8px);
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .admin-card-premium::before {
@@ -212,19 +198,13 @@
   }
 
   .admin-card-premium:hover {
-    border-color: rgba(99, 102, 241, 0.3);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.85) inset,
-      0 25px 40px -25px rgba(99, 102, 241, 0.55),
-      0 35px 80px -45px rgba(99, 102, 241, 0.4);
+    border-color: var(--admin-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   .admin-card-premium-inverse {
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.2) inset,
-      0 20px 35px -22px rgba(1, 8, 23, 0.9),
-      0 30px 80px -45px rgba(8, 47, 73, 0.85);
+    border-color: var(--admin-border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .admin-title {

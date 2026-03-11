@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Metadata } from "next";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -55,7 +56,8 @@ const faqItems = [
   { value: "faq-5", title: "Can I start with one service and expand later?", content: "Yes. Many projects begin with one focused service and grow into a broader digital system over time." },
 ];
 
-const cardClass = "site-card site-card-interactive overflow-hidden relative p-8";
+const cardClass = "site-card site-card-interactive overflow-hidden relative p-8 lg:p-10";
+const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 const ctaPrimary = "inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]";
 const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10";
 
@@ -69,37 +71,50 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         <div className="max-w-5xl mx-auto space-y-6">
 
           {/* Hero */}
-          <AnimatedSection className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">About Us</span>
-            <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight mb-4 text-slate-950 dark:text-[#F8F8FF]">
-              A Modern Digital Partner for Growth-Focused Businesses
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">About Our Crew</span>
+            </div >
+            
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+              A Modern Digital Partner <br className="hidden md:block" /> for Growth-Focused <span className="text-[var(--site-primary)]">Businesses.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-6 max-w-3xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
               Digital Web Crew helps businesses build stronger websites, sharper conversion systems, better search visibility, and more efficient lead handling through custom development, funnels, SEO, and automation.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12 w-full max-w-2xl">
               {supportingPoints.map((point) => (
-                <div key={point} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/80 dark:border-white/10 dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-[#C2D2E1]">
+                <div key={point} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/80 dark:border-white/10 dark:bg-white/5 px-4 py-3 text-sm font-bold text-slate-700 dark:text-[#C2D2E1]">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />
                   {point}
                 </div>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15"><ArrowRight className="h-4 w-4" /></span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className={ctaSecondary}>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10"><ArrowRight className="h-4 w-4" /></span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>
 
           {/* Story */}
           <AnimatedSection className={cardClass}>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Our Story</span>
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Built for Businesses That Need Stronger Digital Infrastructure</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Digital Web Crew was created for businesses that want more than a website that simply looks modern.</p>
@@ -109,7 +124,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           {/* Values */}
           <AnimatedSection className={cardClass}>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#34D399] to-[var(--site-primary)]" />
+            {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Values</span>
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-5">What We Value</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -125,7 +140,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           {/* Two col — What We Build + Who We Work Best With */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedSection className={cardClass}>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] to-[var(--site-primary)]" />
+              {gradientTop}
               <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Services</span>
               <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">What We Build</h2>
               <ul className="space-y-2.5">
@@ -138,7 +153,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             </AnimatedSection>
 
             <AnimatedSection className={cardClass}>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#A78BFA] to-[#60A5FA]" />
+              {gradientTop}
               <span className="mb-3 inline-block rounded-full bg-violet-50 dark:bg-violet-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-violet-600 dark:text-violet-400">Best Fit</span>
               <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Who We Work Best With</h2>
               <ul className="space-y-2.5">
@@ -153,7 +168,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           {/* Approach */}
           <AnimatedSection className={cardClass}>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F59E0B] to-[#34D399]" />
+            {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-amber-50 dark:bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">Approach</span>
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">More Than Design. More Than Traffic.</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Some providers focus only on building websites. Others only on traffic. Others talk about automation without connecting it to how the business actually works.</p>
@@ -162,7 +177,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           {/* Why Choose */}
           <AnimatedSection className={cardClass}>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-[#A78BFA]" />
+            {gradientTop}
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Why Businesses Choose to Work With Us</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-4">Businesses usually come to us because they want a stronger digital setup with more clarity and better execution.</p>
             <ul className="space-y-2.5 mb-4">
@@ -185,7 +200,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           {/* CTA */}
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
+            {gradientTop}
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Looking for a Stronger Digital Partner?</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">If your business needs more than a basic website and you want a clearer, more capable digital system, we can help define the right next step.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

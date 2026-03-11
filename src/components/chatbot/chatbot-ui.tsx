@@ -89,7 +89,7 @@ export function ChatbotUI() {
                                 setIsOpen(true);
                                 initializeChat();
                             }}
-                            className="w-14 h-14 rounded-2xl bg-raly-primary text-white shadow-[0_15px_35px_-5px_rgba(2,77,148,0.35)] flex items-center justify-center hover:bg-raly-primary/95 transition-all border border-white/20 group relative"
+                            className="w-14 h-14 rounded-2xl bg-[var(--site-primary)] text-white shadow-[0_15px_35px_-5px_rgba(var(--site-primary-rgb),0.35)] flex items-center justify-center hover:bg-[var(--site-primary-hover)] transition-all border border-white/20 group relative"
                         >
                             <Sparkles className="absolute -top-1 -right-1 text-yellow-400 fill-yellow-400 animate-pulse" size={14} />
                             <MessageSquare size={24} className="drop-shadow-md" />
@@ -101,49 +101,31 @@ export function ChatbotUI() {
                             animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
                             exit={{ opacity: 0, scale: 0.98, y: 20, filter: "blur(5px)" }}
                             transition={{ type: "spring", damping: 20, stiffness: 200 }}
-                            className="w-[330px] h-[550px] bg-white/70 backdrop-blur-3xl border border-white/40 rounded-[2rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden relative"
+                            className="w-[360px] h-[480px] bg-white dark:bg-[#0A0A0F] border border-slate-200 dark:border-white/10 rounded-3xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden relative"
                         >
+                            <div className="absolute top-0 left-0 w-full h-[2px] bg-[var(--site-primary)]/30 z-[30]" />
                             {/* Header */}
-                            <div className="p-4 px-5 flex items-center justify-between bg-gradient-to-r from-raly-primary/95 to-[#0a4f8f]/95 backdrop-blur-md relative z-20">
-                                <div className="flex items-center gap-2.5">
-                                    <div className="w-9 h-9 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center shadow-inner">
-                                        <Zap size={18} className="text-white fill-white" />
+                            <div className="p-4 px-6 flex items-center justify-between border-b border-slate-100 dark:border-white/5 relative z-20">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-[var(--site-primary)] flex items-center justify-center shadow-sm">
+                                        <Zap size={16} className="text-white fill-white" />
                                     </div>
-                                    <div className="flex flex-col">
-                                        <div className="flex items-center gap-1.5">
-                                            <h3 className="text-white font-black tracking-tighter uppercase text-[12px] leading-tight">
-                                                DWC AI
-                                            </h3>
-                                            <ShieldCheck size={11} className="text-raly-accent" />
-                                        </div>
-                                        <div className="flex items-center gap-1 mt-0.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                                            <span className="text-[8px] font-black text-white/60 uppercase tracking-widest leading-none">
-                                                {mode}
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <h3 className="text-slate-900 dark:text-white font-display font-black tracking-tight text-sm">
+                                        Assistant
+                                    </h3>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                    <button
-                                        onClick={() => setIsOpen(false)}
-                                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
-                                    >
-                                        <Minus size={16} />
-                                    </button>
-                                    <button
-                                        onClick={() => setIsOpen(false)}
-                                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
-                                    >
-                                        <X size={16} />
-                                    </button>
-                                </div>
+                                <button
+                                    onClick={() => setIsOpen(false)}
+                                    className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 dark:text-white/30 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
+                                >
+                                    <X size={18} />
+                                </button>
                             </div>
 
                             {/* Chat Messages */}
                             <div
                                 ref={scrollRef}
-                                className="flex-1 overflow-y-auto p-5 pb-2 space-y-2.5 custom-scrollbar relative z-10 bg-gradient-to-b from-white/20 to-transparent"
+                                className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar relative z-10 bg-slate-50/30 dark:bg-transparent"
                             >
                                 <AnimatePresence initial={false}>
                                     {messages.map((msg, i) => (
@@ -154,7 +136,7 @@ export function ChatbotUI() {
                                     <motion.div
                                         initial={{ opacity: 0, x: -5 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="flex gap-2 items-center text-raly-primary/30 font-black text-[9px] ml-11 uppercase tracking-widest pt-1"
+                                        className="flex gap-2 items-center text-slate-400 dark:text-white/20 font-bold text-[10px] ml-1 uppercase tracking-widest pt-1"
                                     >
                                         <Loader2 size={10} className="animate-spin" />
                                         Thinking...
@@ -163,31 +145,24 @@ export function ChatbotUI() {
                             </div>
 
                             {/* Input Area */}
-                            <div className="p-4 px-5 bg-white/40 border-t border-white/40 relative z-20">
+                            <div className="p-4 bg-white dark:bg-transparent border-t border-slate-100 dark:border-white/5 relative z-20">
                                 <form
                                     onSubmit={handleSendMessage}
-                                    className="relative"
+                                    className="relative group"
                                 >
                                     <input
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
-                                        placeholder="Type your message..."
-                                        className="w-full h-11 pl-5 pr-12 bg-white/60 border border-white/80 rounded-2xl outline-none shadow-sm focus:ring-4 focus:ring-raly-primary/10 focus:bg-white transition-all text-[12px] font-bold placeholder:text-muted-foreground/40"
+                                        placeholder="Send a message..."
+                                        className="w-full h-10 pl-4 pr-10 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl outline-none transition-all text-[13px] font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/20"
                                     />
                                     <button
                                         disabled={loading || !input.trim()}
-                                        className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-raly-primary text-white flex items-center justify-center shadow-md shadow-raly-primary/20 hover:scale-110 active:scale-95 disabled:opacity-30 transition-all"
+                                        className="absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-[var(--site-primary)] text-white flex items-center justify-center shadow-sm hover:opacity-90 disabled:opacity-30 transition-all"
                                     >
                                         <Send size={14} />
                                     </button>
                                 </form>
-                                <div className="mt-3 flex items-center justify-center gap-3">
-                                    <div className="h-[1px] flex-1 bg-black/[0.03]" />
-                                    <span className="text-[7px] font-black text-black/10 uppercase tracking-[0.4em] leading-none">
-                                        Enterprise Strategy
-                                    </span>
-                                    <div className="h-[1px] flex-1 bg-black/[0.03]" />
-                                </div>
                             </div>
                         </motion.div>
                     )}

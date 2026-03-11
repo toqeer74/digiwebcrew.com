@@ -134,49 +134,64 @@ export default async function ConversionFunnelsPage({
   const isRtl = locale === "ar" || locale === "ur";
 
   return (
-    <main className="flex-1 pt-32 pb-24">
+    <main className="flex-1 pt-32 pb-24 text-slate-950 dark:text-[#F8F8FF]">
       <Container>
-        <div className="max-w-5xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto space-y-24">
+          {/* Hero Section */}
           <AnimatedSection className="text-center flex flex-col items-center">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-[#F8F8FF] leading-[1.1]">
-              Conversion Funnels and Landing Pages Built to Turn Interest Into Action
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Funnel Lab</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              Conversion <span className="text-[var(--site-primary)]">Funnels</span> and <br className="hidden md:block" /> Landing Pages.
             </h1>
-            <p className="text-lg text-[#94A3B8] mb-10 max-w-3xl">
-              We build focused page systems that help businesses generate more inquiries, bookings, consultations, and qualified leads through clearer offers, stronger page structure, and better conversion flow.
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+              We build focused page systems that help businesses generate more inquiries, bookings, consultations, and qualified leads through clearer offers and stronger conversion flow.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 w-full max-w-4xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
               {supportingPoints.map((point) => (
-                <div key={point} className="site-card flex items-center justify-center p-4 text-center text-sm font-medium text-[#94A3B8]">
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
                   {point}
                 </div>
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)]">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-10 py-5 transition-all duration-300 hover:bg-[#1a1a2e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="site-card p-10 text-center flex flex-col items-center">
-            <h2 className="text-3xl font-bold text-[#F8F8FF] mb-6">A Better Page Can Change the Result</h2>
-            <p className="text-[#94A3B8] mb-4 max-w-3xl leading-relaxed">
-              Not every visitor needs a full website experience. In many cases, what works better is a focused page built around one goal, one offer, and one next step.
-            </p>
-            <p className="text-[#94A3B8] mb-4 max-w-3xl leading-relaxed">
-              Digital Web Crew builds conversion funnels and landing pages for businesses that want stronger campaign performance, cleaner service promotion, better lead capture, and less friction between interest and action.
-            </p>
-            <p className="text-[#F8F8FF] font-semibold mt-4">Whether the goal is form submissions, booked calls, service inquiries, or local lead generation, the page should guide people clearly and make the next step feel easy.</p>
+
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">A Better Page Can Change the Result</h2>
+            <div className="space-y-6 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-4xl">
+              <p>
+                Not every visitor needs a full website experience. In many cases, what works better is a focused page built around one goal, one offer, and one next step.
+              </p>
+              <p>
+                Digital Web Crew builds conversion funnels and landing pages for businesses that want stronger campaign performance, cleaner service promotion, and less friction between interest and action.
+              </p>
+            </div>
           </AnimatedSection>
+
 
           <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
             <h2 className="text-3xl font-bold text-[#F8F8FF] mb-6">Who This Service Is Built For</h2>
@@ -268,38 +283,32 @@ export default async function ConversionFunnelsPage({
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Built to Connect With the Tools You Use</h2>
-            <p className="text-[#94A3B8] mb-4">
-              Landing pages and funnels often perform best when they are connected to the systems that handle leads after the click.
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
+            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Built to Connect With the Tools You Use</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl leading-relaxed">
+              Landing pages and funnels perform best when connected to the systems that handle leads after the click.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {integrations.map((item) => (
-                <div key={item} className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-4 py-3 text-[#94A3B8]">
+                <div key={item} className="site-card flex items-center justify-center p-4 text-center text-sm font-semibold text-slate-700 dark:text-[#94A3B8] bg-slate-50/50 dark:bg-white/5">
                   {item}
                 </div>
               ))}
             </div>
-            <p className="text-[#94A3B8]">
-              The page should not stop at the submit button. It should fit into the rest of your lead handling process.
-            </p>
           </AnimatedSection>
 
-          <AnimatedSection className="bg-[#13131E] border border-[#1E1E2E] rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Related Services That Pair Well With Funnels and Landing Pages</h2>
-            <p className="text-[#94A3B8] mb-4">
-              Landing pages often work best when they are supported by the right traffic, follow-up, and website structure.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-4">
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
+            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Related Protocol Support</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl leading-relaxed">Landing pages work best when supported by the right traffic, follow-up, and website structure.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               {relatedServices.map((item) => (
-                <span key={item} className="px-3 py-2 rounded-full border border-[#1E1E2E] bg-[#0F0F18] text-sm text-[#94A3B8]">
+                <div key={item} className="site-card p-4 rounded-xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-700 dark:text-[#94A3B8] text-center">
                   {item}
-                </span>
+                </div>
               ))}
             </div>
-            <p className="text-[#94A3B8]">
-              These can be added as part of a broader project scope when needed.
-            </p>
           </AnimatedSection>
 
           <AnimatedSection>
@@ -317,54 +326,48 @@ export default async function ConversionFunnelsPage({
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-12 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-[#F8F8FF] mb-6">Starting Price</h2>
-            <p className="text-[#94A3B8] mb-6 max-w-3xl leading-relaxed">
-              Landing page and funnel projects vary based on the number of pages, copy requirements, design depth, integrations, and follow-up complexity.
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Starting Investment</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+              Landing page and funnel projects vary based on scope, integrations, number of pages, and the level of conversion optimization required.
             </p>
-            <div className="site-card p-8 mb-8 bg-[#1A1A2E]/50 border-[#6366F1]/20">
-              <p className="text-2xl md:text-3xl font-black text-[#F8F8FF]">Conversion Funnels and Landing Pages starting at $2,000</p>
+            <div className="site-card p-8 mb-10 bg-slate-50/50 dark:bg-[#1A1A2E]/50 border-[var(--site-primary)]/20 border-2 w-full max-w-xl">
+              <p className="text-2xl md:text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">Conversion Funnels & Landing Pages starting at $1,200</p>
             </div>
-            <p className="text-[#94A3B8] mb-10 max-w-3xl">
-              Larger funnel systems, multi-step campaigns, and connected automation flows are scoped separately based on requirements.
-            </p>
             <div className="flex flex-col sm:flex-row gap-6">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)]">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-10 py-5 transition-all duration-300 hover:bg-[#13131e] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>
 
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-[#F8F8FF] mb-4">Questions About Funnels and Landing Pages</h2>
+            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About Funnels and Landing Pages</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
-          <AnimatedSection className="site-card p-12 text-center flex flex-col items-center border-[#6366F1]/30 bg-[#6366F1]/5">
-            <h2 className="text-3xl font-bold text-[#F8F8FF] mb-3">Need a Better Path From Click to Conversion?</h2>
-            <p className="text-lg text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
-              If your current pages are getting traffic but not enough action, a stronger landing page or funnel may be the missing piece. Book a consultation or get a custom project scope to move forward.
+          <AnimatedSection className="site-card p-12 text-center flex flex-col items-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Ready to Turn Clicks Into Clients?</h2>
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
+              If your traffic is not converting, a focused landing page or funnel built around your offer and audience can make a real difference. Book a consultation or get a custom scope to get started.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[#6366F1] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[#6366F1]/90 shadow-[0_26px_60px_-36px_rgba(99,102,241,0.4)]">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-[#1E1E2E] bg-[#13131E] text-[#F8F8FF] font-bold px-10 py-5 transition-all duration-300 hover:bg-white/5 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.5)]">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>

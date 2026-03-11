@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Metadata } from "next";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -84,22 +85,35 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
         <div className="max-w-5xl mx-auto space-y-6">
 
           {/* Hero */}
-          <AnimatedSection className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Industries</span>
-            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight mb-4 text-slate-950 dark:text-[#F8F8FF]">
-              Built for Industries Where Trust & Digital Performance Matter
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Industry Clusters</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+              Built for Sectors Where <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Performance</span> Matters.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-8 max-w-3xl mx-auto">
-              We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling.
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+              We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling tailored to their industrial requirements.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15"><ArrowRight className="h-4 w-4" /></span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className={ctaSecondary}>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10"><ArrowRight className="h-4 w-4" /></span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>

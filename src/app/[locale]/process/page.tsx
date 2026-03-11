@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Metadata } from "next";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -73,6 +74,7 @@ const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full
 export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
+  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 
   return (
     <main className="flex-1 pt-32 pb-24">
@@ -80,29 +82,42 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         <div className="max-w-5xl mx-auto space-y-6">
 
           {/* Hero */}
-          <AnimatedSection className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Our Process</span>
-            <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight mb-4 text-slate-950 dark:text-[#F8F8FF]">
-              A Clear Process for Building Smarter Digital Systems
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Our Protocol</span>
+            </div>
+          
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+              A Clear Path From <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Discovery</span> to Launch.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-6 max-w-3xl mx-auto">
-              We use a structured process to make sure every website, funnel, SEO, and automation project is aligned with real business goals, clear priorities, and the right level of implementation.
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+              We use a structured engineering process to make sure every website, funnel, SEO, and automation project is aligned with real business goals, clear priorities, and the right level of implementation.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15"><ArrowRight className="h-4 w-4" /></span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className={ctaSecondary}>
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10"><ArrowRight className="h-4 w-4" /></span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </AnimatedSection>
 
           {/* Why Process */}
-          <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+          <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
+            {gradientTop}
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">A Better Process Leads to Better Work</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Strong digital work does not come from jumping straight into design or development without direction.</p>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Digital Web Crew follows a process built to keep projects clear, practical, and aligned with the real needs of the business.</p>
@@ -112,8 +127,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {steps.map((step) => (
-              <AnimatedSection key={step.num} className="site-card site-card-interactive overflow-hidden relative flex flex-col p-8">
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${step.color}`} />
+              <AnimatedSection key={step.num} className="site-card site-card-interactive overflow-hidden relative flex flex-col p-8 lg:p-10">
+                {gradientTop}
                 <div className="flex items-center gap-3 mb-4">
                   <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${step.badgeColor}`}>{step.badge}</span>
                   <span className="font-display text-3xl font-black text-slate-200 dark:text-white/10 select-none">{step.num}</span>
@@ -134,8 +149,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
           {/* Fit + How to Enter */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] to-[var(--site-primary)]" />
+            <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
+              {gradientTop}
               <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">A Good Fit For These Projects</h2>
               <ul className="space-y-2.5">
                 {fitProjects.map((item) => (
@@ -146,8 +161,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
               </ul>
             </AnimatedSection>
 
-            <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#34D399] to-[#A78BFA]" />
+            <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
+              {gradientTop}
               <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">How to Enter the Process</h2>
               <div className="space-y-4">
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-4">
@@ -170,7 +185,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
           {/* CTA */}
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
+            {gradientTop}
             <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Want a Clearer Path From Idea to Launch?</h2>
             <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">If you want a project that is shaped around business goals, clear scope, and practical execution, the next step is simple.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

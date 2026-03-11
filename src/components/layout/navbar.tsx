@@ -20,15 +20,28 @@ interface NavbarProps {
 export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const pathname = usePathname();
+  let leaveTimeout: NodeJS.Timeout;
+
+  const handleMouseEnter = () => {
+    clearTimeout(leaveTimeout);
+    setServicesOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    leaveTimeout = setTimeout(() => {
+      setServicesOpen(false);
+    }, 150);
+  };
 
   const navLinks = [
     { label: "Home", href: localePath(locale, "/") },
     { label: "Services", href: localePath(locale, "/services"), dropdown: true },
     { label: "Pricing", href: localePath(locale, "/pricing") },
-    { label: "Process", href: localePath(locale, "/process") },
     { label: "Work", href: localePath(locale, "/case-studies") },
+    { label: "Process", href: localePath(locale, "/process") },
     { label: "About", href: localePath(locale, "/about") },
     { label: "Contact", href: localePath(locale, "/contact") },
   ];
@@ -97,16 +110,18 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
               >
                 <button
                   type="button"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
                   onClick={() => setServicesOpen((v) => !v)}
                   className={cn(
-                    "inline-flex items-center gap-1.5 text-sm text-[#94A3B8] hover:text-[#F8F8FF] transition-colors",
-                    pathname.startsWith(link.href) && "text-[#F8F8FF]"
+                    "inline-flex items-center gap-1.5 py-6 text-sm font-semibold transition-all hover:text-[var(--site-primary)]",
+                    pathname.startsWith(link.href) || servicesOpen ? "text-[var(--site-primary)]" : "text-[#94A3B8]"
                   )}
                 >
                   <span>{link.label}</span>
                   <ChevronDown
                     size={14}
-                    className={cn("transition-transform", servicesOpen && "rotate-180")}
+                    className={cn("transition-transform duration-300", servicesOpen && "rotate-180")}
                     aria-hidden="true"
                   />
                 </button>
@@ -163,11 +178,12 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-              className="hidden lg:block absolute left-0 right-0 top-16 border-b border-[#1E1E2E] bg-[#0A0A0F]/96 backdrop-blur-xl shadow-[0_30px_90px_-55px_rgba(0,0,0,0.9)]"
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="hidden lg:block absolute left-0 right-0 top-[64px] border-b border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl shadow-[0_40px_80px_-40px_rgba(0,0,0,0.15)] dark:shadow-[0_40px_80px_-40px_rgba(0,0,0,0.5)]"
             >
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
               <div className="px-6 md:px-12 pt-10 pb-6">
                 <div className="grid grid-cols-4 gap-10">
                   {megaGroups.map((group) => {
@@ -213,12 +229,45 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
 
       {
         mobileOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 border-t border-[#1E1E2E] bg-[#0F0F18] px-6 py-6 overflow-y-auto">
-            <div className="space-y-2">
+          <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F0F18] px-6 py-6 overflow-y-auto">
+            <div className="space-y-4">
               {navLinks.map((link) => (
-                <Link key={link.label} href={link.href} className="block py-3 text-base text-[#94A3B8] hover:text-[#F8F8FF]" onClick={() => setMobileOpen(false)}>
-                  {link.label}
-                </Link>
+                link.dropdown ? (
+                  <div key={link.label} className="space-y-2">
+                    <button 
+                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                      className="flex items-center justify-between w-full py-3 text-lg font-bold text-slate-900 dark:text-[#F8F8FF]"
+                    >
+                      <span>{link.label}</span>
+                      <ChevronDown size={20} className={cn("transition-transform", mobileServicesOpen && "rotate-180")} />
+                    </button>
+                    <AnimatePresence>
+                      {mobileServicesOpen && (
+                        <motion.div 
+                          initial={{ height: 0, opacity: 0 }} 
+                          animate={{ height: "auto", opacity: 1 }} 
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden space-y-1 pl-4 border-l-2 border-slate-100 dark:border-white/5"
+                        >
+                          {mobileServiceItems.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              className="block py-2.5 text-base text-slate-600 dark:text-[#94A3B8]"
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link key={link.label} href={link.href} className="block py-3 text-lg font-bold text-slate-900 dark:text-[#F8F8FF]" onClick={() => setMobileOpen(false)}>
+                    {link.label}
+                  </Link>
+                )
               ))}
             </div>
             <div className="pt-6 mt-6 border-t border-[#1E1E2E]">

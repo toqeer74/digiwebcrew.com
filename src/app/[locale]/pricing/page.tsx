@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -122,168 +123,215 @@ const faqItems = [
 export default async function PricingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
-  const isRtl = locale === "ar" || locale === "ur";
-  const sectionCardClass =
-    "rounded-xl border border-slate-200 bg-white/96 p-8 shadow-[0_18px_36px_-24px_rgba(15,23,42,0.12)] dark:border-[#1E1E2E] dark:bg-[#13131E]";
+  const sectionCardClass = "site-card overflow-hidden relative p-8 lg:p-10";
+  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 
   return (
-    <main className="flex-1 pt-40 pb-24 md:pt-44">
+    <main className="flex-1 pt-32 pb-24">
       <Container>
-        <div className="max-w-5xl mx-auto space-y-8">
-          <AnimatedSection className="text-center">
-            <h1 className="mb-4 text-4xl font-black tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-6xl">
-              Clear Starting Pricing for Custom Digital Work
+        <div className="max-w-6xl mx-auto space-y-24">
+          {/* Hero Section */}
+          <AnimatedSection className="text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
+              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Pricing & Investment</span>
+            </div>
+
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+              Clear Starting <span className="text-[var(--site-primary)]">Pricing</span> for <br className="hidden md:block" /> <span className="text-slate-950 dark:text-[#F8F8FF]">Custom Digital Work.</span>
             </h1>
-            <p className="mb-6 text-lg text-slate-600 dark:text-[#94A3B8]">
-              Every project is shaped around your goals, scope, and technical requirements. To help you plan with more confidence, we provide starting prices for our core services while keeping room for the right level of customization.
+            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+              Every project is shaped around your goals, scope, and technical requirements. We provide starting prices for our core services while keeping room for the right level of customization.
             </p>
-            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
               {supportPoints.map((point) => (
-                <div
-                  key={point}
-                  className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/95 px-4 py-3.5 text-sm text-slate-700 shadow-[0_14px_28px_-22px_rgba(15,23,42,0.12)] dark:border-[#1E1E2E] dark:bg-[linear-gradient(180deg,rgba(23,35,50,0.98),rgba(11,18,29,0.98))] dark:text-[#C2D2E1] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_36px_-26px_rgba(0,0,0,0.56)]"
-                >
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--site-primary)] shadow-[0_0_0_5px_rgba(0,0,0,0.08)] dark:shadow-[0_0_0_5px_rgba(var(--site-primary-rgb),0.12)]" />
-                  <span className="font-medium">{point}</span>
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-sm font-bold text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
+                  {point}
                 </div>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-all duration-300 hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)]">
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-white dark:border-[#1E1E2E] dark:bg-[#13131E] dark:text-[#F8F8FF] dark:hover:bg-[#1a1a2e]">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Pricing That Filters for Fit and Leaves Room for the Right Scope</h2>
-            <p className="mb-3 text-slate-600 dark:text-[#94A3B8]">Not every project needs the same level of work. A focused landing page is not priced like a custom multi-page website.</p>
-            <p className="mb-3 text-slate-600 dark:text-[#94A3B8]">Digital Web Crew uses starting prices to make the investment level more transparent while keeping each project tailored to the real business need.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">If you already know what you need, you can book a consultation. If you want help defining the right direction first, the custom project scope flow is the better place to start.</p>
-          </AnimatedSection>
+          {/* Pricing Factors - Alternating Bento */}
+          <div className="space-y-24">
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-6 space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                  Structure & Scope
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                  Pricing That Filters for Fit and Leaves Room for Scope
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                    Not every project needs the same level of work. A focused landing page is not priced like a custom multi-page website.
+                  </p>
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                    We use starting prices to make the investment level more transparent while keeping each project tailored to the real business need.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-6">
+                <div className={cn(sectionCardClass, "border-2 border-[var(--site-primary)]/10")}>
+                  {gradientTop}
+                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Custom Quote Factors</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {priceFactors.map((factor) => (
+                      <div key={factor} className="flex items-start gap-3">
+                        <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shrink-0" />
+                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] capitalize">{factor}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
 
-          <AnimatedSection>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Starting Investment Levels</h2>
-            <p className="mb-5 max-w-3xl text-slate-600 dark:text-[#94A3B8]">These starting prices reflect the base level for our core services.</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {tiers.map((tier) => (
-                <div
-                  key={tier.title}
-                  className="group flex h-full flex-col rounded-[22px] border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(241,245,249,0.98)_100%)] p-4 shadow-[0_18px_36px_-24px_rgba(15,23,42,0.14)] transition-all duration-300 hover:border-[color:rgba(var(--site-primary-rgb),0.35)] dark:border-[#1E1E2E] dark:bg-[linear-gradient(180deg,rgba(26,39,56,0.995)_0%,rgba(12,20,32,0.995)_100%)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.11),inset_0_22px_46px_-30px_rgba(255,255,255,0.06),0_0_0_1px_rgba(255,255,255,0.68),0_34px_62px_-30px_rgba(0,0,0,0.84),0_24px_48px_-22px_rgba(var(--site-primary-rgb),0.3)] dark:hover:border-white/60"
-                >
-                  <div className="mb-4">
-                    <div className="mb-4 inline-flex rounded-full border border-[color:rgba(var(--site-primary-rgb),0.35)] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.14em] text-[var(--site-primary)] dark:border-white/45 dark:text-white">
-                      {tier.badge}
+            {/* Investment Levels */}
+            <AnimatedSection className="space-y-12">
+              <div className="text-center max-w-3xl mx-auto space-y-4">
+                <h2 className="text-3xl md:text-6xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">Starting Investment Levels</h2>
+                <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  These starting prices reflect the base level for our core services, built on premium engineering foundations.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {tiers.map((tier) => (
+                  <div key={tier.title} className="site-card site-card-interactive p-8 lg:p-10 flex flex-col relative overflow-hidden group border-2 border-transparent">
+                    {gradientTop}
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="inline-block px-3 py-1 rounded-full bg-[var(--site-primary)]/10 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">
+                        {tier.badge}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[2.5rem] md:text-[3.5rem] font-display font-black leading-none text-slate-950 dark:text-[#F8F8FF] tracking-tighter">{tier.price}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8] mt-1">Starting from</p>
+                      </div>
                     </div>
-                    <h3 className="max-w-sm text-[1.26rem] font-semibold leading-[1.08] tracking-tight text-slate-950 dark:text-white">
-                      {tier.title}
-                    </h3>
-                    <p className="mt-2 max-w-xl text-[0.84rem] leading-5 text-slate-600 dark:text-[#B3C0CF]">
+                    
+                    <h3 className="text-2xl md:text-3xl font-display font-black mb-4 text-slate-950 dark:text-[#F8F8FF] tracking-tight leading-tight">{tier.title}</h3>
+                    <p className="text-slate-600 dark:text-[#94A3B8] mb-10 leading-relaxed italic text-[16px]">
                       {tier.desc}
                     </p>
-                  </div>
 
-                  <div className="mb-4 border-t border-slate-200 pt-4 dark:border-white/12">
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
-                      {tier.factors.map((factor) => (
-                        <div key={factor} className="flex items-start gap-2">
-                          <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-[var(--site-primary)] dark:text-white" />
-                          <span className="text-[0.82rem] leading-5 text-slate-700 dark:text-[#E4ECF4]">{factor}</span>
-                        </div>
-                      ))}
+                    <div className="space-y-6 mb-12">
+                      <div className="flex items-center gap-2">
+                        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/20 whitespace-nowrap">Key Factors</p>
+                        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4">
+                        {tier.factors.map((factor) => (
+                          <div key={factor} className="flex items-center gap-3">
+                            <CheckCircle2 size={18} className="text-[var(--site-primary)] shrink-0" />
+                            <span className="text-sm font-bold text-slate-700 dark:text-[#94A3B8]">{factor}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-auto">
+                      <Link href={localePath(locale, tier.href)} className="flex items-center justify-between w-full group/btn relative overflow-hidden rounded-2xl bg-slate-100 dark:bg-white/5 p-5 transition-all border-2 border-transparent hover:border-[var(--site-primary)]/20 group">
+                        <span className="font-bold relative z-10 transition-colors group-hover/btn:text-white">{tier.cta}</span>
+                        <ArrowRight size={22} className="relative z-10 transition-all group-hover/btn:translate-x-1 group-hover/btn:text-white" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--site-primary)] to-[var(--site-primary-soft)] opacity-0 group-hover/btn:opacity-100 transition-all duration-300" />
+                      </Link>
                     </div>
                   </div>
+                ))}
+              </div>
+            </AnimatedSection>
 
-                  <div className="mt-auto flex flex-col gap-2.5 border-t border-slate-200 pt-4 sm:flex-row sm:items-end sm:justify-between dark:border-white/12">
-                    <div>
-                      <p className="text-[1.32rem] font-semibold tracking-tight text-slate-950 dark:text-white">{tier.price}</p>
-                      <p className="text-[0.75rem] text-slate-500 dark:text-[#A7B4C3]">Starting investment for this service</p>
-                    </div>
-                    <Link
-                      href={localePath(locale, tier.href)}
-                      className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--site-primary)] px-3.5 py-2 text-[0.82rem] font-semibold text-white transition-all duration-300 hover:bg-[var(--site-primary-hover)]"
-                    >
-                      Start
-                      <ArrowRight size={14} />
-                    </Link>
+
+            {/* Who This Pricing Is For - Alternating Bento */}
+            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-6 md:order-2 space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                  Ideal Partner Fit
+                </div>
+                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                  Built for Businesses Investing in Growth
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                    Digital Web Crew is designed for businesses that understand the value of stronger digital presentation, better lead flow, and cleaner systems.
+                  </p>
+                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic">
+                    If your priority is business value, clarity, and a stronger long-term system, this pricing model is built for you.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-6 md:order-1">
+                <div className={cn(sectionCardClass, "border-2 border-emerald-500/10")}>
+                  {gradientTop}
+                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Who This Fits Best</h3>
+                  <div className="space-y-4">
+                    {bestFit.map((item) => (
+                      <div key={item} className="flex items-start gap-4 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 group-hover:border-[var(--site-primary)]/20 transition-colors">
+                        <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] leading-tight">{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-[#0A0A0F] border-2 border-[var(--site-primary)]/10")}>
+            {gradientTop}
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-8 tracking-tight text-center">Questions About Pricing</h2>
+            <div className="max-w-4xl mx-auto text-left">
+              <Accordion items={faqItems} />
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">When a Custom Quote Makes More Sense</h2>
-            <p className="mb-3 text-slate-600 dark:text-[#94A3B8]">Some projects are too broad or too specific for a simple starting-price model.</p>
-            <ul className="mb-4 list-disc list-inside space-y-2 text-slate-600 dark:text-[#94A3B8]">
-              {customExamples.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-slate-600 dark:text-[#94A3B8]">If your project includes multiple services or a higher level of technical depth, we will shape the quote around the actual requirements.</p>
-          </AnimatedSection>
 
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">What Usually Changes the Price</h2>
-            <p className="mb-3 text-slate-600 dark:text-[#94A3B8]">The final cost of a project depends on the amount of work involved and the complexity behind it.</p>
-            <ul className="mb-4 list-disc list-inside space-y-2 text-slate-600 dark:text-[#94A3B8]">
-              {priceFactors.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-slate-600 dark:text-[#94A3B8]">A clear scope helps us recommend the right build level without overcomplicating the project.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Built for Businesses Investing in Better Digital Infrastructure</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8]">Digital Web Crew is designed for businesses that understand the value of stronger digital presentation, better lead flow, cleaner systems, and long-term growth support.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Who This Pricing Is Best Suited For</h2>
-            <ul className="mb-4 list-disc list-inside space-y-2 text-slate-600 dark:text-[#94A3B8]">
-              {bestFit.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-slate-600 dark:text-[#94A3B8]">If your priority is business value, clarity, and a stronger long-term system, this pricing model is built for that kind of project.</p>
-          </AnimatedSection>
-
-          <AnimatedSection className={sectionCardClass}>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Two Ways to Move Forward</h2>
-            <p className="mb-2 text-slate-600 dark:text-[#94A3B8]"><strong className="text-slate-950 dark:text-[#F8F8FF]">Option 1 Book Consultation:</strong> Best for businesses that already have a clear need and want to discuss the project directly.</p>
-            <p className="mb-4 text-slate-600 dark:text-[#94A3B8]"><strong className="text-slate-950 dark:text-[#F8F8FF]">Option 2 Get Quote:</strong> Best for businesses that want help defining the right service mix, priorities, timeline, and budget before booking a call.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">Both paths are designed to make the next step easier and more aligned with where you are in the decision process.</p>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Questions About Pricing</h2>
-            <Accordion items={faqItems} />
-          </AnimatedSection>
-
-          <AnimatedSection className={`${sectionCardClass} text-center`}>
-            <h2 className="mb-3 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Ready to Scope the Right Project for Your Business?</h2>
-            <p className="mb-6 text-slate-600 dark:text-[#94A3B8]">Whether you need a website, a landing page system, automation support, or ongoing SEO work, the next step is to define the right scope.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-all duration-300 hover:bg-[var(--site-primary-hover)]">
+          <AnimatedSection className="site-card p-12 lg:p-16 text-center space-y-8 relative overflow-hidden border-2 border-[var(--site-primary)]/20">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
+            <div className="max-w-3xl mx-auto space-y-6">
+              <h2 className="text-3xl md:text-6xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                Ready to Scope the Right Project?
+              </h2>
+              <p className="text-xl text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+                Whether you need a website, automation support, or ongoing SEO work, the next step is to define the right scope.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
+              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-12 py-6 text-lg text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] group">
                 <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 shadow-[0_26px_60px_-36px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-white dark:border-[#1E1E2E] dark:bg-[#0F0F18] dark:text-[#F8F8FF] dark:hover:bg-[#13131E]">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-12 py-6 text-lg transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </span>
               </Link>
             </div>
@@ -291,5 +339,6 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
         </div>
       </Container>
     </main>
+
   );
 }
