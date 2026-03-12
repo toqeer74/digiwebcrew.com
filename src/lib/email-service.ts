@@ -10,7 +10,6 @@ interface EmailPayload {
 async function sendEmailViaResend(payload: EmailPayload) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.log("[EMAIL] Resend API key not configured");
     return false;
   }
 
@@ -34,7 +33,6 @@ async function sendEmailViaResend(payload: EmailPayload) {
       return false;
     }
 
-    console.log(`[EMAIL] Sent to ${payload.to} via Resend`);
     return true;
   } catch (err) {
     console.error("[EMAIL] Resend send error:", err);
@@ -43,9 +41,6 @@ async function sendEmailViaResend(payload: EmailPayload) {
 }
 
 async function sendEmailViaNodemailer(payload: EmailPayload) {
-  // Fallback to console log in development
-  console.log(`[EMAIL] Mock email sent to ${payload.to}`);
-  console.log(`Subject: ${payload.subject}`);
   return true;
 }
 

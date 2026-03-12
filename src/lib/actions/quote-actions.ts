@@ -8,12 +8,11 @@ import { sendEmail, templateNewLeadNotification, templateQuoteConfirmation } fro
 async function triggerAutomation(lead: any) {
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
   if (!webhookUrl) {
-    console.log("[SIMULATION] No N8N_WEBHOOK_URL found. Skipping automation dispatch.");
     return;
   }
 
   try {
-    const response = await fetch(webhookUrl, {
+    await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -28,7 +27,6 @@ async function triggerAutomation(lead: any) {
         }
       })
     });
-    console.log(`[AUTOMATION] Dispatched lead to n8n: ${response.status}`);
   } catch (err) {
     console.error("[AUTOMATION] Failed to trigger webhook:", err);
   }
@@ -96,7 +94,6 @@ export async function submitQuote(data: QuoteFormData) {
       html: templateQuoteConfirmation(newLead.toObject(), locale),
     });
 
-    console.log(`[QUOTE] Lead created and emails sent`);
 
     return {
       success: true,

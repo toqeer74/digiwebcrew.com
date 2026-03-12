@@ -60,7 +60,6 @@ export function AIProjectCalculator() {
       documentType: "tech_breakdown"
     });
 
-    console.log("PDF Download requested", { inputs, hours, weeks, estimatedCost });
     alert("PDF generation functionality is being developed. Your estimate: " + hours + " hours, " + weeks + " weeks, $" + estimatedCost.toLocaleString());
   };
 

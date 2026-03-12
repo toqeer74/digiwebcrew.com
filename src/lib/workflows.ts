@@ -224,7 +224,7 @@ export const workflowTemplates: Record<string, WorkflowTemplate> = {
 export async function triggerWorkflow(event: WorkflowTrigger["event"], leadData: any) {
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
   if (!webhookUrl) {
-    console.log("[WORKFLOW] No N8N_WEBHOOK_URL configured");
+    // No-op in production if webhook not configured
     return;
   }
 
@@ -239,9 +239,7 @@ export async function triggerWorkflow(event: WorkflowTrigger["event"], leadData:
       }),
     });
 
-    if (response.ok) {
-      console.log(`[WORKFLOW] ${event} triggered successfully`);
-    } else {
+    if (!response.ok) {
       console.error(`[WORKFLOW] ${event} failed:`, response.statusText);
     }
   } catch (error) {

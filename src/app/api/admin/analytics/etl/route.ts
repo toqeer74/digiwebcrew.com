@@ -18,8 +18,6 @@ export async function POST(req: NextRequest) {
 
         const data = await req.json();
 
-        // LOGGING: In production, this would persist to BigQuery/PostgreSQL
-        console.log("[COMMAND CENTER ETL] Ingested telemetry:", JSON.stringify(data, null, 2));
 
         // METADATA: Automated Variance Analysis (Triggered in Gumloop, reported here)
         if (data.variance_alert) {
