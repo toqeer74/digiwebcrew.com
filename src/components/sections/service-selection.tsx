@@ -75,6 +75,11 @@ export function ServiceSelection({ locale }: ServiceSelectionProps) {
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
+              <motion.div className="relative h-full p-6 bg-secondary/20 border border-border rounded-2xl hover:bg-secondary/40 transition-colors">
+                <div className={cn("w-12 h-12 rounded-xl mb-4 flex items-center justify-center bg-gradient-to-br", service.color)}>
+                  <Icon className="text-white" size={24} />
+                </div>
+                <h3 className="text-xl font-display font-semibold mb-2">
                   {service.title}
                 </h3>
                 <p className="text-sm text-muted-foreground font-body mb-4 line-clamp-2">
