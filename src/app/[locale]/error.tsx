@@ -32,8 +32,8 @@ export default function Error({
             <AlertTriangle size={48} />
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-display font-black mb-6 tracking-tight text-slate-950 dark:text-[#F8F8FF]">Critical System Fault</h2>
-          <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 leading-relaxed">
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-6 tracking-tight text-foreground">Critical System Fault</h2>
+          <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
             An unexpected error occurred during processing. This lab sequence has been interrupted. The development team has been notified.
           </p>
 
@@ -46,7 +46,7 @@ export default function Error({
               <span>Initialize Reset Sequence</span>
             </button>
             <div className="py-2 px-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-[#94A3B8]/50">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400/50">
                     System Protocol: {error.digest || 'SWL-CRIT-ERR-777'}
                 </p>
             </div>

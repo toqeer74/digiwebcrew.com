@@ -15,10 +15,10 @@ const coreServices = [
 ];
 
 const related = [
-  { name: "WordPress Development", href: "/services/full-stack-websites" },
-  { name: "Next.js Development", href: "/services/full-stack-websites" },
+  { name: "WordPress Development", href: "/services/custom-software" },
+  { name: "Next.js Development", href: "/services/custom-software" },
   { name: "E-commerce Development", href: "/services/ecommerce" },
-  { name: "Web Application Development", href: "/services/custom-web-apps" },
+  { name: "Web Application Development", href: "/services/custom-software" },
   { name: "Mobile Application Development", href: "/services/custom-software" },
   { name: "DevOps & Cloud", href: "/services/devops-cloud" },
   { name: "AI Workflows & Agents", href: "/services/ai-chatbots-automation" },
@@ -62,10 +62,10 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Service Hub</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-white leading-[1.1]">
               Performance-Driven <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Digital Systems</span> for Growth.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-3xl leading-relaxed">
               Digital Web Crew helps growth-focused businesses build custom websites, funnels, SEO systems, and AI automation designed to improve credibility, generate qualified leads, and support smarter customer acquisition.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -75,7 +75,7 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -87,15 +87,15 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
             <AnimatedSection className="md:col-span-7 site-card p-10 relative overflow-hidden flex flex-col justify-center min-h-[400px]">
               {gradientTop}
               <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">Architecture</span>
-              <h2 className="text-3xl md:text-4xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-display font-black text-slate-950 dark:text-white mb-6 tracking-tight">
                 More Than a Website. <br /> A Smarter <span className="opacity-50 underline decoration-[var(--site-primary)] decoration-4 underline-offset-8">Digital System.</span>
               </h2>
-              <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-xl">
+              <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-xl">
                 Most businesses do not just need a nicer design. They need a stronger digital system that helps them attract attention, convert traffic, improve visibility, and handle leads more efficiently.
               </p>
             </AnimatedSection>
 
-            <AnimatedSection className="md:col-span-5 site-card p-10 relative overflow-hidden bg-slate-950 text-white flex flex-col justify-center">
+            <AnimatedSection className="md:col-span-5 site-card p-10 relative overflow-hidden bg-slate-50 dark:bg-midnight text-slate-900 dark:text-white flex flex-col justify-center border border-slate-200 dark:border-white/10">
               {gradientTop}
               <h3 className="text-xl font-display font-black mb-4">Core Principles</h3>
               <ul className="space-y-4">
@@ -105,7 +105,7 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                   "Lightweight & high-performance code",
                   "Scalable infrastructure for growth"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-400 font-medium">
+                  <li key={i} className="flex items-center gap-3 text-slate-600 dark:text-slate-400 font-medium">
                     <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
                     {item}
                   </li>
@@ -119,7 +119,7 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <span className="mb-2 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Our Protocol</span>
-                <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">Core Service Components</h2>
+                <h2 className="text-3xl font-display font-black text-slate-950 dark:text-white tracking-tight">Core Service Components</h2>
               </div>
             </div>
 
@@ -128,12 +128,12 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                 <AnimatedSection key={s.name} delay={idx * 0.1} className={interactiveCardClass}>
                   {gradientTop}
                   <div className="flex justify-between items-start mb-6">
-                    <h3 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">{s.name}</h3>
+                    <h3 className="text-2xl font-display font-black text-slate-950 dark:text-white tracking-tight">{s.name}</h3>
                     <div className="text-[10px] font-black uppercase tracking-widest text-[var(--site-primary)] bg-[var(--site-primary)]/10 px-2 py-1 rounded">
                       {s.price.split(' ')[2]}
                     </div>
                   </div>
-                  <p className="text-slate-600 dark:text-[#94A3B8] mb-8 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                     {s.desc}
                   </p>
                   <Link 
@@ -152,8 +152,8 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             <AnimatedSection className="md:col-span-4 site-card p-8 flex flex-col justify-center">
               <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-wider text-slate-400">Extension</span>
-              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Related Capabilities</h2>
-              <p className="text-sm text-slate-600 dark:text-[#94A3B8]">
+              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-white mb-4">Related Capabilities</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Beyond our core protocols, we maintain deep expertise across the entire digital engineering spectrum.
               </p>
             </AnimatedSection>
@@ -177,12 +177,12 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedSection className={sectionCardClass}>
               {gradientTop}
-              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Investment & Scale</h2>
+              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-white mb-6">Investment & Scale</h2>
               <div className="space-y-4 mb-8">
                 {coreServices.map((s, i) => (
                   <div key={i} className="flex justify-between items-center py-3 border-b border-slate-100 dark:border-white/5">
-                    <span className="text-sm font-medium text-slate-600 dark:text-[#94A3B8]">{s.name}</span>
-                    <span className="text-sm font-black text-slate-950 dark:text-[#F8F8FF]">{s.name.includes("AI Chatbots") ? "Starting at $3,500" : s.price}</span>
+                    <span className="text-sm font-medium text-slate-600 dark:text-slate-400">{s.name}</span>
+                    <span className="text-sm font-black text-slate-950 dark:text-white">{s.name.includes("AI Chatbots") ? "Starting at $3,500" : s.price}</span>
                   </div>
                 ))}
               </div>
@@ -194,7 +194,7 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
 
             <AnimatedSection className={cn(sectionCardClass, "flex flex-col")}>
               {gradientTop}
-              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">How We Work</h2>
+              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-white mb-6">How We Work</h2>
               <div className="flex-1 space-y-4 mb-8">
                  {[
                    { t: "Discover", d: "Understanding your technical gaps" },
@@ -205,8 +205,8 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                    <div key={i} className="flex gap-4">
                      <span className="font-display font-black text-xl text-[var(--site-primary)]/20">{i+1}</span>
                      <div>
-                       <h4 className="font-bold text-slate-950 dark:text-[#F8F8FF]">{p.t}</h4>
-                       <p className="text-xs text-slate-500 dark:text-[#94A3B8]">{p.d}</p>
+                       <h4 className="font-bold text-slate-950 dark:text-white">{p.t}</h4>
+                       <p className="text-xs text-slate-500 dark:text-slate-400">{p.d}</p>
                      </div>
                    </div>
                  ))}
@@ -219,22 +219,22 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
 
           {/* FAQ */}
           <div className="space-y-8">
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight text-center">Common Questions</h2>
+            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-white tracking-tight text-center">Common Questions</h2>
             <div className="max-w-4xl mx-auto">
               <Accordion items={faq} />
             </div>
           </div>
 
           {/* Final CTA */}
-          <AnimatedSection className="site-card overflow-hidden relative text-center p-12 md:p-20 bg-slate-950">
+          <AnimatedSection className="site-card overflow-hidden relative text-center p-12 md:p-20 bg-slate-50 dark:bg-midnight border border-slate-200 dark:border-white/10">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(var(--site-primary-rgb),0.15),transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(var(--site-primary-rgb),0.1),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(var(--site-primary-rgb),0.15),transparent_70%)]" />
             
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-white mb-6 tracking-tight">
                 Need Help Choosing the <span className="text-[var(--site-primary)]">Right Service Mix?</span>
               </h2>
-              <p className="text-[#94A3B8] mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
                 Whether you already know what you need or want help defining the right direction, we can help you map out the next step for your digital infrastructure.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -244,7 +244,7 @@ export default async function ServicesHub({ params }: { params: Promise<{ locale
                     <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-10 py-5 text-white font-bold transition-all hover:bg-white/10 group">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                   <span>Get Quote</span>
                   <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>

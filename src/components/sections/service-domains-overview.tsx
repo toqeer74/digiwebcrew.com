@@ -20,17 +20,17 @@ const iconMap: Record<string, React.ComponentType<any>> = {
 export default function ServiceDomainsOverview({ dict, locale }: { dict: any; locale: string }) {
   return (
     <>
-      <AnimatedSection className="mx-auto mb-20 max-w-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-16 text-center dark:bg-[#0A0A0F] md:mb-40">
+      <AnimatedSection className="mx-auto mb-20 max-w-3xl bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-16 text-center dark:bg-transparent dark:bg-none md:mb-40">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.25)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1">
             <Sparkle size={16} strokeWidth={2.5} className="animate-pulse text-[var(--site-primary)]" />
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">
               Service Architecture
             </span>
           </div>
-          <h1 className="mb-8 text-5xl font-display font-bold leading-tight tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-7xl lg:text-8xl">
+          <h1 className="mb-8 text-5xl font-display font-bold leading-tight tracking-tight text-foreground md:text-7xl lg:text-8xl">
             Services Built to Strengthen Growth, Conversion, and Digital Performance
           </h1>
-          <p className="mx-auto max-w-2xl font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8] md:text-xl">
+          <p className="mx-auto max-w-2xl font-body text-lg leading-relaxed text-muted-foreground md:text-xl">
             {dict.services.hubDesc}
           </p>
         </AnimatedSection>
@@ -48,7 +48,7 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
                 >
                   <AnimatedSection
                     delay={i * 0.1}
-                    className="relative h-full cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white/96 p-6 shadow-[0_16px_32px_-24px_rgba(15,23,42,0.18)] transition-all duration-300 hover:border-[color:rgba(var(--site-primary-rgb),0.35)] hover:shadow-[0_20px_40px_-24px_rgba(15,23,42,0.18)] dark:border-[#1E1E2E] dark:bg-[#13131E] dark:hover:shadow-[0_20px_40px_-24px_rgba(var(--site-primary-rgb),0.18)]"
+                    className="relative h-full cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white/96 p-6 shadow-[0_16px_32px_-24px_rgba(15,23,42,0.18)] transition-all duration-300 hover:border-[color:rgba(var(--site-primary-rgb),0.35)] hover:shadow-[0_20px_40px_-24px_rgba(15,23,42,0.18)] dark:border-white/10 dark:bg-[#1a1f38] dark:hover:shadow-[0_20px_40px_-24px_rgba(var(--site-primary-rgb),0.18)]"
                   >
                     {/* Decorative background */}
                     <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[var(--site-primary)] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-10" />
@@ -60,16 +60,16 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
                       </div>
 
                       {/* Content */}
-                      <h3 className="mb-2 text-lg font-display font-bold tracking-tight text-slate-950 transition-colors group-hover:text-[var(--site-primary)] dark:text-[#F8F8FF]">
+                      <h3 className="mb-2 text-lg font-display font-bold tracking-tight text-slate-950 transition-colors group-hover:text-[var(--site-primary)] dark:text-white">
                         {domain.title}
                       </h3>
-                      <p className="mb-6 font-body text-sm leading-relaxed text-slate-600 dark:text-[#94A3B8]">
+                      <p className="mb-6 font-body text-sm leading-relaxed text-muted-foreground">
                         {domain.description}
                       </p>
 
                       {/* Service Count */}
                       <div className="flex items-center justify-between pt-2">
-                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8]">
+                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                           {domain.categories.length} Service{domain.categories.length !== 1 ? 's' : ''}
                         </span>
                         <ArrowRight size={16} className="text-[var(--site-primary)] transition-transform group-hover:translate-x-1" />
@@ -90,10 +90,10 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
 
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
               <div className="max-w-2xl">
-                <h2 className="mb-4 text-3xl font-display font-bold tracking-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl">
+                <h2 className="mb-4 text-3xl font-display font-bold tracking-tight text-foreground md:text-5xl">
                   {dict.services.customSolution}
                 </h2>
-                <p className="font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]">
+                <p className="font-body text-lg leading-relaxed text-muted-foreground">
                   {dict.services.customSolutionDesc}
                 </p>
               </div>
@@ -110,3 +110,4 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
       </>
     );
   }
+

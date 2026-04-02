@@ -1,0 +1,28 @@
+{
+  "eyebrow": "اعتبار",
+  "heading": "قابلِ اعتماد پلیٹ فارمز اور تصدیق شدہ مہارت",
+  "platformsTitle": "وہ پلیٹ فارمز اور ایکو سسٹمز جن کے ساتھ ہم کام کرتے ہیں",
+  "trustSignalsTitle": "تصدیق شدہ اعتماد کے اشارے",
+  "platforms": [
+    "OpenAI",
+    "Anthropic",
+    "Google",
+    "Meta",
+    "AWS",
+    "Vercel",
+    "Stripe",
+    "HubSpot",
+    "Shopify",
+    "Notion"
+  ],
+  "trustSignals": [
+    "Google Reviews",
+    "Clutch Profile",
+    "LinkedIn Presence",
+    "Verified Business Email",
+    "Case Study Outcomes",
+    "Technical Delivery Portfolio"
+  ],
+  "note": "جن ٹولز کو ہم استعمال کرتے ہیں انہیں رسمی اسناد سے الگ رکھا گیا ہے تاکہ اعتماد کے دعوے درست رہیں۔"
+}
+

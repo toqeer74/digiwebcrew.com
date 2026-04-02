@@ -17,3 +17,4 @@ export function localePath(locale: Locale | string, path: string = "/") {
   return `${prefix}${normalized}`;
 }
 
+

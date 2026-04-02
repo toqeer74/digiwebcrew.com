@@ -105,10 +105,10 @@ export default async function BookConsultationPage({
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Expert Advisor</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Book a Consultation to Discuss <br className="hidden md:block" /> the Right <span className="text-[var(--site-primary)]">Next Step.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               If you already have a project in mind and want to talk through goals, scope, timeline, and fit, book a consultation and let&apos;s discuss what your business needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -125,7 +125,7 @@ export default async function BookConsultationPage({
               </a>
               <Link
                 href={localePath(locale, "/quote")}
-                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
               >
                 <span>Get Quote</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
@@ -138,11 +138,11 @@ export default async function BookConsultationPage({
 
           <AnimatedSection className={cn(sectionCardClass, "max-w-4xl mx-auto p-4 md:p-6")}>
             {gradientTop}
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Select Your Time</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-6">
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">Select Your Time</h2>
+            <p className="text-muted-foreground mb-6">
               Select a time directly in the scheduler below. If it does not load, use the direct booking link above.
             </p>
-            <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0A0A0F]">
+            <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-transparent">
               <iframe
                 title="Calendly Booking"
                 src="https://calendly.com/digiweb/consultation"
@@ -156,8 +156,8 @@ export default async function BookConsultationPage({
             <AnimatedSection className={cn(sectionCardClass, "md:col-span-12 lg:col-span-8")}>
               {gradientTop}
               <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">Purpose</span>
-              <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">A Direct Way to Start the Conversation</h2>
-              <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+              <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">A Direct Way to Start the Conversation</h2>
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>Some businesses already know they are ready to move forward. They may not have every detail finalized, but they know they need the right conversation to shape the next step.</p>
                 <p>This consultation page is for that stage.</p>
                 <p>If you want to discuss a custom website, landing page system, SEO support, automation setup, or a broader digital build, a consultation helps bring the project into clearer focus. It gives space to review the business need, talk through goals, identify the right service direction, and decide what makes sense next.</p>
@@ -168,10 +168,10 @@ export default async function BookConsultationPage({
               <AnimatedSection className={cn(sectionCardClass, "h-full")}>
                 {gradientTop}
                 <span className="mb-4 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Discussion</span>
-                <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">What We Cover</h2>
+                <h2 className="text-2xl font-display font-black text-foreground mb-6">What We Cover</h2>
                 <ul className="space-y-4">
                   {discussionPoints.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <li key={item} className="flex gap-3 text-sm text-muted-foreground">
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 mt-1.5" />
                       {item}
                     </li>
@@ -186,10 +186,10 @@ export default async function BookConsultationPage({
             <AnimatedSection className={sectionCardClass}>
               {gradientTop}
               <span className="mb-4 inline-block rounded-full bg-violet-50 dark:bg-violet-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Best Fit</span>
-              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Who Should Book</h2>
+              <h2 className="text-2xl font-display font-black text-foreground mb-6">Who Should Book</h2>
               <ul className="space-y-3">
                 {shouldBook.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                  <li key={item} className="flex gap-3 text-sm text-muted-foreground">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500 mt-1.5" />
                     {item}
                   </li>
@@ -200,10 +200,10 @@ export default async function BookConsultationPage({
             <AnimatedSection className={sectionCardClass}>
               {gradientTop}
               <span className="mb-4 inline-block rounded-full bg-amber-50 dark:bg-amber-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Preparation</span>
-              <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">What Helps Before</h2>
+              <h2 className="text-2xl font-display font-black text-foreground mb-6">What Helps Before</h2>
               <ul className="space-y-3">
                 {prepareItems.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8]">
+                  <li key={item} className="flex gap-3 text-sm text-muted-foreground">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500 mt-1.5" />
                     {item}
                   </li>
@@ -216,20 +216,20 @@ export default async function BookConsultationPage({
           <AnimatedSection className={sectionCardClass}>
             {gradientTop}
             <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">Outcome</span>
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">What Happens Next</h2>
+            <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">What Happens Next</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="space-y-4">
-                <p className="text-slate-600 dark:text-[#94A3B8] leading-relaxed">Once the consultation is booked, the next step is simple. You select a time, share the relevant details, and we review the information before the conversation.</p>
+                <p className="text-muted-foreground leading-relaxed">Once the consultation is booked, the next step is simple. You select a time, share the relevant details, and we review the information before the conversation.</p>
                 <ul className="space-y-4">
                   {afterBooking.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm text-slate-600 dark:text-[#94A3B8] font-bold">
+                    <li key={item} className="flex gap-3 text-sm text-muted-foreground font-bold">
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 mt-1.5" />
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] leading-relaxed border-l border-slate-200 dark:border-white/10 pl-8 italic">
+              <div className="space-y-4 text-muted-foreground leading-relaxed border-l border-slate-200 dark:border-white/10 pl-8 italic">
                 <p>Digital projects often go wrong when people skip the thinking stage and rush straight into execution.</p>
                 <p>A consultation helps avoid that. It creates a chance to look at the business need properly, discuss the options, and shape the right approach before time and money go into the wrong direction.</p>
               </div>
@@ -237,10 +237,10 @@ export default async function BookConsultationPage({
           </AnimatedSection>
 
 
-          <AnimatedSection className={cn(sectionCardClass, "bg-slate-950 text-white")}>
+          <AnimatedSection className={cn(sectionCardClass, "bg-slate-50 dark:bg-midnight text-slate-900 dark:text-white border border-slate-200 dark:border-white/10")}>
             {gradientTop}
-            <h2 className="text-2xl font-display font-black mb-4 tracking-tight">Need Help Defining the Project First?</h2>
-            <p className="opacity-70 mb-8 max-w-2xl">
+            <h2 className="text-2xl font-display font-black text-foreground mb-4 tracking-tight">Need Help Defining the Project First?</h2>
+            <p className="text-slate-600 dark:opacity-70 mb-8 max-w-2xl">
               If you are not ready to talk live yet and would rather explain your needs in a more structured way, the custom project scope path is a better fit.
             </p>
             <Link
@@ -255,9 +255,9 @@ export default async function BookConsultationPage({
           </AnimatedSection>
 
 
-          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-[#0A0A0F] border-2 border-[var(--site-primary)]/10")}>
+          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-transparent border-2 border-[var(--site-primary)]/10")}>
             {gradientTop}
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Questions About Booking</h2>
+            <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">Questions About Booking</h2>
             <div className="max-w-3xl mx-auto text-left">
               <Accordion items={faqItems} />
             </div>
@@ -265,8 +265,8 @@ export default async function BookConsultationPage({
 
           <AnimatedSection className="site-card overflow-hidden relative text-center p-12 lg:p-16 border-2 border-[var(--site-primary)]/20 shadow-[0_40px_80px_-40px_rgba(var(--site-primary-rgb),0.3)]">
             {gradientTop}
-            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Ready to Talk Through the Project?</h2>
-            <p className="text-xl text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-6 tracking-tight">Ready to Talk Through the Project?</h2>
+            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
               If you have a clear need and want to discuss the right direction, book a consultation and take the next step with more confidence.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -283,7 +283,7 @@ export default async function BookConsultationPage({
               </a>
               <Link
                 href={localePath(locale, "/quote")}
-                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group"
               >
                 <span>Get Quote</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">

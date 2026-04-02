@@ -159,3 +159,4 @@ export default async function WorkflowRunsPage({ searchParams }: { searchParams:
     </div>
   );
 }
+

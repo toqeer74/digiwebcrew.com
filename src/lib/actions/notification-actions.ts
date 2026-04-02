@@ -60,3 +60,4 @@ export async function createNotification(type: string, title: string, body: stri
 
   return notification;
 }
+

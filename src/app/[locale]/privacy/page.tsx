@@ -11,7 +11,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
                 <div className="max-w-4xl mx-auto">
                     <div className="site-card p-8 md:p-12 relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-60" />
-                        <div className="prose dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-headings:tracking-tight prose-p:text-slate-600 dark:prose-p:text-[#94A3B8] prose-p:leading-relaxed">
+                        <div className="prose dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-headings:tracking-tight prose-p:text-slate-600 dark:prose-p:text-muted-foreground prose-p:leading-relaxed">
                             <h1 className="text-4xl md:text-7xl mb-8 tracking-tighter">Privacy <span className="text-[var(--site-primary)]">Protocol.</span></h1>
                             <p className="lead text-xl mb-12 font-bold opacity-60">Last updated: February 2026</p>
                             

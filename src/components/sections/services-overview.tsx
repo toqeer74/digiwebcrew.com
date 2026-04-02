@@ -15,7 +15,7 @@ const services = [
     title: "Full-Stack Websites",
     description: "Next.js & MERN powered websites optimized for performance, SEO, and user experience.",
     iconName: "Globe",
-    href: "/services/full-stack-websites"
+    href: "/services/custom-software"
   },
   {
     title: "E-commerce Ops",
@@ -51,7 +51,7 @@ export function ServicesOverview({ dict }: ServicesOverviewProps) {
   const coreServices = services.slice(0, 3);
 
   return (
-    <Section className="relative z-10 pt-16 bg-[#0A0A0F] border-b border-[#1E1E2E]">
+    <Section className="relative z-10 pt-16 bg-transparent border-b border-white/10">
       <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-indigo-600/10 blur-[120px] -z-10 rounded-full translate-x-1/2 -translate-y-1/2" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-20 px-4 md:px-0">
@@ -70,11 +70,11 @@ export function ServicesOverview({ dict }: ServicesOverviewProps) {
           <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
           Our Expertise
         </div>
-        <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight mb-8 text-[#F8F8FF]">
+        <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight mb-8 text-slate-900 dark:text-white">
           {dict.servicesOverview.title1} <br />
           <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">{dict.servicesOverview.title2}</span>
         </h2>
-        <p className="text-xl text-[#94A3B8] font-body font-medium max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-slate-600 dark:text-slate-400 font-body font-medium max-w-2xl mx-auto leading-relaxed">
           {dict.servicesOverview.description}
         </p>
       </AnimatedSection>
@@ -87,3 +87,4 @@ export function ServicesOverview({ dict }: ServicesOverviewProps) {
     </Section>
   );
 }
+

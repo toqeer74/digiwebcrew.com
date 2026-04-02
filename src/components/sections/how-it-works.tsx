@@ -21,20 +21,20 @@ export function HowItWorks({ dict }: HowItWorksProps) {
     }));
 
     return (
-        <Section className="bg-[#0A0A0F] relative overflow-hidden py-12 md:py-20 border-b border-[#1E1E2E]">
+        <Section className="bg-transparent relative overflow-hidden py-12 md:py-20 border-b border-white/10">
             <Container>
                 {/* Section Header */}
                 <div className="text-center max-w-3xl mx-auto mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-6">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
-                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/30 mb-6">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--site-primary)] animate-pulse" />
+                        <span className="text-xs font-body font-semibold uppercase tracking-widest text-[var(--site-primary)]">
                             Our Process
                         </span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-display font-bold text-[#F8F8FF] tracking-tight mb-6">
+                    <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white tracking-tight mb-6">
                         How It Works
                     </h2>
-                    <p className="text-lg text-[#94A3B8] font-body leading-relaxed">
+                    <p className="text-lg text-muted-foreground font-body leading-relaxed">
                         A streamlined methodology built for modern software development and digital transformation.
                     </p>
                 </div>
@@ -42,7 +42,7 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                 {/* Vertical Timeline */}
                 <div className="relative max-w-3xl mx-auto">
                     {/* Center connecting line */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#6366F1] via-[#8B5CF6]/50 to-transparent transform -translate-x-1/2" />
+                    <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--site-primary)] via-[var(--site-primary)]/50 to-transparent transform -translate-x-1/2" />
 
                     {/* Timeline Steps */}
                     {steps.map((step, index) => {
@@ -69,14 +69,14 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                                             whileInView={{ opacity: 1, x: 0 }}
                                             viewport={{ once: true }}
                                             className={cn(
-                                                "p-6 rounded-lg bg-[#13131E] border border-[#1E1E2E]",
+                                                "p-6 rounded-lg bg-slate-50 dark:bg-[#1a1f38] border border-slate-200 dark:border-white/10",
                                                 isEven ? "md:mr-8" : "md:ml-8"
                                             )}
                                         >
-                                            <h3 className="text-xl font-display font-bold text-[#F8F8FF] mb-3">
+                                            <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mb-3">
                                                 {step.title}
                                             </h3>
-                                            <p className="text-sm text-[#94A3B8] font-body leading-relaxed">
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 font-body leading-relaxed">
                                                 {step.desc}
                                             </p>
                                         </motion.div>
@@ -95,17 +95,17 @@ export function HowItWorks({ dict }: HowItWorksProps) {
                                             <motion.div
                                                 animate={{ scale: [1, 1.2, 1] }}
                                                 transition={{ duration: 2, repeat: Infinity }}
-                                                className="absolute inset-0 rounded-full bg-[#6366F1]/20 blur-xl"
+                                                className="absolute inset-0 rounded-full bg-[var(--site-primary)]/20 blur-xl"
                                                 style={{ width: "100px", height: "100px" }}
                                             />
                                             
                                             {/* Circle */}
-                                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#6366F1] to-[#8B5CF6] border-4 border-[#0A0A0F] flex items-center justify-center text-white shadow-lg relative">
+                                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--site-primary)] to-[var(--site-primary-soft)] border-4 border-midnight flex items-center justify-center text-white relative">
                                                 <Icon size={24} strokeWidth={2} />
                                             </div>
-
+ 
                                             {/* Step number */}
-                                            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#0A0A0F] border border-[#6366F1] flex items-center justify-center text-xs font-display font-bold text-[#6366F1]">
+                                            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-midnight border border-[var(--site-primary)] flex items-center justify-center text-xs font-display font-bold text-[var(--site-primary)]">
                                                 {step.id}
                                             </div>
                                         </motion.div>
@@ -119,3 +119,4 @@ export function HowItWorks({ dict }: HowItWorksProps) {
         </Section>
     );
 }
+

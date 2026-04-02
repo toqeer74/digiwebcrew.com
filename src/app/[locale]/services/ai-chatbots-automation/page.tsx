@@ -147,15 +147,15 @@ export default async function AIChatbotsAutomationPage({
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Automation Lab</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               AI Chatbots & <span className="text-[var(--site-primary)]">Workflow</span> Automation.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               We build practical chatbot and automation systems that help businesses capture leads, qualify inquiries, and improve customer communication speed.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
               {supportingPoints.map((point) => (
-                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400 relative overflow-hidden group">
                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
                   {point}
                 </div>
@@ -168,7 +168,7 @@ export default async function AIChatbotsAutomationPage({
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -178,8 +178,8 @@ export default async function AIChatbotsAutomationPage({
 
           <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Automation Should Make the Business Run Better</h2>
-            <div className="space-y-6 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed max-w-4xl">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-6 tracking-tight">Automation Should Make the Business Run Better</h2>
+            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-4xl">
                <p>Most businesses do not need more tools. They need better systems.</p>
                <p>
                 Digital Web Crew builds chatbot and automation setups that help businesses respond faster, route inquiries more clearly, reduce repetitive work, and create a smoother path from first contact to next step.
@@ -189,77 +189,77 @@ export default async function AIChatbotsAutomationPage({
 
 
           <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Who This Service Is Built For</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
+            <h2 className="text-3xl font-bold text-foreground mb-6 tracking-tight">Who This Service Is Built For</h2>
+            <p className="text-muted-foreground mb-10 max-w-3xl leading-relaxed">
               This service is a strong fit for businesses that deal with incoming leads, repeated questions, manual follow-up, or slow response times.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               {whoFor.map((item) => (
                 <div key={item} className="flex items-center gap-3 text-left p-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
-                  <span className="text-slate-700 dark:text-[#94A3B8] text-[15px] font-medium">{item}</span>
+                  <span className="text-slate-700 dark:text-slate-400 text-[15px] font-medium">{item}</span>
                 </div>
               ))}
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-[#F8F8FF] mb-6">What We Can Build</h2>
-            <p className="text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center bg-slate-50 dark:bg-midnight border border-slate-200 dark:border-white/10">
+            <h2 className="text-3xl font-display font-black text-foreground mb-6">What We Can Build</h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
               The right automation setup depends on your lead flow, current tools, and what parts of the process take too much manual work today.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
               {buildTypes.map((item) => (
-                <div key={item} className="site-card flex items-center justify-center p-4 text-center text-sm font-semibold text-[#94A3B8]">
+                <div key={item} className="site-card flex items-center justify-center p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5">
                   {item}
                 </div>
               ))}
             </div>
-            <p className="text-[#94A3B8] mt-8 max-w-3xl">
+            <p className="text-slate-500 dark:text-slate-400 mt-8 max-w-3xl">
               Some businesses need a focused chatbot setup. Others need a wider automation layer connected to lead handling, communication, and internal workflows.
             </p>
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-8 tracking-tight">What&apos;s Included in This Service</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-8 tracking-tight">What&apos;s Included in This Service</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {included.map(([title, desc]) => (
                 <div key={title} className="site-card p-8 flex flex-col items-center text-center bg-slate-50/50 dark:bg-white/5 border-2 border-transparent hover:border-[var(--site-primary)]/10 transition-all">
-                  <h3 className="font-display font-black text-xl text-slate-950 dark:text-[#F8F8FF] mb-4">{title}</h3>
-                  <p className="text-sm text-slate-600 dark:text-[#94A3B8] leading-relaxed">{desc}</p>
+                  <h3 className="font-display font-black text-xl text-foreground mb-4">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-[#F8F8FF] mb-6">What Better Automation Can Fix</h2>
-            <p className="text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center bg-slate-50 dark:bg-midnight border border-slate-200 dark:border-white/10">
+            <h2 className="text-3xl font-display font-black text-foreground mb-6">What Better Automation Can Fix</h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
               Many businesses lose time and leads because too much depends on manual response, slow follow-up, or disconnected tools. This service can help solve problems like:
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full mb-8">
               {problems.map((item) => (
                 <div key={item} className="flex items-center gap-3 text-left">
                   <div className="h-2 w-2 rounded-full bg-red-500/50 shrink-0" />
-                  <span className="text-[#94A3B8] text-sm">{item}</span>
+                  <span className="text-slate-700 dark:text-slate-400 text-sm font-medium">{item}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[#94A3B8] max-w-3xl italic">
+            <p className="text-slate-500 dark:text-slate-400 max-w-3xl italic">
               The goal is not to automate everything. It is to improve the parts of the process that are slowing the business down.
             </p>
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6">How We Approach Automation Projects</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-4 max-w-3xl leading-relaxed">We start by looking at what happens now.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-4 max-w-3xl leading-relaxed">
+            <h2 className="text-3xl font-bold text-foreground mb-6">How We Approach Automation Projects</h2>
+            <p className="text-muted-foreground mb-4 max-w-3xl leading-relaxed">We start by looking at what happens now.</p>
+            <p className="text-muted-foreground mb-4 max-w-3xl leading-relaxed">
               That means understanding how leads come in, what information matters, where the delays are, and which tasks are repeated too often. From there, we define a setup that fits the business instead of forcing the business to fit the tool.
             </p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-4 max-w-3xl leading-relaxed">
+            <p className="text-muted-foreground mb-4 max-w-3xl leading-relaxed">
               Some projects need only a chatbot and a simple follow-up flow. Others need multiple connected actions across forms, CRM, messaging, and internal systems.
             </p>
-            <p className="text-[#F8F8FF] font-semibold mt-4">We keep the focus on practical use. Clear entry points, better handoff, faster response, and less manual work.</p>
+            <p className="text-slate-900 dark:text-white font-semibold mt-4">We keep the focus on practical use. Clear entry points, better handoff, faster response, and less manual work.</p>
           </AnimatedSection>
 
           <AnimatedSection>
@@ -277,21 +277,21 @@ export default async function AIChatbotsAutomationPage({
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-6">Best Use Cases for This Service</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+            <h2 className="text-3xl font-bold text-foreground mb-6">Best Use Cases for This Service</h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
               This service works especially well for businesses that need faster and more consistent lead handling. The setup is designed to be useful now and flexible enough to grow later.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-8">
               {bestUseCases.map((item) => (
                 <div key={item} className="flex items-center gap-3 text-left">
                   <div className="h-2 w-2 rounded-full bg-emerald-500/50 shrink-0" />
-                  <span className="text-slate-600 dark:text-[#94A3B8] text-sm font-medium">{item}</span>
+                  <span className="text-muted-foreground text-sm font-medium">{item}</span>
                 </div>
               ))}
             </div>
             <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
               {futureExpansion.map((item) => (
-                <div key={item} className="site-card px-6 py-3 text-sm font-semibold text-slate-600 dark:text-[#94A3B8]">
+                <div key={item} className="site-card px-6 py-3 text-sm font-semibold text-muted-foreground">
                   {item}
                 </div>
               ))}
@@ -300,11 +300,11 @@ export default async function AIChatbotsAutomationPage({
 
           <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Related Protocol Support</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-2xl leading-relaxed">Automation works best when it is connected to the rest of your engineering ecosystem.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-6">Related Protocol Support</h2>
+            <p className="text-muted-foreground mb-10 max-w-2xl leading-relaxed">Automation works best when it is connected to the rest of your engineering ecosystem.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               {relatedServices.map((item) => (
-                <div key={item} className="site-card p-4 rounded-xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-700 dark:text-[#94A3B8] text-center">
+                <div key={item} className="site-card p-4 rounded-xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-700 dark:text-slate-400 text-center">
                   {item}
                 </div>
               ))}
@@ -312,14 +312,14 @@ export default async function AIChatbotsAutomationPage({
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-12 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Starting Investment</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-8 max-w-3xl leading-relaxed">
+            <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">Starting Investment</h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
               Automation projects vary based on the number of workflows, platform integrations, communication channels, and logic complexity.
             </p>
-            <div className="site-card p-8 mb-10 bg-slate-50/50 dark:bg-[#1A1A2E]/50 border-[var(--site-primary)]/20 border-2 w-full max-w-xl">
-              <p className="text-2xl md:text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">AI Automation Solutions starting at $3,500</p>
+            <div className="site-card p-8 mb-10 bg-slate-50/50 dark:bg-white/5 border-[var(--site-primary)]/20 border-2 w-full max-w-xl">
+              <p className="text-2xl md:text-3xl font-display font-black text-foreground tracking-tight">AI Automation Solutions starting at $3,500</p>
             </div>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl">
+            <p className="text-muted-foreground mb-10 max-w-3xl">
               Larger workflow systems, multi-channel follow-up, and more advanced automation setups are scoped separately based on requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
@@ -329,7 +329,7 @@ export default async function AIChatbotsAutomationPage({
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -337,14 +337,14 @@ export default async function AIChatbotsAutomationPage({
           </AnimatedSection>
 
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About Chatbots and Automation</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Chatbots and Automation</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-12 text-center flex flex-col items-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 leading-tight tracking-tight">Need Better Lead Handling Without More Manual Work?</h2>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-10 max-w-3xl leading-relaxed">
+            <h2 className="text-3xl font-display font-black text-foreground mb-6 leading-tight tracking-tight">Need Better Lead Handling Without More Manual Work?</h2>
+            <p className="text-lg text-muted-foreground mb-10 max-w-3xl leading-relaxed">
               If your team is losing time to slow response, repeated questions, or disconnected follow-up, the right chatbot or automation setup can help. Book a consultation or get a custom project scope to move forward.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -354,7 +354,7 @@ export default async function AIChatbotsAutomationPage({
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>

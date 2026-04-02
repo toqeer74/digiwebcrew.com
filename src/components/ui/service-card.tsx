@@ -61,7 +61,8 @@ export function ServiceCard({
 
       <Link href={href} className="absolute inset-0 z-10" aria-label={`Explore ${title}`} />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24 bg-[radial-gradient(circle_at_bottom,rgba(var(--site-primary-rgb),0.3),transparent_68%)] opacity-70 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24 bg-[radial-gradient(circle_at_bottom,rgba(var(--site-primary-rgb),0.3),transparent_68%)] opacity-0 dark:opacity-70 blur-2xl transition-opacity duration-500 dark:group-hover:opacity-100 hidden dark:block" />
     </motion.div>
   );
 }
+

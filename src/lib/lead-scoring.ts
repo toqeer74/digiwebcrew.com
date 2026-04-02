@@ -147,3 +147,4 @@ export function calculateLeadLifetimeValue(lead: any): number {
 
   return Math.round(ltv);
 }
+

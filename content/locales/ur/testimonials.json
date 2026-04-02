@@ -1,0 +1,53 @@
+{
+  "reviewBadges": [
+    {
+      "label": "Google Reviews",
+      "meta": "پبلک ریویو پروفائل",
+      "href": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "label": "Clutch",
+      "meta": "ایجنسی ریویو پلیٹ فارم",
+      "href": "https://clutch.co"
+    },
+    {
+      "label": "LinkedIn",
+      "meta": "پروفیشنل سفارشات",
+      "href": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "ہیلتھ کیئر آپریشنز لیڈ",
+      "role": "کلینک گروپ ویب سائٹ + فنل پروجیکٹ",
+      "content": "نئی ویب سائٹ اور کنورژن فلو نے پہلے دن سے بہتر میسجنگ اور معیاری انکوائریز فراہم کیں۔",
+      "rating": 5,
+      "source": "Google Reviews",
+      "sourceUrl": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "name": "SaaS بانی",
+      "role": "آٹومیشن + لیڈ روٹنگ بلڈ",
+      "content": "آٹومیشن سیٹ اپ نے بار بار ہونے والا کام کم کیا اور سیلز فالو اپ کو نمایاں طور پر تیز کیا۔",
+      "rating": 5,
+      "source": "Clutch",
+      "sourceUrl": "https://clutch.co"
+    },
+    {
+      "name": "ہوم سروسز ڈائریکٹر",
+      "role": "SEO + لینڈنگ پیجز انگیجمنٹ",
+      "content": "ہمیں بہتر سرچ ویزیبلٹی اور صاف فنل اسٹرکچر ملا جس سے کیمپین ٹریفک زیادہ منافع بخش ہوئی۔",
+      "rating": 5,
+      "source": "LinkedIn Recommendation",
+      "sourceUrl": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "trustSignals": [
+    "Google Review Profile",
+    "Clutch Agency Listing",
+    "LinkedIn Presence",
+    "Case Study Outcomes",
+    "Verified Business Contact"
+  ]
+}
+

@@ -73,7 +73,7 @@ const faqItems = [
 ];
 
 const ctaPrimary = "inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]";
-const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10";
+const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10";
 
 export default async function IndustriesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -98,10 +98,10 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Industry Clusters</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1]">
               Built for Sectors Where <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Performance</span> Matters.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed">
               We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling tailored to their industrial requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -111,7 +111,7 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -121,9 +121,9 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
           {/* Intro */}
           <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Why Industry Fit Changes the Right Solution</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">The right website, landing page, SEO, or automation setup depends on how the business sells, how customers search, what creates trust, and what action matters most. That is why the work should be shaped around the business model and the decision-making path behind it.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">Why Industry Fit Changes the Right Solution</h2>
+            <p className="text-muted-foreground mb-3">A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company.</p>
+            <p className="text-muted-foreground">The right website, landing page, SEO, or automation setup depends on how the business sells, how customers search, what creates trust, and what action matters most. That is why the work should be shaped around the business model and the decision-making path behind it.</p>
           </AnimatedSection>
 
           {/* Industry Cards Grid */}
@@ -132,11 +132,11 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
               <AnimatedSection key={section.heading} delay={idx * 0.04} className="site-card site-card-interactive overflow-hidden relative flex flex-col p-8">
                 <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${section.accent}`} />
                 <span className={`mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${section.badgeColor}`}>{section.badge}</span>
-                <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">{section.heading}</h2>
-                <p className="text-sm text-slate-600 dark:text-[#94A3B8] mb-4">{section.body}</p>
+                <h2 className="text-xl font-display font-black text-foreground mb-3">{section.heading}</h2>
+                <p className="text-sm text-muted-foreground mb-4">{section.body}</p>
                 <ul className="space-y-2 mb-4">
                   {section.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{point}
                     </li>
                   ))}
@@ -149,12 +149,12 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
           {/* Other Fit */}
           <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] to-[#A78BFA]" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Other Strong-Fit Businesses</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">While the industries above are our strongest fit, we can also work with other businesses where the project and business need are a strong match.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">The best fit usually comes down to this:</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">Other Strong-Fit Businesses</h2>
+            <p className="text-muted-foreground mb-3">While the industries above are our strongest fit, we can also work with other businesses where the project and business need are a strong match.</p>
+            <p className="text-muted-foreground mb-3">The best fit usually comes down to this:</p>
             <ul className="space-y-2 mb-4">
               {["The business values quality and clarity", "The website or digital setup plays a real role in growth", "There is a serious business need behind the project", "The scope and budget support custom work"].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-slate-600 dark:text-[#94A3B8]">
+                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
                 </li>
               ))}
@@ -163,15 +163,15 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
 
           {/* FAQ */}
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About Industry Fit</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Industry Fit</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
           {/* CTA */}
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Need a Digital System Built Around Your Industry?</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-3">Need a Digital System Built Around Your Industry?</h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
                 <span>Book Consultation</span>

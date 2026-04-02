@@ -1,186 +1,287 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Monitor, Filter, Cpu, TrendingUp, Smartphone, Workflow } from "lucide-react";
 import Link from "next/link";
-import { Container } from "../layout/layout-primitives";
 import { localePath } from "@/lib/locale-path";
+import { NetworkBackground } from "@/components/ui/network-background";
+import { Button } from "@/components/ui/button";
 
 interface HeroProps {
-  dict: any;
   locale: string;
 }
 
-const trustedCompanies = [
-  "TechFlow",
-  "Global Legal Partners",
-  "Apex Clinics",
-  "Elevate SaaS",
-  "ProHome Services",
-  "Nexus Consulting",
+const WORDS = ["WEBSITES", "FUNNELS", "AUTOMATION", "GROWTH"];
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+const serviceLinks = [
+  { 
+    title: "WEB SYSTEMS", 
+    icon: Monitor, 
+    color: "#00d4ff", 
+    href: "/services/custom-software",
+    glow: "rgba(0, 212, 255, 0.15)"
+  },
+  { 
+    title: "FUNNELS", 
+    icon: Filter, 
+    color: "#a78bfa", 
+    href: "/services/ecommerce-solutions",
+    glow: "rgba(167, 139, 250, 0.15)"
+  },
+  { 
+    title: "AI AUTOMATION", 
+    icon: Cpu, 
+    color: "#6366f1", 
+    href: "/services/ai-integrations",
+    glow: "rgba(99, 102, 241, 0.15)"
+  },
+  { 
+    title: "SEO & GROWTH", 
+    icon: TrendingUp, 
+    color: "#34d399", 
+    href: "/services/data-driven-seo",
+    glow: "rgba(52, 211, 153, 0.15)"
+  },
+  { 
+    title: "CUSTOM APPS", 
+    icon: Smartphone, 
+    color: "#f87171", 
+    href: "/services/custom-software",
+    glow: "rgba(248, 113, 113, 0.15)"
+  },
+  { 
+    title: "WORKFLOWS", 
+    icon: Workflow, 
+    color: "#f59e0b", 
+    href: "/services/ai-integrations",
+    glow: "rgba(245, 158, 11, 0.15)"
+  },
 ];
 
-const heroHeadline = [
-  "Custom Websites,",
-  "Funnels & AI Automation",
-  "That Turn Traffic Into Qualified Leads",
-];
-
-const headlineContainer = {
-  hidden: { opacity: 1 },
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.16,
-    },
-  },
-};
-
-const headlineLine = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const categories = [
-  "Websites",
-  "Funnels",
+const tags = [
+  "NEXT.JS",
+  "WORDPRESS",
+  "AI AGENTS",
+  "FUNNELS",
   "SEO",
-  "Automation",
-  "Dev Systems",
-  "Technical",
+  "DEVOPS",
+  "AUTOMATION",
 ];
 
-const stats = [
-  { label: "Systems Built", value: "100+" },
-  { label: "Uptime", value: "99.9%" },
-  { label: "Efficiency", value: "94%" },
-];
+export function Hero({ locale }: HeroProps) {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [scrambledText, setScrambledText] = useState(WORDS[0]);
+  const heroRef = useRef<HTMLDivElement>(null);
 
-export function Hero({ dict, locale }: HeroProps) {
+  // Scramble effect
+  useEffect(() => {
+    let iteration = 0;
+    let scrambleInterval: NodeJS.Timeout;
+
+    const startScramble = (target: string) => {
+      iteration = 0;
+      clearInterval(scrambleInterval);
+      scrambleInterval = setInterval(() => {
+        setScrambledText(
+          target
+            .split("")
+            .map((char, index) => {
+              if (index < iteration - 2) return target[index];
+              return CHARS[Math.floor(Math.random() * CHARS.length)];
+            })
+            .join("")
+        );
+
+        iteration += 1 / 3;
+        if (iteration > target.length) {
+          clearInterval(scrambleInterval);
+          setScrambledText(target);
+        }
+      }, 30);
+    };
+
+    // Initial scramble
+    startScramble(WORDS[wordIndex]);
+
+    const wordInterval = setInterval(() => {
+      setWordIndex((prev) => {
+        const next = (prev + 1) % WORDS.length;
+        startScramble(WORDS[next]);
+        return next;
+      });
+    }, 2800);
+
+    return () => {
+      clearInterval(scrambleInterval);
+      clearInterval(wordInterval);
+    };
+  }, []); // Run only once on mount
+
   return (
-    <section className="relative min-h-[60vh] w-full overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] pt-10 pb-8 dark:bg-[#0A0A0F]">
-      {/* Gradient mesh orbs background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="hidden dark:block absolute top-[-10%] left-[5%] h-[600px] w-[600px] rounded-full bg-[rgba(var(--site-primary-rgb),0.12)] blur-[130px]" />
-        <div className="hidden dark:block absolute bottom-[-20%] right-[10%] h-[700px] w-[700px] rounded-full bg-[rgba(var(--site-primary-rgb),0.09)] blur-[150px]" />
-        <div className="hidden dark:block absolute top-[50%] left-[40%] h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.06)] blur-[120px]" />
+    <section 
+      ref={heroRef}
+      id="hero" 
+      className="relative w-full min-h-screen overflow-hidden bg-black text-white font-sans"
+    >
+      {/* Interactive Network Background */}
+      <div className="absolute inset-0 z-0">
+        <NetworkBackground />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
       </div>
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-          {/* Left Column: Text Content (50%) */}
-          <div className="flex flex-col items-start text-left space-y-4">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-              </span>
-              <span>Philosophy & Detail</span>
-            </motion.div>
+      {/* Scan line */}
+      <div className="absolute left-0 right-0 h-[1px] z-[5] pointer-events-none bg-gradient-to-r from-transparent via-[var(--site-primary)]/40 to-transparent animate-scan-line" />
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tight text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance"
-            >
-              Custom Websites, Funnels & <span className="text-[var(--site-primary)]">AI Automation</span>
-            </motion.h1>
+      {/* Main content wrapper */}
+      <div className="relative z-10 flex flex-col justify-between px-8 md:px-12 pt-10 md:pt-20 pb-10 min-h-screen max-w-7xl mx-auto w-full">
+        
+        <div className="flex-1 flex flex-col justify-center">
+          {/* Eyebrow */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-3 mb-8 md:mb-10"
+          >
+            <div className="w-7 h-[1px] bg-[var(--site-primary)]/60 shrink-0" />
+            <span className="font-plex text-[10px] tracking-[0.2em] text-[var(--site-primary)] uppercase font-bold">
+              Engineering-First Digital Agency
+            </span>
+          </motion.div>
 
-            <div className="space-y-4 max-w-xl">
-              <motion.p
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 lg:gap-16">
+            {/* Headline column */}
+            <div className="space-y-1 lg:flex-1">
+              <motion.span 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="block font-inter font-[900] italic leading-[0.82] tracking-tight text-[clamp(50px,8vw,110px)] text-white"
+              >
+                WE BUILD
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="block font-inter font-[900] italic leading-[0.82] tracking-tight text-[clamp(50px,8vw,110px)] text-transparent"
+                style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.9)" }}
+              >
+                DIGITAL
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="block font-plex font-bold leading-[0.82] tracking-tight text-[clamp(50px,8vw,110px)] text-[var(--site-primary)]"
+              >
+                {scrambledText}
+              </motion.span>
+
+              {/* Description directly below heading */}
+              <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-sm md:text-base font-medium text-slate-600 dark:text-[#94A3B8] leading-relaxed italic border-l-4 border-[var(--site-primary)] pl-4"
+                transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-8 text-sm md:text-base leading-relaxed text-white/55 font-normal max-w-xl"
               >
-                This lab brings together engineering-first solutions across high-performance websites and automated sales systems.
+                From high-performance custom websites to AI-powered sales automation — we engineer digital systems that convert visitors into revenue. 100+ systems built. 99.9% uptime.
               </motion.p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+            {/* CTA and Tags column */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+              transition={{ duration: 0.9, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:max-w-md w-full"
             >
-              <Link
-                href={localePath(locale, "/book-consultation")}
-                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all duration-300 hover:bg-[var(--site-primary-hover)]"
-              >
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link
-                href={localePath(locale, "/quote")}
-                className="group relative inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all duration-300 hover:bg-white dark:hover:bg-white/10"
-              >
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
+              <div className="hidden lg:block w-full h-[1px] bg-white/12 mb-8" />
+              
+              <div className="flex flex-row items-center gap-3 lg:mt-4">
+                <Link href={localePath(locale, "/quote")}>
+                  <Button variant="primary" size="lg" className="px-6 py-3 whitespace-nowrap">
+                    Start Your Project
+                    <ArrowRight className="stroke-[3]" />
+                  </Button>
+                </Link>
+                <Link href={localePath(locale, "/case-studies")}>
+                  <Button variant="outline" size="lg" className="px-6 py-3 bg-white !text-black hover:bg-white/90 border-transparent whitespace-nowrap">
+                    View Our Work
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Tags section */}
+              <div className="flex flex-wrap items-center gap-2 mt-8 md:mt-10">
+                {tags.map(tag => (
+                  <span 
+                    key={tag}
+                    className="text-[9px] md:text-[10px] tracking-widest uppercase font-semibold px-3.5 py-2 border border-white/12 rounded-full text-white/45 bg-white/5 transition-all hover:border-[var(--site-primary)]/40 hover:text-[var(--site-primary)] hover:bg-[var(--site-primary)]/5"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </div>
-
-          {/* Right Column: Premium Card Section (50%) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="relative group"
-          >
-            <div className="site-card p-4 lg:p-6 overflow-hidden relative border-2 border-[var(--site-primary)]/10 shadow-[0_40px_80px_-40px_rgba(var(--site-primary-rgb),0.4)] bg-slate-50/50 dark:bg-slate-900/60 dark:border-slate-800">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
-
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)] dark:bg-[var(--site-primary)]/20 dark:border-[var(--site-primary-soft)]/30 dark:text-[var(--site-primary-soft)] mb-8">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] animate-pulse" />
-                Industrial Proof
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-display font-black text-slate-950 dark:text-slate-100 leading-tight text-balance mb-6">
-                Selected Works & <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--site-primary)] via-[#818CF8] to-violet-400">Engineering Outcomes</span>
-              </h2>
-
-              {/* Stats Row Integrated into Card */}
-              <div className="grid grid-cols-3 gap-2 mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="text-left">
-                    <p className="text-2xl font-black text-slate-950 dark:text-slate-100">{stat.value}</p>
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {categories.map((category) => (
-                  <div
-                    key={category}
-                    className="flex items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 shadow-sm transition-all hover:border-[var(--site-primary)] hover:scale-[1.02]"
-                  >
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{category}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Decorative Glow */}
-              <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-[var(--site-primary)]/15 blur-[60px] pointer-events-none" />
-            </div>
-          </motion.div>
         </div>
-      </Container>
+
+        {/* Bottom Service Links */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full mt-auto pt-12"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5">
+            {serviceLinks.map((service, idx) => (
+              <Link 
+                key={service.title}
+                href={localePath(locale, service.href)}
+                className="group relative flex flex-col items-center justify-center p-3 rounded-lg border border-white/5 bg-white/[0.01] transition-all hover:scale-[1.02] hover:bg-white/[0.04]"
+              >
+                {/* Hover Glow */}
+                <div 
+                  className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity blur-xl z-0"
+                  style={{ background: service.glow }}
+                />
+                
+                <div className="relative z-10 flex flex-col items-center gap-3">
+                  <service.icon 
+                    className="w-6 h-6 transition-transform group-hover:-translate-y-0.5" 
+                    style={{ color: service.color }}
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-[9px] tracking-[0.15em] font-plex font-bold text-white/40 group-hover:text-white transition-colors">
+                    {service.title}
+                  </span>
+                </div>
+
+                {/* Corner accent */}
+                <div 
+                  className="absolute top-2 right-2 w-1 h-1 rounded-full opacity-40 group-hover:opacity-100"
+                  style={{ background: service.color }}
+                />
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      <style jsx>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }

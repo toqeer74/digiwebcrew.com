@@ -70,3 +70,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme(): ThemeContextType {
   return useContext(ThemeContext);
 }
+

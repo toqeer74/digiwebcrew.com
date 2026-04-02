@@ -163,3 +163,4 @@ function NavItem({ item, isActive, isCompressed = false }: NavItemProps) {
     </Link>
   );
 }
+

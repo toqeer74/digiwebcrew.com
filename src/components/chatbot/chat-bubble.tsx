@@ -47,7 +47,7 @@ export function ChatBubble({ role, content }: ChatBubbleProps) {
                     "rounded-2xl px-3 py-2 text-[13px] font-medium leading-relaxed transition-all",
                     isAssistant
                         ? "bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 text-slate-800 dark:text-slate-200"
-                        : "bg-[var(--site-primary)] text-white shadow-sm"
+                        : "bg-[var(--site-primary)] text-white"
                 )}>
                     {content}
                 </div>
@@ -55,3 +55,4 @@ export function ChatBubble({ role, content }: ChatBubbleProps) {
         </motion.div>
     );
 }
+

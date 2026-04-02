@@ -300,3 +300,4 @@ export async function convertChatToLead(sessionId: string) {
 
   return JSON.parse(JSON.stringify(lead));
 }
+

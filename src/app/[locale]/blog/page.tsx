@@ -45,10 +45,10 @@ export default async function BlogPage({
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Insights & Strategy</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Digital Systems <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Strategy & Insights.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               Deep dives into digital infrastructure, website performance, lead generation funnels, and real-world automation systems.
             </p>
           </AnimatedSection>

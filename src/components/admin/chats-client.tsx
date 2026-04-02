@@ -186,3 +186,4 @@ export function ChatsClient({ sessions, selected }: { sessions: ChatSessionLite[
     </div>
   );
 }
+

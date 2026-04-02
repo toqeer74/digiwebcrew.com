@@ -92,7 +92,7 @@ export function ChatbotUI() {
                             className="w-14 h-14 rounded-2xl bg-[var(--site-primary)] text-white shadow-[0_15px_35px_-5px_rgba(var(--site-primary-rgb),0.35)] flex items-center justify-center hover:bg-[var(--site-primary-hover)] transition-all border border-white/20 group relative"
                         >
                             <Sparkles className="absolute -top-1 -right-1 text-yellow-400 fill-yellow-400 animate-pulse" size={14} />
-                            <MessageSquare size={24} className="drop-shadow-md" />
+                            <MessageSquare size={24} />
                         </motion.button>
                     ) : (
                         <motion.div
@@ -101,7 +101,7 @@ export function ChatbotUI() {
                             animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
                             exit={{ opacity: 0, scale: 0.98, y: 20, filter: "blur(5px)" }}
                             transition={{ type: "spring", damping: 20, stiffness: 200 }}
-                            className="w-[360px] h-[480px] bg-white dark:bg-[#0A0A0F] border border-slate-200 dark:border-white/10 rounded-3xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden relative"
+                            className="w-[360px] h-[480px] bg-white dark:bg-[#1a1f38] border border-slate-200 dark:border-white/10 rounded-3xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden relative"
                         >
                             <div className="absolute top-0 left-0 w-full h-[2px] bg-[var(--site-primary)]/30 z-[30]" />
                             {/* Header */}
@@ -171,3 +171,4 @@ export function ChatbotUI() {
         </div>
     );
 }
+

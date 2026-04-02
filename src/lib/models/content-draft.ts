@@ -35,3 +35,4 @@ const ContentDraftSchema: Schema = new Schema(
 
 export const ContentDraft =
   mongoose.models.ContentDraft || mongoose.model<IContentDraft>("ContentDraft", ContentDraftSchema);
+

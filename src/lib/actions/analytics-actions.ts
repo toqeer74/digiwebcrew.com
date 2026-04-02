@@ -200,3 +200,4 @@ export async function generateReportData(dateRange?: { from: Date; to: Date }) {
   return analyticsEngine.generateLeadReport(dateRange);
 }
 
+

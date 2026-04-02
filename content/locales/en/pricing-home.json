@@ -1,0 +1,37 @@
+{
+  "title": "Transparent Starting Prices",
+  "packages": [
+    {
+      "label": "Custom Website Dev",
+      "price": "$3,500",
+      "timeline": "3-5 weeks",
+      "fit": "Business website rebuilds"
+    },
+    {
+      "label": "Conversion Funnels",
+      "price": "$2,000",
+      "timeline": "1-3 weeks",
+      "fit": "Lead-generation campaigns"
+    },
+    {
+      "label": "AI Chatbots & Automation",
+      "price": "$3,500",
+      "timeline": "2-4 weeks",
+      "fit": "Sales and support workflows"
+    },
+    {
+      "label": "SEO & Growth Retainers",
+      "price": "$1,000/mo",
+      "timeline": "30-day onboarding",
+      "fit": "Ongoing visibility growth"
+    }
+  ],
+  "comparisonTitle": "Quick Package Comparison",
+  "comparisonRows": [
+    { "label": "SEO Setup Included", "value": "Standard+" },
+    { "label": "Integrations", "value": "Available" },
+    { "label": "Revision Rounds", "value": "Defined per scope" },
+    { "label": "Post-Launch Support", "value": "Optional plans" }
+  ]
+}
+

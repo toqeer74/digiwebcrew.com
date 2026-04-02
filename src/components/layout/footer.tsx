@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { FaLinkedin, FaFacebook, FaInstagram, FaXTwitter, FaGithub } from "react-icons/fa6";
 import { localePath } from "@/lib/locale-path";
@@ -13,168 +14,216 @@ interface FooterProps {
 }
 
 export function Footer({ locale, siteName, logoDataUrl }: FooterProps) {
+    const serviceLinks = [
+        { label: "Custom Website Development", href: "/services/custom-software" },
+        { label: "Funnel / Landing Pages", href: "/services/conversion-funnels" },
+        { label: "AI Chatbots", href: "/services/ai-chatbots-automation" },
+        { label: "SEO & Growth", href: "/services/seo-growth-retainers" },
+        { label: "DevOps / Cloud", href: "/services/devops-cloud" },
+        { label: "Maintenance & Support", href: "/services/maintenance-support" },
+    ];
+
+    const companyLinks = [
+        { label: "Portfolio", href: "/case-studies" },
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Pricing", href: "/pricing" },
+        { label: "Process", href: "/process" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
+    ];
+
+    const resourceLinks = [
+        { label: "Insights / Blog", href: "/blog" },
+        { label: "FAQs", href: "/faqs" },
+        { label: "Industries", href: "/industries" },
+        { label: "Get Custom Quote", href: "/quote" },
+        { label: "Book Consultation", href: "/book-consultation" },
+    ];
+
+    const trustLinks = [
+        { label: "Google Reviews", href: "https://www.google.com/search?q=Digi+Web+Crew+reviews" },
+        { label: "Clutch", href: "https://clutch.co" },
+        { label: "LinkedIn", href: "https://pk.linkedin.com/in/toqeer-shafique" },
+        { label: "GitHub", href: "https://github.com/toqeer74" },
+    ];
+
     return (
-        <footer className="border-t border-t-[2px] border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(248,250,252,1))] dark:border-[#123040] dark:bg-[radial-gradient(circle_at_top_left,_rgba(6,182,212,0.12),_transparent_28%),linear-gradient(180deg,_rgba(9,14,20,0.98),_rgba(9,14,20,1))] pt-5 pb-5">
-            <div className="container px-6 md:px-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-6">
-                    <div className="p-2">
-                        {logoDataUrl ? (
-                            <img src={logoDataUrl} alt={siteName || "Logo"} className="mb-4 h-8 w-auto object-contain" />
-                        ) : (
-                            <h4 className="site-card-title mb-4 font-display text-lg font-bold">
-                                {siteName || "Digital Web Crew"}
-                            </h4>
-                        )}
-                        <p className="site-card-muted mb-4 text-sm">
-                            Custom websites, funnels, SEO systems, and automation for growth-focused businesses.
-                        </p>
-                        <div className="site-card-muted flex items-center gap-3">
-                            <a href="#" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
-                                <FaLinkedin size={16} />
-                            </a>
-                            <a href="#" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
-                                <FaFacebook size={16} />
-                            </a>
-                            <a href="#" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
-                                <FaInstagram size={16} />
-                            </a>
-                            <a href="#" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
-                                <FaXTwitter size={16} />
-                            </a>
-                            <a href="#" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
-                                <FaGithub size={16} />
-                            </a>
+        <footer className="relative overflow-hidden border-t border-t-[2px] border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(248,250,252,1))] dark:border-white/10 dark:bg-midnight dark:bg-none pt-10 pb-6 z-0">
+            {/* Decorative background stroke */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-full lg:w-[80%] xl:w-[60%] z-[-1] opacity-60 dark:opacity-30 flex items-center justify-end overflow-hidden text-[var(--site-primary)] dark:text-white">
+                <svg 
+                    viewBox="0 0 1000 400" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-[120%] min-w-[900px] h-auto translate-x-12 translate-y-[5%]"
+                    preserveAspectRatio="xMidYMid meet"
+                >
+                    <path 
+                        d="M 50,350 C 250,250 450,50 350,250 C 280,390 550,380 600,250 C 650,120 530,100 550,200 C 570,300 750,250 1000,80" 
+                        stroke="currentColor" 
+                        strokeWidth="28" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                    />
+                </svg>
+            </div>
+
+            <div className="container relative z-10 px-6 md:px-12">
+
+                {/* ── TOP: Nav links (left) + CTA (right) ── */}
+                <div className="flex flex-col xl:flex-row gap-10 xl:gap-16 mb-10">
+
+                    {/* LEFT: 3-column nav grid + social icons + email */}
+                    <div className="flex-1 flex flex-col gap-6">
+
+                        {/* 3-column nav links */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-2 text-sm">
+                            {/* Col 1 – Company */}
+                            <ul className="space-y-2">
+                                {companyLinks.map((item) => (
+                                    <li key={item.href + item.label}>
+                                        <Link
+                                            href={localePath(locale, item.href)}
+                                            className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Col 2 – Legal + Resources */}
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link href={localePath(locale, "/privacy")} className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href={localePath(locale, "/terms")} className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
+                                        Terms of Use
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href={localePath(locale, "/blog")} className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]">
+                                        Insights
+                                    </Link>
+                                </li>
+                                {resourceLinks.map((item) => (
+                                    <li key={item.href}>
+                                        <Link
+                                            href={localePath(locale, item.href)}
+                                            className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Col 3 – Services */}
+                            <ul className="space-y-2">
+                                {serviceLinks.map((item) => (
+                                    <li key={item.href}>
+                                        <Link
+                                            href={localePath(locale, item.href)}
+                                            className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
+
+                        {/* Social icons */}
+                        <div>
+                            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-white/40 mb-2">
+                                Follow us on
+                            </p>
+                            <div className="site-card-muted flex items-center gap-4 text-base">
+                                <a href="https://pk.linkedin.com/in/toqeer-shafique" target="_blank" rel="noreferrer" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]" aria-label="LinkedIn">
+                                    <FaLinkedin size={18} />
+                                </a>
+                                <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]" aria-label="Facebook">
+                                    <FaFacebook size={18} />
+                                </a>
+                                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]" aria-label="Instagram">
+                                    <FaInstagram size={18} />
+                                </a>
+                                <a href="https://x.com" target="_blank" rel="noreferrer" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]" aria-label="X">
+                                    <FaXTwitter size={18} />
+                                </a>
+                                <a href="https://github.com/toqeer74" target="_blank" rel="noreferrer" className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]" aria-label="GitHub">
+                                    <FaGithub size={18} />
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Email */}
+                        <a
+                            href="mailto:admin@digiwebcrew.com"
+                            className="text-sm font-medium underline underline-offset-4 text-slate-700 dark:text-white hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)] w-fit"
+                        >
+                            admin@digiwebcrew.com
+                        </a>
                     </div>
 
-                    <div className="p-2">
-                        <h4 className="site-card-title mb-4 font-display text-lg font-bold">Services</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/services/custom-software")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Custom Website Dev
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/services/conversion-funnels")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Conversion Funnels
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/services/ai-chatbots-automation")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    AI Chatbots
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/services/seo-growth-retainers")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    SEO & Growth
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="p-2">
-                        <h4 className="site-card-title mb-4 font-display text-lg font-bold">Company</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/pricing")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Pricing
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/process")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Process
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/case-studies")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Work / Case Studies
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/industries")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Industries
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/faqs")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    FAQs
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/about")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href={localePath(locale, "/contact")}
-                                    className="site-card-muted hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
-                                >
-                                    Contact
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="p-2">
-                        <h4 className="site-card-title mb-4 font-display text-lg font-bold">Get Started</h4>
-                        <div className="space-y-2.5 w-full max-w-[240px]">
+                    {/* RIGHT: CTA headline + button */}
+                    <div className="xl:w-[42%] flex flex-col justify-center gap-6">
+                        <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight text-slate-800 dark:text-white dark:drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+                            Elevate{" "}
+                            <span className="text-slate-900 dark:text-white">your business now,</span>
+                            <br />
+                            with{" "}
+                            <span className="text-[var(--site-primary)]">creative</span>{" "}
+                            solutions!
+                        </h2>
+                        <div className="flex flex-wrap items-center gap-4 relative z-10">
                             <Link
-                                href={localePath(locale, "/quote")}
-                                className="inline-flex w-full items-center justify-between gap-2 rounded-full border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] transition-colors hover:bg-[var(--site-primary-hover)]"
+                                href={localePath(locale, "/contact")}
+                                className="inline-flex items-center gap-2 rounded-full bg-[var(--site-primary)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity dark:drop-shadow-lg"
                             >
-                                <span>Get Quote</span>
-                                <span className="grid h-7 w-7 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                                </span>
+                                Start Your Project <ArrowRight size={16} />
                             </Link>
                             <Link
                                 href={localePath(locale, "/book-consultation")}
-                                className="inline-flex w-full items-center justify-between gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.45)] bg-transparent px-4 py-2 text-sm font-semibold text-[var(--site-primary)] transition-colors hover:bg-[rgba(var(--site-primary-rgb),0.08)] hover:border-[color:rgba(var(--site-primary-rgb),0.7)] dark:text-white dark:hover:bg-[rgba(var(--site-primary-rgb),0.14)] dark:hover:border-[color:rgba(var(--site-primary-rgb),0.8)]"
+                                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-md dark:border-white/20 dark:bg-midnight/80 dark:backdrop-blur-md dark:text-white dark:hover:bg-white/20"
                             >
-                                <span>Book Consultation</span>
-                                <span className="grid h-7 w-7 place-items-center rounded-full bg-[rgba(var(--site-primary-rgb),0.12)] ring-1 ring-[rgba(var(--site-primary-rgb),0.18)] dark:bg-white/10 dark:ring-white/15">
-                                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                                </span>
+                                Book Consultation <ArrowRight size={16} />
                             </Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="site-card-divider flex flex-col gap-3 border-t border-t-[2px] pt-4 text-xs text-slate-500 md:flex-row md:items-center md:justify-between dark:text-white">
-                    <span>© {new Date().getFullYear()} {siteName || "Digital Web Crew"}</span>
-                    <div className="flex items-center gap-4">
+                {/* ── BOTTOM: Original single-row sub-footer ── */}
+                <div className="site-card-divider flex flex-col gap-6 border-t border-t-[2px] pt-6 text-[10px] md:text-xs text-slate-500 xl:flex-row xl:items-center xl:justify-between dark:text-white/80">
+                    <span className="flex-1">© {new Date().getFullYear()} {siteName || "Digital Web Crew"}</span>
+
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6 flex-1 justify-center py-2 xl:py-0">
+                        <span className="font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/40 whitespace-nowrap">Review Platforms:</span>
+                        <div className="flex items-center gap-3 md:gap-4 overflow-x-auto no-scrollbar">
+                            {trustLinks.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="site-card-muted flex items-center gap-1.5 transition-all hover:text-[var(--site-primary)] dark:hover:text-white font-bold whitespace-nowrap"
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-1 items-center gap-4 xl:justify-end">
+                        <Link
+                            href={localePath(locale, "/blog")}
+                            className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
+                        >
+                            Insights
+                        </Link>
                         <Link
                             href={localePath(locale, "/privacy")}
                             className="hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary-soft)]"
@@ -189,7 +238,9 @@ export function Footer({ locale, siteName, logoDataUrl }: FooterProps) {
                         </Link>
                     </div>
                 </div>
+
             </div>
         </footer>
     );
 }
+

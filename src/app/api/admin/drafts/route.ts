@@ -38,3 +38,4 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Failed to load drafts" }, { status: 500 });
   }
 }
+

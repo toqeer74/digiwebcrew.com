@@ -79,7 +79,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                     className
                 )}
             >
-                <div className="max-w-4xl mx-auto bg-white dark:bg-midnight-900 rounded-2xl shadow-2xl dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-midnight-700 overflow-hidden">
+                <div className="max-w-4xl mx-auto bg-white dark:bg-midnight-900 rounded-2xl dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-midnight-700 overflow-hidden">
                     {/* Header */}
                     <div className="p-6 pb-4 flex items-start gap-4">
                         <div className="w-12 h-12 rounded-xl bg-raly-accent/20 flex items-center justify-center text-raly-primary shrink-0">
@@ -191,14 +191,14 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                         {showDetails ? (
                             <button
                                 onClick={handleSavePreferences}
-                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors shadow-md shadow-raly-primary/20"
+                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors dark:shadow-md dark:shadow-raly-primary/20"
                             >
                                 Save Preferences
                             </button>
                         ) : (
                             <button
                                 onClick={handleAcceptAll}
-                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors shadow-md shadow-raly-primary/20"
+                                className="px-6 py-2.5 text-sm font-bold text-raly-primary bg-raly-accent rounded-xl hover:bg-raly-accent/95 transition-colors dark:shadow-md dark:shadow-raly-primary/20"
                             >
                                 Accept All
                             </button>
@@ -209,3 +209,4 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
         </AnimatePresence>
     );
 }
+

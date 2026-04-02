@@ -1,0 +1,28 @@
+{
+  "eyebrow": "الموثوقية",
+  "heading": "منصات موثوقة وخبرة مثبتة",
+  "platformsTitle": "المنصات والأنظمة التي نبني عليها",
+  "trustSignalsTitle": "إشارات ثقة موثقة",
+  "platforms": [
+    "OpenAI",
+    "Anthropic",
+    "Google",
+    "Meta",
+    "AWS",
+    "Vercel",
+    "Stripe",
+    "HubSpot",
+    "Shopify",
+    "Notion"
+  ],
+  "trustSignals": [
+    "Google Reviews",
+    "Clutch Profile",
+    "LinkedIn Presence",
+    "Verified Business Email",
+    "Case Study Outcomes",
+    "Technical Delivery Portfolio"
+  ],
+  "note": "يتم عرض الأدوات التي نستخدمها بشكل منفصل عن الاعتمادات الرسمية للحفاظ على دقة إشارات الثقة."
+}
+

@@ -43,3 +43,4 @@ export function SidebarLogo({ branding }: SidebarLogoProps) {
     </div>
   );
 }
+

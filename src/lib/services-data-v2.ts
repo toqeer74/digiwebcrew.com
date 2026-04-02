@@ -109,7 +109,7 @@ export const serviceDomains: ServiceDomain[] = [
   },
   {
     title: "Full-Stack Website Development",
-    slug: "full-stack-websites",
+    slug: "custom-software",
     description: "High-performance websites and comprehensive SEO services for search dominance.",
     icon: "Globe",
     color: "from-blue-500 to-cyan-500",
@@ -435,7 +435,7 @@ export const techLabs: TechLab[] = [
     description: "Our core laboratory for building high-performance, SEO-optimized web experiences.",
     iconName: "Zap",
     capabilities: ["SSR & SSG Optimization", "Edge Function Deployment", "Middleware Security"],
-    relatedServices: ["full-stack-websites", "custom-software"]
+    relatedServices: ["custom-software"]
   },
   {
     title: "The Shopify Lab",
@@ -474,3 +474,4 @@ export function getCategoriesByDomainSlug(domainSlug: string) {
 export function getTechLabBySlug(slug: string) {
   return techLabs.find(t => t.slug === slug) || null;
 }
+

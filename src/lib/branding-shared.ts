@@ -54,3 +54,4 @@ export function deriveBrandingVars(primaryColor: string) {
     "--site-primary-dark-text": "#08131C",
   } as const;
 }
+

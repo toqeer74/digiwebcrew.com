@@ -2,14 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Code2, ShoppingCart, Globe, Settings, Smartphone, Zap, Shield, Database } from "lucide-react";
+import { ChevronRight, Code2, Globe, Settings, Zap, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { localePath } from "@/lib/locale-path";
 
 interface ServiceSelectionProps {
-  dict: any;
-  isRtl: boolean;
   locale: string;
 }
 
@@ -52,16 +50,16 @@ const services = [
   }
 ];
 
-export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps) {
+export function ServiceSelection({ locale }: ServiceSelectionProps) {
   const [hoveredService, setHoveredService] = useState<string | null>(null);
 
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-display font-bold tracking-tight mb-4 text-[#F8F8FF]">
+        <h2 className="text-3xl font-display font-bold tracking-tight mb-4 text-foreground">
           What service are you interested in?
         </h2>
-        <p className="text-lg text-[#94A3B8] font-body">
+        <p className="text-lg text-muted-foreground font-body">
           Select a service to get a detailed quote tailored to your needs
         </p>
       </div>
@@ -77,44 +75,16 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={cn(
-                  "relative p-6 rounded-2xl border transition-all duration-300",
-                  "bg-[#13131E] hover:shadow-xl hover:shadow-[#6366F1]/10 hover:scale-105",
-                  "border-[#1E1E2E] hover:border-[#6366F1]/50",
-                  "cursor-pointer"
-                )}
-              >
-                {/* Gradient Background */}
-                <div className={cn(
-                  "absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300",
-                  "bg-gradient-to-br", service.color
-                )} />
-
-                {/* Icon */}
-                <div className={cn(
-                  "w-12 h-12 rounded-xl flex items-center justify-center mb-4",
-                  "bg-gradient-to-br", service.color,
-                  "text-white shadow-lg"
-                )}>
-                  <Icon size={24} />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-[#6366F1] text-[#F8F8FF] transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-sm text-[#94A3B8] font-body mb-4 line-clamp-2">
+                <p className="text-sm text-muted-foreground font-body mb-4 line-clamp-2">
                   {service.description}
                 </p>
 
                 {/* Features */}
                 <div className="space-y-2 mb-4">
                   {service.features.slice(0, 2).map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-[#94A3B8] font-body">
+                    <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground font-body">
                       <div className="w-1 h-1 rounded-full bg-[#6366F1]" />
                       {feature}
                     </div>
@@ -124,7 +94,7 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
                 {/* Arrow */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-body font-medium text-[#6366F1] group-hover:translate-x-1 transition-transform">
-                    Get Quote
+                    Get Custom Quote
                   </span>
                   <ChevronRight 
                     size={16} 
@@ -159,7 +129,7 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
         </p>
         <Link
           href={localePath(locale, "/contact")}
-          className="inline-flex items-center gap-2 px-6 py-2 bg-[#6366F1] text-[#F8F8FF] rounded-lg hover:bg-[#6366F1]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-[#6366F1] text-foreground rounded-lg hover:bg-[#6366F1]/90 transition-colors"
         >
           Get Consultation
           <ChevronRight size={16} />
@@ -168,3 +138,4 @@ export function ServiceSelection({ dict, isRtl, locale }: ServiceSelectionProps)
     </div>
   );
 }
+

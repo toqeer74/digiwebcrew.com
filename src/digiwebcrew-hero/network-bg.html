@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Network Background</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #050608; overflow: hidden; }
+    canvas { display: block; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<script>
+  /* ── Service nodes ── */
+  const SERVICE_NODES = [
+    { label: 'Custom Websites', color: '#00d4ff', size: 7 },
+    { label: 'AI Automation',   color: '#a78bfa', size: 8 },
+    { label: 'Funnels',         color: '#34d399', size: 6 },
+    { label: 'SEO & Growth',    color: '#f59e0b', size: 6 },
+    { label: 'DevOps',          color: '#f87171', size: 5 },
+    { label: 'E-Commerce',      color: '#60a5fa', size: 5 },
+    { label: 'Analytics',       color: '#c084fc', size: 4 },
+    { label: 'API Dev',         color: '#2dd4bf', size: 4 },
+  ];
+
+  const canvas = document.getElementById('bg');
+  const ctx    = canvas.getContext('2d');
+  const mouse  = { x: -9999, y: -9999 };
+
+  let W, H, nodes = [], particles = [];
+
+  /* ── Layout ── */
+  function build() {
+    W = canvas.width  = canvas.offsetWidth  || window.innerWidth;
+    H = canvas.height = canvas.offsetHeight || window.innerHeight;
+    nodes = [];
+    particles = [];
+
+    const cols = 4, rows = 2;
+    const padX = W * 0.06, padY = H * 0.1;
+    const cellW = (W - padX * 2) / cols;
+    const cellH = (H - padY * 2) / rows;
+
+    SERVICE_NODES.forEach((s, i) => {
+      const col = i % cols, row = Math.floor(i / cols);
+      const bx  = padX + col * cellW + cellW * 0.5 + (Math.random() - 0.5) * cellW * 0.45;
+      const by  = padY + row * cellH + cellH * 0.5 + (Math.random() - 0.5) * cellH * 0.5;
+      nodes.push({
+        x: bx, y: by, baseX: bx, baseY: by,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        r: s.size, color: s.color, label: s.label,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.018 + Math.random() * 0.012,
+      });
+    });
+
+    /* ambient nodes */
+    for (let i = 0; i < 34; i++) {
+      const bx = padX * 0.5 + Math.random() * (W - padX);
+      const by = 30 + Math.random() * (H - 60);
+      nodes.push({
+        x: bx, y: by, baseX: bx, baseY: by,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        r: 1.5 + Math.random() * 2,
+        color: ['#00d4ff','#a78bfa','#34d399','#60a5fa'][Math.floor(Math.random()*4)],
+        label: '',
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.015 + Math.random() * 0.01,
+      });
+    }
+
+    for (let k = 0; k < 50; k++) spawnParticle();
+  }
+
+  function spawnParticle() {
+    if (nodes.length < 2) return;
+    let fi = Math.floor(Math.random() * nodes.length);
+    let ti = Math.floor(Math.random() * nodes.length);
+    while (ti === fi) ti = Math.floor(Math.random() * nodes.length);
+    const f = nodes[fi], t = nodes[ti];
+    if (Math.hypot(t.x - f.x, t.y - f.y) > W * 0.7) return;
+    particles.push({
+      fi, ti, t: 0,
+      speed: 0.003 + Math.random() * 0.005,
+      color: f.color,
+      size: 1.5 + Math.random() * 1.5,
+    });
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);     ctx.quadraticCurveTo(x+w, y,   x+w,   y+r);
+    ctx.lineTo(x+w,   y+h-r); ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    ctx.lineTo(x+r,   y+h);   ctx.quadraticCurveTo(x,   y+h, x,     y+h-r);
+    ctx.lineTo(x,     y+r);   ctx.quadraticCurveTo(x,   y,   x+r,   y);
+    ctx.closePath();
+  }
+
+  /* ── Draw loop ── */
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* grid */
+    ctx.save();
+    ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+    ctx.lineWidth   = 1;
+    const gs = 70;
+    for (let gx = 0; gx < W; gx += gs) { ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
+    for (let gy = 0; gy < H; gy += gs) { ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+    ctx.restore();
+
+    const mr = 160;
+
+    /* update nodes */
+    nodes.forEach(n => {
+      n.vx += (n.baseX - n.x) * 0.001;
+      n.vy += (n.baseY - n.y) * 0.001;
+      const dx = n.x - mouse.x, dy = n.y - mouse.y;
+      const d  = Math.hypot(dx, dy);
+      if (d < mr && d > 0) {
+        const f = (mr - d) / mr;
+        n.vx += (dx/d) * f * 1.8;
+        n.vy += (dy/d) * f * 1.8;
+      }
+      n.vx *= 0.94; n.vy *= 0.94;
+      n.x  += n.vx; n.y  += n.vy;
+      n.pulse += n.pulseSpeed;
+    });
+
+    /* connections */
+    const CD = W * 0.28;
+    for (let a = 0; a < nodes.length; a++) {
+      for (let b = a+1; b < nodes.length; b++) {
+        const na = nodes[a], nb = nodes[b];
+        const d  = Math.hypot(na.x-nb.x, na.y-nb.y);
+        if (d > CD) continue;
+        const alpha = (1 - d/CD) * 0.22;
+        const grad  = ctx.createLinearGradient(na.x, na.y, nb.x, nb.y);
+        const a1 = Math.round(alpha*255).toString(16).padStart(2,'0');
+        grad.addColorStop(0, na.color + a1);
+        grad.addColorStop(1, nb.color + a1);
+        ctx.beginPath();
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = 0.8;
+        ctx.moveTo(na.x, na.y);
+        ctx.lineTo(nb.x, nb.y);
+        ctx.stroke();
+      }
+    }
+
+    /* mouse connections */
+    if (mouse.x > 0 && mouse.x < W) {
+      const nearest = [...nodes]
+        .map((n,i) => ({ i, d: Math.hypot(n.x-mouse.x, n.y-mouse.y) }))
+        .sort((a,b) => a.d-b.d).slice(0,5);
+      ctx.setLineDash([4,6]);
+      nearest.forEach(({ i, d }) => {
+        if (d > mr*2) return;
+        const alpha = Math.max(0, 1 - d/(mr*2)) * 0.55;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
+        ctx.lineWidth   = 1;
+        ctx.moveTo(mouse.x, mouse.y);
+        ctx.lineTo(nodes[i].x, nodes[i].y);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+    }
+
+    /* particles */
+    for (let k = particles.length-1; k >= 0; k--) {
+      const p = particles[k];
+      p.t += p.speed;
+      if (p.t >= 1) { particles.splice(k,1); spawnParticle(); continue; }
+      const f = nodes[p.fi], t = nodes[p.ti];
+      if (!f || !t) continue;
+      const px = f.x + (t.x-f.x)*p.t;
+      const py = f.y + (t.y-f.y)*p.t;
+      const alpha = Math.sin(p.t*Math.PI)*0.9;
+      ctx.globalAlpha = alpha;
+      const grd = ctx.createRadialGradient(px,py,0,px,py,p.size*2);
+      grd.addColorStop(0, p.color+'ff');
+      grd.addColorStop(1, p.color+'00');
+      ctx.beginPath();
+      ctx.fillStyle = grd;
+      ctx.arc(px, py, p.size*2, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    /* nodes */
+    nodes.forEach(n => {
+      const ps = Math.sin(n.pulse)*0.4+1;
+      const pr = n.r * ps;
+      const ra = (Math.sin(n.pulse)*0.5+0.5)*0.25;
+
+      /* outer glow */
+      const og = ctx.createRadialGradient(n.x,n.y,pr, n.x,n.y,pr*4.5);
+      const oa = Math.round(ra*255).toString(16).padStart(2,'0');
+      og.addColorStop(0, n.color+oa);
+      og.addColorStop(1, n.color+'00');
+      ctx.beginPath(); ctx.fillStyle=og;
+      ctx.arc(n.x,n.y,pr*4.5,0,Math.PI*2); ctx.fill();
+
+      /* inner dot */
+      const ig = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,pr*1.4);
+      ig.addColorStop(0,'#ffffff'); ig.addColorStop(0.4,n.color); ig.addColorStop(1,n.color+'aa');
+      ctx.beginPath(); ctx.fillStyle=ig;
+      ctx.arc(n.x,n.y,pr,0,Math.PI*2); ctx.fill();
+
+      /* label pill */
+      if (n.label) {
+        const la = 0.55 + Math.sin(n.pulse)*0.1;
+        ctx.save(); ctx.globalAlpha = la;
+        ctx.font = 'bold 10px "IBM Plex Mono",monospace';
+        const tw = ctx.measureText(n.label).width;
+        const pw = tw+26, ph=22, lx=n.x+pr+6, ly=n.y-ph/2;
+        ctx.fillStyle='rgba(0,0,0,0.72)';
+        roundRect(ctx,lx,ly,pw,ph,4); ctx.fill();
+        ctx.strokeStyle=n.color+'44'; ctx.lineWidth=1;
+        roundRect(ctx,lx,ly,pw,ph,4); ctx.stroke();
+        ctx.fillStyle=n.color; ctx.beginPath();
+        ctx.arc(lx+7,ly+ph/2,2.5,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#fff';
+        ctx.fillText(n.label,lx+14,ly+ph/2+3.5);
+        ctx.restore();
+      }
+    });
+
+    /* cursor orb */
+    if (mouse.x > 0 && mouse.x < W) {
+      const cg = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,50);
+      cg.addColorStop(0,'rgba(0,212,255,0.18)');
+      cg.addColorStop(1,'rgba(0,212,255,0)');
+      ctx.beginPath(); ctx.fillStyle=cg;
+      ctx.arc(mouse.x,mouse.y,50,0,Math.PI*2); ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  /* ── Events ── */
+  window.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+  window.addEventListener('resize', build);
+
+  build();
+  draw();
+</script>
+</body>
+</html>

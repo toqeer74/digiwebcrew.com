@@ -196,3 +196,4 @@ export default async function AuditPage({ searchParams }: { searchParams: AuditS
     </div>
   );
 }
+

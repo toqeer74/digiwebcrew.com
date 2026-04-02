@@ -1,0 +1,53 @@
+{
+  "reviewBadges": [
+    {
+      "label": "Google Reviews",
+      "meta": "Public review profile",
+      "href": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "label": "Clutch",
+      "meta": "Agency review platform",
+      "href": "https://clutch.co"
+    },
+    {
+      "label": "LinkedIn",
+      "meta": "Professional recommendations",
+      "href": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Healthcare Operations Lead",
+      "role": "Clinic Group Website + Funnel Project",
+      "content": "The new website and conversion flow gave us a clearer message and better inquiry quality from day one.",
+      "rating": 5,
+      "source": "Google Reviews",
+      "sourceUrl": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "name": "SaaS Founder",
+      "role": "Automation + Lead Routing Build",
+      "content": "Their automation setup removed repetitive tasks and made follow-up handling significantly faster for our sales process.",
+      "rating": 5,
+      "source": "Clutch",
+      "sourceUrl": "https://clutch.co"
+    },
+    {
+      "name": "Home Services Director",
+      "role": "SEO + Landing Pages Engagement",
+      "content": "We got stronger search visibility and a cleaner funnel structure that made campaign traffic much more profitable.",
+      "rating": 5,
+      "source": "LinkedIn Recommendation",
+      "sourceUrl": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "trustSignals": [
+    "Google Review Profile",
+    "Clutch Agency Listing",
+    "LinkedIn Presence",
+    "Case Study Outcomes",
+    "Verified Business Contact"
+  ]
+}
+

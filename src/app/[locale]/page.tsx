@@ -1,180 +1,126 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Shield, Globe, Smartphone, Monitor, Layers } from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
-import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { Hero } from "@/components/sections/hero";
+import { BlogInsightsPreview } from "@/components/sections/blog-insights-preview";
+import { ClientLogos } from "@/components/sections/client-logos";
 import { FeaturesRow } from "@/components/sections/features-row";
 import { AIProjectCalculator } from "@/components/tools/ai-project-calculator";
 import { ServiceConfigurator } from "@/components/tools/service-configurator";
 import { ProcessVisualization } from "@/components/sections/process-visualization";
+import { StackSlider } from "@/components/sections/stack-slider";
+import { SystemWorkflow } from "@/components/sections/system-workflow";
+import { WhyChooseUs } from "@/components/sections/why-choose-us";
+import { TeamSection } from "@/components/sections/team-section";
 import { Testimonials } from "@/components/sections/testimonials";
+import { TrustedPlatforms } from "@/components/sections/trusted-platforms";
+import { HomePageCards } from "@/components/sections/homepage-cards";
+import { FluidBackground } from "@/components/sections/homepage-visuals";
+import { getBlogPosts, getClientLogosData, getHomePricingData, getHomepageData, getTeamData, getTestimonialsData, getTrustedPlatformsData } from "@/lib/content-engine";
 import { localePath } from "@/lib/locale-path";
-
-const capabilities = [
-  "WordPress Development",
-  "Next.js Development",
-  "Web Applications",
-  "E-commerce Development",
-  "AI Workflows & Agents",
-  "DevOps & Cloud Support",
-  "Local SEO",
-  "Technical SEO",
-  "Website Maintenance & Support",
-];
-
-const industries = [
-  "Law Firms",
-  "Dental, Medical, Clinics & Med Spas",
-  "Home Services",
-  "Consultants, Coaches & Agencies",
-  "SaaS & B2B Service Companies",
-  "Education, Training & eLearning",
-];
-
-const faq = [
-  { value: "1", title: "What types of businesses do you work with?", content: "We work with growth-focused businesses that want stronger digital systems for credibility, lead generation, SEO, and automation. Our strongest fit includes law firms, clinics, home services, consultants, SaaS, and education-related businesses." },
-  { value: "2", title: "Do you build custom websites or use templates?", content: "We position our work around custom solutions tailored to business goals, content structure, and conversion needs. The right approach depends on the project, but our focus is on building systems that fit the business properly." },
-  { value: "3", title: "Can you handle SEO and automation too?", content: "Yes. Our services include custom websites, conversion funnels, SEO support, AI chatbots, and automation workflows, allowing us to build more complete digital growth systems." },
-  { value: "4", title: "How does the custom project scope process work?", content: "The scope flow helps you define what you need, what your goals are, and where your project stands. It gives us the information needed to recommend the right direction and next steps." },
-  { value: "5", title: "Do you offer ongoing support after launch?", content: "Yes. We can provide ongoing support, maintenance, SEO, optimization, and improvement work after launch depending on your needs." },
-  { value: "6", title: "How do you use AI in your services?", content: "We use AI where it adds real value, including chat support, lead qualification, workflow automation, content support, and customer communication systems." },
-];
+import { cn } from "@/lib/utils";
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
-  const isRtl = locale === "ar" || locale === "ur";
-  const homeCardClass = "site-card site-card-interactive p-8";
-  const homeCardTitleClass = "site-card-title mb-3 text-2xl font-bold";
-  const homeCardTextClass = "site-card-muted mb-4 text-[15px] leading-7 dark:text-[#D7E3EF]";
+  const industryIcons = [Shield, Globe, Smartphone, Monitor, Layers, Shield];
+  const industryColors = [
+    "text-blue-500",
+    "text-emerald-500",
+    "text-orange-500",
+    "text-purple-500",
+    "text-indigo-500",
+    "text-amber-500"
+  ];
+  const featuredPosts = (await getBlogPosts()).slice(0, 3);
+  const testimonialsData = await getTestimonialsData(locale);
+  const clientLogosData = await getClientLogosData(locale);
+  const teamData = await getTeamData(locale);
+  const trustedPlatformsData = await getTrustedPlatformsData(locale);
+  const homePricingData = await getHomePricingData(locale);
+  const homepageData = await getHomepageData(locale);
 
   return (
     <main className="flex-1">
       <section className="relative">
-        <Hero dict={dict} locale={locale} />
+        <Hero locale={locale} />
       </section>
+
+      <ClientLogos data={clientLogosData} />
 
       <FeaturesRow />
 
-      <section className="py-24 border-t border-slate-200 dark:border-[#1E1E2E]">
+      <StackSlider />
+
+      <SystemWorkflow />
+
+      <WhyChooseUs />
+
+      <section className="py-24 border-t border-slate-200 dark:border-white/10">
         <Container>
           <div className="max-w-6xl mx-auto space-y-6">
+            <HomePageCards 
+              locale={locale} 
+              homepageData={homepageData} 
+              homePricingData={homePricingData} 
+            />
 
-            {/* Row 1 — Work + Process (High impact proof moved up) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between p-8">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] to-[var(--site-primary)]" />
-                <div>
-                  <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Portfolio</span>
-                  <h2 className="mb-3 text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF]">Selected Work</h2>
-                  <p className="mb-6 text-sm leading-relaxed text-slate-500 dark:text-[#94A3B8]">From custom websites to automation workflows, our work is built to support real business objectives with stronger design and better performance.</p>
-                </div>
-                <Link href={localePath(locale, "/case-studies")} className="inline-flex items-center gap-2 font-semibold text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] text-sm hover:underline">
-                  View Work <ArrowRight size={14} />
-                </Link>
-              </AnimatedSection>
-
-              <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between p-8">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#A78BFA] to-[#60A5FA]" />
-                <div>
-                  <span className="mb-3 inline-block rounded-full bg-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-violet-600 dark:bg-violet-500/10 dark:text-violet-400">Methodology</span>
-                  <h2 className="mb-3 text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF]">A Clear Process from Strategy to Launch</h2>
-                  <div className="mb-6 flex gap-2 flex-wrap">
-                    {["Discover", "Scope", "Build", "Launch & Grow"].map((step, i) => (
-                      <span key={step} className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-white/5 px-3 py-1 text-xs font-semibold text-slate-600 dark:text-[#94A3B8]">
-                        <span className="text-[10px] font-black text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">{i + 1}</span>
-                        {step}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <Link href={localePath(locale, "/process")} className="inline-flex items-center gap-2 font-semibold text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] text-sm hover:underline">
-                  View Full Process <ArrowRight size={14} />
-                </Link>
-              </AnimatedSection>
-            </div>
-
-            {/* Row 2 — Capabilities (text left, visual right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between p-8 lg:p-10">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-                <div>
-                  <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Our Stack</span>
-                  <h2 className="mb-4 text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-snug">Built for More Than<br />Basic Websites</h2>
-                  <p className="mb-6 text-sm leading-relaxed text-slate-500 dark:text-[#94A3B8]">Whether you need a focused website project or a broader digital growth system, we shape the right service mix around your goals.</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {capabilities.map((c) => (
-                    <span key={c} className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:border-[color:rgba(var(--site-primary-rgb),0.22)] dark:bg-[rgba(var(--site-primary-rgb),0.07)] dark:text-[#C2D2E1]">{c}</span>
-                  ))}
+            {/* Row 3 - Industries (visual left, text right) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+              <div className="hidden dark:block absolute -inset-20 bg-[var(--site-primary)]/5 blur-[120px] pointer-events-none rounded-full" />
+              
+              <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 border border-slate-200 bg-white/85 backdrop-blur-xl transition-all duration-700 hover:border-[var(--site-primary)]/20 dark:border-white/5 dark:bg-white/5">
+                <div className="hidden dark:block absolute -left-10 -top-10 h-64 w-64 rounded-full bg-[rgba(52,211,153,0.1)] blur-[80px]" />
+                <div className="grid grid-cols-1 gap-4 relative z-10">
+                  {homepageData.industries.map((i: string, idx: number) => {
+                    const IndustryIcon = industryIcons[idx % industryIcons.length];
+                    const industryColor = industryColors[idx % industryColors.length];
+                    return (
+                      <div key={i} className="group/item flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-md px-6 py-5 text-sm font-bold text-slate-700 transition-all hover:border-slate-300 hover:bg-white dark:hover:shadow-[0_0_20px_rgba(var(--site-primary-rgb),0.15)] dark:border-white/5 dark:bg-white/[0.03] dark:text-[#D7E3EF] dark:hover:border-white/20 dark:hover:bg-white/[0.08] shadow-none">
+                        <div className="flex items-center gap-4">
+                          <IndustryIcon size={16} className={cn(industryColor, "transform transition-transform group-hover/item:scale-110")} />
+                          <span className="tracking-tight">{i}</span>
+                        </div>
+                        <ArrowRight size={16} className="opacity-0 -translate-x-3 transition-all duration-300 group-hover/item:opacity-100 group-hover/item:translate-x-0 text-[var(--site-primary)]" />
+                      </div>
+                    );
+                  })}
                 </div>
               </AnimatedSection>
 
-              <AnimatedSection className="site-card overflow-hidden relative flex flex-col justify-between p-8 lg:p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.12),rgba(52,211,153,0.08))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.18),rgba(52,211,153,0.05))]">
-                <div className="absolute -right-8 -bottom-8 h-48 w-48 rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] blur-2xl" />
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  {[
-                    { num: "100+", label: "Projects Shipped" },
-                    { num: "9", label: "Services Offered" },
-                    { num: "99.9%", label: "Uptime SLA" },
-                    { num: "24h", label: "Avg Response Time" },
-                  ].map(({ num, label }) => (
-                    <div key={label} className="rounded-xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-white/5 p-4 text-center">
-                      <p className="font-display text-2xl font-black text-[var(--site-primary)]">{num}</p>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8]">{label}</p>
-                    </div>
-                  ))}
+              <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between border border-slate-200 bg-white/85 p-8 backdrop-blur-xl transition-all duration-700 hover:border-emerald-500/30 dark:border-white/5 dark:bg-white/5">
+                <FluidBackground />
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#34D399] via-[var(--site-primary)] to-[#60A5FA] z-20 opacity-50" />
+                
+                <div className="relative z-10">
+                  <span className="mb-4 inline-block rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400">{homepageData.industriesSection.eyebrow}</span>
+                  <h2 className="mb-4 text-3xl font-display font-black leading-tight tracking-tight text-foreground">{homepageData.industriesSection.title}</h2>
+                  <p className="mb-8 text-sm leading-relaxed text-muted-foreground font-medium max-w-md">{homepageData.industriesSection.description}</p>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-[#6B7E8E]">Delivered across web, SEO, automation, and AI systems.</p>
-              </AnimatedSection>
-            </div>
-
-            {/* Row 3 — Industries (visual left, text right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 bg-[linear-gradient(135deg,rgba(52,211,153,0.06),rgba(var(--site-primary-rgb),0.10))] dark:bg-[linear-gradient(135deg,rgba(52,211,153,0.06),rgba(var(--site-primary-rgb),0.10))]">
-                <div className="absolute -left-6 -top-6 h-40 w-40 rounded-full bg-[rgba(52,211,153,0.15)] blur-2xl" />
-                <div className="grid grid-cols-1 gap-2.5">
-                  {industries.map((i) => (
-                    <div key={i} className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white/60 backdrop-blur-sm px-4 py-2.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-[#D7E3EF]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] dark:bg-[var(--site-primary-soft)] shrink-0" />
-                      {i}
-                    </div>
-                  ))}
+                
+                <div className="relative z-10">
+                  <Link href={localePath(locale, "/industries")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 text-sm font-black text-white dark:shadow-[0_20px_40px_-15px_rgba(var(--site-primary-rgb),0.5)] shadow-none hover:bg-[var(--site-primary-hover)] hover:-translate-y-1 transition-all duration-300">
+                    Explore Solutions <ArrowRight size={16} />
+                  </Link>
                 </div>
-              </AnimatedSection>
-
-              <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between p-8 lg:p-10">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#34D399] via-[var(--site-primary)] to-[#60A5FA]" />
-                <div>
-                  <span className="mb-3 inline-block rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">Industries</span>
-                  <h2 className="mb-4 text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-snug">Built for High-Value,<br />Growth-Focused Industries</h2>
-                  <p className="mb-6 text-sm leading-relaxed text-slate-500 dark:text-[#94A3B8]">We work with businesses that value precision—legal, medical, consulting, SaaS, and beyond. Every project is shaped around real growth outcomes.</p>
-                </div>
-                <Link href={localePath(locale, "/industries")} className="inline-flex items-center gap-2 font-semibold text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] text-sm hover:underline">
-                  View Industries We Serve <ArrowRight size={14} />
-                </Link>
               </AnimatedSection>
             </div>
 
             <ProcessVisualization />
-            <Testimonials />
+            <Testimonials data={testimonialsData} />
+            <TrustedPlatforms data={trustedPlatformsData} />
+            <TeamSection locale={locale} data={teamData} />
 
-            {/* Row 4 — AI + Pricing (text left, visual right) */}
+            {/* Row 4 - AI + Pricing (text left, visual right) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <AnimatedSection className="site-card site-card-interactive overflow-hidden relative flex flex-col justify-between p-8 lg:p-10">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F59E0B] to-[#34D399]" />
                 <div>
-                  <span className="mb-3 inline-block rounded-full bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">AI Automation</span>
-                  <h2 className="mb-4 text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-snug">AI Where It Actually<br />Improves Growth</h2>
-                  <ul className="space-y-3 text-sm text-slate-500 dark:text-[#94A3B8]">
-                    {[
-                      "AI chat for first-response support",
-                      "Automation for lead capture and routing",
-                      "Workflow systems that reduce manual tasks",
-                      "Smarter support structures for growing businesses",
-                    ].map((item) => (
+                  <span className="mb-3 inline-block rounded-full bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">{homepageData.aiSection.eyebrow}</span>
+                  <h2 className="mb-4 text-2xl font-display font-black text-foreground leading-snug">{homepageData.aiSection.title}</h2>
+                  <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+                    {homepageData.aiSection.bullets.map((item: string) => (
                       <li key={item} className="flex items-start gap-2">
                         <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
                         {item}
@@ -188,39 +134,56 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-[#F59E0B]" />
                 <div>
                   <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Pricing</span>
-                  <h2 className="mb-4 text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-snug">Transparent Starting Prices</h2>
+                  <h2 className="mb-4 text-2xl font-display font-black text-foreground leading-snug">{homePricingData.title}</h2>
                   <div className="space-y-2.5 mb-6">
-                    {[
-                      ["Custom Website Dev", "$3,500"],
-                      ["Conversion Funnels", "$2,000"],
-                      ["AI Chatbots & Automation", "$3,500"],
-                      ["SEO & Growth Retainers", "$1,000/mo"],
-                    ].map(([label, price]) => (
-                      <div key={label} className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-white/10 px-4 py-2.5 bg-slate-50 dark:bg-white/5">
-                        <span className="text-sm font-medium text-slate-600 dark:text-[#C2D2E1]">{label}</span>
-                        <span className="text-sm font-black text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">{price}</span>
+                    {homePricingData.packages.map((item: any) => (
+                      <div key={item.label} className="rounded-xl border border-slate-200 dark:border-white/10 px-4 py-3 bg-slate-50 dark:bg-white/5">
+                        <div className="mb-1 flex items-center justify-between">
+                          <span className="text-sm font-medium text-slate-600 dark:text-[#C2D2E1]">{item.label}</span>
+                          <span className="text-sm font-black text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">{item.price}</span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-[#8EA3B8]">
+                          <span>{item.timeline}</span>
+                          <span className="h-1 w-1 rounded-full bg-slate-400 dark:bg-[#8EA3B8]" />
+                          <span>{item.fit}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
+                  <div className="rounded-xl border border-slate-200/90 bg-white/75 px-4 py-3 dark:border-white/10 dark:bg-white/5">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-[#8EA3B8]">{homePricingData.comparisonTitle}</p>
+                    <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-[#C2D2E1]">
+                      {homePricingData.comparisonRows.map((row: any) => (
+                        <div key={row.label} className="contents">
+                          <p>{row.label}</p>
+                          <p className="font-semibold text-right">{row.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Link href={localePath(locale, "/pricing")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--site-primary)] px-6 py-3 text-sm font-bold text-white shadow-[0_16px_40px_-20px_rgba(var(--site-primary-rgb),0.5)] hover:bg-[var(--site-primary-hover)] transition-all">
+                  <Link href={localePath(locale, "/pricing")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--site-primary)] px-6 py-3 text-sm font-bold text-white dark:shadow-[0_16px_40px_-20px_rgba(var(--site-primary-rgb),0.5)] shadow-none hover:bg-[var(--site-primary-hover)] transition-all">
                     View Pricing <ArrowRight size={14} />
                   </Link>
                   <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 dark:border-white/15 px-6 py-3 text-sm font-bold text-slate-700 dark:text-[#D7E3EF] hover:bg-slate-50 dark:hover:bg-white/5 transition-all">
-                    Get Quote <ArrowRight size={14} />
+                    Get Custom Quote <ArrowRight size={14} />
                   </Link>
                 </div>
               </AnimatedSection>
             </div>
 
+            <BlogInsightsPreview locale={locale} posts={featuredPosts} />
+
             {/* AI project Calculator & Service Configurator moved lower */}
-            <AnimatedSection className="py-12 bg-white border-y border-slate-200 dark:bg-[#0A0A0F] dark:border-[#1E1E2E]">
+            <AnimatedSection className="py-12 bg-white border-y border-slate-200 dark:bg-transparent dark:border-white/10">
               <div className="max-w-4xl mx-auto text-center space-y-2 mb-6">
-                <h2 className="text-3xl xl:text-4xl font-black text-slate-950 tracking-tight leading-tight dark:text-[#F8F8FF]">
-                  Architect Your <span className="text-[var(--site-primary)]">Enterprise</span> Future
+                <h2 className="text-3xl xl:text-4xl font-black text-slate-950 tracking-tight leading-tight dark:text-white">
+                  {homepageData.enterpriseBlock.titlePrefix}{" "}
+                  <span className="text-[var(--site-primary)]">{homepageData.enterpriseBlock.titleAccent}</span>{" "}
+                  {homepageData.enterpriseBlock.titleSuffix}
                 </h2>
-                <p className="text-base xl:text-lg text-slate-600 dark:text-[#94A3B8]">{dict.hero.description}</p>
+                <p className="text-base xl:text-lg text-muted-foreground">{homepageData.enterpriseBlock.description}</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
@@ -235,8 +198,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
             {/* FAQ */}
             <AnimatedSection>
-              <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">Frequently Asked Questions</h2>
-              <Accordion items={faq} />
+              <h2 className="mb-4 text-2xl font-bold text-foreground">Frequently Asked Questions</h2>
+              <Accordion items={homepageData.faq} />
               <div className="mt-4">
                 <Link href={localePath(locale, "/faqs")} className="text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] font-semibold">View All FAQs</Link>
               </div>
@@ -244,25 +207,42 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
 
             {/* Final CTA */}
-            <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
+            <AnimatedSection className="site-card overflow-hidden relative text-center p-10 md:p-14 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-              <div className="absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-[rgba(var(--site-primary-rgb),0.10)] blur-3xl pointer-events-none" />
-              <div className="absolute -top-10 -left-10 h-48 w-48 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
-              <h2 className="mb-3 text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF]">Ready to Build a Smarter Growth System?</h2>
-              <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-slate-500 dark:text-[#94A3B8]">Whether you need a custom website, stronger landing pages, SEO support, or AI automation, we can help you define the right next step.</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] transition-all hover:bg-[var(--site-primary-hover)]">
-                  <span>Book Consultation</span>
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/80 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10">
-                  <span>Get Quote</span>
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                </Link>
+              <div className="hidden dark:block absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-[rgba(var(--site-primary-rgb),0.10)] blur-3xl pointer-events-none" />
+              <div className="hidden dark:block absolute -top-10 -left-10 h-48 w-48 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
+              
+              <div className="relative z-10">
+                <span className="mb-4 inline-block rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
+                  READY TO TURN TRAFFIC INTO LEADS?
+                </span>
+                <h2 className="mb-4 text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
+                  Ready to turn your website into a growth system?
+                </h2>
+                <p className="mx-auto mb-10 max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground font-medium">
+                  Get your free website audit and next-step growth plan. We'll audit your current setup, identify the biggest growth levers, and map out a tailored plan.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white dark:shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] shadow-none transition-all hover:bg-[var(--site-primary-hover)] hover:-translate-y-1">
+                    <span>Book Consultation</span>
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                  <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/80 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1">
+                    <span>Get Custom Quote</span>
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                  <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-50/50 px-8 py-4 font-bold text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400 transition-all hover:bg-emerald-100 dark:hover:bg-emerald-500/20 hover:-translate-y-1">
+                    <span>Get Free Website Audit</span>
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-emerald-500/10 ring-1 ring-emerald-500/20">
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                </div>
               </div>
             </AnimatedSection>
 
@@ -272,4 +252,3 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     </main>
   );
 }
-

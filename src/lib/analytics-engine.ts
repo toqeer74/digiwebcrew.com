@@ -228,3 +228,4 @@ export async function generateLeadReport(dateRange?: { from: Date; to: Date }) {
     return null;
   }
 }
+

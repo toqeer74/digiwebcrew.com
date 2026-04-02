@@ -52,7 +52,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <Container>
                 <Link
                     href={localePath(locale, "/case-studies")}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-[#94A3B8] hover:text-[#6366F1] transition-colors mb-12"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-[#6366F1] transition-colors mb-12"
                 >
                     <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />
                     {dict.caseStudies.back}
@@ -65,9 +65,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                             <span className="px-3 py-1 rounded-full bg-[#6366F1]/20 text-[#6366F1] text-xs font-bold uppercase tracking-widest">
                                 Industrial Case Study
                             </span>
-                            <span className="text-sm font-semibold text-[#94A3B8]">{study.industry} • {study.year}</span>
+                            <span className="text-sm font-semibold text-muted-foreground">{study.industry} • {study.year}</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-[#F8F8FF]">
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-foreground">
                             {study.title}
                         </h1>
                     </header>
@@ -76,7 +76,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 pb-32">
                     <div className="lg:col-span-8">
 
-                        <div className="prose prose-invert prose-zinc max-w-none text-[#94A3B8]">
+                        <div className="prose prose-invert prose-zinc max-w-none text-muted-foreground">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                 {study.content}
                             </ReactMarkdown>
@@ -86,22 +86,22 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     {/* Sidebar */}
                     <div className="lg:col-span-4">
                         <div className="site-card p-10 sticky top-32 space-y-10">
-                            <h4 className="font-bold text-2xl flex items-center gap-3 text-[#F8F8FF]">
+                            <h4 className="font-bold text-2xl flex items-center gap-3 text-foreground">
                                 <Monitor size={24} className="text-[#6366F1]" />
                                 Project Scope
                             </h4>
 
                             <div className="space-y-8">
                                 <div className="site-card-divider pt-2">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-3">Client Partnership</p>
-                                    <p className="font-black text-2xl text-[#F8F8FF] leading-tight">{study.client}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">Client Partnership</p>
+                                    <p className="font-black text-2xl text-foreground leading-tight">{study.client}</p>
                                 </div>
 
                                 <div className="site-card-divider pt-2">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-4">{dict.caseStudies.techStack}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4">{dict.caseStudies.techStack}</p>
                                     <div className="flex flex-wrap gap-3">
                                         {study.techStack.map(tech => (
-                                            <span key={tech} className="site-card px-3 py-1.5 text-xs font-bold text-[#94A3B8]">
+                                            <span key={tech} className="site-card px-3 py-1.5 text-xs font-bold text-muted-foreground">
                                                 {tech}
                                             </span>
                                         ))}
@@ -109,10 +109,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                                 </div>
 
                                 <div className="site-card-divider pt-2">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-4">{dict.caseStudies.outcomes}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4">{dict.caseStudies.outcomes}</p>
                                     <ul className="space-y-4">
                                         {study.outcomes.map(outcome => (
-                                            <li key={outcome} className="flex items-start gap-4 text-[15px] font-medium text-[#94A3B8] leading-relaxed">
+                                            <li key={outcome} className="flex items-start gap-4 text-[15px] font-medium text-muted-foreground leading-relaxed">
                                                 <CheckCircle2 size={18} className="text-[#6366F1] shrink-0 mt-0.5" />
                                                 {outcome}
                                             </li>

@@ -11,3 +11,4 @@ export const getDictionary = async (locale: string) => {
     ? dictionaries[locale as keyof typeof dictionaries]() 
     : dictionaries.en();
 };
+

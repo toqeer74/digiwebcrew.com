@@ -1,0 +1,24 @@
+{
+  "heading": "DigiWebCrew کے پیچھے ٹیم سے ملیں",
+  "members": [
+    {
+      "name": "Toqeer Shafique",
+      "role": "Founder & Technical Lead",
+      "bio": "ویب سائٹس، فنلز، اور آٹومیشن سسٹمز میں آرکیٹیکچر، ڈیلیوری اسٹریٹیجی، اور ہائی پرفارمنس امپلیمینٹیشن کی قیادت کرتے ہیں۔",
+      "expertise": ["Web Systems", "AI Automation", "Technical SEO"]
+    },
+    {
+      "name": "Growth Design Team",
+      "role": "UI/UX & Conversion Design",
+      "bio": "کنورژن فوکسڈ انٹرفیس تیار کرتی ہے جس میں واضح میسجنگ، ٹرسٹ سگنلز، اور پرفارمنس فرسٹ یوزر فلو شامل ہوتے ہیں۔",
+      "expertise": ["UX Strategy", "Landing Pages", "Conversion Optimization"]
+    },
+    {
+      "name": "Engineering Operations",
+      "role": "Development & Deployment",
+      "bio": "قابلِ اعتماد فرنٹ اینڈ اور بیک اینڈ سسٹمز بناتی ہے جن میں صاف ڈیپلائمنٹ ورک فلو اور طویل مدتی مینٹینیبلٹی شامل ہو۔",
+      "expertise": ["Next.js", "APIs", "DevOps"]
+    }
+  ]
+}
+

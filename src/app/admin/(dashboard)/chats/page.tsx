@@ -45,3 +45,4 @@ export default async function ChatsPage({ searchParams }: { searchParams: Search
 
   return <ChatsClient sessions={sessions} selected={selected} />;
 }
+

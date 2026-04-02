@@ -83,7 +83,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-20 bg-card border rounded-[3rem] p-12 shadow-2xl relative overflow-hidden"
+        className="text-center py-20 bg-card border rounded-[3rem] p-12 dark:shadow-2xl relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent -z-10" />
         <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-8">
@@ -126,7 +126,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
         </div>
       </div>
 
-      <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[2.5rem] p-8 md:p-12 min-h-[500px] flex flex-col shadow-xl relative overflow-hidden">
+      <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[2.5rem] p-8 md:p-12 min-h-[500px] flex flex-col dark:shadow-xl relative overflow-hidden">
         <div className="hidden">
           <input
             type="text"
@@ -162,7 +162,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
                         handleNext();
                       }}
                       className={cn(
-                        "p-6 rounded-2xl border text-left transition-all hover:shadow-lg group relative overflow-hidden",
+                        "p-6 rounded-2xl border text-left transition-all dark:hover:shadow-lg group relative overflow-hidden",
                         formData.serviceCategory === cat.slug
                           ? "border-[#3B82F6] bg-[#EFF6FF] ring-1 ring-[#3B82F6]"
                           : "border-[#E2E8F0] bg-white hover:bg-[#F8FAFC]"
@@ -365,7 +365,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
             <button
               onClick={handleSubmit}
               disabled={isSubmitting || !formData.email || !formData.fullName || !formData.message}
-              className="flex items-center justify-center gap-3 h-14 px-10 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 transition-all"
+              className="flex items-center justify-center gap-3 h-14 px-10 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] dark:shadow-xl dark:shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 transition-all"
             >
               {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
               {isSubmitting ? dict.quote.wizard.submitting : dict.quote.wizard.submit}
@@ -378,7 +378,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
                 (currentStep === 1 && !formData.serviceInterest) ||
                 (currentStep === 3 && (!formData.budgetRange || !formData.timeline || !formData.message))
               }
-              className="flex items-center justify-center gap-2 h-14 px-10 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 transition-all"
+              className="flex items-center justify-center gap-2 h-14 px-10 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] dark:shadow-xl dark:shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 transition-all"
             >
               {dict.quote.wizard.next}
               <ChevronRight size={20} className={isRtl ? "rotate-180" : ""} />
@@ -389,3 +389,4 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
     </div>
   );
 }
+

@@ -118,17 +118,17 @@ export default async function CaseStudiesPage({
           <div className="space-y-24">
             <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
               <div className="md:col-span-6 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Philosophy & Detail
                 </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
                   Work That Shows How the System Comes Together
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
                     A portfolio should do more than display screenshots. It should show how the work solved a problem, supported a business goal, or improved the way the digital system functions.
                   </p>
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic border-l-2 border-[var(--site-primary)] pl-4">
+                  <p className="text-muted-foreground text-lg leading-relaxed italic border-l-2 border-[var(--site-primary)] pl-4">
                     This page brings together selected work across websites, landing pages, SEO improvements, and automation systems.
                   </p>
                 </div>
@@ -144,17 +144,17 @@ export default async function CaseStudiesPage({
             {/* Intro Bento Section 2 - Project Categories */}
             <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
               <div className="md:col-span-6 md:order-2 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Specialized Focus
                 </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
                   A Hybrid Approach to Portfolio Presentation
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
                     Not every project needs a long case study, but every project should still communicate value clearly. That is why our work section is built as a hybrid.
                   </p>
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic border-l-2 border-emerald-500 pl-4">
+                  <p className="text-muted-foreground text-lg leading-relaxed italic border-l-2 border-emerald-500 pl-4">
                     The goal is to show how different services work together to support real business outcomes.
                   </p>
                 </div>
@@ -162,12 +162,12 @@ export default async function CaseStudiesPage({
               <div className="md:col-span-6 md:order-1">
                 <div className="site-card p-5 lg:p-6 relative overflow-hidden group border-2 border-emerald-500/10">
                   {gradientTop}
-                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Project Categories</h3>
+                  <h3 className="text-xl font-bold mb-6 text-foreground">Project Categories</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {categories.map((category) => (
                       <div key={category} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10">
                         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] leading-tight">{category}</span>
+                        <span className="text-sm text-muted-foreground leading-tight">{category}</span>
                       </div>
                     ))}
                   </div>
@@ -179,8 +179,8 @@ export default async function CaseStudiesPage({
           {/* Selected Projects Grid */}
           <AnimatedSection className="space-y-12">
             <div className="text-center max-w-3xl mx-auto space-y-4">
-              <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF]">Selected Infrastructure Projects</h2>
-              <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+              <h2 className="text-3xl md:text-5xl font-display font-black text-foreground">Selected Infrastructure Projects</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 From custom websites to automation workflows, our work is built to support real business objectives.
               </p>
             </div>
@@ -203,7 +203,7 @@ export default async function CaseStudiesPage({
                     </div>
                   </div>
                   
-                  <h3 className="text-2xl font-display font-black mb-6 text-slate-950 dark:text-[#F8F8FF] leading-tight group-hover:text-[var(--site-primary)] transition-colors">{item.title}</h3>
+                  <h3 className="text-2xl font-display font-black mb-6 text-foreground leading-tight group-hover:text-[var(--site-primary)] transition-colors">{item.title}</h3>
                   
                   <div className="space-y-6 mb-10">
                     <div className="space-y-2">
@@ -230,7 +230,7 @@ export default async function CaseStudiesPage({
 
           {/* Bottom FAQ Section */}
           <AnimatedSection className="space-y-8">
-            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] text-center mb-12">Questions About Our Work</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground text-center mb-12">Questions About Our Work</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
@@ -250,10 +250,10 @@ export default async function CaseStudiesPage({
                   <span className="text-[10px] font-bold uppercase tracking-wider">Live Status: Accepting Projects for Q2 2026</span>
                 </div>
                 
-                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
                   Want Similar Work Built <br className="hidden md:block" /> for Your Business Goals?
                 </h2>
-                <p className="text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed max-w-2xl">
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
                    From custom websites to automation, let's define the right digital scope to scale your business performance.
                 </p>
               </div>
@@ -265,7 +265,7 @@ export default async function CaseStudiesPage({
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </span>
                 </Link>
-                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-8 py-5 text-base transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-8 py-5 text-base transition-all hover:bg-white dark:hover:bg-white/10 group">
                   <span>Get Quote</span>
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />

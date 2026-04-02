@@ -52,3 +52,4 @@ export function SiteWrapper({ children, className, ...props }: SiteWrapperProps)
     </div>
   );
 }
+

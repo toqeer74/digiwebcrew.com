@@ -18,7 +18,7 @@ export function AnimatedSection({
   direction = "up",
 }: AnimatedSectionProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-20px" });
 
   const directions = {
     up: { y: 40 },
@@ -50,3 +50,4 @@ export function AnimatedSection({
     </motion.div>
   );
 }
+

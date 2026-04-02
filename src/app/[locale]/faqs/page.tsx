@@ -114,10 +114,10 @@ export default async function FAQsPage({
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Knowledge Base</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Frequently Asked <span className="text-[var(--site-primary)]">Questions.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               Answers to common questions about services, pricing, process, fit, and what it is like to work with Digital Web Crew.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -127,7 +127,7 @@ export default async function FAQsPage({
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-10 py-5 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-10 py-5 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -139,8 +139,8 @@ export default async function FAQsPage({
 
           <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 border-2 border-[var(--site-primary)]/10">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Clear Answers for Businesses Comparing the Right Next Step</h2>
-            <div className="space-y-4 text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+            <h2 className="text-3xl font-display font-black text-foreground mb-6">Clear Answers for Businesses Comparing the Right Next Step</h2>
+            <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
               <p>Choosing the right digital partner usually comes with a lot of questions.</p>
               <p>
                 You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out.
@@ -154,7 +154,7 @@ export default async function FAQsPage({
 
           {groups.map((group, groupIdx) => (
             <AnimatedSection key={group.heading} delay={groupIdx * 0.03} className="space-y-6">
-              <h2 className="text-2xl md:text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">{group.heading}</h2>
+              <h2 className="text-2xl md:text-3xl font-display font-black text-foreground tracking-tight">{group.heading}</h2>
 
               <Accordion
                 items={group.items.map(([title, content], itemIdx) => ({
@@ -168,8 +168,8 @@ export default async function FAQsPage({
 
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Still Have Questions About the Right Next Step?</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">
+            <h2 className="text-2xl font-display font-black text-foreground mb-3">Still Have Questions About the Right Next Step?</h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
               If you need help deciding what fits your business, the next step is simple. Book a consultation or submit your project scope and move forward with more clarity.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -179,7 +179,7 @@ export default async function FAQsPage({
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10">
                 <span>Get Quote</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -13,20 +13,20 @@ interface CtaBannerProps {
 
 export function CtaBanner({ dict, locale }: CtaBannerProps) {
   return (
-    <section className="bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))] py-20 dark:bg-[#0A0A0F]">
+    <section className="bg-white dark:bg-midnight py-20 transition-colors">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 text-center shadow-[0_20px_44px_-28px_rgba(15,23,42,0.18)] md:p-16 dark:border-indigo-500/20 dark:bg-gradient-to-br dark:from-indigo-900/40 dark:to-violet-900/30"
+          className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 text-center shadow-none md:p-16 dark:border-[var(--site-primary)]/20 dark:bg-gradient-to-br dark:from-midnight dark:to-[#11152c]"
         >
           {/* Decorative orb */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] dark:bg-indigo-600/10"
+              className="hidden dark:block h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] dark:bg-indigo-600/10"
             />
           </div>
 
@@ -48,7 +48,7 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="mb-6 text-3xl font-display font-bold leading-tight text-slate-950 dark:text-[#F8F8FF] md:text-5xl"
+              className="mb-6 text-3xl font-display font-bold leading-tight text-foreground md:text-5xl"
             >
               Let's Build Something<br />
               <span className="bg-gradient-to-r from-[var(--site-primary)] to-[#6ea3e6] bg-clip-text text-transparent">
@@ -61,7 +61,7 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="mx-auto mb-10 max-w-2xl font-body text-lg leading-relaxed text-slate-600 dark:text-[#94A3B8]"
+              className="mx-auto mb-10 max-w-2xl font-body text-lg leading-relaxed text-slate-600 dark:text-slate-400"
             >
               Join hundreds of companies trusting us with their mission-critical infrastructure. Get started today with a custom scope assessment.
             </motion.p>
@@ -81,7 +81,7 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
                 Get Custom Scope
                 <ArrowRight size={20} />
               </Link>
-              <button className="whitespace-nowrap rounded-full border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-white/80 px-8 py-4 font-body font-semibold text-slate-950 transition-all duration-200 hover:bg-[rgba(var(--site-primary-rgb),0.08)] dark:bg-transparent dark:text-[#F8F8FF] dark:hover:bg-[#6366F1]/10">
+              <button className="whitespace-nowrap rounded-full border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-white/80 px-8 py-4 font-body font-semibold text-slate-950 transition-all duration-200 hover:bg-[rgba(var(--site-primary-rgb),0.08)] dark:bg-transparent dark:text-white dark:hover:bg-[var(--site-primary)]/10">
                 Schedule Call
               </button>
             </motion.div>
@@ -91,3 +91,4 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
     </section>
   );
 }
+

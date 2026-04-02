@@ -32,12 +32,12 @@ export default function NotFound() {
                 404
              </h1>
              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-3xl md:text-5xl font-display font-black tracking-tight text-slate-950 dark:text-[#F8F8FF]">System Gap</span>
+                <span className="text-3xl md:text-5xl font-display font-black tracking-tight text-foreground">System Gap</span>
              </div>
           </div>
 
-          <h2 className="text-2xl md:text-4xl font-display font-black mb-6 tracking-tight text-slate-950 dark:text-[#F8F8FF]">The laboratory you're looking for doesn't exist.</h2>
-          <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 leading-relaxed">
+          <h2 className="text-2xl md:text-4xl font-display font-black mb-6 tracking-tight text-foreground">The laboratory you're looking for doesn't exist.</h2>
+          <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
             The path you followed might be broken, decommissioned, or moved to a different sector in our digital system.
           </p>
 
@@ -51,7 +51,7 @@ export default function NotFound() {
             </Link>
             <button 
               onClick={() => window.history.back()}
-              className="flex items-center gap-3 h-14 px-8 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10"
+              className="flex items-center gap-3 h-14 px-8 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10"
             >
               <ArrowLeft size={18} />
               <span>Return to Previous Sector</span>

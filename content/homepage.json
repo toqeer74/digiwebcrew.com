@@ -1,0 +1,105 @@
+{
+  "selectedWork": {
+    "eyebrow": "Portfolio",
+    "title": "Selected Work",
+    "description": "From custom websites to automation workflows, our work is built to support real business objectives with stronger design and better performance.",
+    "ctaLabel": "View Work"
+  },
+  "methodology": {
+    "eyebrow": "Methodology",
+    "title": "A Clear Process from Strategy to Launch",
+    "steps": ["Discover", "Scope", "Build", "Launch & Grow"],
+    "ctaLabel": "View Full Process"
+  },
+  "capabilitiesSection": {
+    "eyebrow": "Our Stack",
+    "title": "Built for More Than Basic Websites",
+    "description": "Whether you need a focused website project or a broader digital growth system, we shape the right service mix around your goals."
+  },
+  "proofCaption": "Portfolio-based outcomes across websites, funnels, SEO, and automation systems.",
+  "industriesSection": {
+    "eyebrow": "Industries",
+    "title": "Built for High-Value, Growth-Focused Industries",
+    "description": "We work with businesses that value precision - legal, medical, consulting, SaaS, and beyond. Every project is shaped around real growth outcomes.",
+    "ctaLabel": "View Industries We Serve"
+  },
+  "aiSection": {
+    "eyebrow": "AI Automation",
+    "title": "AI Where It Actually Improves Growth",
+    "bullets": [
+      "AI chat for first-response support",
+      "Automation for lead capture and routing",
+      "Workflow systems that reduce manual tasks",
+      "Smarter support structures for growing businesses"
+    ]
+  },
+  "enterpriseBlock": {
+    "titlePrefix": "Architect Your",
+    "titleAccent": "Enterprise",
+    "titleSuffix": "Future",
+    "description": "Build the right mix of website performance, funnels, and automation systems to support long-term growth."
+  },
+  "finalCta": {
+    "title": "Ready to turn your website into a growth system?",
+    "description": "Get a tailored audit, clear recommendations, and the right next step for your business.",
+    "primaryLabel": "Book Consultation",
+    "secondaryLabel": "Get Custom Quote"
+  },
+  "capabilities": [
+    "WordPress Development",
+    "Next.js Development",
+    "Web Applications",
+    "E-commerce Development",
+    "AI Workflows & Agents",
+    "DevOps & Cloud Support",
+    "Local SEO",
+    "Technical SEO",
+    "Website Maintenance & Support"
+  ],
+  "industries": [
+    "Law Firms",
+    "Dental, Medical, Clinics & Med Spas",
+    "Home Services",
+    "Consultants, Coaches & Agencies",
+    "SaaS & B2B Service Companies",
+    "Education, Training & eLearning"
+  ],
+  "proofStats": [
+    { "num": "42+", "label": "Landing Pages Delivered" },
+    { "num": "18", "label": "Custom Web Projects" },
+    { "num": "12", "label": "Automation Flows Built" },
+    { "num": "3x", "label": "Faster Launch Cycles" }
+  ],
+  "faq": [
+    {
+      "value": "1",
+      "title": "What types of businesses do you work with?",
+      "content": "We work with growth-focused businesses that want stronger digital systems for credibility, lead generation, SEO, and automation. Our strongest fit includes law firms, clinics, home services, consultants, SaaS, and education-related businesses."
+    },
+    {
+      "value": "2",
+      "title": "Do you build custom websites or use templates?",
+      "content": "We position our work around custom solutions tailored to business goals, content structure, and conversion needs. The right approach depends on the project, but our focus is on building systems that fit the business properly."
+    },
+    {
+      "value": "3",
+      "title": "Can you handle SEO and automation too?",
+      "content": "Yes. Our services include custom websites, conversion funnels, SEO support, AI chatbots, and automation workflows, allowing us to build more complete digital growth systems."
+    },
+    {
+      "value": "4",
+      "title": "How does the custom project scope process work?",
+      "content": "The scope flow helps you define what you need, what your goals are, and where your project stands. It gives us the information needed to recommend the right direction and next steps."
+    },
+    {
+      "value": "5",
+      "title": "Do you offer ongoing support after launch?",
+      "content": "Yes. We can provide ongoing support, maintenance, SEO, optimization, and improvement work after launch depending on your needs."
+    },
+    {
+      "value": "6",
+      "title": "How do you use AI in your services?",
+      "content": "We use AI where it adds real value, including chat support, lead qualification, workflow automation, content support, and customer communication systems."
+    }
+  ]
+}

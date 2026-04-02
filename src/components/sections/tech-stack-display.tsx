@@ -19,7 +19,7 @@ import { Container } from "../layout/layout-primitives";
 
 const techStack = [
   { name: "React", icon: SiReact, color: "text-[#61DAFB]" },
-  { name: "Next.js", icon: SiNextdotjs, color: "text-[#F8F8FF]" },
+  { name: "Next.js", icon: SiNextdotjs, color: "text-foreground" },
   { name: "TypeScript", icon: SiTypescript, color: "text-[#3178C6]" },
   { name: "JavaScript", icon: SiJavascript, color: "text-[#F7DF1E]" },
   { name: "Python", icon: SiPython, color: "text-[#3776AB]" },
@@ -33,9 +33,6 @@ const techStack = [
 ];
 
 export function TechStackDisplay() {
-  const stackCardClass =
-    "rounded-[2rem] border border-slate-200/70 bg-white/96 shadow-[0_18px_38px_-24px_rgba(15,23,42,0.2)] transition-all duration-300 dark:border-[color:rgba(var(--site-primary-rgb),0.28)] dark:bg-[linear-gradient(180deg,rgba(26,39,56,0.995),rgba(12,20,32,0.995))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_0_1px_rgba(var(--site-primary-rgb),0.12),0_26px_54px_-28px_rgba(0,0,0,0.82),0_20px_42px_-22px_rgba(var(--site-primary-rgb),0.22),0_0_34px_-22px_rgba(var(--site-primary-rgb),0.18)] dark:hover:border-[color:rgba(var(--site-primary-rgb),0.46)] dark:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(var(--site-primary-rgb),0.26),0_30px_60px_-28px_rgba(0,0,0,0.86),0_24px_48px_-20px_rgba(var(--site-primary-rgb),0.28),0_0_42px_-18px_rgba(var(--site-primary-rgb),0.24)]";
-
   return (
     <section className="border-y border-slate-200/70 bg-white py-24 dark:border-[color:rgba(var(--site-primary-rgb),0.16)] dark:bg-[radial-gradient(circle_at_top_left,rgba(var(--site-primary-rgb),0.14),transparent_24%),linear-gradient(180deg,rgba(0,0,0,0.985),rgba(4,6,10,0.995))]">
       <Container>
@@ -59,7 +56,7 @@ export function TechStackDisplay() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-            className="font-display text-4xl font-bold leading-tight tracking-tight text-slate-950 dark:text-white md:text-5xl"
+            className="font-display text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl"
           >
               Engineered for<br />
               <span className="text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
@@ -82,7 +79,7 @@ export function TechStackDisplay() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className={`${stackCardClass} p-6`}
+              className="rounded-2xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 p-6 transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgba(var(--site-primary-rgb),0.12)] ring-1 ring-[rgba(var(--site-primary-rgb),0.16)] dark:bg-[rgba(var(--site-primary-rgb),0.14)] dark:ring-[rgba(var(--site-primary-rgb),0.24)]">
@@ -90,26 +87,25 @@ export function TechStackDisplay() {
                 </div>
                 <div>
                   <p className="text-xs font-body font-semibold uppercase tracking-widest text-slate-500 dark:text-[#b7cadb]">1 in All Solutions</p>
-                  <p className="text-sm font-display font-bold text-slate-950 dark:text-white">DigiWebCrew</p>
+                  <p className="text-sm font-display font-bold text-foreground">DigiWebCrew</p>
                 </div>
               </div>
             </motion.div>
           </div>
 
           {/* Right: Tech Grid */}
-          <div className="lg:w-2/3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-4">
             {techStack.map((tech, idx) => (
               <motion.div
                 key={tech.name}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
-                whileHover={{ y: -5, scale: 1.05 }}
-                className={`${stackCardClass} flex flex-col items-center justify-center gap-4 p-6 text-center`}
+                className="group flex items-center gap-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 p-5 text-left transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1"
               >
-                <tech.icon className={tech.color} size={40} />
-                <span className="text-xs font-body font-semibold uppercase tracking-wider text-slate-600 dark:text-[#d7e3ef]">
+                <tech.icon className={`flex-shrink-0 ${tech.color} drop-shadow-[0_0_8px_currentColor]`} size={24} />
+                <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/50 transition-colors group-hover:text-slate-900 dark:group-hover:text-white">
                   {tech.name}
                 </span>
               </motion.div>
@@ -120,3 +116,4 @@ export function TechStackDisplay() {
     </section>
   );
 }
+

@@ -17,3 +17,4 @@ export const QuoteSchema = z.object({
 });
 
 export type QuoteFormData = z.infer<typeof QuoteSchema>;
+

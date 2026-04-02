@@ -161,3 +161,4 @@ function updateChatMode(session: IChatSession, text: string) {
         session.mode = "QA";
     }
 }
+

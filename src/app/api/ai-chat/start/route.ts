@@ -28,3 +28,4 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: false, error: "Initialization failed" }, { status: 500 });
     }
 }
+

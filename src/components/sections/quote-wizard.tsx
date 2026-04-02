@@ -263,18 +263,18 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-3xl border border-[#1E1E2E] bg-[#13131E] p-10 text-center"
+        className="rounded-3xl border border-white/10 bg-slate-100 dark:bg-white/5 p-10 text-center"
       >
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#6366F1]/10 text-[#6366F1]">
           <CheckCircle2 size={36} />
         </div>
-        <h3 className="mb-3 text-3xl font-display font-bold text-[#F8F8FF]">Your Submission Is In</h3>
-        <p className="mb-7 text-[#94A3B8]">Thank you. Your project scope details have been received.</p>
+        <h3 className="mb-3 text-3xl font-display font-bold text-foreground">Your Submission Is In</h3>
+        <p className="mb-7 text-muted-foreground">Thank you. Your project scope details have been received.</p>
         <button
           onClick={() => {
             window.location.href = localePath(locale, "/thank-you");
           }}
-          className="inline-flex items-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 font-semibold text-white"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 font-semibold text-foreground"
         >
           Continue
           <ChevronRight size={16} />
@@ -289,16 +289,16 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
         <div className="mb-3 flex items-end justify-between">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6366F1]">Step {currentStep + 1} of {steps.length}</p>
-            <h3 className="text-2xl font-display font-bold text-[#F8F8FF]">{steps[currentStep]}</h3>
+            <h3 className="text-2xl font-display font-bold text-foreground">{steps[currentStep]}</h3>
           </div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">{progress}% Complete</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{progress}% Complete</p>
         </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#13131E]">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/5">
           <motion.div className="h-full bg-[#6366F1]" initial={false} animate={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      <div className="rounded-3xl border border-[#1E1E2E] bg-[#13131E] p-6 md:p-8">
+      <div className="rounded-3xl border border-white/10 bg-slate-100 dark:bg-white/5 p-6 md:p-8">
         <div className="hidden">
           <input
             value={formData.honeypot}
@@ -325,8 +325,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.needHelp === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -344,8 +344,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.businessType === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -363,8 +363,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.mainGoal === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -384,8 +384,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                       className={cn(
                         "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                         active
-                          ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                          : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                          ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                          : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                       )}
                     >
                       {option}
@@ -404,8 +404,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.projectStage === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -423,8 +423,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.timeline === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -442,8 +442,8 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                       formData.budget === option
-                        ? "border-[#6366F1] bg-[#6366F1]/10 text-[#F8F8FF]"
-                        : "border-[#1E1E2E] bg-[#0F0F18] text-[#94A3B8] hover:text-[#F8F8FF]"
+                        ? "border-[#6366F1] bg-[#6366F1]/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {option}
@@ -455,45 +455,45 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
             {currentStep === 7 && (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Name"
                   value={formData.fullName}
                   onChange={(e) => setFormData((prev) => ({ ...prev, fullName: e.target.value }))}
                 />
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Company"
                   value={formData.company}
                   onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
                 />
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                 />
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Phone"
                   value={formData.phone}
                   onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                 />
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Website"
                   value={formData.website}
                   onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
                 />
                 <input
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF]"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground"
                   placeholder="Country"
                   value={formData.country}
                   onChange={(e) => setFormData((prev) => ({ ...prev, country: e.target.value }))}
                 />
 
                 <select
-                  className="rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-3 text-[#F8F8FF] md:col-span-2"
+                  className="rounded-lg border border-white/10 bg-white/5 p-3 text-foreground md:col-span-2"
                   value={formData.preferredContact}
                   onChange={(e) => setFormData((prev) => ({ ...prev, preferredContact: e.target.value }))}
                 >
@@ -510,7 +510,7 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
             {currentStep === 8 && (
               <div>
                 <textarea
-                  className="min-h-[200px] w-full rounded-lg border border-[#1E1E2E] bg-[#0F0F18] p-4 text-[#F8F8FF]"
+                  className="min-h-[200px] w-full rounded-lg border border-white/10 bg-white/5 p-4 text-foreground"
                   placeholder="Share any challenges, goals, feature needs, integrations, references, examples, or details that would help us understand the project better."
                   value={formData.message}
                   onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
@@ -520,11 +520,11 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-6 flex flex-col gap-3 border-t border-[#1E1E2E] pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <button
             onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
             className={cn(
-              "inline-flex items-center justify-center gap-2 rounded-lg border border-[#1E1E2E] bg-[#0F0F18] px-5 py-3 text-sm font-semibold text-[#F8F8FF]",
+              "inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-foreground",
               currentStep === 0 ? "pointer-events-none opacity-0" : "opacity-100"
             )}
           >
@@ -536,7 +536,7 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
             <button
               onClick={() => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))}
               disabled={!canNext()}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 text-sm font-semibold text-white disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 text-sm font-semibold text-foreground disabled:opacity-50"
             >
               Next
               <ChevronRight size={16} className={isRtl ? "rotate-180" : ""} />
@@ -545,7 +545,7 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
             <button
               onClick={submit}
               disabled={isSubmitting || !canNext()}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 text-sm font-semibold text-white disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#6366F1] px-6 py-3 text-sm font-semibold text-foreground disabled:opacity-50"
             >
               {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               {isSubmitting ? "Submitting" : "Submit Project Scope"}
@@ -556,3 +556,4 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
     </div>
   );
 }
+

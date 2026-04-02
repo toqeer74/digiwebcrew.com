@@ -13,14 +13,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", ...props }, ref) => {
     const variantStyles = {
       primary:
-        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-contrast)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
+        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-contrast)] shadow-none hover:bg-[var(--site-primary-hover)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
       secondary:
-        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
+        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-none hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
       outline:
-        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
+        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-none hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
       ghost: "bg-transparent text-[#B7CADB] hover:bg-[#0C1822]/70 hover:text-[#F8FBFF]",
       glass:
-        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-[0_26px_60px_-36px_rgba(0,0,0,0.6)] hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
+        "border border-[color:var(--site-primary-border)] bg-[var(--site-primary)] text-[var(--site-primary-dark-text)] shadow-none hover:bg-[var(--site-primary-hover)] dark:text-[var(--site-primary-contrast)] dark:shadow-[0_26px_60px_-36px_rgba(255,255,255,0.12)] [&_svg]:ml-2 [&_svg]:h-8 [&_svg]:w-8 [&_svg]:rounded-full [&_svg]:bg-white [&_svg]:p-1.5 [&_svg]:text-[var(--site-primary)]",
     };
 
     const sizeStyles = {
@@ -48,3 +48,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
+

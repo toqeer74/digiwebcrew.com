@@ -23,3 +23,4 @@ export async function updateLeadStatus(id: string, status: string) {
   await Lead.findByIdAndUpdate(id, { status });
   return { success: true };
 }
+

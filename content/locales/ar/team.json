@@ -1,0 +1,24 @@
+{
+  "heading": "تعرف على الفريق وراء DigiWebCrew",
+  "members": [
+    {
+      "name": "Toqeer Shafique",
+      "role": "Founder & Technical Lead",
+      "bio": "يقود هندسة الحلول واستراتيجية التنفيذ وتطوير الأنظمة عالية الأداء عبر المواقع والفَنلز وأنظمة الأتمتة.",
+      "expertise": ["Web Systems", "AI Automation", "Technical SEO"]
+    },
+    {
+      "name": "Growth Design Team",
+      "role": "UI/UX & Conversion Design",
+      "bio": "يصمم واجهات تركّز على التحويل مع رسائل واضحة وإشارات ثقة وتجربة استخدام مبنية على الأداء.",
+      "expertise": ["UX Strategy", "Landing Pages", "Conversion Optimization"]
+    },
+    {
+      "name": "Engineering Operations",
+      "role": "Development & Deployment",
+      "bio": "يبني أنظمة Front-end وBack-end موثوقة مع تدفقات نشر واضحة وقابلية صيانة طويلة المدى.",
+      "expertise": ["Next.js", "APIs", "DevOps"]
+    }
+  ]
+}
+

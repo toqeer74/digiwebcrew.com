@@ -10,7 +10,8 @@
     "dev:turbo": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "content:locales:check": "node scripts/check-locale-content.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.8",

@@ -6,7 +6,14 @@ import {
   PenTool,
   Code2,
   CheckCircle2,
-  Rocket
+  Rocket,
+  GitBranch,
+  Server,
+  Database,
+  Terminal,
+  ShieldCheck,
+  Eye,
+  Sparkles
 } from "lucide-react";
 import { Container } from "../layout/layout-primitives";
 import { cn } from "@/lib/utils";
@@ -14,26 +21,31 @@ import { cn } from "@/lib/utils";
 const stages = [
   {
     icon: Search,
+    color: "text-blue-500",
     title: "Discovery & Logic Mapping",
     description: "Deep dive into business logic, user journeys, and technical architecture."
   },
   {
     icon: PenTool,
+    color: "text-purple-500",
     title: "High-Fidelity Prototyping",
     description: "Interactive blueprints to validate UX and user flows before development."
   },
   {
     icon: Code2,
+    color: "text-emerald-500",
     title: "Agile Development Sprints",
     description: "Scalable code shipped in iterative cycles with clear demos and milestones."
   },
   {
     icon: CheckCircle2,
+    color: "text-amber-500",
     title: "Automated QA Testing",
     description: "Unit, integration, and performance testing to ensure reliability at launch."
   },
   {
     icon: Rocket,
+    color: "text-rose-500",
     title: "Deployment & Scaling",
     description: "Go-live, monitoring, and optimization for speed, security, and growth."
   }
@@ -42,21 +54,22 @@ const stages = [
 const sprintItems: Array<{
   label: string;
   status: "todo" | "doing" | "review" | "done";
+  icon: any;
 }> = [
-    { label: "Logic Mapping", status: "done" },
-    { label: "UI Prototypes", status: "done" },
-    { label: "API Architecture", status: "doing" },
-    { label: "Database Schema", status: "doing" },
-    { label: "Backend Dev", status: "doing" },
-    { label: "Frontend Logic", status: "review" },
-    { label: "QA Integration", status: "todo" },
-    { label: "Final Review", status: "review" },
-    { label: "Launch Polish", status: "todo" }
+    { label: "Logic Mapping", status: "done", icon: GitBranch },
+    { label: "UI Prototypes", status: "done", icon: PenTool },
+    { label: "API Architecture", status: "doing", icon: Server },
+    { label: "Database Schema", status: "doing", icon: Database },
+    { label: "Backend Dev", status: "doing", icon: Terminal },
+    { label: "Frontend Logic", status: "review", icon: Code2 },
+    { label: "QA Integration", status: "todo", icon: ShieldCheck },
+    { label: "Final Review", status: "review", icon: Eye },
+    { label: "Launch Polish", status: "todo", icon: Sparkles }
   ];
 
 export function ProcessVisualization() {
   return (
-    <section className="py-12 lg:py-16 bg-white dark:bg-[#0A0A0F]">
+    <section className="py-12 lg:py-16 bg-white dark:bg-midnight">
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.div
@@ -73,7 +86,7 @@ export function ProcessVisualization() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-6 dark:text-[#F8F8FF]"
+            className="text-4xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-6 dark:text-white"
           >
             Engineering Excellence, <br />
             <span className="text-[var(--site-primary-soft)]">By Design</span>
@@ -97,7 +110,7 @@ export function ProcessVisualization() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="relative mb-16 lg:mb-0"
           >
-            <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.16),transparent_55%),linear-gradient(180deg,#ffffff,rgba(248,250,252,0.75))] shadow-[0_28px_80px_-48px_rgba(15,23,42,0.45)] dark:border-slate-800 dark:bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.35),transparent_55%),linear-gradient(180deg,rgba(15,23,42,0.95),rgba(15,23,42,0.85))] dark:shadow-[0_38px_90px_-56px_rgba(0,0,0,0.95)]">
+            <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.16),transparent_55%),linear-gradient(180deg,#ffffff,rgba(248,250,252,0.75))] shadow-none dark:border-white/10 dark:bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.35),transparent_55%),linear-gradient(180deg,#1a1f38,#121826)] dark:shadow-[0_38px_90px_-56px_rgba(0,0,0,0.95)]">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
               <div className="aspect-[4/3] w-full" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.9),transparent_55%)] dark:bg-[linear-gradient(90deg,rgba(15,23,42,0.9),transparent_55%)]" />
@@ -116,7 +129,7 @@ export function ProcessVisualization() {
               </div>
             </div>
 
-            <div className="absolute -bottom-10 right-0 w-[86%] max-w-[420px] rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_32px_80px_-40px_rgba(15,23,42,0.5)] backdrop-blur-lg sm:-bottom-12 sm:p-6 lg:-right-6 dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-[0_42px_100px_-50px_rgba(0,0,0,0.95)]">
+            <div className="absolute -bottom-10 right-0 w-[86%] max-w-[420px] rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-none backdrop-blur-lg sm:-bottom-12 sm:p-6 lg:-right-6 dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-[0_42px_100px_-50px_rgba(0,0,0,0.95)]">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-display font-extrabold text-slate-900 dark:text-slate-100">
                   Sprint Board
@@ -126,34 +139,37 @@ export function ProcessVisualization() {
                 </span>
               </div>
               <div className="mt-4 grid grid-cols-3 gap-3">
-                {sprintItems.map((item) => (
-                  <div
-                    key={item.label}
-                    className={cn(
-                      "flex h-10 items-center gap-2 rounded-xl border border-slate-100 bg-white px-2 shadow-sm",
-                      "dark:border-slate-700 dark:bg-slate-800/60 dark:shadow-none"
-                    )}
-                  >
-                    <span
+                {sprintItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.label}
                       className={cn(
-                        "h-2 w-2 rounded-full",
-                        item.status === "done" && "bg-emerald-500/80",
-                        item.status === "doing" && "bg-[var(--site-primary)]",
-                        item.status === "review" && "bg-amber-500/80",
-                        item.status === "todo" && "bg-slate-300 dark:bg-slate-600"
+                        "flex h-11 items-center gap-2 rounded-xl border border-slate-100 bg-white px-2.5 shadow-none",
+                        "dark:border-slate-700 dark:bg-slate-800/60 dark:shadow-none"
                       )}
-                      aria-hidden="true"
-                    />
-                    <span className="min-w-0 text-[11px] font-semibold text-slate-700 dark:text-slate-200">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
+                    >
+                      <Icon
+                        size={14}
+                        className={cn(
+                          item.status === "done" && "text-emerald-500",
+                          item.status === "doing" && "text-[var(--site-primary)]",
+                          item.status === "review" && "text-amber-500",
+                          item.status === "todo" && "text-slate-400 dark:text-slate-500"
+                        )}
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0 text-[10px] font-bold leading-tight text-slate-700 dark:text-slate-200">
+                        {item.label}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <div className="absolute left-[58%] top-[52%] hidden -translate-y-1/2 lg:block">
-              <div className="rounded-full border border-[color:rgba(var(--site-primary-rgb),0.35)] bg-[rgba(var(--site-primary-rgb),0.15)] px-4 py-2 text-xs font-semibold text-[var(--site-primary)] shadow-[0_12px_30px_-15px_rgba(var(--site-primary-rgb),0.4)] backdrop-blur-md dark:bg-slate-800/80 dark:text-[var(--site-primary-soft)] dark:shadow-[0_16px_40px_-20px_rgba(var(--site-primary-rgb),0.6)]">
+              <div className="rounded-full border border-[color:rgba(var(--site-primary-rgb),0.35)] bg-[rgba(var(--site-primary-rgb),0.15)] px-4 py-2 text-xs font-semibold text-[var(--site-primary)] shadow-none backdrop-blur-md dark:bg-slate-800/80 dark:text-[var(--site-primary-soft)] dark:shadow-[0_16px_40px_-20px_rgba(var(--site-primary-rgb),0.6)]">
                 Start with Discovery
               </div>
             </div>
@@ -170,31 +186,39 @@ export function ProcessVisualization() {
               <ol className="space-y-10">
                 {stages.map((stage, idx) => {
                   const Icon = stage.icon;
-                  const isActive = idx === 0;
                   return (
-                    <li key={stage.title} className="relative pl-12">
+                    <motion.li
+                      key={stage.title}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-10%" }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: idx * 0.15,
+                        ease: [0.21, 0.47, 0.32, 0.98] 
+                      }}
+                      className="relative pl-12"
+                    >
                       <div className="absolute left-[18px] top-2 -translate-x-1/2" aria-hidden="true">
                         <span
                           className={cn(
-                            "grid h-9 w-9 place-items-center rounded-xl border shadow-[0_14px_30px_-18px_rgba(15,23,42,0.35)]",
-                            isActive
-                              ? "border-[color:rgba(var(--site-primary-rgb),0.38)] bg-[rgba(var(--site-primary-rgb),0.14)] text-[var(--site-primary)] dark:border-[var(--site-primary-soft)]/40 dark:bg-[var(--site-primary)]/20 dark:text-[var(--site-primary-soft)]"
-                              : "border-slate-200 bg-white text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                            "grid h-10 w-10 place-items-center rounded-xl border bg-white shadow-none dark:bg-slate-800 transition-all duration-300 hover:scale-110",
+                            "border-slate-200 dark:border-slate-700"
                           )}
                         >
-                          <Icon size={16} />
+                          <Icon size={18} className={stage.color} />
                         </span>
                       </div>
 
-                      <div>
+                      <div className="pt-0.5">
                         <p className="text-base font-display font-extrabold text-slate-900 dark:text-slate-100">
                           {stage.title}
                         </p>
-                        <p className="mt-1 text-sm font-body font-medium text-slate-600 dark:text-slate-400">
+                        <p className="mt-1.5 text-sm font-body font-medium text-slate-600 dark:text-slate-400">
                           {stage.description}
                         </p>
                       </div>
-                    </li>
+                    </motion.li>
                   );
                 })}
               </ol>
@@ -213,7 +237,7 @@ export function ProcessVisualization() {
             <p className="text-sm font-body font-bold text-slate-600 dark:text-slate-300 text-center sm:text-left">
               Ready to initiate the first stage?
             </p>
-            <button className="rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-[var(--site-primary)] px-7 py-3 text-sm font-display font-extrabold uppercase tracking-widest text-white transition-all shadow-[0_14px_34px_-18px_rgba(0,0,0,0.26)] hover:bg-[var(--site-primary-hover)] active:scale-95 dark:border-[var(--site-primary-soft)]/30 dark:shadow-[0_14px_34px_-18px_rgba(var(--site-primary-rgb),0.62)] whitespace-nowrap">
+            <button className="rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-[var(--site-primary)] px-7 py-3 text-sm font-display font-extrabold uppercase tracking-widest text-white transition-all shadow-none hover:bg-[var(--site-primary-hover)] active:scale-95 dark:border-[var(--site-primary-soft)]/30 dark:shadow-[0_14px_34px_-18px_rgba(var(--site-primary-rgb),0.62)] whitespace-nowrap">
               Start Discovery Phase
             </button>
           </div>
@@ -223,3 +247,4 @@ export function ProcessVisualization() {
     </section>
   );
 }
+

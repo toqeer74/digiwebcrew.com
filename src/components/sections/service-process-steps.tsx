@@ -17,12 +17,12 @@ interface ServiceProcessStepsProps {
 
 export function ServiceProcessSteps({ title, steps, ctaHref, ctaLabel }: ServiceProcessStepsProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white/96 p-8 shadow-[0_16px_32px_-24px_rgba(15,23,42,0.18)] dark:border-[#1E1E2E] dark:bg-[#13131E]">
-      <h2 className="mb-4 text-2xl font-bold text-slate-950 dark:text-[#F8F8FF]">{title}</h2>
-      <div className="mb-5 space-y-3 text-slate-600 dark:text-[#94A3B8]">
+    <div className="site-card group relative flex flex-col items-center p-8 text-center transition-all hover:bg-white/10 dark:border-white/10 dark:bg-transparent">
+      <h2 className="mb-4 text-2xl font-bold text-foreground">{title}</h2>
+      <div className="mb-5 space-y-3 text-muted-foreground">
         {steps.map((step, idx) => (
           <p key={step.title}>
-            <strong className="text-slate-950 dark:text-[#F8F8FF]">Step {idx + 1} {step.title}:</strong> {step.description}
+            <strong className="text-foreground">Step {idx + 1} {step.title}:</strong> {step.description}
           </p>
         ))}
       </div>
@@ -35,3 +35,4 @@ export function ServiceProcessSteps({ title, steps, ctaHref, ctaLabel }: Service
     </div>
   );
 }
+

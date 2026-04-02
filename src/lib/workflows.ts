@@ -292,3 +292,4 @@ Copy and paste one of the workflow templates into n8n JSON editor:
 - Adjust as needed based on results
 `;
 }
+

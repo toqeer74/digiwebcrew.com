@@ -88,3 +88,4 @@ export const AccordionItem = ({
 }) => {
   return null // This component is not used with the Accordion above, just for type compatibility
 }
+

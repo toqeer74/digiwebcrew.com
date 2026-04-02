@@ -92,3 +92,4 @@ const LeadSchema: Schema = new Schema(
 );
 
 export const Lead = mongoose.models.Lead || mongoose.model<ILead>("Lead", LeadSchema);
+

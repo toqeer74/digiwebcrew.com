@@ -59,7 +59,7 @@ const faqItems = [
 const cardClass = "site-card site-card-interactive overflow-hidden relative p-8 lg:p-10";
 const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 const ctaPrimary = "inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]";
-const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10";
+const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10";
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -84,10 +84,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">About Our Crew</span>
             </div >
             
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1]">
               A Modern Digital Partner <br className="hidden md:block" /> for Growth-Focused <span className="text-[var(--site-primary)]">Businesses.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed">
               Digital Web Crew helps businesses build stronger websites, sharper conversion systems, better search visibility, and more efficient lead handling through custom development, funnels, SEO, and automation.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12 w-full max-w-2xl">
@@ -105,7 +105,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -116,22 +116,22 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <AnimatedSection className={cardClass}>
             {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Our Story</span>
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Built for Businesses That Need Stronger Digital Infrastructure</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Digital Web Crew was created for businesses that want more than a website that simply looks modern.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Many businesses need a stronger system behind their online presence — better presentation, clearer service structure, stronger lead paths, improved visibility, and more practical support.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">We combine custom website development, landing pages, SEO support, and automation into digital systems designed to help businesses present themselves better and operate more effectively.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">Built for Businesses That Need Stronger Digital Infrastructure</h2>
+            <p className="text-muted-foreground mb-3">Digital Web Crew was created for businesses that want more than a website that simply looks modern.</p>
+            <p className="text-muted-foreground mb-3">Many businesses need a stronger system behind their online presence — better presentation, clearer service structure, stronger lead paths, improved visibility, and more practical support.</p>
+            <p className="text-muted-foreground">We combine custom website development, landing pages, SEO support, and automation into digital systems designed to help businesses present themselves better and operate more effectively.</p>
           </AnimatedSection>
 
           {/* Values */}
           <AnimatedSection className={cardClass}>
             {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Values</span>
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-5">What We Value</h2>
+            <h2 className="text-2xl font-display font-black text-foreground mb-5">What We Value</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {values.map(([title, desc]) => (
                 <div key={title} className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-4">
-                  <h3 className="font-semibold text-slate-800 dark:text-[#F8F8FF] mb-1.5">{title}</h3>
-                  <p className="text-sm text-slate-500 dark:text-[#94A3B8]">{desc}</p>
+                  <h3 className="font-semibold text-slate-800 dark:text-white mb-1.5">{title}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{desc}</p>
                 </div>
               ))}
             </div>
@@ -142,10 +142,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <AnimatedSection className={cardClass}>
               {gradientTop}
               <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">Services</span>
-              <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">What We Build</h2>
+              <h2 className="text-xl font-display font-black text-foreground mb-4">What We Build</h2>
               <ul className="space-y-2.5">
                 {builds.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-[#94A3B8]">
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
                   </li>
                 ))}
@@ -155,10 +155,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <AnimatedSection className={cardClass}>
               {gradientTop}
               <span className="mb-3 inline-block rounded-full bg-violet-50 dark:bg-violet-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-violet-600 dark:text-violet-400">Best Fit</span>
-              <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Who We Work Best With</h2>
+              <h2 className="text-xl font-display font-black text-foreground mb-4">Who We Work Best With</h2>
               <ul className="space-y-2.5">
                 {fit.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-[#94A3B8]">
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />{item}
                   </li>
                 ))}
@@ -170,19 +170,19 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <AnimatedSection className={cardClass}>
             {gradientTop}
             <span className="mb-3 inline-block rounded-full bg-amber-50 dark:bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">Approach</span>
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">More Than Design. More Than Traffic.</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Some providers focus only on building websites. Others only on traffic. Others talk about automation without connecting it to how the business actually works.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Digital Web Crew takes a more connected approach. We look at how the website presents the business, how pages guide action, how visibility improves, and how lead handling can become more efficient.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">More Than Design. More Than Traffic.</h2>
+            <p className="text-muted-foreground mb-3">Some providers focus only on building websites. Others only on traffic. Others talk about automation without connecting it to how the business actually works.</p>
+            <p className="text-muted-foreground mb-3">Digital Web Crew takes a more connected approach. We look at how the website presents the business, how pages guide action, how visibility improves, and how lead handling can become more efficient.</p>
           </AnimatedSection>
 
           {/* Why Choose */}
           <AnimatedSection className={cardClass}>
             {gradientTop}
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">Why Businesses Choose to Work With Us</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-4">Businesses usually come to us because they want a stronger digital setup with more clarity and better execution.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">Why Businesses Choose to Work With Us</h2>
+            <p className="text-muted-foreground mb-4">Businesses usually come to us because they want a stronger digital setup with more clarity and better execution.</p>
             <ul className="space-y-2.5 mb-4">
               {reasons.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-[#94A3B8]">
+                <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
                 </li>
               ))}
@@ -194,15 +194,15 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
           {/* FAQ */}
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About Digital Web Crew</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Digital Web Crew</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
           {/* CTA */}
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
             {gradientTop}
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Looking for a Stronger Digital Partner?</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">If your business needs more than a basic website and you want a clearer, more capable digital system, we can help define the right next step.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-3">Looking for a Stronger Digital Partner?</h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">If your business needs more than a basic website and you want a clearer, more capable digital system, we can help define the right next step.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
                 <span>Book Consultation</span>

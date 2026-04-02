@@ -16,3 +16,4 @@ export function AuditAutoRefresh() {
 
   return null;
 }
+

@@ -76,15 +76,15 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Success</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Submission <span className="text-emerald-500">Received.</span> <br className="hidden md:block" /> Thank You.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               We have received your custom scope submission. Our team will review the laboratory details to identify the best next step and reach out with a clear direction for your project.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
               {supportingPoints.map((point) => (
-                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-xs font-bold text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-xs font-bold text-slate-700 dark:text-slate-400 relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
                   {point}
                 </div>
@@ -96,11 +96,11 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
              <AnimatedSection className="md:col-span-12 lg:col-span-7 site-card p-10 lg:p-12 relative overflow-hidden group">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-60" />
-                <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6">Want to Move Faster?</h2>
-                <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-8 leading-relaxed">
+                <h2 className="text-3xl font-display font-black text-foreground mb-6">Want to Move Faster?</h2>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                   If you are ready to talk through the project directly, you can book a consultation now instead of waiting for the next step to be shaped from the form alone.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-10 text-slate-600 dark:text-[#94A3B8]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-10 text-muted-foreground">
                   {fasterReasons.map((reason) => (
                     <div key={reason} className="flex items-start gap-3">
                       <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shrink-0" />
@@ -121,13 +121,13 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
 
              <AnimatedSection className="md:col-span-12 lg:col-span-5 site-card p-10 lg:p-12 relative overflow-hidden flex flex-col justify-center border-emerald-500/10 hover:border-emerald-500/20">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent opacity-60" />
-                <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-8">Quick Navigation</h2>
+                <h2 className="text-3xl font-display font-black text-foreground mb-8">Quick Navigation</h2>
                 <div className="grid grid-cols-1 gap-3">
                   {secondaryLinks.map((link) => (
                     <Link
                       key={link.label}
                       href={link.href}
-                      className="group flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:border-[var(--site-primary)]/20 hover:bg-white dark:hover:bg-white/10 transition-all font-bold text-slate-700 dark:text-[#94A3B8] hover:text-[var(--site-primary)]"
+                      className="group flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:border-[var(--site-primary)]/20 hover:bg-white dark:hover:bg-white/10 transition-all font-bold text-slate-700 dark:text-slate-400 hover:text-[var(--site-primary)]"
                     >
                       <span>{link.label}</span>
                       <ArrowRight size={18} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
@@ -138,16 +138,16 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
           </div>
 
           <AnimatedSection className="space-y-8">
-            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] text-center mb-12">Common Questions After Submitting</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground text-center mb-12">Common Questions After Submitting</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
           <AnimatedSection className="site-card p-12 lg:p-16 text-center space-y-8 relative overflow-hidden border-2 border-[var(--site-primary)]/20 shadow-[0_40px_80px_-40px_rgba(var(--site-primary-rgb),0.3)]">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
-            <h2 className="text-3xl md:text-6xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+            <h2 className="text-3xl md:text-6xl font-display font-black text-foreground leading-tight">
                Build Something Great Together
             </h2>
-            <p className="text-xl text-slate-600 dark:text-[#94A3B8] max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                We're looking forward to reviewing your project brief. In the meantime, feel free to explore our latest case studies.
             </p>
             <div className="flex justify-center pt-4">

@@ -1,0 +1,53 @@
+{
+  "reviewBadges": [
+    {
+      "label": "Google Reviews",
+      "meta": "ملف مراجعات عام",
+      "href": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "label": "Clutch",
+      "meta": "منصة مراجعات الوكالات",
+      "href": "https://clutch.co"
+    },
+    {
+      "label": "LinkedIn",
+      "meta": "توصيات مهنية",
+      "href": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "مسؤول عمليات الرعاية الصحية",
+      "role": "مشروع موقع مجموعة عيادات + فنل",
+      "content": "الموقع الجديد وتدفق التحويل قدما رسالة أوضح وجودة أفضل للعملاء المحتملين منذ اليوم الأول.",
+      "rating": 5,
+      "source": "Google Reviews",
+      "sourceUrl": "https://www.google.com/search?q=Digi+Web+Crew+reviews"
+    },
+    {
+      "name": "مؤسس SaaS",
+      "role": "بناء الأتمتة + توجيه العملاء المحتملين",
+      "content": "إعداد الأتمتة خفف الأعمال المتكررة وسرّع بشكل ملحوظ متابعة فريق المبيعات.",
+      "rating": 5,
+      "source": "Clutch",
+      "sourceUrl": "https://clutch.co"
+    },
+    {
+      "name": "مدير خدمات منزلية",
+      "role": "تعاون SEO + صفحات هبوط",
+      "content": "حصلنا على ظهور بحث أقوى وبنية فنل أوضح جعلت حركة الحملات أكثر ربحية.",
+      "rating": 5,
+      "source": "LinkedIn Recommendation",
+      "sourceUrl": "https://pk.linkedin.com/in/toqeer-shafique"
+    }
+  ],
+  "trustSignals": [
+    "Google Review Profile",
+    "Clutch Agency Listing",
+    "LinkedIn Presence",
+    "Case Study Outcomes",
+    "Verified Business Contact"
+  ]
+}
+

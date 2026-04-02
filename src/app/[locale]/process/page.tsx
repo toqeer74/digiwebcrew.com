@@ -69,7 +69,7 @@ const faqItems = [
 ];
 
 const ctaPrimary = "inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]";
-const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] transition-all hover:bg-white dark:hover:bg-white/10";
+const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10";
 
 export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -95,10 +95,10 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Our Protocol</span>
             </div>
           
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1]">
               A Clear Path From <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Discovery</span> to Launch.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed">
               We use a structured engineering process to make sure every website, funnel, SEO, and automation project is aligned with real business goals, clear priorities, and the right level of implementation.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -108,7 +108,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-[#F8F8FF] font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -118,10 +118,10 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
           {/* Why Process */}
           <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
             {gradientTop}
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">A Better Process Leads to Better Work</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Strong digital work does not come from jumping straight into design or development without direction.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-3">Digital Web Crew follows a process built to keep projects clear, practical, and aligned with the real needs of the business.</p>
-            <p className="text-slate-600 dark:text-[#94A3B8]">Some projects are focused and simple. Others include multiple services and a broader implementation path.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-4">A Better Process Leads to Better Work</h2>
+            <p className="text-muted-foreground mb-3">Strong digital work does not come from jumping straight into design or development without direction.</p>
+            <p className="text-muted-foreground mb-3">Digital Web Crew follows a process built to keep projects clear, practical, and aligned with the real needs of the business.</p>
+            <p className="text-muted-foreground">Some projects are focused and simple. Others include multiple services and a broader implementation path.</p>
           </AnimatedSection>
 
           {/* Steps Grid */}
@@ -133,12 +133,12 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                   <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${step.badgeColor}`}>{step.badge}</span>
                   <span className="font-display text-3xl font-black text-slate-200 dark:text-white/10 select-none">{step.num}</span>
                 </div>
-                <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Step {step.num} — {step.title}</h2>
-                <p className="text-sm text-slate-600 dark:text-[#94A3B8] mb-3">{step.body}</p>
+                <h2 className="text-xl font-display font-black text-foreground mb-3">Step {step.num} — {step.title}</h2>
+                <p className="text-sm text-muted-foreground mb-3">{step.body}</p>
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-[#6B7E8E] mb-3">{step.subheading}</p>
                 <ul className="space-y-2">
                   {step.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-slate-600 dark:text-[#94A3B8]">
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
                     </li>
                   ))}
@@ -151,10 +151,10 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
               {gradientTop}
-              <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">A Good Fit For These Projects</h2>
+              <h2 className="text-xl font-display font-black text-foreground mb-4">A Good Fit For These Projects</h2>
               <ul className="space-y-2.5">
                 {fitProjects.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-[#94A3B8]">
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
                   </li>
                 ))}
@@ -163,15 +163,15 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
             <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8 lg:p-10">
               {gradientTop}
-              <h2 className="text-xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-4">How to Enter the Process</h2>
+              <h2 className="text-xl font-display font-black text-foreground mb-4">How to Enter the Process</h2>
               <div className="space-y-4">
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-4">
-                  <p className="font-semibold text-slate-800 dark:text-[#F8F8FF] mb-1">Option 1 — Book Consultation</p>
-                  <p className="text-sm text-slate-500 dark:text-[#94A3B8]">Best if you already know what you want and want to discuss the project directly.</p>
+                  <p className="font-semibold text-slate-800 dark:text-white mb-1">Option 1 — Book Consultation</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Best if you already know what you want and want to discuss the project directly.</p>
                 </div>
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-4">
-                  <p className="font-semibold text-slate-800 dark:text-[#F8F8FF] mb-1">Option 2 — Get Quote</p>
-                  <p className="text-sm text-slate-500 dark:text-[#94A3B8]">Best if you want to define the need more clearly before booking a call.</p>
+                  <p className="font-semibold text-slate-800 dark:text-white mb-1">Option 2 — Get Quote</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Best if you want to define the need more clearly before booking a call.</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -179,15 +179,15 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
           {/* FAQ */}
           <AnimatedSection>
-            <h2 className="text-2xl font-bold text-slate-950 dark:text-[#F8F8FF] mb-4">Questions About the Process</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About the Process</h2>
             <Accordion items={faqItems} />
           </AnimatedSection>
 
           {/* CTA */}
           <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
             {gradientTop}
-            <h2 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-3">Want a Clearer Path From Idea to Launch?</h2>
-            <p className="text-slate-600 dark:text-[#94A3B8] mb-6 max-w-xl mx-auto">If you want a project that is shaped around business goals, clear scope, and practical execution, the next step is simple.</p>
+            <h2 className="text-2xl font-display font-black text-foreground mb-3">Want a Clearer Path From Idea to Launch?</h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">If you want a project that is shaped around business goals, clear scope, and practical execution, the next step is simple.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
                 <span>Book Consultation</span>

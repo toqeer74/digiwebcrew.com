@@ -174,3 +174,4 @@ export function templateQuoteConfirmation(lead: any, locale: string): string {
     </html>
   `;
 }
+

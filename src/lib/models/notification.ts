@@ -47,3 +47,4 @@ const Notification =
   mongoose.model<INotification>("Notification", NotificationSchema);
 
 export { Notification };
+

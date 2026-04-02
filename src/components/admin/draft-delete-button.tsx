@@ -43,3 +43,4 @@ export function DraftDeleteButton({ draftId }: { draftId: string }) {
     </>
   );
 }
+

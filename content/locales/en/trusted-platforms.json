@@ -1,0 +1,28 @@
+{
+  "eyebrow": "Credibility",
+  "heading": "Trusted Platforms & Verified Expertise",
+  "platformsTitle": "Platforms & Ecosystems We Build With",
+  "trustSignalsTitle": "Verified Trust Signals",
+  "platforms": [
+    "OpenAI",
+    "Anthropic",
+    "Google",
+    "Meta",
+    "AWS",
+    "Vercel",
+    "Stripe",
+    "HubSpot",
+    "Shopify",
+    "Notion"
+  ],
+  "trustSignals": [
+    "Google Reviews",
+    "Clutch Profile",
+    "LinkedIn Presence",
+    "Verified Business Email",
+    "Case Study Outcomes",
+    "Technical Delivery Portfolio"
+  ],
+  "note": "Tools we use are listed separately from formal credentials to keep trust claims accurate."
+}
+

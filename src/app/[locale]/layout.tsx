@@ -12,6 +12,7 @@ import { ConsentBanner } from "@/components/ui/consent-banner";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
 import { localePath } from "@/lib/locale-path";
+import { GlobalDecorativeBackground } from "@/components/GlobalDecorativeBackground";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -118,6 +119,7 @@ export default async function RootLayout({
       </head>
       <body className="bg-background text-foreground font-sans font-medium antialiased transition-colors duration-300 pt-16">
         <ThemeProvider>
+          <GlobalDecorativeBackground />
           <Navbar dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
           <MotionProvider>
             <PageTransition>

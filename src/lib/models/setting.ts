@@ -16,3 +16,4 @@ const SettingSchema: Schema = new Schema(
 );
 
 export const Setting = mongoose.models.Setting || mongoose.model<ISetting>("Setting", SettingSchema);
+

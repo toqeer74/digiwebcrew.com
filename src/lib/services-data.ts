@@ -37,8 +37,8 @@ export type TechLab = {
 
 export const serviceDomains: ServiceDomain[] = [
   {
-    title: "Custom Web Applications",
-    slug: "custom-web-apps",
+    title: "Custom Software Engineering",
+    slug: "custom-software",
     description: "Enterprise web apps, mobile solutions, SaaS platforms, and everything web-related.",
     icon: "Code2",
     color: "from-raly-primary to-raly-accent",
@@ -79,7 +79,7 @@ export const techLabs: TechLab[] = [
     description: "Our core laboratory for building high-performance web experiences.",
     iconName: "Zap",
     capabilities: ["SSR & SSG Optimization", "Edge Function Deployment", "Performance Tuning"],
-    relatedServices: ["custom-web-apps", "data-driven-seo"]
+    relatedServices: ["custom-software", "data-driven-seo"]
   },
   {
     title: "The Shopify Lab",
@@ -118,3 +118,4 @@ export function getCategoriesByDomainSlug(domainSlug: string) {
 export function getTechLabBySlug(slug: string) {
   return techLabs.find(t => t.slug === slug) || null;
 }
+

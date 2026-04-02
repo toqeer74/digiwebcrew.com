@@ -67,3 +67,4 @@ const ChatSessionSchema: Schema = new Schema(
 
 export default mongoose.models.ChatSession || mongoose.model<IChatSession>("ChatSession", ChatSessionSchema);
 export const ChatSession = mongoose.models.ChatSession || mongoose.model<IChatSession>("ChatSession", ChatSessionSchema);
+

@@ -24,3 +24,4 @@ export function CopyButton({ value, label = "Copy" }: { value: string; label?: s
     </Button>
   );
 }
+

@@ -121,3 +121,4 @@ export function DistributionChart({ data }: { data: any[] }) {
     </div>
   );
 }
+

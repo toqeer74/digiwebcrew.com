@@ -22,12 +22,12 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[#0A0A0F] text-white">
+        <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-transparent text-slate-900 dark:text-white">
           {/* Background Accents */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[#6366F1]/20 via-transparent to-[#8B5CF6]/10 opacity-30" />
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#6366F1]/20 blur-[150px] rounded-full" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_100%)]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.8)_100%)] opacity-0 dark:opacity-100" />
           </div>
 
           <Container>
@@ -38,15 +38,15 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                   Technology Laboratory
                 </div>
                 <h1 className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-8 leading-[0.9]">
-                  <span className="text-[#F8F8FF] block">{tech.title.split(' ').slice(0, -1).join(' ')}</span>
+                  <span className="text-slate-950 dark:text-white block">{tech.title.split(' ').slice(0, -1).join(' ')}</span>
                   <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent block">{tech.title.split(' ').slice(-1)}</span>
                 </h1>
-                <p className="text-xl md:text-2xl text-[#94A3B8] font-body font-medium mb-12 max-w-xl leading-relaxed">
+                <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-body font-medium mb-12 max-w-xl leading-relaxed">
                   {tech.description}
                 </p>
                 <Link
                   href={localePath(locale, "/quote")}
-                  className="group flex h-16 items-center justify-center rounded-xl bg-white text-[#0A0A0F] font-display font-extrabold text-[13px] px-10 uppercase tracking-[0.2em] transition-all hover:bg-gray-50 hover:scale-[1.02] active:scale-95 border border-white shadow-lg shadow-[#6366F1]/10 w-max"
+                  className="group flex h-16 items-center justify-center rounded-xl bg-white text-[#1a1f38] font-display font-extrabold text-[13px] px-10 uppercase tracking-[0.2em] transition-all hover:bg-gray-50 hover:scale-[1.02] active:scale-95 border border-white dark:shadow-lg dark:shadow-[#6366F1]/10 w-max"
                 >
                   <span>Start a Tech Audit</span>
                   <ArrowRight size={18} strokeWidth={2.5} className="ml-3 group-hover:translate-x-1 transition-transform" />
@@ -75,7 +75,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
           <Container>
             <AnimatedSection className="text-center mb-20">
               <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6">Core Capabilities</h2>
-              <p className="text-[#94A3B8] font-medium max-w-xl mx-auto">
+              <p className="text-slate-600 dark:text-slate-400 font-medium max-w-xl mx-auto">
                 Specialized technical strengths we bring to every project within this laboratory.
               </p>
             </AnimatedSection>
@@ -85,7 +85,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                 <AnimatedSection
                   key={i}
                   delay={i * 0.1}
-                  className="p-10 rounded-[3rem] glass border border-[#1E1E2E]/50 hover:border-[#6366F1]/30 transition-all duration-500 hover:premium-shadow text-center group"
+                  className="p-10 rounded-[3rem] glass border border-white/10 hover:border-[#6366F1]/30 transition-all duration-500 hover:premium-shadow text-center group"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-[#6366F1]/5 flex items-center justify-center text-[#6366F1] mx-auto mb-6 group-hover:scale-110 transition-transform">
                     <Target size={32} />
@@ -98,7 +98,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
         </Section>
 
         {/* Related Services */}
-        <Section className="py-24 md:py-32 border-t border-[#1E1E2E]/30">
+        <Section className="py-24 md:py-32 border-t border-white/10">
           <Container>
             <AnimatedSection className="mb-16">
               <h2 className="text-4xl font-extrabold tracking-tighter">Related Laboratories</h2>
@@ -113,13 +113,13 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                   <Link
                     key={serviceSlug}
                     href={localePath(locale, `/services/${serviceSlug}`)}
-                    className="group p-8 rounded-[2.5rem] glass border border-[#1E1E2E]/50 flex items-center justify-between hover:border-[#6366F1]/50 transition-all"
+                    className="group p-8 rounded-[2.5rem] glass border border-slate-200 dark:border-white/10 flex items-center justify-between hover:border-[#6366F1]/50 transition-all"
                   >
                     <div>
                       <p className="text-[10px] font-black uppercase tracking-widest text-[#6366F1] mb-2">Service Category</p>
                       <h4 className="text-2xl font-bold tracking-tight">{title}</h4>
                     </div>
-                    <div className="w-12 h-12 rounded-xl bg-[#13131E] border border-[#1E1E2E]/50 flex items-center justify-center text-[#F8F8FF] group-hover:bg-[#1E1E2E] group-hover:border-[#6366F1]/50 transition-all shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-midnight border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-900 dark:text-white group-hover:bg-slate-200 dark:group-hover:bg-white/10 group-hover:border-[#6366F1]/50 transition-all dark:shadow-sm">
                       <ArrowRight size={20} strokeWidth={3} />
                     </div>
                   </Link>
@@ -142,7 +142,7 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
                 <AnimatedSection key={i} delay={i * 0.1} className="space-y-4">
                   <item.icon size={40} className="text-[#6366F1]" strokeWidth={1} />
                   <h5 className="text-lg font-black uppercase tracking-tighter">{item.title}</h5>
-                  <p className="text-sm text-[#94A3B8] font-medium leading-relaxed">{item.desc}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
                 </AnimatedSection>
               ))}
             </div>
@@ -152,3 +152,4 @@ export function TechTemplate({ tech, dict, locale }: TechTemplateProps) {
     </div>
   );
 }
+

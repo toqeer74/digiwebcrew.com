@@ -25,3 +25,4 @@ export const getPublicBrandingConfig = cache(async (): Promise<BrandingConfig> =
     return DEFAULT_BRANDING_CONFIG;
   }
 });
+

@@ -29,7 +29,7 @@ export function AIExecutiveSummary({ title, summary, techStack, className }: AIE
         >
             {/* Semantic Header for Machines */}
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-raly-primary text-raly-base flex items-center justify-center shadow-md shadow-raly-primary/20">
+                <div className="w-10 h-10 rounded-xl bg-raly-primary text-raly-base flex items-center justify-center dark:shadow-md dark:shadow-raly-primary/20">
                     <BrainCircuit size={20} />
                 </div>
                 <div className="space-y-0.5">
@@ -71,3 +71,4 @@ export function AIExecutiveSummary({ title, summary, techStack, className }: AIE
         </motion.div>
     );
 }
+

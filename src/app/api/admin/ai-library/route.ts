@@ -25,3 +25,4 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Failed to load AI library" }, { status: 500 });
   }
 }
+

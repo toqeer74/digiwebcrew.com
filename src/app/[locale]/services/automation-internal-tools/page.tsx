@@ -42,10 +42,10 @@ export default async function AutomationPage({ params }: { params: Promise<{ loc
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Internal Ops Lab</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               AI & <span className="text-[var(--site-primary)]">Workflow</span> <br className="hidden md:block" /> Automation Tools.
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               Internal dashboards, GPT integrations, and automated workflows that eliminate manual processing and save thousands of engineering hours.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -55,7 +55,7 @@ export default async function AutomationPage({ params }: { params: Promise<{ loc
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -65,8 +65,8 @@ export default async function AutomationPage({ params }: { params: Promise<{ loc
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             <AnimatedSection className="md:col-span-12 site-card p-10 relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-orange-500 to-yellow-500" />
-              <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Internal Productivity</h2>
-              <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed mb-8 max-w-4xl">
+              <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">Internal Productivity</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-4xl">
                 We build the "glue" between your existing systems—creating custom pipelines that automate repetitive data entry, analysis, and communication tasks.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -75,17 +75,17 @@ export default async function AutomationPage({ params }: { params: Promise<{ loc
                     <div className="h-8 w-8 rounded-lg bg-[var(--site-primary)]/10 flex items-center justify-center text-[var(--site-primary)] font-black text-xs">
                       0{i+1}
                     </div>
-                    <span className="text-sm font-bold text-slate-700 dark:text-[#94A3B8]">{f}</span>
+                    <span className="text-sm font-bold text-slate-700 dark:text-slate-400">{f}</span>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
 
-            <AnimatedSection className="md:col-span-6 site-card p-10 relative overflow-hidden bg-slate-950 text-white flex flex-col justify-center">
-              <h3 className="text-xl font-display font-black mb-6 text-white/90">Automation Outcomes</h3>
+            <AnimatedSection className="md:col-span-6 site-card p-10 relative overflow-hidden bg-slate-50 dark:bg-midnight text-slate-900 dark:text-white flex flex-col justify-center border border-slate-200 dark:border-white/10">
+              <h3 className="text-xl font-display font-black mb-6 text-foreground/90">Automation Outcomes</h3>
               <div className="space-y-4">
                 {outcomes.map(o => (
-                  <div key={o} className="flex items-center gap-3 text-sm font-bold text-slate-400">
+                  <div key={o} className="flex items-center gap-3 text-sm font-bold text-muted-foreground">
                     <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
                     {o}
                   </div>
@@ -94,10 +94,10 @@ export default async function AutomationPage({ params }: { params: Promise<{ loc
             </AnimatedSection>
 
              <AnimatedSection className="md:col-span-6 site-card p-10 relative overflow-hidden border-dashed border-2 border-slate-200 dark:border-white/10 flex flex-col justify-center">
-              <h3 className="text-xl font-display font-black mb-6 text-slate-950 dark:text-[#F8F8FF]">Tool Stack</h3>
+              <h3 className="text-xl font-display font-black mb-6 text-foreground">Tool Stack</h3>
               <div className="flex flex-wrap gap-2">
                  {techStack.map(t => (
-                   <div key={t} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-center font-bold text-slate-600 dark:text-[#94A3B8] bg-white dark:bg-white/5 uppercase tracking-widest text-[10px]">
+                   <div key={t} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-center font-bold text-muted-foreground bg-white dark:bg-white/5 uppercase tracking-widest text-[10px]">
                      {t}
                    </div>
                  ))}

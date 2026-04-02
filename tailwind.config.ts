@@ -174,6 +174,12 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "scan-line": {
+          "0%": { top: "-2px", opacity: "0" },
+          "5%": { opacity: "1" },
+          "95%": { opacity: "0.6" },
+          "100%": { top: "100%", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -183,6 +189,7 @@ const config: Config = {
         "gradient-x": "gradient-x 6s ease infinite",
         marquee: "marquee 28s linear infinite",
         "fade-up": "fade-up 0.5s ease forwards",
+        "scan-line": "scan-line 6s linear infinite",
       },
     },
   },

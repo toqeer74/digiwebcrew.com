@@ -8,6 +8,7 @@ import { ArrowRight, CheckCircle2, FlaskConical, ExternalLink } from "lucide-rea
 import { cn } from "@/lib/utils";
 import { AIExecutiveSummary } from "../ui/ai-summary";
 import Link from "next/link";
+import { localePath } from "@/lib/locale-path";
 
 interface ServiceTemplateProps {
   title?: string;
@@ -36,7 +37,8 @@ export function ServiceTemplate({
   outcomes,
   ctaText = "Initiate Project Discovery",
   category,
-  subService
+  subService,
+  locale = "en"
 }: ServiceTemplateProps) {
   // Extract data from subService/category if provided
   const displayTitle = subService?.title || title || "Specialized Service";
@@ -61,7 +63,7 @@ export function ServiceTemplate({
   });
 
   return (
-    <div className="min-h-screen pt-32 pb-24 dark:bg-[#0A0A0F]">
+    <div className="min-h-screen pt-32 pb-24 dark:bg-midnight">
       <Container>
         {/* Modern Centered Hero */}
         <div className="flex flex-col items-center text-center mb-24 max-w-5xl mx-auto">
@@ -83,7 +85,7 @@ export function ServiceTemplate({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1]"
+            className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1]"
           >
             {displayTitle} <br />
             <span className="text-[var(--site-primary)]">Solutions</span>
@@ -93,7 +95,7 @@ export function ServiceTemplate({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed"
+            className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed"
           >
             {displayDescription}
           </motion.p>
@@ -104,7 +106,11 @@ export function ServiceTemplate({
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <Link href="/book-consultation" className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+                <span>Get Quote</span>
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
               <span>{ctaText}</span>
               <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -127,7 +133,7 @@ export function ServiceTemplate({
               <div className="w-16 h-16 rounded-2xl bg-[var(--site-primary)]/5 dark:bg-white/5 flex items-center justify-center text-[var(--site-primary)] mb-8 transition-transform group-hover:scale-110">
                 <CheckCircle2 size={32} strokeWidth={1.5} />
               </div>
-              <h3 className="font-display font-black text-slate-950 dark:text-[#F8F8FF] text-xl leading-tight">{feature}</h3>
+              <h3 className="font-display font-black text-foreground text-xl leading-tight">{feature}</h3>
             </motion.div>
           ))}
         </div>
@@ -155,12 +161,12 @@ export function ServiceTemplate({
               <ArrowRight className="text-slate-400 group-hover:text-[var(--site-primary)] transition-all group-hover:translate-x-2" size={28} />
             </div>
             <h4 className="text-3xl font-display font-black text-slate-900 dark:text-white mb-4">Service Cluster</h4>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed">Explore the full engineering cluster and connected micro-service definitions.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Explore the full engineering cluster and connected micro-service definitions.</p>
           </Link>
 
           <Link
             href="/tech"
-            className="site-card p-10 lg:p-12 relative overflow-hidden group transition-all border-2 border-[var(--site-primary)]/20 shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.3)] bg-gradient-to-br from-slate-50 to-white dark:from-[#13131E] dark:to-[#1a1a2e]"
+            className="site-card p-10 lg:p-12 relative overflow-hidden group transition-all border-2 border-[var(--site-primary)]/20 shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.3)] bg-gradient-to-br from-slate-50 to-white dark:from-midnight dark:to-midnight/80"
           >
              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-[var(--site-primary-soft)]" />
             <div className="flex justify-between items-start mb-8">
@@ -170,12 +176,12 @@ export function ServiceTemplate({
               <ArrowRight className="text-slate-400 dark:text-white/20 group-hover:text-[var(--site-primary)] transition-all group-hover:translate-x-2" size={28} />
             </div>
             <h4 className="text-3xl font-display font-black text-slate-900 dark:text-white mb-4">View Evidence</h4>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed">Inspect live proof-of-work and industrial outcomes in our global tech library.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Inspect live proof-of-work and industrial outcomes in our global tech library.</p>
           </Link>
         </div>
 
         {/* Tech Stack - Modern Logo Cloud */}
-        <div className="py-24 border-y border-slate-200 dark:border-white/10 mb-24">
+        <div className="rounded-2xl border border-slate-200 bg-white/50 p-6 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mb-24">
           <div className="text-center">
             <h3 className="text-[10px] font-black text-slate-400 dark:text-white/20 uppercase tracking-[0.4em] mb-16">Precision Engineering Stack</h3>
             <div className="flex flex-wrap justify-center gap-x-16 gap-y-12">
@@ -196,7 +202,7 @@ export function ServiceTemplate({
                Direct Business Value
             </div>
             <h3 className="text-3xl md:text-5xl font-display font-black text-slate-900 dark:text-white tracking-tight leading-tight">Key Industrial <span className="text-[var(--site-primary)]">Outcomes</span></h3>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed">Our engineering lab is optimized for these specific KPIs, ensuring your investment translates directly into sustained business growth.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Our engineering lab is optimized for these specific KPIs, ensuring your investment translates directly into sustained business growth.</p>
           </div>
           <div className="lg:col-span-7 grid grid-cols-1 gap-4">
             {displayOutcomes.map((outcome: string, idx: number) => (
@@ -210,7 +216,7 @@ export function ServiceTemplate({
               >
                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[var(--site-primary)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="text-3xl font-display font-black text-[var(--site-primary)] opacity-20 group-hover:opacity-100 transition-opacity w-12">0{idx + 1}</div>
-                <p className="text-lg font-bold text-slate-800 dark:text-[#F8F8FF]">{outcome}</p>
+                <p className="text-lg font-bold text-slate-800 dark:text-white">{outcome}</p>
                 <div className="ml-auto w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 opacity-0 group-hover:opacity-100 transition-all">
                   <CheckCircle2 size={16} />
                 </div>
@@ -223,3 +229,4 @@ export function ServiceTemplate({
 
   );
 }
+

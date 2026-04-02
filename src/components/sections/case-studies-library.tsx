@@ -54,7 +54,7 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
     const filtered = items.filter(cs => cs.category === activeCategory);
 
     return (
-        <section className="py-24 bg-[#0A0A0F] border-b border-[#1E1E2E]">
+        <section className="py-24 bg-transparent border-b border-white/10">
             <Container>
                 <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
                     <div className="max-w-2xl">
@@ -69,7 +69,7 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                                 Industrial Proof
                             </span>
                         </motion.div>
-                        <h2 className="text-4xl md:text-5xl font-display font-black text-[#F8F8FF] tracking-tight leading-tight">
+                        <h2 className="text-4xl md:text-5xl font-display font-black text-foreground tracking-tight leading-tight">
                             Selected Works & <br />
                             <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Engineering Outcomes</span>
                         </h2>
@@ -81,8 +81,8 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
                                 className={`px-4 py-2 rounded-lg text-xs font-body font-semibold uppercase tracking-wider transition-all border ${activeCategory === cat
-                                    ? "bg-[#6366F1] border-[#6366F1] text-white shadow-lg"
-                                    : "bg-[#13131E] border-[#1E1E2E] text-[#94A3B8] hover:border-[#6366F1]/30 hover:text-[#F8F8FF]"
+                                    ? "bg-[#6366F1] border-[#6366F1] text-white"
+                                    : "bg-slate-100 dark:bg-midnight border-slate-200 dark:border-white/10 text-muted-foreground hover:border-[#6366F1]/30 hover:text-slate-900 dark:hover:text-white"
                                     }`}
                             >
                                 {cat}
@@ -112,7 +112,7 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                                 }}
                                 className="block"
                             >
-                            <div className="relative aspect-[16/10] bg-[#13131E] rounded-xl overflow-hidden border border-[#1E1E2E] mb-8 transition-all group-hover:border-[#6366F1]/50 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+                            <div className="relative aspect-[16/10] bg-slate-100 dark:bg-midnight rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 mb-8 transition-all group-hover:border-[#6366F1]/50 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end p-12">
                                     <div className="text-white">
                                         <p className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1] mb-2">KPI METRIC</p>
@@ -128,10 +128,10 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                                         className="object-cover"
                                     />
                                 ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-[#13131E] transition-transform duration-700 group-hover:scale-110">
+                                     <div className="absolute inset-0 flex items-center justify-center bg-slate-100 dark:bg-midnight transition-transform duration-700 group-hover:scale-110">
                                         <div className="flex flex-col items-center gap-4 opacity-30">
-                                            <Search size={64} className="text-[#94A3B8]" />
-                                            <p className="font-body font-semibold uppercase tracking-widest text-sm text-[#94A3B8]">Project Snapshot</p>
+                                            <Search size={64} className="text-muted-foreground" />
+                                            <p className="font-body font-semibold uppercase tracking-widest text-sm text-muted-foreground">Project Snapshot</p>
                                         </div>
                                     </div>
                                 )}
@@ -148,13 +148,13 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                             <div className="px-4 space-y-4">
                                 <div className="flex gap-2 flex-wrap">
                                     {cs.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] font-body font-semibold text-[#94A3B8] uppercase tracking-widest border border-[#1E1E2E] px-2 py-0.5 rounded bg-[#13131E]/50">
+                                         <span key={tag} className="text-[10px] font-body font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-slate-200 dark:border-white/10 px-2 py-0.5 rounded bg-slate-50 dark:bg-white/5">
                                             {tag}
                                         </span>
                                     ))}
                                 </div>
-                                <h3 className="text-2xl font-display font-black text-[#F8F8FF] group-hover:text-[#6366F1] transition-colors">{cs.title}</h3>
-                                <p className="text-[#94A3B8] font-body leading-relaxed max-w-lg">{cs.description}</p>
+                                 <h3 className="text-2xl font-display font-black text-foreground group-hover:text-[#6366F1] transition-colors">{cs.title}</h3>
+                                 <p className="text-muted-foreground font-body leading-relaxed max-w-lg">{cs.description}</p>
                             </div>
                         </motion.div>
                     ))}
@@ -163,3 +163,4 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
         </section>
     );
 }
+

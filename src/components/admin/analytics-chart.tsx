@@ -74,3 +74,4 @@ export function AnalyticsChart({ trends }: AnalyticsChartProps) {
     </Card>
   );
 }
+

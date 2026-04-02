@@ -4,6 +4,7 @@ import { QuoteWizard } from "@/components/sections/quote-wizard";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { localePath } from "@/lib/locale-path";
+import { TechStackDisplay } from "@/components/sections/tech-stack-display";
 import { 
   Layout, 
   Globe, 
@@ -13,8 +14,28 @@ import {
   TrendingUp, 
   Bot, 
   Search,
-  ArrowRight
+  ArrowRight,
+  CheckCircle2,
+  Shield,
+  Code2,
+  Zap,
+  Smartphone
 } from "lucide-react";
+
+const coreFeatures = [
+  "Server-Side Rendering",
+  "Image Optimization",
+  "Edge-Side Delivery",
+  "High-Conversion UI/UX",
+];
+
+const supportingPoints = [
+  "Custom-tailored solutions",
+  "Scalable architecture",
+  "Modern tech stack",
+  "Responsive design",
+  "SEO optimized",
+];
 
 const legacyFeatures = [
   "Enterprise Architecture",
@@ -33,8 +54,6 @@ const legacyOutcomes = [
 ];
 
 const webDevRelatedServices = [
-  { label: "Custom Web Apps", href: "/services/custom-web-apps", icon: Layout },
-  { label: "Full-Stack Websites", href: "/services/full-stack-websites", icon: Globe },
   { label: "E-commerce Development", href: "/services/ecommerce", icon: ShoppingCart },
   { label: "DevOps & Cloud", href: "/services/devops-cloud", icon: Cloud },
   { label: "Maintenance & Support", href: "/services/maintenance-support", icon: Wrench },
@@ -127,6 +146,62 @@ export default async function CustomSoftwarePage({
             </div>
           </AnimatedSection>
 
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <AnimatedSection className="md:col-span-8 site-card p-10 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+              <h2 className="text-3xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Built for Scale</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {supportingPoints.map((s, i) => (
+                  <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-700 dark:text-slate-400">
+                    <CheckCircle2 size={16} className="text-[var(--site-primary)]" />
+                    {s}
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className="md:col-span-4 site-card p-10 relative overflow-hidden bg-slate-900 text-white flex flex-col justify-center">
+               <div className="flex items-center gap-3 mb-4 text-[var(--site-primary)]">
+                <Shield size={24} />
+                <span className="font-display font-black">Secure & Reliable</span>
+              </div>
+              <p className="text-sm text-slate-400 leading-relaxed font-bold">
+                Built with security best practices and reliable deployment strategies for peace of mind.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection className="md:col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               {[
+                 { icon: <Code2 />, title: "Clean Code", desc: "Maintainable and well-documented" },
+                 { icon: <Zap />, title: "High Performance", desc: "Optimized for speed" },
+                 { icon: <Globe />, title: "Global Ready", desc: "Multi-language support" },
+                 { icon: <Smartphone />, title: "Mobile First", desc: "Responsive design" }
+               ].map((item, i) => (
+                 <div key={i} className="site-card p-8 flex flex-col gap-4">
+                    <div className="text-[var(--site-primary)]">{item.icon}</div>
+                    <h3 className="font-display font-black text-slate-950 dark:text-[#F8F8FF]">{item.title}</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">{item.desc}</p>
+                 </div>
+               ))}
+            </AnimatedSection>
+          </div>
+
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
+             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
+            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-6 tracking-tight">Technical Excellence Protocol</h2>
+            <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed mb-10 max-w-4xl">
+              We build industrial-grade websites that prioritize speed, security, and search engine visibility through modern full-stack engineering.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {coreFeatures.map((f, i) => (
+                <div key={i} className="site-card-interactive p-6 flex flex-col gap-3 group border-2 border-transparent hover:border-[var(--site-primary)]/20">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shadow-[0_0_8px_rgba(var(--site-primary-rgb),0.5)]" />
+                  <span className="text-sm font-black text-slate-950 dark:text-[#F8F8FF] uppercase tracking-tight">{f}</span>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+
           <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
             <h3 className="text-2xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-8">Expected Outcomes</h3>
@@ -174,6 +249,10 @@ export default async function CustomSoftwarePage({
               Explore Full Catalog
             </Link>
           </AnimatedSection>
+        </div>
+
+        <div className="mb-20 max-w-6xl mx-auto">
+          <TechStackDisplay />
         </div>
 
         <div id="custom-software-scope" className="space-y-8">

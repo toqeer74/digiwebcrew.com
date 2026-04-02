@@ -142,17 +142,17 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
               <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Pricing & Investment</span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-slate-950 dark:text-[#F8F8FF] leading-[1.1] text-balance">
-              Clear Starting <span className="text-[var(--site-primary)]">Pricing</span> for <br className="hidden md:block" /> <span className="text-slate-950 dark:text-[#F8F8FF]">Custom Digital Work.</span>
+            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
+              Clear Starting <span className="text-[var(--site-primary)]">Pricing</span> for <br className="hidden md:block" /> <span className="text-foreground">Custom Digital Work.</span>
             </h1>
-            <p className="text-lg text-slate-600 dark:text-[#94A3B8] mb-12 max-w-3xl leading-relaxed mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
               Every project is shaped around your goals, scope, and technical requirements. We provide starting prices for our core services while keeping room for the right level of customization.
             </p>
 
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
               {supportPoints.map((point) => (
-                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-sm font-bold text-slate-700 dark:text-[#94A3B8] relative overflow-hidden group">
+                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-sm font-bold text-slate-700 dark:text-slate-400 relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
                   {point}
                 </div>
@@ -166,7 +166,7 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -179,17 +179,17 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
           <div className="space-y-24">
             <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
               <div className="md:col-span-6 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Structure & Scope
                 </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
                   Pricing That Filters for Fit and Leaves Room for Scope
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
                     Not every project needs the same level of work. A focused landing page is not priced like a custom multi-page website.
                   </p>
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
                     We use starting prices to make the investment level more transparent while keeping each project tailored to the real business need.
                   </p>
                 </div>
@@ -197,12 +197,12 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
               <div className="md:col-span-6">
                 <div className={cn(sectionCardClass, "border-2 border-[var(--site-primary)]/10")}>
                   {gradientTop}
-                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Custom Quote Factors</h3>
+                  <h3 className="text-xl font-bold mb-6 text-foreground">Custom Quote Factors</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {priceFactors.map((factor) => (
                       <div key={factor} className="flex items-start gap-3">
                         <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shrink-0" />
-                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] capitalize">{factor}</span>
+                        <span className="text-sm text-muted-foreground capitalize">{factor}</span>
                       </div>
                     ))}
                   </div>
@@ -213,8 +213,8 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
             {/* Investment Levels */}
             <AnimatedSection className="space-y-12">
               <div className="text-center max-w-3xl mx-auto space-y-4">
-                <h2 className="text-3xl md:text-6xl font-display font-black text-slate-950 dark:text-[#F8F8FF] tracking-tight">Starting Investment Levels</h2>
-                <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                <h2 className="text-3xl md:text-6xl font-display font-black text-foreground tracking-tight">Starting Investment Levels</h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   These starting prices reflect the base level for our core services, built on premium engineering foundations.
                 </p>
               </div>
@@ -228,13 +228,13 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
                         {tier.badge}
                       </div>
                       <div className="text-right">
-                        <p className="text-[2.5rem] md:text-[3.5rem] font-display font-black leading-none text-slate-950 dark:text-[#F8F8FF] tracking-tighter">{tier.price}</p>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8] mt-1">Starting from</p>
+                        <p className="text-[2.5rem] md:text-[3.5rem] font-display font-black leading-none text-foreground tracking-tighter">{tier.price}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Starting from</p>
                       </div>
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl font-display font-black mb-4 text-slate-950 dark:text-[#F8F8FF] tracking-tight leading-tight">{tier.title}</h3>
-                    <p className="text-slate-600 dark:text-[#94A3B8] mb-10 leading-relaxed italic text-[16px]">
+                    <h3 className="text-2xl md:text-3xl font-display font-black mb-4 text-foreground tracking-tight leading-tight">{tier.title}</h3>
+                    <p className="text-muted-foreground mb-10 leading-relaxed italic text-[16px]">
                       {tier.desc}
                     </p>
 
@@ -248,7 +248,7 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
                         {tier.factors.map((factor) => (
                           <div key={factor} className="flex items-center gap-3">
                             <CheckCircle2 size={18} className="text-[var(--site-primary)] shrink-0" />
-                            <span className="text-sm font-bold text-slate-700 dark:text-[#94A3B8]">{factor}</span>
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-400">{factor}</span>
                           </div>
                         ))}
                       </div>
@@ -270,17 +270,17 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
             {/* Who This Pricing Is For - Alternating Bento */}
             <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
               <div className="md:col-span-6 md:order-2 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Ideal Partner Fit
                 </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
                   Built for Businesses Investing in Growth
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
                     Digital Web Crew is designed for businesses that understand the value of stronger digital presentation, better lead flow, and cleaner systems.
                   </p>
-                  <p className="text-slate-600 dark:text-[#94A3B8] text-lg leading-relaxed italic">
+                  <p className="text-muted-foreground text-lg leading-relaxed italic">
                     If your priority is business value, clarity, and a stronger long-term system, this pricing model is built for you.
                   </p>
                 </div>
@@ -288,12 +288,12 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
               <div className="md:col-span-6 md:order-1">
                 <div className={cn(sectionCardClass, "border-2 border-emerald-500/10")}>
                   {gradientTop}
-                  <h3 className="text-xl font-bold mb-6 text-slate-950 dark:text-[#F8F8FF]">Who This Fits Best</h3>
+                  <h3 className="text-xl font-bold mb-6 text-foreground">Who This Fits Best</h3>
                   <div className="space-y-4">
                     {bestFit.map((item) => (
                       <div key={item} className="flex items-start gap-4 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 group-hover:border-[var(--site-primary)]/20 transition-colors">
                         <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="text-sm text-slate-600 dark:text-[#94A3B8] leading-tight">{item}</span>
+                        <span className="text-sm text-muted-foreground leading-tight">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -302,9 +302,9 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
             </AnimatedSection>
           </div>
 
-          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-[#0A0A0F] border-2 border-[var(--site-primary)]/10")}>
+          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-transparent border-2 border-[var(--site-primary)]/10")}>
             {gradientTop}
-            <h2 className="text-3xl md:text-5xl font-display font-black text-slate-950 dark:text-[#F8F8FF] mb-8 tracking-tight text-center">Questions About Pricing</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-8 tracking-tight text-center">Questions About Pricing</h2>
             <div className="max-w-4xl mx-auto text-left">
               <Accordion items={faqItems} />
             </div>
@@ -314,10 +314,10 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
           <AnimatedSection className="site-card p-12 lg:p-16 text-center space-y-8 relative overflow-hidden border-2 border-[var(--site-primary)]/20">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
             <div className="max-w-3xl mx-auto space-y-6">
-              <h2 className="text-3xl md:text-6xl font-display font-black text-slate-950 dark:text-[#F8F8FF] leading-tight">
+              <h2 className="text-3xl md:text-6xl font-display font-black text-foreground leading-tight">
                 Ready to Scope the Right Project?
               </h2>
-              <p className="text-xl text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+              <p className="text-xl text-muted-foreground leading-relaxed">
                 Whether you need a website, automation support, or ongoing SEO work, the next step is to define the right scope.
               </p>
             </div>
@@ -328,7 +328,7 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </span>
               </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-[#F8F8FF] font-bold px-12 py-6 text-lg transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-12 py-6 text-lg transition-all hover:bg-white dark:hover:bg-white/10 group">
                 <span>Get Quote</span>
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
