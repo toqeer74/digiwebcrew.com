@@ -4,141 +4,108 @@ import { authOptions } from "@/lib/auth-options";
 import { connectToDatabase } from "@/lib/db";
 import { ContentDraft } from "@/lib/models/content-draft";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
 import { DraftDeleteButton } from "@/components/admin/draft-delete-button";
 import { PageHeader } from "@/components/admin/page-header";
 
 type SearchParams = Promise<{ q?: string; type?: string }>;
 
-const TYPE_BADGES: Record<string, string> = {
-  blog: "bg-blue-100 text-blue-700",
-  landing: "bg-violet-100 text-violet-700",
-  seo: "bg-emerald-100 text-emerald-700",
-  email: "bg-amber-100 text-amber-700",
-  social: "bg-pink-100 text-pink-700",
-  other: "bg-slate-100 text-slate-700",
+const TYPE_BADGE: Record<string, string> = {
+  blog: "adm-badge-accent", landing: "adm-badge-purple", seo: "adm-badge-success",
+  email: "adm-badge-warning", social: "adm-badge-danger", other: "adm-badge-muted",
 };
-
 const TYPE_OPTIONS = ["all", "blog", "landing", "seo", "email", "social", "other"];
+
+function relTime(d?: Date | string) {
+  if (!d) return "";
+  const ms = Date.now() - new Date(d).getTime();
+  const mins = Math.floor(ms/60000), hrs = Math.floor(ms/3600000), days = Math.floor(ms/86400000);
+  if (mins < 1) return "Just now"; if (hrs < 1) return `${mins}m ago`;
+  if (days < 1) return `${hrs} hour${hrs>1?"s":""} ago`; if (days === 1) return "Yesterday";
+  return `${days}d ago`;
+}
 
 export default async function DraftsPage({ searchParams }: { searchParams: SearchParams }) {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/admin/login");
 
   const { q, type } = await searchParams;
-
   const db = await connectToDatabase();
   const query: Record<string, any> = {};
-  if (q) {
-    query.$or = [
-      { title: { $regex: q, $options: "i" } },
-      { promptKey: { $regex: q, $options: "i" } },
-      { modelName: { $regex: q, $options: "i" } },
-    ];
-  }
-  if (type && type !== "all") {
-    query.type = type;
-  }
+  if (q) query.$or = [{ title: { $regex: q, $options: "i" } }, { promptKey: { $regex: q, $options: "i" } }, { modelName: { $regex: q, $options: "i" } }];
+  if (type && type !== "all") query.type = type;
 
-  const drafts = db
-    ? await ContentDraft.find(query)
-        .sort({ createdAt: -1 })
-        .limit(100)
-        .select({
-          type: 1,
-          promptKey: 1,
-          title: 1,
-          modelName: 1,
-          createdAt: 1,
-          workflowRunId: 1,
-          workflowStepIndex: 1,
-        })
-        .lean()
-    : [];
+  const drafts = db ? await ContentDraft.find(query).sort({ createdAt: -1 }).limit(100)
+    .select({ type: 1, promptKey: 1, title: 1, modelName: 1, createdAt: 1, workflowRunId: 1, workflowStepIndex: 1, content: 1 }).lean() : [];
 
   return (
-    <div className="admin-page-stack space-y-6 pb-8 w-full">
+    <div className="admin-page-stack w-full pb-8">
       <PageHeader
         title="Drafts"
-        subtitle="Generated drafts and workflow outputs."
+        subtitle="Manage your saved proposals and content drafts."
         breadcrumb={[{ label: "Dashboard", href: "/admin/dashboard" }, { label: "Drafts" }]}
+        actions={
+          <button className="adm-btn adm-btn-primary adm-btn-sm">+ New Draft</button>
+        }
       />
 
-      <Card className="admin-card rounded-xl">
-        <CardContent className="pt-6">
-          <form className="grid grid-cols-1 gap-2 md:grid-cols-[1fr_200px_auto]">
-            <input
-              name="q"
-              defaultValue={q || ""}
-              placeholder="Search title, prompt key, model"
-              className="h-10 rounded-lg border border-slate-200 px-3 text-sm"
-            />
-            <select name="type" defaultValue={type || "all"} className="h-10 rounded-lg border border-slate-200 px-3 text-sm">
-              {TYPE_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option === "all" ? "All Types" : option}
-                </option>
-              ))}
+      {/* Filters */}
+      <ACard>
+        <ACardBody>
+          <form style={{ display: "grid", gridTemplateColumns: "1fr 200px auto", gap: 12 }}>
+            <input name="q" defaultValue={q||""} placeholder="Search title, prompt key, model…" className="adm-input h-10" />
+            <select name="type" defaultValue={type||"all"} className="adm-input h-10">
+              {TYPE_OPTIONS.map(o => <option key={o} value={o}>{o==="all"?"All Types":o}</option>)}
             </select>
-            <button className="h-10 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white">Filter</button>
+            <button type="submit" className="adm-btn adm-btn-primary h-10 px-5">Filter</button>
           </form>
-        </CardContent>
-      </Card>
+        </ACardBody>
+      </ACard>
 
-      <Card className="admin-card rounded-xl overflow-hidden">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-base font-semibold">Recent Drafts</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-left">
-              <thead>
-                <tr className="bg-slate-50">
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Type</th>
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Prompt Key</th>
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Title</th>
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Model</th>
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Created</th>
-                  <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {drafts.map((draft: any) => {
-                  const id = String(draft._id);
-                  const draftType = String(draft.type || "other").toLowerCase();
-                  return (
-                    <tr key={id} className="border-b border-slate-100 hover:bg-slate-50">
-                      <td className="px-4 py-3">
-                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${TYPE_BADGES[draftType] || TYPE_BADGES.other}`}>
-                          {draftType}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{draft.promptKey || "-"}</td>
-                      <td className="px-4 py-3 text-sm font-medium text-slate-900 max-w-[360px] truncate">{draft.title || "Untitled"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-600">{draft.modelName || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-500">{draft.createdAt ? new Date(draft.createdAt).toLocaleString() : ""}</td>
-                      <td className="px-4 py-3">
-                        <div className="flex justify-end gap-2">
-                          <Link
-                            href={`/admin/drafts/${id}`}
-                            className="inline-flex h-8 items-center rounded-lg border border-slate-200 px-3 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                          >
-                            View
-                          </Link>
-                          <DraftDeleteButton draftId={id} />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      {/* Drafts as cards (matching HTML) */}
+      <ACard>
+        <ACardHeader>
+          <ACardTitle>Recent Drafts</ACardTitle>
+          <div className="flex items-center gap-3">
+            <span className="adm-badge adm-badge-muted">{drafts.length} drafts</span>
+            <div className="adm-pill-tabs">
+              {["All","Proposals","Emails","Other"].map(t => (
+                <button key={t} className={`adm-pill-tab${t==="All"?" active":""}`}>{t}</button>
+              ))}
+            </div>
           </div>
-
-          {drafts.length === 0 ? <div className="p-10 text-center text-sm text-slate-500">No drafts available.</div> : null}
-        </CardContent>
-      </Card>
+        </ACardHeader>
+        <ACardBody style={{ padding: "8px 20px 20px" }}>
+          {drafts.length === 0 ? (
+            <div style={{ padding: "40px 0", textAlign: "center", color: "var(--adm-text-muted)", fontSize: 13 }}>No drafts found.</div>
+          ) : (
+            drafts.map((draft: any) => {
+              const id = String(draft._id);
+              const draftType = String(draft.type || "other").toLowerCase();
+              const excerpt = draft.content ? String(draft.content).slice(0, 140) + "…" : "";
+              return (
+                <div key={id} className="adm-draft-card">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <div className="adm-draft-card-title">{draft.title || "Untitled"}</div>
+                      <div className="adm-draft-card-meta">
+                        Modified {relTime(draft.createdAt)} • {draftType}
+                        {draft.promptKey ? ` • ${draft.promptKey}` : ""}
+                      </div>
+                      {excerpt && <div className="adm-draft-card-excerpt">{excerpt}</div>}
+                    </div>
+                    <div style={{ display: "flex", gap: 6, flexShrink: 0, alignItems: "center" }}>
+                      <span className={`adm-badge ${TYPE_BADGE[draftType]||"adm-badge-muted"}`}>{draftType}</span>
+                      <Link href={`/admin/drafts/${id}`} className="adm-btn adm-btn-primary adm-btn-sm">View</Link>
+                      <DraftDeleteButton draftId={id} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </ACardBody>
+      </ACard>
     </div>
   );
 }
-

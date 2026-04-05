@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Plus, Search, Filter, Zap, ChevronDown, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { AddLeadModal } from "./add-lead-modal";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { PageHeader } from "@/components/admin/page-header";
@@ -49,35 +48,57 @@ export function LeadsHeader() {
         subtitle="Manage, filter, and convert inbound leads."
         breadcrumb={[{ label: "Dashboard", href: "/admin/dashboard" }, { label: "Leads" }]}
         actions={
-          <>
-            <a href={exportHref} className="inline-flex">
-              <Button variant="outline" className="h-10"><Download size={15} /> Export CSV</Button>
+          <div className="flex items-center gap-2">
+            <a href={exportHref}>
+              <button className="adm-btn adm-btn-secondary adm-btn-sm inline-flex items-center gap-2">
+                <Download size={14} /> Export CSV
+              </button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} className="h-10">
-              <Plus size={15} /> Add Lead
-            </Button>
-          </>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="adm-btn adm-btn-primary adm-btn-sm inline-flex items-center gap-2"
+            >
+              <Plus size={14} /> Add Lead
+            </button>
+          </div>
         }
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-2">
+      {/* Filter bar */}
+      <div
+        className="grid grid-cols-1 gap-3 rounded-xl p-4 md:grid-cols-[1fr_auto_auto]"
+        style={{ background: "white", border: "1.5px solid var(--adm-border)" }}
+      >
         <form onSubmit={onSearchSubmit} className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search
+            size={15}
+            className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: "var(--adm-text-muted)" }}
+          />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, email, company"
-            className="w-full h-10 pl-10 pr-3 rounded-lg border border-slate-200 bg-white text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+            placeholder="Search by name, email, company…"
+            className="adm-input h-10 pl-9"
           />
         </form>
 
-        <div className="relative min-w-[170px]">
-          <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <div className="relative">
+          <Filter
+            size={13}
+            className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: "var(--adm-text-muted)" }}
+          />
+          <ChevronDown
+            size={13}
+            className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: "var(--adm-text-muted)" }}
+          />
           <select
             onChange={(e) => updateParams({ status: e.target.value, page: "1" })}
             defaultValue={searchParams.get("status") || "ALL"}
-            className="h-10 w-full pl-9 pr-8 rounded-lg border border-slate-200 bg-white text-sm text-slate-700 appearance-none"
+            className="adm-input h-10 pl-9 pr-9 appearance-none min-w-[160px]"
           >
             <option value="ALL">All Statuses</option>
             <option value="NEW">New</option>
@@ -87,22 +108,29 @@ export function LeadsHeader() {
             <option value="WON">Won</option>
             <option value="LOST">Lost</option>
           </select>
-          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         </div>
 
-        <div className="relative min-w-[170px]">
-          <Zap size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <div className="relative">
+          <Zap
+            size={13}
+            className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: "var(--adm-text-muted)" }}
+          />
+          <ChevronDown
+            size={13}
+            className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: "var(--adm-text-muted)" }}
+          />
           <select
             onChange={(e) => updateParams({ tier: e.target.value, page: "1" })}
             defaultValue={searchParams.get("tier") || "ALL"}
-            className="h-10 w-full pl-9 pr-8 rounded-lg border border-slate-200 bg-white text-sm text-slate-700 appearance-none"
+            className="adm-input h-10 pl-9 pr-9 appearance-none min-w-[140px]"
           >
             <option value="ALL">All Tiers</option>
-            <option value="HOT">Hot</option>
-            <option value="WARM">Warm</option>
-            <option value="COLD">Cold</option>
+            <option value="HOT">🔥 Hot</option>
+            <option value="WARM">🌡 Warm</option>
+            <option value="COLD">❄️ Cold</option>
           </select>
-          <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         </div>
       </div>
 
@@ -110,5 +138,3 @@ export function LeadsHeader() {
     </div>
   );
 }
-
-

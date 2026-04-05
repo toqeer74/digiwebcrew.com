@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ConfirmModal } from "@/components/admin/confirm-modal";
 
@@ -28,9 +27,15 @@ export function DraftDeleteButton({ draftId }: { draftId: string }) {
 
   return (
     <>
-      <Button type="button" variant="outline" className="h-8 px-3 text-xs" onClick={() => setOpen(true)} disabled={loading}>
-        {loading ? "Deleting..." : "Delete"}
-      </Button>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        disabled={loading}
+        className="adm-btn adm-btn-sm"
+        style={{ color: "var(--adm-danger)", background: "var(--adm-danger-dim)", borderColor: "transparent" }}
+      >
+        {loading ? "Deleting…" : "Delete"}
+      </button>
       <ConfirmModal
         open={open}
         title="Delete this draft?"
@@ -43,4 +48,3 @@ export function DraftDeleteButton({ draftId }: { draftId: string }) {
     </>
   );
 }
-

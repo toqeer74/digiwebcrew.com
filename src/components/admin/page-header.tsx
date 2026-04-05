@@ -4,65 +4,42 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import React from "react";
 
-interface BreadcrumbItem {
-  label: string;
-  href?: string;
-}
+interface BreadcrumbItem { label: string; href?: string; }
+interface PageHeaderProps { title: string; subtitle?: string; breadcrumb?: BreadcrumbItem[]; actions?: React.ReactNode; }
 
-interface PageHeaderProps {
-  title: string;
-  subtitle?: string;
-  breadcrumb?: BreadcrumbItem[];
-  actions?: React.ReactNode;
-}
-
-export function PageHeader({
-  title,
-  subtitle,
-  breadcrumb,
-  actions,
-}: PageHeaderProps) {
+export function PageHeader({ title, subtitle, breadcrumb, actions }: PageHeaderProps) {
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div className="space-y-1.5">
+    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div className="space-y-1">
         {breadcrumb && breadcrumb.length > 0 && (
-          <nav className="flex items-center gap-2 text-xs font-medium text-slate-500">
+          <nav className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: "var(--adm-text-muted)" }}>
             {breadcrumb.map((item, index) => (
               <React.Fragment key={item.label}>
                 {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="hover:text-slate-900 transition-colors"
-                  >
+                  <Link href={item.href} className="transition-colors hover:text-slate-900">
                     {item.label}
                   </Link>
                 ) : (
-                  <span className="text-slate-900 font-semibold">{item.label}</span>
+                  <span style={{ color: "var(--adm-text)", fontWeight: 700 }}>{item.label}</span>
                 )}
-                {index < breadcrumb.length - 1 && (
-                  <ChevronRight size={12} className="text-slate-400" />
-                )}
+                {index < breadcrumb.length - 1 && <ChevronRight size={11} />}
               </React.Fragment>
             ))}
           </nav>
         )}
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="text-sm text-slate-500 leading-relaxed font-medium">
-              {subtitle}
-            </p>
-          )}
-        </div>
+        <h1
+          className="tracking-tight"
+          style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.8px", color: "var(--adm-text)", fontFamily: "var(--adm-font)", lineHeight: 1.1 }}
+        >
+          {title}
+        </h1>
+        {subtitle && (
+          <p style={{ fontSize: 13.5, color: "var(--adm-text-muted)", marginTop: 4, fontWeight: 500 }}>
+            {subtitle}
+          </p>
+        )}
       </div>
-      {actions && (
-        <div className="flex items-center gap-3">
-          {actions}
-        </div>
-      )}
+      {actions && <div className="flex items-center gap-3">{actions}</div>}
     </div>
   );
 }
-

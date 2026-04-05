@@ -1,60 +1,80 @@
 import Link from "next/link";
 
-interface LeadsTableProps {
-  leads: any[];
-}
+interface LeadsTableProps { leads: any[]; }
+
+const TIER_BADGE: Record<string, string> = {
+  HOT:  "adm-badge-danger",
+  WARM: "adm-badge-warning",
+  COLD: "adm-badge-muted",
+};
 
 export function LeadsTable({ leads }: LeadsTableProps) {
+  if (leads.length === 0) {
+    return (
+      <div
+        className="grid min-h-[200px] place-items-center rounded-xl text-center"
+        style={{ border: "1.5px solid var(--adm-border)", background: "var(--adm-bg)" }}
+      >
+        <div>
+          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--adm-text-dim)" }}>No leads found</p>
+          <p style={{ fontSize: 12.5, color: "var(--adm-text-muted)", marginTop: 4 }}>Try adjusting your filters</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+    <div style={{ border: "1.5px solid var(--adm-border)", borderRadius: "var(--adm-radius-lg)", overflow: "hidden", background: "white" }}>
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="admin-table w-full">
           <thead>
-            <tr className="bg-slate-50">
-              <th className="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Lead</th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tier</th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Service</th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Date</th>
-              <th className="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide text-right">Action</th>
+            <tr>
+              <th>Lead</th>
+              <th>Tier</th>
+              <th>Service</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th style={{ textAlign: "right" }}>Action</th>
             </tr>
           </thead>
           <tbody>
             {leads.map((lead) => (
-              <tr key={lead._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                <td className="px-4 py-3">
+              <tr key={lead._id}>
+                <td>
                   <div className="flex items-center gap-3">
-                    <div className="h-9 w-9 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-semibold">
-                      {lead.fullName?.charAt(0) || "?"}
+                    <div
+                      className="grid place-items-center shrink-0 rounded-full text-sm font-bold"
+                      style={{
+                        width: 36, height: 36,
+                        background: "var(--adm-primary-dim)",
+                        color: "var(--adm-primary)",
+                      }}
+                    >
+                      {lead.fullName?.charAt(0)?.toUpperCase() || "?"}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-900">{lead.fullName}</p>
-                      <p className="text-xs text-slate-500">{lead.email}</p>
+                      <p style={{ fontSize: 13.5, fontWeight: 600, color: "var(--adm-text)" }}>{lead.fullName}</p>
+                      <p style={{ fontSize: 11.5, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)" }}>{lead.email}</p>
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      lead.leadTier === "HOT"
-                        ? "bg-red-100 text-red-700"
-                        : lead.leadTier === "WARM"
-                          ? "bg-amber-100 text-amber-700"
-                          : "bg-slate-100 text-slate-600"
-                    }`}
-                  >
+                <td>
+                  <span className={`adm-badge ${TIER_BADGE[lead.leadTier] || "adm-badge-muted"}`}>
                     {lead.leadTier || "COLD"}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm text-slate-700">{lead.serviceCategory || "General"}</td>
-                <td className="px-4 py-3 text-sm text-slate-500">
-                  {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : "-"}
+                <td style={{ color: "var(--adm-text-dim)", fontSize: 13.5 }}>{lead.serviceCategory || "General"}</td>
+                <td>
+                  {lead.status && (
+                    <span className="adm-badge adm-badge-muted">{lead.status}</span>
+                  )}
                 </td>
-                <td className="px-4 py-3 text-right">
-                  <Link
-                    href={`/admin/leads/${lead._id}`}
-                    className="inline-flex items-center rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
-                  >
-                    View
+                <td style={{ fontSize: 12, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)" }}>
+                  {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : "—"}
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <Link href={`/admin/leads/${lead._id}`} className="adm-btn adm-btn-secondary adm-btn-sm">
+                    View →
                   </Link>
                 </td>
               </tr>
@@ -62,14 +82,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
           </tbody>
         </table>
       </div>
-
-      {leads.length === 0 && (
-        <div className="p-10 text-center bg-slate-50">
-          <p className="text-sm text-slate-500">No leads found for the current filters.</p>
-        </div>
-      )}
     </div>
   );
 }
-
-

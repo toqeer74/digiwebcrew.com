@@ -1,19 +1,14 @@
 import { getLeads } from "@/lib/actions/lead-actions";
 import { LeadsTable } from "@/components/admin/leads-table";
 import { LeadsHeader } from "@/components/admin/leads-header";
-import { ArrowRight, AlertCircle, ShieldAlert, WifiOff } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { AlertCircle, ShieldAlert, WifiOff, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    q?: string;
-    status?: string;
-    tier?: string;
-    page?: string
-  }>;
+  searchParams: Promise<{ q?: string; status?: string; tier?: string; page?: string }>;
 }) {
   const { q, status, tier, page } = await searchParams;
   const pageNum = parseInt(page || "1");
@@ -22,60 +17,36 @@ export default async function LeadsPage({
   let errorType: "NONE" | "CONFIG" | "CONNECTION" | "GENERIC" = "NONE";
 
   try {
-    data = await getLeads({
-      query: q,
-      status: status || "ALL",
-      tier: tier || "ALL",
-      page: pageNum,
-    });
+    data = await getLeads({ query: q, status: status || "ALL", tier: tier || "ALL", page: pageNum });
   } catch (err: any) {
-    console.error("Leads Fetch Error:", err);
     if (err.message?.includes("MONGODB_URI")) errorType = "CONFIG";
     else if (err.name === "MongooseServerSelectionError" || err.message?.includes("ETIMEDOUT")) errorType = "CONNECTION";
     else errorType = "GENERIC";
   }
 
   if (errorType !== "NONE") {
+    const ErrorIcon = errorType === "CONFIG" ? ShieldAlert : errorType === "CONNECTION" ? WifiOff : AlertCircle;
+    const errorColor = errorType === "CONFIG" ? "var(--adm-warning)" : errorType === "CONNECTION" ? "var(--adm-danger)" : "var(--adm-text-muted)";
+    const errorDim = errorType === "CONFIG" ? "var(--adm-warning-dim)" : errorType === "CONNECTION" ? "var(--adm-danger-dim)" : "var(--adm-bg)";
+
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] p-12 text-center text-foreground">
-        <div className={cn(
-          "w-20 h-20 rounded-xl flex items-center justify-center mb-8 border",
-          errorType === "CONFIG" ? "bg-amber-50 text-amber-500 border-amber-100" :
-            errorType === "CONNECTION" ? "bg-rose-50 text-rose-500 border-rose-100" :
-              "bg-slate-50 text-slate-500 border-slate-200"
-        )}>
-          {errorType === "CONFIG" ? <ShieldAlert size={48} /> :
-            errorType === "CONNECTION" ? <WifiOff size={48} /> :
-              <AlertCircle size={48} />}
+      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-6">
+        <div
+          className="grid place-items-center mb-8 rounded-2xl"
+          style={{ width: 80, height: 80, background: errorDim, color: errorColor, border: `1.5px solid ${errorColor}30` }}
+        >
+          <ErrorIcon size={36} />
         </div>
-
-        <h1 className="text-4xl font-black tracking-tight uppercase">
-          {errorType === "CONFIG" ? "Configuration Gap" :
-            errorType === "CONNECTION" ? "Connectivity Shield" :
-              "Records Offline"}
+        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: -1, color: "var(--adm-text)" }}>
+          {errorType === "CONFIG" ? "Configuration Gap" : errorType === "CONNECTION" ? "Connection Error" : "Records Offline"}
         </h1>
-
-        <p className="max-w-lg text-sm text-slate-500 mt-4 leading-relaxed">
-          {errorType === "CONFIG" ? (
-            <>
-              The <span className="text-amber-600 font-semibold">MONGODB_URI</span> environment variable is missing. Please define it in your <span className="font-semibold">Vercel Project Settings</span>.
-            </>
-          ) : errorType === "CONNECTION" ? (
-            <>
-              Connection rejected by the database. Ensure the <span className="text-rose-600 font-semibold">Vercel Deployment IP</span> is whitelisted (set to 0.0.0.0/0) in MongoDB Atlas.
-            </>
-          ) : (
-            "The records database is currently unreachable. Please verify connectivity services."
-          )}
+        <p style={{ maxWidth: 480, fontSize: 13.5, color: "var(--adm-text-muted)", marginTop: 12, lineHeight: 1.7 }}>
+          {errorType === "CONFIG"
+            ? <><span style={{ color: "var(--adm-warning)", fontWeight: 700 }}>MONGODB_URI</span> is missing. Define it in your Vercel Project Settings.</>
+            : errorType === "CONNECTION"
+              ? <>Connection rejected. Whitelist <span style={{ color: "var(--adm-danger)", fontWeight: 700 }}>0.0.0.0/0</span> in MongoDB Atlas Network Access.</>
+              : "The database is currently unreachable."}
         </p>
-
-        {errorType === "CONNECTION" && (
-          <div className="mt-10 p-4 bg-rose-50/50 rounded-lg border border-rose-100 max-w-md">
-            <p className="text-xs text-rose-700 font-medium leading-relaxed">
-              Whitelisting "0.0.0.0/0" in MongoDB Atlas Network Access is mandatory for serverless environments.
-            </p>
-          </div>
-        )}
       </div>
     );
   }
@@ -83,20 +54,15 @@ export default async function LeadsPage({
   const { leads, pages } = data;
 
   return (
-    <div className="admin-page-stack space-y-6 pb-10 w-full">
+    <div className="admin-page-stack w-full pb-10">
       <LeadsHeader />
       <LeadsTable leads={leads} />
 
-      {pages > 0 && (
-        <div className="mt-6 flex flex-wrap justify-center items-center gap-2">
+      {pages > 1 && (
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
           <Link
-            href={{
-              query: { q, status, tier, page: Math.max(1, pageNum - 1).toString() }
-            }}
-            className={cn(
-              "admin-btn-ghost h-9 w-9 flex items-center justify-center rounded-xl border border-border transition-all hover:bg-secondary",
-              pageNum === 1 && "pointer-events-none opacity-30"
-            )}
+            href={{ query: { q, status, tier, page: Math.max(1, pageNum - 1).toString() } }}
+            className={cn("adm-btn adm-btn-secondary adm-btn-sm", pageNum === 1 && "pointer-events-none opacity-30")}
           >
             <ArrowRight size={14} className="rotate-180" />
           </Link>
@@ -104,33 +70,25 @@ export default async function LeadsPage({
           {Array.from({ length: pages }).map((_, i) => (
             <Link
               key={i}
-              href={{
-                query: { q, status, tier, page: (i + 1).toString() }
-              }}
+              href={{ query: { q, status, tier, page: (i + 1).toString() } }}
               className={cn(
-                "w-9 h-9 flex items-center justify-center rounded-xl font-black transition-all border border-border text-[10px]",
-                pageNum === i + 1
-                  ? "admin-btn-primary text-white shadow-lg shadow-primary/20 scale-105 border-primary"
-                  : "admin-btn-ghost text-muted-foreground hover:bg-secondary"
+                "adm-btn adm-btn-sm",
+                pageNum === i + 1 ? "adm-btn-primary" : "adm-btn-secondary"
               )}
+              style={{ minWidth: 36, padding: "7px 10px" }}
             >
               {i + 1}
             </Link>
           ))}
 
           <Link
-            href={{
-              query: { q, status, tier, page: Math.min(pages, pageNum + 1).toString() }
-            }}
-            className={cn(
-              "admin-btn-ghost h-9 w-9 flex items-center justify-center rounded-xl border border-border transition-all hover:bg-secondary",
-              pageNum === pages && "pointer-events-none opacity-30"
-            )}
+            href={{ query: { q, status, tier, page: Math.min(pages, pageNum + 1).toString() } }}
+            className={cn("adm-btn adm-btn-secondary adm-btn-sm", pageNum === pages && "pointer-events-none opacity-30")}
           >
             <ArrowRight size={14} />
           </Link>
 
-          <p className="ml-3 text-sm text-slate-500">
+          <p style={{ fontSize: 12.5, color: "var(--adm-text-muted)", marginLeft: 8 }}>
             Page {pageNum} of {Math.max(1, pages)}
           </p>
         </div>
@@ -138,4 +96,3 @@ export default async function LeadsPage({
     </div>
   );
 }
-

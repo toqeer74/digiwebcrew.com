@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-
 interface ConfirmModalProps {
   open: boolean;
   title: string;
@@ -15,38 +13,42 @@ interface ConfirmModalProps {
 }
 
 export function ConfirmModal({
-  open,
-  title,
-  description,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
-  variant = "danger",
-  isLoading,
-  onConfirm,
-  onCancel,
+  open, title, description,
+  confirmLabel = "Confirm", cancelLabel = "Cancel",
+  variant = "danger", isLoading, onConfirm, onCancel,
 }: ConfirmModalProps) {
   if (!open) return null;
 
-  const confirmButtonClass =
-    variant === "warning"
-      ? "bg-amber-500 text-white hover:bg-amber-600"
-      : "bg-red-600 text-white hover:bg-red-700";
+  const confirmColor = variant === "warning" ? "var(--adm-warning)" : "var(--adm-danger)";
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-black/40 px-4">
-      <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-5 shadow-2xl">
-        <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-        {description ? <p className="mt-2 text-sm text-slate-500">{description}</p> : null}
-
-        <div className="mt-5 flex justify-end gap-2">
-          <Button variant="outline" onClick={onCancel} disabled={isLoading}>{cancelLabel}</Button>
-          <Button onClick={onConfirm} disabled={isLoading} className={confirmButtonClass}>
-            {isLoading ? "Please wait..." : confirmLabel}
-          </Button>
+      <div
+        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+        style={{ border: "1.5px solid var(--adm-border)" }}
+      >
+        <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--adm-text)" }}>{title}</h3>
+        {description && (
+          <p style={{ fontSize: 13.5, color: "var(--adm-text-muted)", marginTop: 8 }}>{description}</p>
+        )}
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            onClick={onCancel}
+            disabled={isLoading}
+            className="adm-btn adm-btn-secondary adm-btn-sm"
+          >
+            {cancelLabel}
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="adm-btn adm-btn-sm text-white"
+            style={{ background: confirmColor }}
+          >
+            {isLoading ? "Please wait…" : confirmLabel}
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-

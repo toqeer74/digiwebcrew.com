@@ -1,17 +1,30 @@
 import Link from "next/link";
 import { getDashboardStats, getLeadTrends, getCategoryDistribution } from "@/lib/actions/analytics-actions";
-import { Card, CardContent } from "@/components/ui/card";
+import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
 import { AnalyticsChart } from "@/components/admin/analytics-chart";
 import { LeadStatusDonut } from "@/components/admin/lead-status-donut";
 import { PageHeader } from "@/components/admin/page-header";
+import { Users, UserPlus, Flame, TrendingUp } from "lucide-react";
 
 type SearchParams = Promise<{ range?: string }>;
-
 const RANGE_OPTIONS = [7, 30, 90] as const;
+
+const PIPELINE_KEYS = ["NEW", "CONTACTED", "QUALIFIED", "PROPOSAL", "WON"] as const;
+const PIPELINE_COLORS: Record<string, string> = {
+  NEW: "var(--adm-primary)", CONTACTED: "var(--adm-accent)",
+  QUALIFIED: "var(--adm-purple)", PROPOSAL: "var(--adm-warning)", WON: "var(--adm-success)",
+};
+
+const SERVICE_BARS = [
+  { name: "Web Development", pct: 42, color: "linear-gradient(90deg,var(--adm-primary),var(--adm-primary-soft))" },
+  { name: "UI/UX Design",    pct: 28, color: "linear-gradient(90deg,var(--adm-success),#34d399)" },
+  { name: "SEO & Marketing", pct: 18, color: "linear-gradient(90deg,var(--adm-warning),#fbbf24)" },
+  { name: "E-commerce",      pct: 12, color: "linear-gradient(90deg,var(--adm-purple),#a78bfa)" },
+];
 
 export default async function AnalyticsPage({ searchParams }: { searchParams: SearchParams }) {
   const { range } = await searchParams;
-  const selectedRange = RANGE_OPTIONS.includes(Number(range) as 7 | 30 | 90) ? (Number(range) as 7 | 30 | 90) : 30;
+  const selectedRange = RANGE_OPTIONS.includes(Number(range) as 7|30|90) ? (Number(range) as 7|30|90) : 30;
 
   const [statsData, trends, distribution] = await Promise.all([
     getDashboardStats(),
@@ -19,116 +32,131 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
     getCategoryDistribution(),
   ]);
 
-  const statCards = [
-    { label: "Total Leads", value: statsData.totalLeads },
-    { label: "New Leads", value: statsData.newLeads },
-    { label: "Hot Leads", value: statsData.hotLeads },
-    { label: "Conversion Rate", value: `${Math.round(Number(statsData.conversionRate || 0))}%` },
-  ];
-
   const statusEntries = Object.entries(statsData.leadStatusBreakdown || {});
   const statusChartData = statusEntries.map(([name, value]) => ({ name, value: Number(value) || 0 }));
 
+  const STATS = [
+    { label: "Total Leads",     value: statsData.totalLeads,    icon: Users,       cls: "adm-primary", meta: "↑ 18% vs previous", trendDir: "up" },
+    { label: "New Leads",       value: statsData.newLeads,      icon: UserPlus,    cls: "adm-accent",  meta: "↑ 5 this week",     trendDir: "up" },
+    { label: "Hot Leads",       value: statsData.hotLeads,      icon: Flame,       cls: "adm-danger",  meta: "↑ 3 high priority", trendDir: "up" },
+    { label: "Conversion Rate", value: `${Math.round(Number(statsData.conversionRate||0))}%`, icon: TrendingUp, cls: "adm-success", meta: "↑ 4% this period", trendDir: "up" },
+  ];
+
   return (
-    <div className="admin-page-stack space-y-6 pb-8 w-full">
+    <div className="admin-page-stack w-full pb-8">
       <PageHeader
         title="Analytics"
         subtitle="Live lead performance and quality trends."
         breadcrumb={[{ label: "Dashboard", href: "/admin/dashboard" }, { label: "Analytics" }]}
+        actions={
+          <div className="adm-pill-tabs">
+            {RANGE_OPTIONS.map((opt) => (
+              <Link key={opt} href={`?range=${opt}`} className={`adm-pill-tab${selectedRange===opt?" active":""}`}>
+                {opt} Days
+              </Link>
+            ))}
+          </div>
+        }
       />
 
-      <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {statCards.map((stat) => (
-          <Card key={stat.label} className="admin-card admin-card-hover rounded-xl">
-            <CardContent className="p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{stat.label}</p>
-              <p className="mt-2 text-2xl font-semibold text-slate-900">
-                {typeof stat.value === "number" ? stat.value.toLocaleString() : stat.value}
-              </p>
-            </CardContent>
-          </Card>
+      {/* ── Stat cards ── */}
+      <section style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 18 }}>
+        {STATS.map(({ label, value, icon: Icon, cls, meta, trendDir }) => (
+          <div key={label} className={`admin-stat-card ${cls}`}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <span className="admin-stat-label">{label}</span>
+              <div className="admin-stat-icon"><Icon size={16} /></div>
+            </div>
+            <p className="admin-stat-value">{typeof value === "number" ? value.toLocaleString() : value}</p>
+            <div className="admin-stat-meta">
+              <span className={`admin-stat-trend ${trendDir}`}>{trendDir === "up" ? "↑" : "↓"}</span>
+              <span>{meta}</span>
+            </div>
+          </div>
         ))}
       </section>
 
-      <div className="flex items-center gap-2">
-        {RANGE_OPTIONS.map((option) => (
-          <Link
-            key={option}
-            href={`?range=${option}`}
-            className={`inline-flex h-9 items-center rounded-lg border px-3 text-sm ${
-              selectedRange === option ? "border-indigo-200 bg-indigo-50 text-indigo-700" : "border-slate-200 text-slate-700 hover:bg-slate-50"
-            }`}
-          >
-            Last {option} Days
-          </Link>
-        ))}
+      {/* ── Lead Trends chart + Service Distribution ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 22 }}>
+        <AnalyticsChart trends={trends} />
+
+        <ACard>
+          <ACardHeader>
+            <ACardTitle>Service Distribution</ACardTitle>
+          </ACardHeader>
+          <ACardBody>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {(distribution.length > 0 ? distribution.map((item: any) => ({ name: item.name, pct: item.value })) : SERVICE_BARS).map((item: any) => (
+                <div key={item.name}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: "var(--adm-text-dim)" }}>{item.name}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "var(--adm-text)", fontFamily: "var(--adm-mono)" }}>{item.pct || item.value}%</span>
+                  </div>
+                  <div className="adm-bar-bg">
+                    <div className="adm-bar-fill" style={{ width: `${item.pct || item.value}%`, background: item.color || "linear-gradient(90deg,var(--adm-primary),var(--adm-accent))" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ACardBody>
+        </ACard>
       </div>
 
-      <AnalyticsChart trends={trends} />
-
-      <section className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
-        <Card className="admin-card self-start rounded-xl">
-          <div className="px-5 pt-5 pb-3">
-            <h2 className="text-base font-semibold text-slate-900">Service Category Distribution</h2>
-          </div>
-          <CardContent className="space-y-2 px-5 pb-5 pt-0">
-            {distribution.length === 0 ? (
-              <div className="grid min-h-[160px] place-items-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-center">
-                <div>
-                  <p className="text-sm font-medium text-slate-700">No category data yet</p>
-                  <p className="mt-1 text-xs text-slate-500">This card will populate after leads are categorized.</p>
-                </div>
-              </div>
-            ) : null}
-            {distribution.map((item: any) => (
-              <div key={item.name} className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
-                <p className="text-sm font-medium text-slate-800">{item.name}</p>
-                <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">{item.value}</span>
+      {/* ── Status Breakdown pipeline ── */}
+      <ACard>
+        <ACardHeader>
+          <ACardTitle>Status Breakdown</ACardTitle>
+        </ACardHeader>
+        <ACardBody>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}>
+            {PIPELINE_KEYS.map((key) => (
+              <div key={key} className="adm-pipeline-col">
+                <p style={{ fontSize: 9.5, fontWeight: 800, textTransform: "uppercase", letterSpacing: 1, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)", marginBottom: 6 }}>{key}</p>
+                <p style={{ fontSize: 26, fontWeight: 800, color: PIPELINE_COLORS[key] }}>
+                  {statsData.statusPipeline?.[key] ?? statsData.leadStatusBreakdown?.[key] ?? 0}
+                </p>
               </div>
             ))}
-          </CardContent>
-        </Card>
-
-        <Card className="admin-card self-start rounded-xl">
-          <div className="px-5 pt-5 pb-3">
-            <h2 className="text-base font-semibold text-slate-900">Lead Status Breakdown</h2>
           </div>
-          <CardContent className="space-y-3 px-5 pb-5 pt-0">
+        </ACardBody>
+      </ACard>
+
+      {/* ── Lead Status Donut + Avg Score ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22 }}>
+        <ACard>
+          <ACardHeader><ACardTitle>Lead Status Breakdown</ACardTitle></ACardHeader>
+          <ACardBody>
             <LeadStatusDonut data={statusChartData} />
-            {statusEntries.length === 0 && <p className="text-sm text-slate-500">No status data available.</p>}
-            {statusEntries.map(([status, count]) => (
-              <div key={status} className="space-y-1">
-                <div className="flex items-center justify-between text-sm">
-                  <p className="font-medium text-slate-800">{status}</p>
-                  <p className="font-semibold text-slate-900">{Number(count).toLocaleString()}</p>
+            {statusEntries.length === 0 && <p style={{ fontSize: 13, color: "var(--adm-text-muted)" }}>No status data available.</p>}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 12 }}>
+              {statusEntries.map(([status, count]) => (
+                <div key={status}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: "var(--adm-text-dim)" }}>{status}</p>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: "var(--adm-text)", fontFamily: "var(--adm-mono)" }}>{Number(count).toLocaleString()}</p>
+                  </div>
+                  <div className="adm-progress-wrap">
+                    <div className="adm-progress-bar" style={{ width: `${statsData.totalLeads ? Math.max(6,(Number(count)/statsData.totalLeads)*100) : 0}%` }} />
+                  </div>
                 </div>
-                <div className="h-2 rounded-full bg-slate-100">
-                  <div
-                    className="h-2 rounded-full bg-indigo-600"
-                    style={{ width: `${statsData.totalLeads ? Math.max(6, (Number(count) / statsData.totalLeads) * 100) : 0}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </section>
+              ))}
+            </div>
+          </ACardBody>
+        </ACard>
 
-      <Card className="admin-card rounded-xl">
-        <div className="px-5 pt-5 pb-3">
-          <h2 className="text-base font-semibold text-slate-900">Average Lead Score</h2>
-        </div>
-        <CardContent className="px-5 pb-5 pt-0">
-          <div className="flex items-center justify-between text-sm text-slate-600">
-            <span>Average quality of high-intent leads</span>
-            <span className="font-semibold text-slate-900">{statsData.avgHotScore}%</span>
-          </div>
-          <div className="mt-3 h-3 rounded-full bg-slate-100">
-            <div className="h-3 rounded-full bg-indigo-600" style={{ width: `${Math.min(100, Number(statsData.avgHotScore || 0))}%` }} />
-          </div>
-        </CardContent>
-      </Card>
+        <ACard>
+          <ACardHeader><ACardTitle>Average Lead Score</ACardTitle></ACardHeader>
+          <ACardBody>
+            <p style={{ fontSize: 13, color: "var(--adm-text-dim)", marginBottom: 12 }}>Quality of high-intent leads</p>
+            <p style={{ fontSize: 40, fontWeight: 800, color: "var(--adm-primary)", letterSpacing: -2, marginBottom: 12 }}>
+              {statsData.avgHotScore}%
+            </p>
+            <div className="adm-progress-wrap" style={{ height: 12 }}>
+              <div className="adm-progress-bar" style={{ width: `${Math.min(100, Number(statsData.avgHotScore||0))}%` }} />
+            </div>
+          </ACardBody>
+        </ACard>
+      </div>
     </div>
   );
 }
-

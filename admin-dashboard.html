@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digi Web Crew — Admin Command Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --sidebar: #0f1623;
+      --sidebar-hover: #1a2236;
+      --sidebar-active: #1e2d4a;
+      --border: #e4e9f2;
+      --border-hover: #c8d3e8;
+
+      --primary: #4f46e5;
+      --primary-soft: #6366f1;
+      --primary-dim: #eef2ff;
+      --primary-glow: rgba(79, 70, 229, 0.15);
+
+      --accent: #0ea5e9;
+      --accent-dim: #e0f2fe;
+      --success: #10b981;
+      --success-dim: #d1fae5;
+      --warning: #f59e0b;
+      --warning-dim: #fef3c7;
+      --danger: #ef4444;
+      --danger-dim: #fee2e2;
+      --purple: #8b5cf6;
+      --purple-dim: #ede9fe;
+
+      --text: #0f172a;
+      --text-dim: #475569;
+      --text-muted: #94a3b8;
+      --text-sidebar: #94a3b8;
+      --text-sidebar-active: #ffffff;
+
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+
+      --sidebar-width: 248px;
+      --header-height: 64px;
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 7px;
+
+      --shadow-xs: 0 1px 3px rgba(15,23,42,0.04);
+      --shadow-sm: 0 2px 8px rgba(15,23,42,0.06);
+      --shadow-md: 0 6px 20px rgba(15,23,42,0.09);
+      --shadow-lg: 0 16px 40px rgba(15,23,42,0.12);
+      --shadow-primary: 0 8px 24px rgba(79,70,229,0.25);
+
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── LAYOUT ─── */
+    .layout { display: flex; min-height: 100vh; }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      background: var(--sidebar);
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 200;
+      overflow: hidden;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
+    }
+
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(79,70,229,0.35);
+    }
+
+    .logo-text-wrap {}
+    .logo-name { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.3px; line-height: 1; }
+    .logo-tag { font-size: 10px; font-weight: 600; color: var(--text-sidebar); font-family: var(--mono); margin-top: 2px; letter-spacing: 0.5px; }
+
+    .sidebar-search {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px; top: 50%;
+      transform: translateY(-50%);
+      color: rgba(148,163,184,0.5);
+      pointer-events: none;
+    }
+
+    .sidebar-search-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px 8px 32px;
+      font-size: 12px;
+      color: #fff;
+      font-family: var(--font);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .sidebar-search-input::placeholder { color: rgba(148,163,184,0.4); }
+    .sidebar-search-input:focus {
+      border-color: rgba(99,102,241,0.5);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 12px;
+      scrollbar-width: none;
+    }
+    .sidebar-nav::-webkit-scrollbar { display: none; }
+
+    .nav-section {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(148,163,184,0.45);
+      padding: 14px 10px 6px;
+      font-family: var(--mono);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-sidebar);
+      transition: var(--transition);
+      text-decoration: none;
+      position: relative;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .nav-item.active {
+      background: rgba(99,102,241,0.2);
+      color: #fff;
+    }
+
+    .nav-item.active .nav-icon {
+      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(79,70,229,0.35);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 3px;
+      background: var(--primary-soft);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .nav-icon {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      color: rgba(148,163,184,0.7);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover .nav-icon {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--primary);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      font-family: var(--mono);
+      padding: 2px 6px;
+      border-radius: 20px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .nav-badge.warning { background: var(--warning); }
+    .nav-badge.success { background: var(--success); }
+
+    .sidebar-footer {
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-avatar {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-role { font-size: 10px; color: rgba(148,163,184,0.6); font-family: var(--mono); margin-top: 1px; }
+
+    .user-status {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px rgba(16,185,129,0.5);
+      flex-shrink: 0;
+    }
+
+    /* ─── MAIN AREA ─── */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 100vh;
+    }
+
+    /* ─── TOP HEADER ─── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--header-height);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+
+    .topbar-left { display: flex; align-items: center; gap: 16px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .breadcrumb-item { color: var(--text-muted); font-weight: 500; }
+    .breadcrumb-item.active { color: var(--text); font-weight: 700; }
+    .breadcrumb-sep { color: var(--text-muted); }
+
+    .topbar-search {
+      position: relative;
+    }
+
+    .topbar-search-input {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 14px 8px 36px;
+      font-size: 13px;
+      color: var(--text);
+      font-family: var(--font);
+      width: 240px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .topbar-search-input:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px var(--primary-glow);
+      width: 290px;
+    }
+
+    .topbar-search-icon {
+      position: absolute;
+      left: 11px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--text-dim);
+      position: relative;
+    }
+
+    .icon-btn:hover { background: var(--bg); border-color: var(--border-hover); color: var(--text); }
+
+    .notif-dot {
+      position: absolute;
+      top: -3px; right: -3px;
+      width: 8px; height: 8px;
+      background: var(--danger);
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .topbar-avatar {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(79,70,229,0.25);
+    }
+
+    .topbar-avatar:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,70,229,0.35); }
+
+    /* ─── CONTENT ─── */
+    .content {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    /* ─── TABS ─── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeSlide 0.25s ease; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header { margin-bottom: 28px; }
+    .page-header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .page-title { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--text); line-height: 1.1; }
+    .page-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
+
+    /* ─── STATS GRID ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-xs);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      background: var(--stat-color, var(--primary));
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-hover);
+    }
+
+    .stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .stat-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.2px; font-family: var(--mono); }
+    .stat-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; background: var(--stat-dim, var(--primary-dim)); color: var(--stat-color, var(--primary)); }
+    .stat-value { font-size: 32px; font-weight: 800; line-height: 1; color: var(--text); letter-spacing: -1.5px; }
+    .stat-meta { font-size: 12px; color: var(--text-muted); margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+    .stat-trend { font-weight: 700; }
+    .stat-trend.up { color: var(--success); }
+    .stat-trend.down { color: var(--danger); }
+
+    .stat-card.primary { --stat-color: var(--primary); --stat-dim: var(--primary-dim); }
+    .stat-card.accent  { --stat-color: var(--accent); --stat-dim: var(--accent-dim); }
+    .stat-card.success { --stat-color: var(--success); --stat-dim: var(--success-dim); }
+    .stat-card.warning { --stat-color: var(--warning); --stat-dim: var(--warning-dim); }
+    .stat-card.danger  { --stat-color: var(--danger); --stat-dim: var(--danger-dim); }
+    .stat-card.purple  { --stat-color: var(--purple); --stat-dim: var(--purple-dim); }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xs);
+      margin-bottom: 22px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .card-title-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--primary-dim); color: var(--primary); }
+    .card-body { padding: 24px; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1.5px solid transparent;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+
+    .btn svg { flex-shrink: 0; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(79,70,229,0.28);
+    }
+    .btn-primary:hover { background: var(--primary-soft); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,70,229,0.38); }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text-dim);
+      border-color: var(--border);
+      box-shadow: var(--shadow-xs);
+    }
+    .btn-secondary:hover { background: var(--bg); border-color: var(--border-hover); color: var(--text); }
+
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: #dc2626; transform: translateY(-1px); }
+
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #059669; transform: translateY(-1px); }
+
+    .btn-ghost { background: transparent; color: var(--text-dim); border-color: transparent; }
+    .btn-ghost:hover { background: var(--bg); color: var(--text); }
+
+    .btn-sm { padding: 7px 14px; font-size: 12px; }
+    .btn-lg { padding: 13px 28px; font-size: 15px; }
+    .btn-full { width: 100%; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    /* ─── BADGES / CHIPS ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 10.5px;
+      font-weight: 700;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-primary { background: var(--primary-dim); color: var(--primary); }
+    .badge-accent   { background: var(--accent-dim); color: #0369a1; }
+    .badge-success  { background: var(--success-dim); color: #065f46; }
+    .badge-warning  { background: var(--warning-dim); color: #92400e; }
+    .badge-danger   { background: var(--danger-dim); color: #991b1b; }
+    .badge-purple   { background: var(--purple-dim); color: #5b21b6; }
+    .badge-muted    { background: #f1f5f9; color: var(--text-dim); }
+    .badge-dot::before { content: '•'; font-size: 14px; line-height: 1; }
+
+    /* ─── TABLES ─── */
+    .table-wrap {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+      background: var(--bg);
+      padding: 13px 18px;
+      text-align: left;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: var(--mono);
+      letter-spacing: 1px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    td {
+      padding: 15px 18px;
+      font-size: 13.5px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(79,70,229,0.02); }
+    .td-mono { font-family: var(--mono); font-size: 12px; }
+    .td-link { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
+    .td-link:hover { text-decoration: underline; }
+
+    /* ─── FORMS ─── */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+
+    label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      letter-spacing: 1px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    textarea {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: var(--font);
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+    }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    /* ─── TOGGLE ─── */
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fafbfe;
+      transition: var(--transition);
+    }
+    .toggle-row:hover { border-color: var(--border-hover); }
+    .toggle-left { display: flex; flex-direction: column; gap: 3px; }
+    .toggle-label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .toggle-desc { font-size: 12px; color: var(--text-muted); }
+
+    .switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0;
+      background: #e2e8f0;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .slider::before {
+      content: '';
+      position: absolute;
+      height: 18px; width: 18px;
+      left: 3px; bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input:checked + .slider { background: var(--primary); }
+    input:checked + .slider::before { transform: translateX(20px); }
+
+    /* ─── PROGRESS ─── */
+    .progress-box { height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 99px;
+      transition: width 0.8s ease;
+      position: relative;
+    }
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer { to { left: 200%; } }
+
+    /* ─── CONSOLE / LOG ─── */
+    .console {
+      background: #0d1117;
+      color: #c9d1d9;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.7;
+      overflow: auto;
+      min-height: 200px;
+    }
+
+    .log-entry { display: flex; gap: 12px; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .log-time { color: #6e7681; min-width: 86px; flex-shrink: 0; }
+    .log-type { min-width: 48px; flex-shrink: 0; font-weight: 700; }
+    .log-type.ERROR { color: #f85149; }
+    .log-type.INFO { color: #79c0ff; }
+    .log-type.WARN { color: #e3b341; }
+    .log-type.SUCCESS { color: #56d364; }
+    .log-msg { color: #c9d1d9; }
+
+    /* ─── PIPELINE CHART ─── */
+    .pipeline-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .pipeline-col {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .pipeline-col:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .pipeline-col-label { font-size: 10px; font-weight: 800; font-family: var(--mono); text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .pipeline-col-value { font-size: 26px; font-weight: 800; color: var(--text); margin-top: 4px; }
+
+    /* ─── ACTIVITY FEED ─── */
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .activity-dot.success { background: var(--success); }
+    .activity-dot.warning { background: var(--warning); }
+    .activity-dot.danger  { background: var(--danger); }
+    .activity-title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+    .activity-time { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; font-family: var(--mono); }
+
+    /* ─── ANALYTICS BARS ─── */
+    .analytics-bar-group { display: flex; flex-direction: column; gap: 14px; }
+    .analytics-bar-row { display: flex; flex-direction: column; gap: 6px; }
+    .analytics-bar-label { display: flex; justify-content: space-between; align-items: center; }
+    .analytics-bar-name { font-size: 13px; font-weight: 600; color: var(--text-dim); }
+    .analytics-bar-val { font-size: 12px; font-weight: 700; color: var(--text); font-family: var(--mono); }
+    .analytics-bar-bg { height: 7px; background: var(--bg); border-radius: 99px; overflow: hidden; border: 1px solid var(--border); }
+    .analytics-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+
+    /* ─── CHART PLACEHOLDER ─── */
+    .mini-chart {
+      height: 60px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 0 0 4px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: var(--primary-dim);
+      transition: var(--transition);
+      min-height: 4px;
+    }
+    .chart-bar:hover { background: var(--primary); opacity: 0.7; }
+    .chart-bar.active { background: linear-gradient(to top, var(--primary), var(--accent)); }
+
+    /* ─── TOAST ─── */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: white;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.3s ease;
+      min-width: 240px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+    }
+    .toast.show { opacity: 1; transform: translateX(0); }
+    .toast.success { background: #10b981; }
+    .toast.error   { background: #ef4444; }
+    .toast.info    { background: var(--primary); }
+    .toast.warning { background: var(--warning); }
+
+    /* ─── QUICK ACTIONS ─── */
+    .quick-actions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .quick-action-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 18px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .quick-action-card:hover { border-color: var(--primary); background: var(--primary-dim); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .quick-action-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
+    .quick-action-label { font-size: 13px; font-weight: 700; color: var(--text); }
+    .quick-action-desc { font-size: 11.5px; color: var(--text-muted); }
+
+    /* ─── PILL TABS ─── */
+    .pill-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: var(--radius-md); padding: 4px; border: 1.5px solid var(--border); }
+    .pill-tab { padding: 7px 16px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: var(--transition); color: var(--text-muted); }
+    .pill-tab:hover { color: var(--text); }
+    .pill-tab.active { background: white; color: var(--primary); box-shadow: var(--shadow-xs); }
+
+    /* ─── LEAD INTENT ─── */
+    .intent-hot { background: #fee2e2; color: #991b1b; }
+    .intent-warm { background: #fef3c7; color: #92400e; }
+    .intent-cold { background: #f1f5f9; color: #475569; }
+
+    /* ─── SKILLS TAGS ─── */
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--accent-dim);
+      color: #0369a1;
+      border-radius: 99px;
+      font-size: 11.5px;
+      font-weight: 700;
+      font-family: var(--mono);
+    }
+
+    .skill-tag-remove {
+      cursor: pointer;
+      opacity: 0.6;
+      line-height: 1;
+    }
+    .skill-tag-remove:hover { opacity: 1; }
+
+    /* ─── COLOR PICKER ─── */
+    .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .color-swatch {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition);
+    }
+    .color-swatch:hover, .color-swatch.selected { border-color: white; box-shadow: 0 0 0 3px var(--primary); transform: scale(1.1); }
+
+    /* ─── WORKFLOW RUN ─── */
+    .workflow-run {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      background: white;
+      transition: var(--transition);
+      margin-bottom: 10px;
+    }
+    .workflow-run:hover { border-color: var(--border-hover); box-shadow: var(--shadow-sm); }
+    .workflow-run-info { display: flex; flex-direction: column; gap: 3px; }
+    .workflow-run-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .workflow-run-meta { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+
+    /* ─── DRAFT CARD ─── */
+    .draft-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: var(--transition);
+      margin-bottom: 12px;
+    }
+    .draft-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-sm); }
+    .draft-card-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .draft-card-meta { font-size: 12px; color: var(--text-muted); font-family: var(--mono); margin-top: 4px; }
+    .draft-card-excerpt { font-size: 13px; color: var(--text-dim); margin-top: 10px; line-height: 1.6; }
+
+    /* ─── AI ASSISTANT ─── */
+    .ai-chat-messages {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ai-msg { display: flex; gap: 10px; max-width: 80%; }
+    .ai-msg.user { flex-direction: row-reverse; align-self: flex-end; }
+    .ai-msg-avatar { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+    .ai-msg-avatar.bot { background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; }
+    .ai-msg-avatar.user-av { background: var(--bg); border: 1.5px solid var(--border); color: var(--text-dim); }
+    .ai-msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.6; }
+    .ai-msg.bot .ai-msg-bubble { background: white; border: 1.5px solid var(--border); color: var(--text); }
+    .ai-msg.user .ai-msg-bubble { background: var(--primary); color: white; }
+
+    /* ─── AUDIT ─── */
+    .audit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .audit-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .audit-icon.create { background: var(--success-dim); color: var(--success); }
+    .audit-icon.update { background: var(--accent-dim); color: var(--accent); }
+    .audit-icon.delete { background: var(--danger-dim); color: var(--danger); }
+    .audit-icon.login  { background: var(--primary-dim); color: var(--primary); }
+    .audit-action { font-size: 14px; font-weight: 600; color: var(--text); }
+    .audit-detail { font-size: 12.5px; color: var(--text-muted); margin-top: 3px; }
+    .audit-time { font-size: 11px; font-family: var(--mono); color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1400px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 1100px) { .quick-actions-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .main { margin-left: 0; }
+      .content { padding: 20px 16px; }
+    }
+
+    /* ─── SCROLLBAR ─── */
+    .content::-webkit-scrollbar { width: 6px; }
+    .content::-webkit-scrollbar-track { background: transparent; }
+    .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+    .content::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+    /* ─── MINI SPARKLINE ─── */
+    .sparkline-wrap { display: flex; align-items: flex-end; gap: 2px; height: 28px; margin-top: 4px; }
+    .spark-bar { flex: 1; border-radius: 2px; min-height: 2px; background: var(--stat-color, var(--primary)); opacity: 0.25; }
+    .spark-bar:last-child { opacity: 0.8; }
+    .spark-bar:nth-last-child(2) { opacity: 0.6; }
+
+    /* ─── TWO-COL GRID ─── */
+    .col-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; }
+    .col-2-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    @media (max-width: 1000px) { .col-2, .col-2-equal, .col-3 { grid-template-columns: 1fr; } }
+
+    /* ─── STATUS INDICATORS ─── */
+    .status-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.online { background: var(--success); box-shadow: 0 0 6px rgba(16,185,129,0.5); animation: pulse 2s infinite; }
+    .status-dot.offline { background: var(--danger); }
+    .status-dot.idle { background: var(--warning); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* ─── EMPTY STATES ─── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .empty-state-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state-title { font-size: 15px; font-weight: 700; color: var(--text-dim); }
+    .empty-state-desc { font-size: 13px; margin-top: 6px; max-width: 300px; }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a class="logo-inner" href="#">
+        <div class="logo-icon">DW</div>
+        <div class="logo-text-wrap">
+          <div class="logo-name">Digi Web Crew</div>
+          <div class="logo-tag">ADMIN v2.0</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="sidebar-search">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="sidebar-search-input" placeholder="Search..." />
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+
+      <div class="nav-item active" data-tab="dashboard">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </div>
+        Dashboard
+      </div>
+
+      <div class="nav-item" data-tab="analytics">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        </div>
+        Analytics
+        <span class="nav-badge success">↑12%</span>
+      </div>
+
+      <div class="nav-item" data-tab="leads">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        Leads
+        <span class="nav-badge">24</span>
+      </div>
+
+      <div class="nav-item" data-tab="chats">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        Chats
+        <span class="nav-badge warning">7</span>
+      </div>
+
+      <div class="nav-item" data-tab="tasks">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </div>
+        Tasks
+        <span class="nav-badge">5</span>
+      </div>
+
+      <div class="nav-section">Content</div>
+
+      <div class="nav-item" data-tab="ai-assistant">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        AI Assistant
+      </div>
+
+      <div class="nav-item" data-tab="drafts">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        </div>
+        Drafts
+      </div>
+
+      <div class="nav-item" data-tab="workflow-runs">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
+        </div>
+        Workflow Runs
+      </div>
+
+      <div class="nav-section">System</div>
+
+      <div class="nav-item" data-tab="branding">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="13.5" cy="6.5" r="0.5"></circle><circle cx="17.5" cy="10.5" r="0.5"></circle><circle cx="8.5" cy="7.5" r="0.5"></circle><circle cx="6.5" cy="12.5" r="0.5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>
+        </div>
+        Branding
+      </div>
+
+      <div class="nav-item" data-tab="audit">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        Audit Log
+      </div>
+
+      <div class="nav-item" data-tab="settings">
+        <div class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </div>
+        Settings
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">AD</div>
+        <div class="user-info">
+          <div class="user-name">Admin User</div>
+          <div class="user-role">super_admin</div>
+        </div>
+        <div class="user-status" id="system-status-dot"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN AREA ═══ -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="breadcrumbs" id="breadcrumbs">
+          <span class="breadcrumb-item active">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <svg class="topbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="topbar-search-input" placeholder="Search leads, chats, drafts..." />
+        </div>
+        <div class="icon-btn" title="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <div class="notif-dot"></div>
+        </div>
+        <div class="icon-btn" title="Help">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </div>
+        <div class="topbar-avatar" title="Profile">AD</div>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <div class="content">
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <div id="tab-dashboard" class="tab-content active">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-subtitle">Overview of leads, activity, and pipeline status.</p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <span style="font-size:12px; color:var(--text-muted); font-family:var(--mono);" id="last-updated">Last sync: just now</span>
+              <button class="btn btn-primary btn-sm" onclick="refreshDashboard()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-header">
+              <span class="stat-label">Total Leads</span>
+              <div class="stat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-total-leads">—</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 12%</span> vs last month</div>
+            <div class="sparkline-wrap" id="spark-leads"></div>
+          </div>
+
+          <div class="stat-card success">
+            <div class="stat-header">
+              <span class="stat-label">Hot Leads</span>
+              <div class="stat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-hot-leads">—</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 8%</span> conversion rate</div>
+            <div class="sparkline-wrap" id="spark-hot"></div>
+          </div>
+
+          <div class="stat-card accent">
+            <div class="stat-header">
+              <span class="stat-label">Active Chats</span>
+              <div class="stat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-chats">—</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 5</span> today</div>
+            <div class="sparkline-wrap" id="spark-chats"></div>
+          </div>
+
+          <div class="stat-card warning">
+            <div class="stat-header">
+              <span class="stat-label">Drafts</span>
+              <div class="stat-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-drafts">—</div>
+            <div class="stat-meta"><span class="stat-trend down">3</span> pending review</div>
+            <div class="sparkline-wrap" id="spark-drafts"></div>
+          </div>
+        </div>
+
+        <!-- PIPELINE + ACTIVITY -->
+        <div class="col-2">
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">
+                  <div class="card-title-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                  Lead Status Pipeline
+                </span>
+                <span class="badge badge-primary">Live</span>
+              </div>
+              <div class="card-body">
+                <div class="pipeline-grid" id="pipeline-grid">
+                  <div class="pipeline-col"><div class="pipeline-col-label">New</div><div class="pipeline-col-value" id="p-new">—</div></div>
+                  <div class="pipeline-col"><div class="pipeline-col-label">Contacted</div><div class="pipeline-col-value" id="p-contacted">—</div></div>
+                  <div class="pipeline-col"><div class="pipeline-col-label">Qualified</div><div class="pipeline-col-value" id="p-qualified">—</div></div>
+                  <div class="pipeline-col"><div class="pipeline-col-label">Proposal</div><div class="pipeline-col-value" id="p-proposal">—</div></div>
+                  <div class="pipeline-col"><div class="pipeline-col-label">Won</div><div class="pipeline-col-value" id="p-won">—</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">
+                  <div class="card-title-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+                  Recent Leads
+                </span>
+                <button class="btn btn-ghost btn-sm" onclick="navigate('leads')">View all →</button>
+              </div>
+              <div class="table-wrap" style="border:none; border-radius:0;">
+                <table>
+                  <thead><tr><th>Name</th><th>Industry</th><th>Budget</th><th>Intent</th></tr></thead>
+                  <tbody id="recent-leads-tbody">
+                    <tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">👤</div><div class="empty-state-title">No leads yet</div><div class="empty-state-desc">Leads will appear here once they come in</div></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Activity Feed</span>
+                <span class="badge badge-muted">Today</span>
+              </div>
+              <div class="card-body" id="activity-feed">
+                <div class="empty-state"><div class="empty-state-title">No recent activity</div></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Quick Actions</span>
+              </div>
+              <div class="card-body">
+                <div class="quick-actions-grid">
+                  <div class="quick-action-card" onclick="navigate('leads')">
+                    <div class="quick-action-icon" style="background:var(--primary-dim);">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.3"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <div>
+                      <div class="quick-action-label">Add Lead</div>
+                      <div class="quick-action-desc">New prospect</div>
+                    </div>
+                  </div>
+                  <div class="quick-action-card" onclick="navigate('drafts')">
+                    <div class="quick-action-icon" style="background:var(--success-dim);">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    </div>
+                    <div>
+                      <div class="quick-action-label">New Draft</div>
+                      <div class="quick-action-desc">Create content</div>
+                    </div>
+                  </div>
+                  <div class="quick-action-card" onclick="navigate('ai-assistant')">
+                    <div class="quick-action-icon" style="background:var(--purple-dim);">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div>
+                      <div class="quick-action-label">AI Write</div>
+                      <div class="quick-action-desc">Generate copy</div>
+                    </div>
+                  </div>
+                  <div class="quick-action-card" onclick="navigate('settings')">
+                    <div class="quick-action-icon" style="background:var(--warning-dim);">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2.3"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </div>
+                    <div>
+                      <div class="quick-action-label">Settings</div>
+                      <div class="quick-action-desc">Configure</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ANALYTICS ═══ -->
+      <div id="tab-analytics" class="tab-content">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Analytics</h1>
+              <p class="page-subtitle">Live lead performance and quality trends.</p>
+            </div>
+            <div class="pill-tabs">
+              <div class="pill-tab active" onclick="setRange(7, this)">7 Days</div>
+              <div class="pill-tab" onclick="setRange(30, this)">30 Days</div>
+              <div class="pill-tab" onclick="setRange(90, this)">90 Days</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-header"><span class="stat-label">Total Leads</span><div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div></div>
+            <div class="stat-value">142</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 18%</span> vs previous</div>
+          </div>
+          <div class="stat-card accent">
+            <div class="stat-header"><span class="stat-label">New Leads</span><div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div></div>
+            <div class="stat-value">38</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 5</span> this week</div>
+          </div>
+          <div class="stat-card danger">
+            <div class="stat-header"><span class="stat-label">Hot Leads</span><div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div></div>
+            <div class="stat-value">19</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 3</span> high priority</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-header"><span class="stat-label">Conversion</span><div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div></div>
+            <div class="stat-value">34%</div>
+            <div class="stat-meta"><span class="stat-trend up">↑ 4%</span> this period</div>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Lead Trends</span><span class="badge badge-success">Growing</span></div>
+            <div class="card-body">
+              <div style="display:flex; gap:3px; align-items:flex-end; height:120px; margin-bottom:12px;" id="trends-chart">
+                <!-- Generated by JS -->
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); font-family:var(--mono);" id="trends-labels"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Service Distribution</span></div>
+            <div class="card-body">
+              <div class="analytics-bar-group">
+                <div class="analytics-bar-row">
+                  <div class="analytics-bar-label"><span class="analytics-bar-name">Web Development</span><span class="analytics-bar-val">42%</span></div>
+                  <div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:42%"></div></div>
+                </div>
+                <div class="analytics-bar-row">
+                  <div class="analytics-bar-label"><span class="analytics-bar-name">UI/UX Design</span><span class="analytics-bar-val">28%</span></div>
+                  <div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:28%; background:linear-gradient(90deg,var(--success),#34d399);"></div></div>
+                </div>
+                <div class="analytics-bar-row">
+                  <div class="analytics-bar-label"><span class="analytics-bar-name">SEO & Marketing</span><span class="analytics-bar-val">18%</span></div>
+                  <div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:18%; background:linear-gradient(90deg,var(--warning),#fbbf24);"></div></div>
+                </div>
+                <div class="analytics-bar-row">
+                  <div class="analytics-bar-label"><span class="analytics-bar-name">E-commerce</span><span class="analytics-bar-val">12%</span></div>
+                  <div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:12%; background:linear-gradient(90deg,var(--purple),#a78bfa);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Status Breakdown</span></div>
+          <div class="card-body">
+            <div class="pipeline-grid">
+              <div class="pipeline-col"><div class="pipeline-col-label">New</div><div class="pipeline-col-value">38</div></div>
+              <div class="pipeline-col"><div class="pipeline-col-label">Contacted</div><div class="pipeline-col-value">24</div></div>
+              <div class="pipeline-col"><div class="pipeline-col-label">Qualified</div><div class="pipeline-col-value">18</div></div>
+              <div class="pipeline-col"><div class="pipeline-col-label">Proposal</div><div class="pipeline-col-value">11</div></div>
+              <div class="pipeline-col"><div class="pipeline-col-label">Won</div><div class="pipeline-col-value">7</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ LEADS ═══ -->
+      <div id="tab-leads" class="tab-content">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Leads</h1>
+              <p class="page-subtitle">Manage and track all incoming leads.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Add lead modal would open here', 'info')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Lead
+            </button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <div class="topbar-search" style="position:relative;">
+                <svg class="topbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="topbar-search-input" placeholder="Search leads..." style="width:200px;" />
+              </div>
+              <select style="width:auto; padding:8px 12px; font-size:13px;">
+                <option>All Status</option>
+                <option>New</option>
+                <option>Contacted</option>
+                <option>Qualified</option>
+                <option>Won</option>
+              </select>
+              <select style="width:auto; padding:8px 12px; font-size:13px;">
+                <option>All Intent</option>
+                <option>Hot</option>
+                <option>Warm</option>
+                <option>Cold</option>
+              </select>
+            </div>
+            <span class="badge badge-muted">142 total</span>
+          </div>
+          <div class="table-wrap" style="border:none; border-radius:0; border-top: 1.5px solid var(--border);">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Industry</th>
+                  <th>Budget</th>
+                  <th>Status</th>
+                  <th>Intent</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a class="td-link">Ahmed Malik</a><div style="font-size:11px; color:var(--text-muted);">ahmed@example.com</div></td>
+                  <td>E-commerce</td>
+                  <td class="td-mono">$5,000</td>
+                  <td><span class="badge badge-primary">Qualified</span></td>
+                  <td><span class="badge badge-danger">Hot</span></td>
+                  <td class="td-mono" style="font-size:11px;">Apr 2, 2026</td>
+                  <td>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-sm" onclick="showToast('Opening lead details...', 'info')">View</button>
+                      <button class="btn btn-ghost btn-sm">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="td-link">Sara Johnson</a><div style="font-size:11px; color:var(--text-muted);">sara@design.co</div></td>
+                  <td>Design Agency</td>
+                  <td class="td-mono">$12,000</td>
+                  <td><span class="badge badge-success">Won</span></td>
+                  <td><span class="badge badge-warning">Warm</span></td>
+                  <td class="td-mono" style="font-size:11px;">Mar 29, 2026</td>
+                  <td>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-sm" onclick="showToast('Opening lead details...', 'info')">View</button>
+                      <button class="btn btn-ghost btn-sm">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="td-link">Carlos Rivera</a><div style="font-size:11px; color:var(--text-muted);">c.rivera@startup.io</div></td>
+                  <td>SaaS / Tech</td>
+                  <td class="td-mono">$3,500</td>
+                  <td><span class="badge badge-accent">Contacted</span></td>
+                  <td><span class="badge badge-muted">Cold</span></td>
+                  <td class="td-mono" style="font-size:11px;">Mar 27, 2026</td>
+                  <td>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-sm" onclick="showToast('Opening lead details...', 'info')">View</button>
+                      <button class="btn btn-ghost btn-sm">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="td-link">Priya Patel</a><div style="font-size:11px; color:var(--text-muted);">priya@store.in</div></td>
+                  <td>Retail</td>
+                  <td class="td-mono">$8,000</td>
+                  <td><span class="badge badge-purple">Proposal</span></td>
+                  <td><span class="badge badge-danger">Hot</span></td>
+                  <td class="td-mono" style="font-size:11px;">Mar 25, 2026</td>
+                  <td>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-sm" onclick="showToast('Opening lead details...', 'info')">View</button>
+                      <button class="btn btn-ghost btn-sm">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="td-link">James Park</a><div style="font-size:11px; color:var(--text-muted);">james@mediagroup.com</div></td>
+                  <td>Media</td>
+                  <td class="td-mono">$2,000</td>
+                  <td><span class="badge badge-muted">New</span></td>
+                  <td><span class="badge badge-warning">Warm</span></td>
+                  <td class="td-mono" style="font-size:11px;">Apr 1, 2026</td>
+                  <td>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-sm" onclick="showToast('Opening lead details...', 'info')">View</button>
+                      <button class="btn btn-ghost btn-sm">Edit</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="padding:14px 20px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border);">
+            <span style="font-size:12.5px; color:var(--text-muted);">Showing 5 of 142 leads</span>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-secondary btn-sm">← Previous</button>
+              <button class="btn btn-primary btn-sm">Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CHATS ═══ -->
+      <div id="tab-chats" class="tab-content">
+        <div class="page-header">
+          <h1 class="page-title">Chats</h1>
+          <p class="page-subtitle">Live visitor conversations and transcripts.</p>
+        </div>
+        <div class="col-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Chat Sessions</span><span class="badge badge-success">3 live</span></div>
+            <div class="table-wrap" style="border:none;">
+              <table>
+                <thead><tr><th>Visitor</th><th>Status</th><th>Duration</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Visitor #4821</strong><div style="font-size:11px;color:var(--text-muted);">About: Web design pricing</div></td><td><span class="badge badge-success">Live</span></td><td class="td-mono">4:32</td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Opening chat...', 'info')">Join</button></td></tr>
+                  <tr><td><strong>Visitor #4820</strong><div style="font-size:11px;color:var(--text-muted);">About: Portfolio review</div></td><td><span class="badge badge-warning">Waiting</span></td><td class="td-mono">1:05</td><td><button class="btn btn-primary btn-sm" onclick="showToast('Joining chat...', 'info')">Join</button></td></tr>
+                  <tr><td><strong>Visitor #4819</strong><div style="font-size:11px;color:var(--text-muted);">About: E-commerce build</div></td><td><span class="badge badge-muted">Ended</span></td><td class="td-mono">12:47</td><td><button class="btn btn-secondary btn-sm">View Log</button></td></tr>
+                  <tr><td><strong>Ahmed Malik</strong><div style="font-size:11px;color:var(--text-muted);">Returning lead</div></td><td><span class="badge badge-success">Live</span></td><td class="td-mono">2:18</td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Opening chat...', 'info')">Join</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Chat Stats</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <div class="toggle-row">
+                  <span class="toggle-label">Today's Chats</span>
+                  <span style="font-size:22px; font-weight:800; color:var(--primary);">18</span>
+                </div>
+                <div class="toggle-row">
+                  <span class="toggle-label">Avg. Duration</span>
+                  <span style="font-size:22px; font-weight:800; color:var(--success);">6:24</span>
+                </div>
+                <div class="toggle-row">
+                  <span class="toggle-label">Conversion Rate</span>
+                  <span style="font-size:22px; font-weight:800; color:var(--accent);">42%</span>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:13px; font-weight:600;">Response Rate</span>
+                    <span class="badge badge-success">88%</span>
+                  </div>
+                  <div class="progress-box"><div class="progress-bar" style="width:88%; background:linear-gradient(90deg,var(--success),#34d399);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TASKS ═══ -->
+      <div id="tab-tasks" class="tab-content">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Tasks</h1>
+              <p class="page-subtitle">Track and complete lead follow-up tasks.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Add task modal would open here', 'info')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              New Task
+            </button>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Pending Tasks</span><span class="badge badge-warning">5 due</span></div>
+              <div style="padding:16px; display:flex; flex-direction:column; gap:10px;" id="tasks-list">
+                <div class="workflow-run">
+                  <div class="workflow-run-info">
+                    <div class="workflow-run-name">Follow up with Ahmed Malik</div>
+                    <div class="workflow-run-meta">Due: Today at 5:00 PM • E-commerce lead</div>
+                  </div>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span class="badge badge-danger">High</span>
+                    <button class="btn btn-success btn-sm" onclick="completeTask(this)">✓ Done</button>
+                  </div>
+                </div>
+                <div class="workflow-run">
+                  <div class="workflow-run-info">
+                    <div class="workflow-run-name">Send proposal to Sara Johnson</div>
+                    <div class="workflow-run-meta">Due: Tomorrow • Design Agency</div>
+                  </div>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span class="badge badge-warning">Med</span>
+                    <button class="btn btn-success btn-sm" onclick="completeTask(this)">✓ Done</button>
+                  </div>
+                </div>
+                <div class="workflow-run">
+                  <div class="workflow-run-info">
+                    <div class="workflow-run-name">Schedule discovery call with Carlos</div>
+                    <div class="workflow-run-meta">Due: Apr 5 • SaaS Lead</div>
+                  </div>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span class="badge badge-muted">Low</span>
+                    <button class="btn btn-success btn-sm" onclick="completeTask(this)">✓ Done</button>
+                  </div>
+                </div>
+                <div class="workflow-run">
+                  <div class="workflow-run-info">
+                    <div class="workflow-run-name">Review Priya's e-commerce requirements</div>
+                    <div class="workflow-run-meta">Due: Apr 4 • Retail</div>
+                  </div>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span class="badge badge-danger">High</span>
+                    <button class="btn btn-success btn-sm" onclick="completeTask(this)">✓ Done</button>
+                  </div>
+                </div>
+                <div class="workflow-run">
+                  <div class="workflow-run-info">
+                    <div class="workflow-run-name">Update portfolio for media leads</div>
+                    <div class="workflow-run-meta">Due: Apr 7 • Internal</div>
+                  </div>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <span class="badge badge-muted">Low</span>
+                    <button class="btn btn-success btn-sm" onclick="completeTask(this)">✓ Done</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Task Overview</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="font-size:13px; font-weight:600;">Overall Progress</span><span class="td-mono" style="font-size:12px;">5 / 18</span></div>
+                  <div class="progress-box"><div class="progress-bar" style="width:28%;"></div></div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px;">
+                  <div style="background:var(--danger-dim); padding:14px; border-radius:var(--radius-md); text-align:center;">
+                    <div style="font-size:24px; font-weight:800; color:var(--danger);">2</div>
+                    <div style="font-size:11px; color:#991b1b; font-weight:700; font-family:var(--mono);">HIGH PRIORITY</div>
+                  </div>
+                  <div style="background:var(--warning-dim); padding:14px; border-radius:var(--radius-md); text-align:center;">
+                    <div style="font-size:24px; font-weight:800; color:var(--warning);">1</div>
+                    <div style="font-size:11px; color:#92400e; font-weight:700; font-family:var(--mono);">MED PRIORITY</div>
+                  </div>
+                  <div style="background:var(--success-dim); padding:14px; border-radius:var(--radius-md); text-align:center;">
+                    <div style="font-size:24px; font-weight:800; color:var(--success);">13</div>
+                    <div style="font-size:11px; color:#065f46; font-weight:700; font-family:var(--mono);">COMPLETED</div>
+                  </div>
+                  <div style="background:var(--primary-dim); padding:14px; border-radius:var(--radius-md); text-align:center;">
+                    <div style="font-size:24px; font-weight:800; color:var(--primary);">2</div>
+                    <div style="font-size:11px; color:#3730a3; font-weight:700; font-family:var(--mono);">LOW PRIORITY</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AI ASSISTANT ═══ -->
+      <div id="tab-ai-assistant" class="tab-content">
+        <div class="page-header">
+          <h1 class="page-title">AI Assistant</h1>
+          <p class="page-subtitle">Generate proposals, emails, and content with AI.</p>
+        </div>
+
+        <div class="col-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Chat with AI</span><span class="badge badge-purple">Powered by Claude</span></div>
+            <div class="card-body" style="padding:16px;">
+              <div class="ai-chat-messages" id="ai-chat-messages">
+                <div class="ai-msg bot">
+                  <div class="ai-msg-avatar bot">AI</div>
+                  <div class="ai-msg-bubble">Hi! I'm your AI writing assistant. I can help you craft proposals, follow-up emails, client briefs, and more. What would you like to create today?</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:10px; margin-top:12px;">
+                <input type="text" id="ai-chat-input" placeholder="Ask me to write something..." style="flex:1;" onkeydown="if(event.key==='Enter') sendAiMessage()" />
+                <button class="btn btn-primary" onclick="sendAiMessage()">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Quick Templates</span></div>
+              <div class="card-body" style="display:flex; flex-direction:column; gap:8px;">
+                <button class="btn btn-secondary btn-full" onclick="aiTemplate('Write a professional follow-up email for a web development lead')">📧 Follow-up Email</button>
+                <button class="btn btn-secondary btn-full" onclick="aiTemplate('Write a project proposal for e-commerce website development')">📄 Project Proposal</button>
+                <button class="btn btn-secondary btn-full" onclick="aiTemplate('Write a discovery call agenda for a new lead')">📋 Discovery Agenda</button>
+                <button class="btn btn-secondary btn-full" onclick="aiTemplate('Write a professional cold outreach message for a potential client')">💼 Cold Outreach</button>
+                <button class="btn btn-secondary btn-full" onclick="aiTemplate('Write a closing email to win a web design project')">🏆 Closing Email</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">AI Settings</span></div>
+              <div class="card-body" style="display:flex; flex-direction:column; gap:12px;">
+                <div class="form-group">
+                  <label>Tone</label>
+                  <select><option>Professional</option><option>Friendly</option><option>Formal</option><option>Casual</option></select>
+                </div>
+                <div class="form-group">
+                  <label>Language</label>
+                  <select><option>English</option><option>Urdu</option><option>Arabic</option><option>Spanish</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DRAFTS ═══ -->
+      <div id="tab-drafts" class="tab-content">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Drafts</h1>
+              <p class="page-subtitle">Manage your saved proposals and content drafts.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Opening draft editor...', 'info')">+ New Draft</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="badge badge-muted">6 drafts</span>
+            <div class="pill-tabs">
+              <div class="pill-tab active">All</div>
+              <div class="pill-tab">Proposals</div>
+              <div class="pill-tab">Emails</div>
+              <div class="pill-tab">Other</div>
+            </div>
+          </div>
+          <div style="padding:16px; display:flex; flex-direction:column; gap:0;">
+            <div class="draft-card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div class="draft-card-title">E-commerce Website Proposal — Ahmed Malik</div>
+                  <div class="draft-card-meta">Modified 2 hours ago • Proposal</div>
+                  <div class="draft-card-excerpt">Full-stack e-commerce solution with custom product pages, payment gateway integration, and admin panel...</div>
+                </div>
+                <div style="display:flex; gap:6px; flex-shrink:0; margin-left:16px;">
+                  <span class="badge badge-warning">Draft</span>
+                  <button class="btn btn-primary btn-sm">Edit</button>
+                  <button class="btn btn-secondary btn-sm">Preview</button>
+                </div>
+              </div>
+            </div>
+            <div class="draft-card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div class="draft-card-title">UX Redesign Brief — Sara Johnson</div>
+                  <div class="draft-card-meta">Modified yesterday • Proposal</div>
+                  <div class="draft-card-excerpt">Complete UX audit and redesign for existing SaaS dashboard focusing on user retention and onboarding flow...</div>
+                </div>
+                <div style="display:flex; gap:6px; flex-shrink:0; margin-left:16px;">
+                  <span class="badge badge-success">Ready</span>
+                  <button class="btn btn-primary btn-sm">Edit</button>
+                  <button class="btn btn-secondary btn-sm">Preview</button>
+                </div>
+              </div>
+            </div>
+            <div class="draft-card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div class="draft-card-title">Follow-up Email — Carlos Rivera</div>
+                  <div class="draft-card-meta">Modified 3 days ago • Email</div>
+                  <div class="draft-card-excerpt">Following up on our discussion about the SaaS landing page. Here's a revised timeline and package options...</div>
+                </div>
+                <div style="display:flex; gap:6px; flex-shrink:0; margin-left:16px;">
+                  <span class="badge badge-accent">Review</span>
+                  <button class="btn btn-primary btn-sm">Edit</button>
+                  <button class="btn btn-secondary btn-sm">Preview</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ WORKFLOW RUNS ═══ -->
+      <div id="tab-workflow-runs" class="tab-content">
+        <div class="page-header">
+          <h1 class="page-title">Workflow Runs</h1>
+          <p class="page-subtitle">Automated process history and status.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Runs</span>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Triggering workflow...', 'info')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Trigger Run
+            </button>
+          </div>
+          <div style="padding:16px;">
+            <div class="workflow-run">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 6px rgba(16,185,129,0.5);"></div>
+                <div class="workflow-run-info">
+                  <div class="workflow-run-name">Lead Qualification Workflow</div>
+                  <div class="workflow-run-meta">Run #1042 • Started 10 min ago • 4 steps completed</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span class="badge badge-success">Success</span>
+                <button class="btn btn-secondary btn-sm">Details</button>
+              </div>
+            </div>
+            <div class="workflow-run">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--danger);"></div>
+                <div class="workflow-run-info">
+                  <div class="workflow-run-name">Email Follow-up Sequence</div>
+                  <div class="workflow-run-meta">Run #1041 • 1 hour ago • Failed at step 3</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span class="badge badge-danger">Failed</span>
+                <button class="btn btn-secondary btn-sm">Retry</button>
+              </div>
+            </div>
+            <div class="workflow-run">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 6px rgba(16,185,129,0.5);"></div>
+                <div class="workflow-run-info">
+                  <div class="workflow-run-name">New Lead Notification</div>
+                  <div class="workflow-run-meta">Run #1040 • 3 hours ago • Notified admin</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span class="badge badge-success">Success</span>
+                <button class="btn btn-secondary btn-sm">Details</button>
+              </div>
+            </div>
+            <div class="workflow-run">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--warning);"></div>
+                <div class="workflow-run-info">
+                  <div class="workflow-run-name">AI Proposal Generator</div>
+                  <div class="workflow-run-meta">Run #1039 • Yesterday • Partial — 2 of 4 sent</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span class="badge badge-warning">Partial</span>
+                <button class="btn btn-secondary btn-sm">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ BRANDING ═══ -->
+      <div id="tab-branding" class="tab-content">
+        <div class="page-header">
+          <h1 class="page-title">Branding</h1>
+          <p class="page-subtitle">Customize your site identity and visual appearance.</p>
+        </div>
+
+        <div class="col-2-equal">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Site Identity</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:18px;">
+                <div class="form-group">
+                  <label>Site Name</label>
+                  <input type="text" value="Digi Web Crew" id="site-name" />
+                </div>
+                <div class="form-group">
+                  <label>Tagline</label>
+                  <input type="text" value="We build digital experiences" />
+                </div>
+                <div class="form-group">
+                  <label>Contact Email</label>
+                  <input type="email" value="hello@digiwebcrew.com" />
+                </div>
+                <div>
+                  <label>Logo Upload</label>
+                  <div style="margin-top:8px; border:2px dashed var(--border); border-radius:var(--radius-md); padding:30px; text-align:center; cursor:pointer; transition:var(--transition);" onmouseenter="this.style.borderColor='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)'">
+                    <div style="font-size:28px; margin-bottom:8px;">🖼️</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-dim);">Drop logo here or click to upload</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">PNG, SVG recommended • Max 2MB</div>
+                  </div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Branding saved successfully!', 'success')">Save Identity</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Color Theme</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:18px;">
+                <div class="form-group">
+                  <label>Primary Color</label>
+                  <input type="text" value="#4f46e5" id="brand-color" />
+                  <div class="color-swatches">
+                    <div class="color-swatch selected" style="background:#4f46e5;" onclick="setBrandColor('#4f46e5', this)"></div>
+                    <div class="color-swatch" style="background:#0ea5e9;" onclick="setBrandColor('#0ea5e9', this)"></div>
+                    <div class="color-swatch" style="background:#10b981;" onclick="setBrandColor('#10b981', this)"></div>
+                    <div class="color-swatch" style="background:#8b5cf6;" onclick="setBrandColor('#8b5cf6', this)"></div>
+                    <div class="color-swatch" style="background:#ef4444;" onclick="setBrandColor('#ef4444', this)"></div>
+                    <div class="color-swatch" style="background:#f59e0b;" onclick="setBrandColor('#f59e0b', this)"></div>
+                    <div class="color-swatch" style="background:#0f172a;" onclick="setBrandColor('#0f172a', this)"></div>
+                    <div class="color-swatch" style="background:#ec4899;" onclick="setBrandColor('#ec4899', this)"></div>
+                  </div>
+                </div>
+                <div>
+                  <label>Preview</label>
+                  <div style="margin-top:8px; padding:20px; background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-md);">
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                      <button class="btn btn-primary btn-sm" id="preview-btn">Primary Button</button>
+                      <button class="btn btn-secondary btn-sm">Secondary</button>
+                      <span class="badge badge-primary" id="preview-badge">Badge</span>
+                    </div>
+                    <div style="margin-top:12px; height:6px; background:var(--primary); border-radius:99px; width:70%;"></div>
+                  </div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('Color theme saved!', 'success')">Apply Theme</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AUDIT LOG ═══ -->
+      <div id="tab-audit" class="tab-content">
+        <div class="page-header">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Audit Log</h1>
+              <p class="page-subtitle">Track all administrative actions and changes.</p>
+            </div>
+            <button class="btn btn-secondary" onclick="showToast('Exporting audit log...', 'info')">Export CSV</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Actions</span>
+            <span class="badge badge-muted" id="audit-count">Loading...</span>
+          </div>
+          <div style="padding: 16px 24px;" id="audit-list">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">System Diagnostics</span><span class="badge badge-success">All systems up</span></div>
+          <div class="card-body">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div class="toggle-row"><span class="toggle-label">Database Connection</span><span class="badge badge-success">Connected</span></div>
+              <div class="toggle-row"><span class="toggle-label">OpenAI Integration</span><span class="badge badge-success">Active</span></div>
+              <div class="toggle-row"><span class="toggle-label">Email Service</span><span class="badge badge-warning">Degraded</span></div>
+              <div class="toggle-row"><span class="toggle-label">Chat Widget</span><span class="badge badge-success">Online</span></div>
+              <div class="toggle-row"><span class="toggle-label">Storage</span><span class="badge badge-success">78% free</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SETTINGS ═══ -->
+      <div id="tab-settings" class="tab-content">
+        <div class="page-header">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Configure tracking, system integrations, and notifications.</p>
+        </div>
+
+        <div class="pill-tabs" style="margin-bottom:24px; width:fit-content;">
+          <div class="pill-tab active" onclick="setSettingsTab('tracking', this)">Tracking</div>
+          <div class="pill-tab" onclick="setSettingsTab('system', this)">System</div>
+          <div class="pill-tab" onclick="setSettingsTab('notifications', this)">Notifications</div>
+          <div class="pill-tab" onclick="setSettingsTab('security', this)">Security</div>
+        </div>
+
+        <!-- Tracking -->
+        <div id="settings-tracking">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Analytics Tracking</span></div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="form-group"><label>Google Tag Manager ID</label><input type="text" placeholder="GTM-XXXXXXX" /></div>
+                <div class="form-group"><label>Google Analytics 4 ID</label><input type="text" placeholder="G-XXXXXXXXXX" /></div>
+                <div class="form-group"><label>Meta Pixel ID</label><input type="text" placeholder="1234567890" /></div>
+                <div class="form-group"><label>Meta Access Token</label><input type="password" placeholder="••••••••••••••••" /></div>
+                <div class="form-group"><label>LinkedIn Partner ID</label><input type="text" placeholder="1234567" /></div>
+                <div class="form-group"><label>Google Ads ID</label><input type="text" placeholder="AW-XXXXXXXXX" /></div>
+              </div>
+              <div style="margin-top:24px;">
+                <button class="btn btn-primary" onclick="showToast('Tracking settings saved!', 'success')">Save Tracking Config</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System (hidden by default) -->
+        <div id="settings-system" style="display:none;">
+          <div class="card">
+            <div class="card-header"><span class="card-title">System Configuration</span></div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="form-group"><label>Notification Email</label><input type="email" placeholder="admin@example.com" /></div>
+                <div class="form-group"><label>Admin Password</label><input type="password" placeholder="••••••••" /></div>
+              </div>
+              <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+                <div class="toggle-row">
+                  <div class="toggle-left">
+                    <div class="toggle-label">Maintenance Mode</div>
+                    <div class="toggle-desc">Site shows under-maintenance page to visitors</div>
+                  </div>
+                  <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-left">
+                    <div class="toggle-label">Debug Logging</div>
+                    <div class="toggle-desc">Verbose logs stored to database</div>
+                  </div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+              </div>
+              <div style="margin-top:24px;">
+                <button class="btn btn-primary" onclick="showToast('System settings saved!', 'success')">Save System Config</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Check System Status</span></div>
+            <div class="card-body" id="system-status-box">
+              <button class="btn btn-secondary" onclick="checkSystemStatus()">Run Status Check</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="settings-notifications" style="display:none;">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Notification Preferences</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">New Lead Alert</div><div class="toggle-desc">Get notified when a new lead submits</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">Chat Started</div><div class="toggle-desc">Notify when a visitor starts chatting</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">Workflow Failure</div><div class="toggle-desc">Alert on failed automation runs</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">Weekly Summary</div><div class="toggle-desc">Weekly digest email every Monday</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+              </div>
+              <div style="margin-top:24px;">
+                <button class="btn btn-primary" onclick="showToast('Notification preferences saved!', 'success')">Save Preferences</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="settings-security" style="display:none;">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Security Settings</span></div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">Two-Factor Authentication</div><div class="toggle-desc">Require 2FA for all admin logins</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">Session Timeout</div><div class="toggle-desc">Auto-logout after 30 minutes of inactivity</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><div class="toggle-left"><div class="toggle-label">IP Whitelist</div><div class="toggle-desc">Restrict admin access to specific IPs</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+              </div>
+              <div style="margin-top:20px;">
+                <div class="form-group">
+                  <label>Change Password</label>
+                  <input type="password" placeholder="Current password" />
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+                  <input type="password" placeholder="New password" />
+                  <input type="password" placeholder="Confirm password" />
+                </div>
+              </div>
+              <div style="margin-top:20px; display:flex; gap:12px;">
+                <button class="btn btn-primary" onclick="showToast('Security settings updated!', 'success')">Save Security</button>
+                <button class="btn btn-danger" onclick="if(confirm('Sign out all other sessions?')) showToast('All other sessions revoked', 'success')">Revoke Sessions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+  // ─── NAVIGATION ───
+  const BREADCRUMBS = {
+    dashboard: 'Dashboard',
+    analytics: 'Analytics',
+    leads: 'Leads',
+    chats: 'Chats',
+    tasks: 'Tasks',
+    'ai-assistant': 'AI Assistant',
+    drafts: 'Drafts',
+    'workflow-runs': 'Workflow Runs',
+    branding: 'Branding',
+    audit: 'Audit Log',
+    settings: 'Settings'
+  };
+
+  function navigate(tabId) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    const navItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+    if (navItem) navItem.classList.add('active');
+    const tab = document.getElementById('tab-' + tabId);
+    if (tab) tab.classList.add('active');
+    document.getElementById('breadcrumbs').innerHTML = `
+      <span class="breadcrumb-item"><a href="#" onclick="navigate('dashboard'); return false;" style="color:var(--text-muted);text-decoration:none;">Dashboard</a></span>
+      ${tabId !== 'dashboard' ? `<span class="breadcrumb-sep">›</span><span class="breadcrumb-item active">${BREADCRUMBS[tabId] || tabId}</span>` : ''}
+    `;
+    if (tabId === 'dashboard') {
+      document.getElementById('breadcrumbs').innerHTML = `<span class="breadcrumb-item active">Dashboard</span>`;
+      refreshDashboard();
+    }
+    if (tabId === 'audit') loadAuditLog();
+    if (tabId === 'analytics') drawTrendsChart(30);
+  }
+
+  document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+    item.addEventListener('click', () => navigate(item.getAttribute('data-tab')));
+  });
+
+  // ─── DASHBOARD DATA ───
+  function refreshDashboard() {
+    // Simulate live data
+    animateValue('stat-total-leads', 142);
+    animateValue('stat-hot-leads', 19);
+    animateValue('stat-chats', 18);
+    animateValue('stat-drafts', 6);
+
+    // Pipeline
+    const pVals = { 'p-new': 38, 'p-contacted': 24, 'p-qualified': 18, 'p-proposal': 11, 'p-won': 7 };
+    Object.entries(pVals).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.textContent = v; });
+
+    // Recent leads
+    const leads = [
+      { name: 'Ahmed Malik', industry: 'E-commerce', budget: '$5,000', intent: 'Hot', intentClass: 'badge-danger' },
+      { name: 'Sara Johnson', industry: 'Design', budget: '$12,000', intent: 'Warm', intentClass: 'badge-warning' },
+      { name: 'Priya Patel', industry: 'Retail', budget: '$8,000', intent: 'Hot', intentClass: 'badge-danger' },
+      { name: 'James Park', industry: 'Media', budget: '$2,000', intent: 'Warm', intentClass: 'badge-warning' },
+    ];
+    document.getElementById('recent-leads-tbody').innerHTML = leads.map(l => `
+      <tr>
+        <td><a class="td-link" onclick="navigate('leads')">${l.name}</a></td>
+        <td>${l.industry}</td>
+        <td class="td-mono">${l.budget}</td>
+        <td><span class="badge ${l.intentClass}">${l.intent}</span></td>
+      </tr>
+    `).join('');
+
+    // Activity Feed
+    const activities = [
+      { dot: 'success', title: 'New lead: Ahmed Malik', time: '2 min ago' },
+      { dot: '', title: 'Proposal sent to Sara Johnson', time: '18 min ago' },
+      { dot: 'warning', title: 'Task due: Follow-up Carlos', time: '1 hour ago' },
+      { dot: 'danger', title: 'Workflow run failed (Step 3)', time: '2 hours ago' },
+      { dot: 'success', title: 'Lead won: Priya Patel — $8k', time: '3 hours ago' },
+    ];
+    document.getElementById('activity-feed').innerHTML = activities.map(a => `
+      <div class="activity-item">
+        <div class="activity-dot ${a.dot}"></div>
+        <div>
+          <div class="activity-title">${a.title}</div>
+          <div class="activity-time">${a.time}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Sparklines
+    buildSparkline('spark-leads', [60,72,65,80,88,92,100,110,115,120,130,142]);
+    buildSparkline('spark-hot', [8,10,9,12,14,13,15,16,17,18,18,19]);
+    buildSparkline('spark-chats', [8,11,9,13,10,14,12,16,15,17,16,18]);
+    buildSparkline('spark-drafts', [2,3,2,4,3,5,4,4,5,5,6,6]);
+
+    document.getElementById('last-updated').textContent = 'Last sync: ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    document.querySelector('.user-status').classList.add('online');
+  }
+
+  function buildSparkline(id, data) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const max = Math.max(...data);
+    el.innerHTML = data.map((v, i) => `
+      <div class="spark-bar" style="height:${Math.round((v/max)*100)}%; ${i===data.length-1?'opacity:0.9;':''}""></div>
+    `).join('');
+  }
+
+  function animateValue(id, end) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let start = 0;
+    const step = Math.ceil(end / 20);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) { el.textContent = end; clearInterval(timer); }
+      else el.textContent = start;
+    }, 30);
+  }
+
+  // ─── ANALYTICS CHART ───
+  function drawTrendsChart(range) {
+    const chart = document.getElementById('trends-chart');
+    const labels = document.getElementById('trends-labels');
+    if (!chart) return;
+    const data = Array.from({length: range === 7 ? 7 : range === 30 ? 12 : 12}, (_,i) => Math.floor(Math.random() * 30 + 10));
+    const max = Math.max(...data);
+    chart.innerHTML = data.map((v,i) => `
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+        <div style="width:100%; border-radius:4px 4px 0 0; background:${i===data.length-1?'linear-gradient(to top, var(--primary), var(--accent))':'var(--primary-dim)'}; height:${Math.round((v/max)*100)}px; min-height:4px; transition:all 0.3s ease; cursor:pointer;" onmouseenter="showToast('${v} leads', 'info')"></div>
+      </div>
+    `).join('');
+    const wk = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    labels.innerHTML = (range === 7 ? wk : data.map((_,i)=>'W'+(i+1))).map(l => `<span>${l}</span>`).join('');
+  }
+
+  function setRange(n, el) {
+    document.querySelectorAll('#tab-analytics .pill-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    drawTrendsChart(n);
+  }
+
+  // ─── AUDIT LOG ───
+  const auditItems = [
+    { type: 'login', icon: '🔐', action: 'Admin Login', detail: 'Successfully authenticated from 203.x.x.x', time: 'Just now' },
+    { type: 'create', icon: '✅', action: 'Lead Created', detail: 'New lead: Ahmed Malik (E-commerce)', time: '2 min ago' },
+    { type: 'update', icon: '✏️', action: 'Settings Updated', detail: 'Tracking config: GTM ID changed', time: '18 min ago' },
+    { type: 'create', icon: '✅', action: 'Draft Created', detail: 'New proposal draft for Sara Johnson', time: '1 hour ago' },
+    { type: 'delete', icon: '🗑️', action: 'Lead Deleted', detail: 'Removed duplicate entry: visitor_3182', time: '2 hours ago' },
+    { type: 'update', icon: '✏️', action: 'Lead Status Changed', detail: 'Priya Patel → Status: WON', time: '3 hours ago' },
+    { type: 'create', icon: '✅', action: 'Workflow Triggered', detail: 'Lead Qualification Workflow Run #1042', time: '4 hours ago' },
+    { type: 'update', icon: '✏️', action: 'Branding Updated', detail: 'Primary color changed to #4f46e5', time: 'Yesterday' },
+  ];
+
+  function loadAuditLog() {
+    const list = document.getElementById('audit-list');
+    const count = document.getElementById('audit-count');
+    if (!list) return;
+    list.innerHTML = auditItems.map(a => `
+      <div class="audit-item">
+        <div class="audit-icon ${a.type}">${a.icon}</div>
+        <div style="flex:1;">
+          <div class="audit-action">${a.action}</div>
+          <div class="audit-detail">${a.detail}</div>
+        </div>
+        <div class="audit-time">${a.time}</div>
+      </div>
+    `).join('');
+    if (count) count.textContent = auditItems.length + ' entries';
+  }
+
+  // ─── SETTINGS TABS ───
+  const settingsPanels = ['tracking','system','notifications','security'];
+  function setSettingsTab(tab, el) {
+    settingsPanels.forEach(p => {
+      const panel = document.getElementById('settings-' + p);
+      if (panel) panel.style.display = p === tab ? 'block' : 'none';
+    });
+    document.querySelectorAll('#tab-settings .pill-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ─── TASKS ───
+  function completeTask(btn) {
+    const row = btn.closest('.workflow-run');
+    row.style.opacity = '0.4';
+    row.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+      row.style.transition = 'all 0.4s';
+      row.style.opacity = '0';
+      setTimeout(() => row.remove(), 400);
+    }, 300);
+    showToast('Task marked as done!', 'success');
+  }
+
+  // ─── SYSTEM STATUS ───
+  function checkSystemStatus() {
+    const box = document.getElementById('system-status-box');
+    if (!box) return;
+    box.innerHTML = '<div style="font-family:var(--mono); font-size:12px; color:var(--text-muted);">Checking...</div>';
+    setTimeout(() => {
+      box.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="toggle-row"><span>Database (MongoDB)</span><span class="badge badge-success">✓ Connected</span></div>
+          <div class="toggle-row"><span>OpenAI API</span><span class="badge badge-success">✓ Active</span></div>
+          <div class="toggle-row"><span>Email (SMTP)</span><span class="badge badge-warning">⚠ Degraded</span></div>
+          <div class="toggle-row"><span>Chat Widget</span><span class="badge badge-success">✓ Online</span></div>
+          <div style="font-size:11px; font-family:var(--mono); color:var(--text-muted); margin-top:4px;">Checked at ${new Date().toLocaleTimeString()}</div>
+        </div>
+      `;
+    }, 1200);
+    showToast('Running system diagnostics...', 'info');
+  }
+
+  // ─── BRANDING ───
+  function setBrandColor(color, el) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('brand-color').value = color;
+    document.documentElement.style.setProperty('--primary', color);
+    showToast('Preview updated! Click "Apply Theme" to save.', 'info');
+  }
+
+  // ─── AI ASSISTANT ───
+  const aiResponses = [
+    "I'll craft that for you right away. Here's a professional version:\n\n---\nSubject: Following up on your web development inquiry\n\nDear [Name],\n\nI hope this message finds you well. I wanted to follow up on our previous conversation and share some thoughts on how we can move forward with your project...\n\n[Draft continues based on your project context]",
+    "Great choice! Here's a compelling proposal outline:\n\n📋 PROJECT OVERVIEW\nWe propose a full-featured web solution tailored to your specific requirements...\n\n💼 SCOPE OF WORK\n• Discovery & Strategy (Week 1)\n• Design & Prototyping (Weeks 2–3)\n• Development (Weeks 4–7)\n• Testing & Launch (Week 8)",
+    "Here's your discovery call agenda:\n\n🗓️ DISCOVERY CALL AGENDA (45 mins)\n\n1. Introduction & background (5 min)\n2. Current pain points (10 min)\n3. Goals & success metrics (10 min)\n4. Timeline & budget discussion (10 min)\n5. Next steps & proposal timeline (10 min)"
+  ];
+
+  let aiMsgCount = 0;
+
+  function sendAiMessage() {
+    const input = document.getElementById('ai-chat-input');
+    const msgs = document.getElementById('ai-chat-messages');
+    if (!input.value.trim()) return;
+
+    // User message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'ai-msg user';
+    userDiv.innerHTML = `<div class="ai-msg-avatar user-av">You</div><div class="ai-msg-bubble">${escapeHTML(input.value)}</div>`;
+    msgs.appendChild(userDiv);
+    input.value = '';
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // AI response after delay
+    setTimeout(() => {
+      const botDiv = document.createElement('div');
+      botDiv.className = 'ai-msg bot';
+      const resp = aiResponses[aiMsgCount % aiResponses.length];
+      botDiv.innerHTML = `<div class="ai-msg-avatar bot">AI</div><div class="ai-msg-bubble" style="white-space:pre-wrap;">${escapeHTML(resp)}</div>`;
+      msgs.appendChild(botDiv);
+      msgs.scrollTop = msgs.scrollHeight;
+      aiMsgCount++;
+    }, 900);
+  }
+
+  function aiTemplate(prompt) {
+    document.getElementById('ai-chat-input').value = prompt;
+    sendAiMessage();
+    navigate('ai-assistant');
+  }
+
+  // ─── TOAST ───
+  function showToast(msg, type = 'info') {
+    const c = document.getElementById('toast-container');
+    const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span>${icons[type] || 'ℹ'}</span> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+  }
+
+  // ─── HELPERS ───
+  function escapeHTML(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function refreshDashboard() {
+    animateValue('stat-total-leads', 142);
+    animateValue('stat-hot-leads', 19);
+    animateValue('stat-chats', 18);
+    animateValue('stat-drafts', 6);
+    const pVals = { 'p-new': 38, 'p-contacted': 24, 'p-qualified': 18, 'p-proposal': 11, 'p-won': 7 };
+    Object.entries(pVals).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.textContent = v; });
+    const leads = [
+      { name: 'Ahmed Malik', industry: 'E-commerce', budget: '$5,000', intent: 'Hot', intentClass: 'badge-danger' },
+      { name: 'Sara Johnson', industry: 'Design', budget: '$12,000', intent: 'Warm', intentClass: 'badge-warning' },
+      { name: 'Priya Patel', industry: 'Retail', budget: '$8,000', intent: 'Hot', intentClass: 'badge-danger' },
+      { name: 'James Park', industry: 'Media', budget: '$2,000', intent: 'Warm', intentClass: 'badge-warning' },
+    ];
+    document.getElementById('recent-leads-tbody').innerHTML = leads.map(l => `
+      <tr><td><a class="td-link" onclick="navigate('leads')">${l.name}</a></td><td>${l.industry}</td><td class="td-mono">${l.budget}</td><td><span class="badge ${l.intentClass}">${l.intent}</span></td></tr>
+    `).join('');
+    const activities = [
+      { dot: 'success', title: 'New lead: Ahmed Malik', time: '2 min ago' },
+      { dot: '', title: 'Proposal sent to Sara Johnson', time: '18 min ago' },
+      { dot: 'warning', title: 'Task due: Follow-up Carlos', time: '1 hour ago' },
+      { dot: 'danger', title: 'Workflow run failed (Step 3)', time: '2 hours ago' },
+      { dot: 'success', title: 'Lead won: Priya Patel — $8k', time: '3 hours ago' },
+    ];
+    document.getElementById('activity-feed').innerHTML = activities.map(a => `
+      <div class="activity-item"><div class="activity-dot ${a.dot}"></div><div><div class="activity-title">${a.title}</div><div class="activity-time">${a.time}</div></div></div>
+    `).join('');
+    buildSparkline('spark-leads', [60,72,65,80,88,92,100,110,115,120,130,142]);
+    buildSparkline('spark-hot', [8,10,9,12,14,13,15,16,17,18,18,19]);
+    buildSparkline('spark-chats', [8,11,9,13,10,14,12,16,15,17,16,18]);
+    buildSparkline('spark-drafts', [2,3,2,4,3,5,4,4,5,5,6,6]);
+    document.getElementById('last-updated').textContent = 'Last sync: ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+
+  // ─── INIT ───
+  refreshDashboard();
+  document.querySelector('.user-status').classList.add('online');
+
+  // Sidebar search
+  document.querySelector('.sidebar-search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = q && !text.includes(q) ? 'none' : '';
+    });
+  });
+</script>
+</body>
+</html>

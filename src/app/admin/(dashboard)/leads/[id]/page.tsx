@@ -1,23 +1,21 @@
-﻿import { getLeadById } from "@/lib/actions/lead-actions";
+import { getLeadById } from "@/lib/actions/lead-actions";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { LeadDetailsClient } from "@/components/admin/lead-details-client";
 import { PageHeader } from "@/components/admin/page-header";
 import Link from "next/link";
 
-export default async function LeadDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const lead = await getLeadById(id);
   if (!lead) notFound();
 
   const score = Math.max(0, Math.min(100, Number(lead.leadScore || 0)));
+  const TIER_COLOR: Record<string, string> = {
+    HOT: "adm-badge-danger", WARM: "adm-badge-warning", COLD: "adm-badge-muted",
+  };
 
   return (
-    <div className="admin-page-stack space-y-6 pb-8 w-full">
+    <div className="admin-page-stack w-full pb-8">
       <PageHeader
         title={lead.fullName || "Unknown Lead"}
         subtitle={`${lead.email}${lead.company ? ` · ${lead.company}` : ""}`}
@@ -27,38 +25,58 @@ export default async function LeadDetailPage({
           { label: "Detail" },
         ]}
         actions={
-          <>
+          <div className="flex items-center gap-2">
             <Link
               href={`mailto:${lead.email}`}
-              className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 px-6 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              className="adm-btn adm-btn-secondary adm-btn-sm"
             >
               Email Lead
             </Link>
-            <Button variant="outline" className="font-medium">Lead ID: {String(lead._id).slice(-8)}</Button>
-          </>
+            <span
+              className="adm-btn adm-btn-sm"
+              style={{ background: "var(--adm-bg)", color: "var(--adm-text-muted)", border: "1.5px solid var(--adm-border)", fontFamily: "var(--adm-mono)", fontSize: 11 }}
+            >
+              ID: {String(lead._id).slice(-8)}
+            </span>
+          </div>
         }
       />
 
-      <section className="rounded-xl border border-slate-200 bg-white p-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      {/* Score + Tier card */}
+      <div className="rounded-xl bg-white p-5" style={{ border: "1.5px solid var(--adm-border)" }}>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
           <div>
-            <p className="text-sm text-slate-500">Lead Score</p>
-            <p className="text-2xl font-semibold text-slate-900">{score}/100</p>
+            <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)" }}>
+              Lead Score
+            </p>
+            <p style={{ fontSize: 28, fontWeight: 800, color: "var(--adm-text)", letterSpacing: -1, marginTop: 2 }}>
+              {score}<span style={{ fontSize: 16, color: "var(--adm-text-muted)", fontWeight: 600 }}>/100</span>
+            </p>
           </div>
-          <span className={`rounded-full px-3 py-1 text-sm font-semibold ${
-            lead.leadTier === "HOT"
-              ? "bg-red-100 text-red-700"
-              : lead.leadTier === "WARM"
-                ? "bg-amber-100 text-amber-700"
-                : "bg-slate-100 text-slate-600"
-          }`}>
-            {lead.leadTier || "COLD"}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className={`adm-badge ${TIER_COLOR[lead.leadTier || "COLD"] || "adm-badge-muted"}`}>
+              {lead.leadTier || "COLD"}
+            </span>
+            {lead.status && (
+              <span className="adm-badge adm-badge-muted">{lead.status}</span>
+            )}
+            {lead.serviceCategory && (
+              <span className="adm-badge adm-badge-accent">{lead.serviceCategory}</span>
+            )}
+          </div>
         </div>
-        <div className="mt-3 h-2 w-full rounded-full bg-slate-100">
-          <div className="h-full rounded-full bg-indigo-600" style={{ width: `${score}%` }} />
+        <div className="adm-progress-wrap" style={{ height: 10 }}>
+          <div
+            className="adm-progress-bar"
+            style={{
+              width: `${score}%`,
+              background: score >= 70 ? "linear-gradient(90deg,var(--adm-success),#34d399)" :
+                          score >= 40 ? "linear-gradient(90deg,var(--adm-warning),#fbbf24)" :
+                          "linear-gradient(90deg,var(--adm-danger),#f87171)",
+            }}
+          />
         </div>
-      </section>
+      </div>
 
       <LeadDetailsClient
         leadId={id}
@@ -70,5 +88,3 @@ export default async function LeadDetailPage({
     </div>
   );
 }
-
-

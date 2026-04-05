@@ -1,113 +1,145 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Bell, Check, Clock, ShieldAlert, Zap, Info } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { useState, useEffect, useRef } from "react";
+import { Bell, Check, Zap, Info } from "lucide-react";
 import { getNotifications, markNotificationAsRead } from "@/lib/actions/notification-actions";
+import { format } from "date-fns";
 
 interface Notification {
-  id: string;
-  type: string;
-  title: string;
-  body: string;
-  time: Date;
-  read: boolean;
+  id: string; type: string; title: string; body: string; time: Date; read: boolean;
 }
+
+const typeIcon = (type: string) => {
+  if (type === "SYSTEM") return <Check size={15} />;
+  if (type === "ALERT")  return <Zap size={15} />;
+  return <Info size={15} />;
+};
+
+const typeColor = (type: string) => {
+  if (type === "SYSTEM") return { bg: "var(--adm-success-dim)", color: "var(--adm-success)" };
+  if (type === "ALERT")  return { bg: "var(--adm-danger-dim)",  color: "var(--adm-danger)" };
+  return { bg: "var(--adm-accent-dim)", color: "var(--adm-accent)" };
+};
 
 export function NotificationPopover() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        getNotifications().then(setNotifications);
-    }, []);
+  useEffect(() => {
+    getNotifications().then(setNotifications).catch(() => {});
+  }, []);
 
-    const handleMarkAsRead = async (id: string) => {
-        await markNotificationAsRead(id);
-        setNotifications(prev =>
-            prev.map(n => n.id === id ? { ...n, read: true } : n)
-        );
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false);
     };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
-    const unreadCount = notifications.filter(n => !n.read).length;
+  const markRead = async (id: string) => {
+    await markNotificationAsRead(id).catch(() => {});
+    setNotifications((prev) => prev.map((n) => n.id === id ? { ...n, read: true } : n));
+  };
 
-    return (
-        <div className="relative">
+  const unread = notifications.filter((n) => !n.read).length;
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="admin-icon-btn relative"
+        title="Notifications"
+        style={{ width: 36, height: 36, borderRadius: "var(--adm-radius-sm)" }}
+      >
+        <Bell size={16} />
+        {unread > 0 && (
+          <span
+            className="absolute -top-1 -right-1 flex items-center justify-center min-w-[17px] h-[17px] px-1 rounded-full text-white font-black"
+            style={{ fontSize: 9, background: "var(--adm-danger)", border: "2px solid white" }}
+          >
+            {unread}
+          </span>
+        )}
+      </button>
+
+      {isOpen && (
+        <div
+          className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-2xl bg-white shadow-2xl"
+          style={{ border: "1.5px solid var(--adm-border)" }}
+        >
+          {/* Header */}
+          <div
+            className="flex items-center justify-between px-5 py-4"
+            style={{ borderBottom: "1px solid var(--adm-border)", background: "var(--adm-bg)" }}
+          >
+            <h3 style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.5px", color: "var(--adm-text)" }}>
+              Notifications
+            </h3>
+            {unread > 0 && (
+              <span className="adm-badge adm-badge-danger">{unread} new</span>
+            )}
+          </div>
+
+          {/* List */}
+          <div className="max-h-80 overflow-y-auto custom-scrollbar">
+            {notifications.length === 0 ? (
+              <div className="grid min-h-[120px] place-items-center">
+                <p style={{ fontSize: 13, color: "var(--adm-text-muted)" }}>No notifications</p>
+              </div>
+            ) : (
+              notifications.map((n) => {
+                const { bg, color } = typeColor(n.type);
+                return (
+                  <div
+                    key={n.id}
+                    onClick={() => !n.read && markRead(n.id)}
+                    className="flex gap-3 px-5 py-4 cursor-pointer transition-colors"
+                    style={{
+                      borderBottom: "1px solid var(--adm-border)",
+                      background: n.read ? "white" : "var(--adm-primary-dim)",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--adm-bg)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = n.read ? "white" : "var(--adm-primary-dim)")}
+                  >
+                    <div
+                      className="grid shrink-0 place-items-center rounded-xl"
+                      style={{ width: 34, height: 34, background: bg, color }}
+                    >
+                      {typeIcon(n.type)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-0.5">
+                        <p style={{ fontSize: 13, fontWeight: 600, color: "var(--adm-text)" }}>{n.title}</p>
+                        <span style={{ fontSize: 10, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)", flexShrink: 0 }}>
+                          {format(n.time, "HH:mm")}
+                        </span>
+                      </div>
+                      <p style={{ fontSize: 12, color: "var(--adm-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {n.body}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Footer */}
+          <div
+            className="px-5 py-3 text-center"
+            style={{ background: "var(--adm-bg)", borderTop: "1px solid var(--adm-border)" }}
+          >
             <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 rounded-full bg-white border border-border flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-primary transition-all relative group shadow-sm z-50"
+              style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "var(--adm-primary)" }}
+              onClick={() => setIsOpen(false)}
             >
-                <Bell size={22} className={cn("transition-transform", isOpen && "rotate-12")} />
-                {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 bg-rose-500 text-white text-[10px] font-black rounded-full border-2 border-white shadow-sm flex items-center justify-center animate-in zoom-in duration-300">
-                        {unreadCount}
-                    </span>
-                )}
+              Dismiss All
             </button>
-
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        <div
-                            className="fixed inset-0 z-40"
-                            onClick={() => setIsOpen(false)}
-                        />
-                        <motion.div
-                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                            className="absolute right-0 mt-4 w-96 bg-white border border-border rounded-[2.5rem] shadow-2xl z-50 overflow-hidden"
-                        >
-                            <div className="p-8 border-b border-border bg-gray-50/50">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900">Intelligence Feed</h3>
-                                    <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">{unreadCount} NEW</span>
-                                </div>
-                            </div>
-
-                            <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
-                                {notifications.map((notif) => (
-                                    <div
-                                        key={notif.id}
-                                        onClick={() => !notif.read && handleMarkAsRead(notif.id)}
-                                        className={cn(
-                                            "p-6 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer group",
-                                            !notif.read && "bg-blue-50/30"
-                                        )}
-                                    >
-                                        <div className="flex gap-4">
-                                            <div className={cn(
-                                                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border",
-                                                notif.type === "SYSTEM" ? "bg-emerald-50 text-emerald-500 border-emerald-100" :
-                                                    notif.type === "ALERT" ? "bg-rose-50 text-rose-500 border-rose-100" :
-                                                        "bg-blue-50 text-blue-500 border-blue-100"
-                                            )}>
-                                                {notif.type === "SYSTEM" ? <Check size={18} /> : notif.type === "ALERT" ? <Zap size={18} /> : <Info size={18} />}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center justify-between mb-1">
-                                                    <p className="text-sm font-black text-gray-900">{notif.title}</p>
-                                                    <span className="text-[10px] font-bold text-gray-300">{format(notif.time, "HH:mm")}</span>
-                                                </div>
-                                                <p className="text-xs text-gray-400 font-medium leading-relaxed truncate">{notif.body}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="p-4 bg-gray-50/50 text-center">
-                                <button className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">
-                                    View All Activity
-                                </button>
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 }
-

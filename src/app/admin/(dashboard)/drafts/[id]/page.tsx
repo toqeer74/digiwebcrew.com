@@ -3,19 +3,20 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { connectToDatabase } from "@/lib/db";
 import { ContentDraft } from "@/lib/models/content-draft";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { DraftDeleteButton } from "@/components/admin/draft-delete-button";
 import { PageHeader } from "@/components/admin/page-header";
 import { CopyButton } from "@/components/admin/copy-button";
+import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
+import { FileText, Info, ArrowLeft } from "lucide-react";
 
-const TYPE_BADGES: Record<string, string> = {
-  blog: "bg-blue-100 text-blue-700",
-  landing: "bg-violet-100 text-violet-700",
-  seo: "bg-emerald-100 text-emerald-700",
-  email: "bg-amber-100 text-amber-700",
-  social: "bg-pink-100 text-pink-700",
-  other: "bg-slate-100 text-slate-700",
+const TYPE_BADGE: Record<string, string> = {
+  blog:    "adm-badge-accent",
+  landing: "adm-badge-purple",
+  seo:     "adm-badge-success",
+  email:   "adm-badge-warning",
+  social:  "adm-badge-danger",
+  other:   "adm-badge-muted",
 };
 
 export default async function DraftDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -23,7 +24,6 @@ export default async function DraftDetailPage({ params }: { params: Promise<{ id
   if (!session) redirect("/admin/login");
 
   const { id } = await params;
-
   const db = await connectToDatabase();
   if (!db) redirect("/admin/drafts");
 
@@ -36,7 +36,7 @@ export default async function DraftDetailPage({ params }: { params: Promise<{ id
   const draftType = String(d.type || "other").toLowerCase();
 
   return (
-    <div className="admin-page-stack space-y-6 pb-8 w-full">
+    <div className="admin-page-stack w-full pb-8">
       <PageHeader
         title={d.title || "Untitled Draft"}
         subtitle={`${draftType} · ${d.promptKey}${d.modelName ? ` · ${d.modelName}` : ""}${d.workflowRunId ? ` · Run ${d.workflowRunId}` : ""}`}
@@ -46,70 +46,108 @@ export default async function DraftDetailPage({ params }: { params: Promise<{ id
           { label: "Detail" },
         ]}
         actions={
-          <>
+          <div className="flex items-center gap-2">
             <CopyButton value={content} label="Copy Content" />
-            {d.workflowRunId ? (
-              <Link href={`/admin/workflow-runs/${d.workflowRunId}`} className="inline-flex h-9 items-center rounded-lg border border-slate-200 px-3 text-sm hover:bg-slate-50">
+            {d.workflowRunId && (
+              <Link href={`/admin/workflow-runs/${d.workflowRunId}`} className="adm-btn adm-btn-secondary adm-btn-sm">
                 View Run
               </Link>
-            ) : null}
-            <Link href="/admin/drafts" className="inline-flex h-9 items-center rounded-lg border border-slate-200 px-3 text-sm hover:bg-slate-50">
-              Back
+            )}
+            <Link href="/admin/drafts" className="adm-btn adm-btn-secondary adm-btn-sm inline-flex items-center gap-2">
+              <ArrowLeft size={13} /> Back
             </Link>
             <DraftDeleteButton draftId={String(d._id)} />
-          </>
+          </div>
         }
       />
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <Card className="admin-card rounded-xl lg:col-span-8">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base font-semibold">Content</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${TYPE_BADGES[draftType] || TYPE_BADGES.other}`}>{draftType}</span>
-              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">{d.promptKey || "-"}</span>
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        {/* Content */}
+        <ACard className="lg:col-span-8">
+          <ACardHeader>
+            <ACardTitle icon={<FileText size={14} />}>Content</ACardTitle>
+            <div className="flex items-center gap-2">
+              <span className={`adm-badge ${TYPE_BADGE[draftType] || "adm-badge-muted"}`}>{draftType}</span>
+              {d.promptKey && <span className="adm-badge adm-badge-muted">{d.promptKey}</span>}
             </div>
-            <pre className="max-h-[520px] overflow-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-800 whitespace-pre-wrap">{content}</pre>
-          </CardContent>
-        </Card>
+          </ACardHeader>
+          <ACardBody>
+            <pre
+              className="max-h-[560px] overflow-auto rounded-xl p-5 text-xs whitespace-pre-wrap"
+              style={{
+                background: "#0d1117",
+                color: "#c9d1d9",
+                fontFamily: "var(--adm-mono)",
+                lineHeight: 1.7,
+                border: "1.5px solid var(--adm-border)",
+              }}
+            >
+              {content || "No content generated."}
+            </pre>
+          </ACardBody>
+        </ACard>
 
-        <Card className="admin-card rounded-xl lg:col-span-4">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base font-semibold">Metadata</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Created</p>
-              <p className="mt-1 text-slate-700">{d.createdAt ? new Date(d.createdAt).toLocaleString() : "-"}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Model</p>
-              <p className="mt-1 text-slate-700">{d.modelName || "-"}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Workflow Run</p>
-              <div className="mt-1">
-                {d.workflowRunId ? (
-                  <Link href={`/admin/workflow-runs/${d.workflowRunId}`} className="text-indigo-700 hover:underline">
-                    {d.workflowRunId}
-                  </Link>
-                ) : (
-                  <span className="text-slate-700">-</span>
-                )}
+        {/* Metadata */}
+        <ACard className="lg:col-span-4">
+          <ACardHeader>
+            <ACardTitle icon={<Info size={14} />}>Metadata</ACardTitle>
+          </ACardHeader>
+          <ACardBody className="space-y-4">
+            {[
+              { label: "Created",      value: d.createdAt ? new Date(d.createdAt).toLocaleString() : "—" },
+              { label: "Model",        value: d.modelName || "—" },
+              { label: "Prompt Key",   value: d.promptKey || "—" },
+              { label: "Type",         value: draftType },
+            ].map(({ label, value }) => (
+              <div key={label}>
+                <p className="adm-label mb-1">{label}</p>
+                <p style={{ fontSize: 13.5, color: "var(--adm-text-dim)" }}>{value}</p>
               </div>
-            </div>
+            ))}
+
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">ID</p>
-              <p className="mt-1 break-all font-mono text-xs">{String(d._id)}</p>
+              <p className="adm-label mb-1">Workflow Run</p>
+              {d.workflowRunId ? (
+                <Link
+                  href={`/admin/workflow-runs/${d.workflowRunId}`}
+                  style={{ fontSize: 13.5, color: "var(--adm-primary)", fontWeight: 600 }}
+                  onMouseEnter={(e) => ((e.target as HTMLElement).style.textDecoration = "underline")}
+                  onMouseLeave={(e) => ((e.target as HTMLElement).style.textDecoration = "none")}
+                >
+                  {d.workflowRunId}
+                </Link>
+              ) : (
+                <p style={{ fontSize: 13.5, color: "var(--adm-text-muted)" }}>—</p>
+              )}
             </div>
+
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Variables</p>
-              <pre className="mt-1 max-h-[220px] overflow-auto rounded-lg border border-slate-200 bg-white p-3 text-xs whitespace-pre-wrap">{variables}</pre>
+              <p className="adm-label mb-1">Document ID</p>
+              <p
+                style={{ fontSize: 11, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)", wordBreak: "break-all" }}
+              >
+                {String(d._id)}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+
+            {variables !== "{}" && (
+              <div>
+                <p className="adm-label mb-1">Variables</p>
+                <pre
+                  className="max-h-[200px] overflow-auto rounded-xl p-3 text-xs whitespace-pre-wrap"
+                  style={{
+                    background: "var(--adm-bg)",
+                    border: "1.5px solid var(--adm-border)",
+                    fontFamily: "var(--adm-mono)",
+                    color: "var(--adm-text-dim)",
+                  }}
+                >
+                  {variables}
+                </pre>
+              </div>
+            )}
+          </ACardBody>
+        </ACard>
       </div>
     </div>
   );
