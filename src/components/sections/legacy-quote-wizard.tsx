@@ -69,7 +69,7 @@ export function LegacyQuoteWizard({ dict, isRtl, locale }: LegacyQuoteWizardProp
       localStorage.removeItem(STORAGE_KEY);
       return;
     }
-    alert(result.message);
+    alert(result.error || "Failed to submit quote");
   };
 
   const updateForm = (field: keyof QuoteFormData, value: string) => {

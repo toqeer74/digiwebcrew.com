@@ -63,3 +63,7 @@ next-env.d.ts
 /build_*.log
 /errors.txt
 /files_*.txt
+
+# prisma
+/src/generated/
+/prisma/migrations/

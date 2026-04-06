@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import { requireAdminSession } from "@/lib/auth-middleware";
 import { logAudit } from "@/lib/audit";
 import fs from "fs";
@@ -84,27 +83,26 @@ export async function POST(req: NextRequest) {
 
     const content = response.choices?.[0]?.message?.content || "";
 
-    const db = await connectToDatabase();
-    if (!db) {
-      return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
-    }
+    await connectToDatabase();
 
-    const draft = await ContentDraft.create({
-      type: body.type || "other",
-      promptKey: body.promptKey,
-      content,
-      variables,
-      modelName: model,
+    const draft = await prisma.contentDraft.create({
+      data: {
+        type: (body.type?.toUpperCase() as any) || "OTHER",
+        promptKey: body.promptKey,
+        content,
+        variables: variables as any,
+        modelName: model,
+      },
     });
 
     await logAudit({
       action: "CREATE_DRAFT",
       resource: "content-draft",
-      resourceId: draft._id.toString(),
+      resourceId: draft.id,
       metadata: { promptKey: body.promptKey, type: body.type },
     });
 
-    return NextResponse.json({ success: true, draftId: draft._id.toString(), content });
+    return NextResponse.json({ success: true, draftId: draft.id, content });
   } catch (error) {
     const detail = error instanceof Error ? error.message : undefined;
     await logAudit({

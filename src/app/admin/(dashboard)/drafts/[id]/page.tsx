@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import Link from "next/link";
 import { DraftDeleteButton } from "@/components/admin/draft-delete-button";
 import { PageHeader } from "@/components/admin/page-header";
@@ -24,10 +23,11 @@ export default async function DraftDetailPage({ params }: { params: Promise<{ id
   if (!session) redirect("/admin/login");
 
   const { id } = await params;
-  const db = await connectToDatabase();
-  if (!db) redirect("/admin/drafts");
+  await connectToDatabase();
 
-  const draft = await ContentDraft.findById(id).lean();
+  const draft = await prisma.contentDraft.findUnique({
+    where: { id },
+  });
   if (!draft) redirect("/admin/drafts");
 
   const d: any = draft;

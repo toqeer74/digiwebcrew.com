@@ -35,8 +35,8 @@
   --adm-text-dim:     #475569;
   --adm-text-muted:   #94a3b8;
 
-  --adm-font:         'Plus Jakarta Sans', 'DM Sans', sans-serif;
-  --adm-mono:         'JetBrains Mono', ui-monospace, monospace;
+  --adm-font:         var(--font-plus-jakarta, 'Plus Jakarta Sans', 'DM Sans', sans-serif);
+  --adm-mono:         var(--font-jetbrains-mono, 'JetBrains Mono', ui-monospace, monospace);
 
   --adm-radius-xl:    18px;
   --adm-radius-lg:    13px;
@@ -49,7 +49,7 @@
   --adm-shadow-lg:    0 16px 40px rgba(15,23,42,0.13);
 
   --adm-transition:   all 0.2s cubic-bezier(0.4,0,0.2,1);
-  --adm-sidebar-w:    256px;
+  --adm-sidebar-w:    80px;
 
   /* Legacy compat */
   --admin-primary:        var(--adm-primary);
@@ -100,12 +100,12 @@
 
 /* Nav items */
 .admin-nav-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 10px; border-radius: var(--adm-radius-md);
-  cursor: pointer; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  padding: 10px 0; border-radius: var(--adm-radius-md);
+  cursor: pointer; font-size: 14px; font-weight: 600;
   color: var(--adm-text-dim); transition: var(--adm-transition);
-  text-decoration: none; position: relative; margin-bottom: 2px;
-  min-width: 0; overflow: hidden;
+  text-decoration: none; position: relative;
+  min-width: 0; overflow: hidden; letter-spacing: -0.1px;
 }
 .admin-nav-item:hover { background: var(--adm-bg); color: var(--adm-text); }
 .admin-nav-item.active-nav,
@@ -121,12 +121,12 @@
 .admin-nav-item.active-nav::before,
 .admin-nav-item[aria-current="page"]::before {
   content: ''; position: absolute;
-  left: 0; top: 18%; bottom: 18%;
-  width: 3px; background: var(--adm-primary);
-  border-radius: 0 3px 3px 0;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3.5px; background: var(--adm-primary);
+  border-radius: 0 4px 4px 0;
 }
 .admin-nav-icon {
-  width: 30px; height: 30px; border-radius: 8px;
+  width: 36px; height: 36px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   background: transparent; color: var(--adm-text-muted); flex-shrink: 0;
   transition: var(--adm-transition);
@@ -138,12 +138,12 @@
 }
 .admin-nav-badge {
   margin-left: auto; background: var(--adm-primary); color: white;
-  font-size: 9px; font-weight: 800; font-family: var(--adm-mono);
-  padding: 2px 5px; border-radius: 20px; min-width: 18px; text-align: center;
-  flex-shrink: 0; white-space: nowrap; line-height: 1.4;
+  font-size: 10px; font-weight: 800; font-family: var(--adm-mono);
+  padding: 2px 8px; border-radius: 20px; min-width: 22px; text-align: center;
+  flex-shrink: 0; white-space: nowrap; line-height: 1.6;
 }
 .admin-nav-badge.warning { background: var(--adm-warning); color: #451a03; }
-.admin-nav-badge.success { background: var(--adm-success-dim); color: var(--adm-success); }
+.admin-nav-badge.success { background: var(--adm-success-dim); color: var(--adm-success); font-size: 10px; }
 
 /* Sidebar user card */
 .admin-user-card {

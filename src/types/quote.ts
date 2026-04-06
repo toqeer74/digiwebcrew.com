@@ -11,6 +11,8 @@ export const QuoteSchema = z.object({
   timeline: z.string().min(1, "Timeline is required"),
   message: z.string().min(10, "Please provide some project details (min 10 chars)"),
   techPreference: z.string().optional(),
+  country: z.string().optional(),
+  utm: z.any().optional(),
   referral: z.string().optional(),
   locale: z.string().optional().default("en"),
   honeypot: z.string().max(0, "Bot detected").optional(),

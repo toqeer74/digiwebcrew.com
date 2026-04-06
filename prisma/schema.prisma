@@ -1,0 +1,264 @@
+// Prisma Schema — PostgreSQL
+// Replaces all 6 Mongoose models: Lead, ChatSession, ContentDraft, AuditLog, Notification, Setting
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── LEAD ───────────────────────────────────────────────────────────────────
+model Lead {
+  id              String   @id @default(cuid())
+  fullName        String
+  email           String
+  company         String?
+  country         String?
+  timezone        String?
+  serviceCategory String
+  serviceInterest String
+  projectType     String?
+  budgetRange     String?
+  timeline        String?
+  techPreference  String?
+  message         String?
+  source          String?
+  utm             Json?    // Map<string, string>
+  leadScore       Int      @default(0)
+  leadTier        LeadTier @default(COLD)
+  status          LeadStatus @default(NEW)
+  notes           LeadNote[]
+  events          LeadEvent[]
+  tasks           LeadTask[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([email])
+  @@index([leadTier])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum LeadTier {
+  HOT
+  WARM
+  COLD
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL
+  WON
+  LOST
+  SPAM
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  content   String
+  author    String   @default("Admin")
+  type      NoteType @default(NOTE)
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+}
+
+enum NoteType {
+  NOTE
+  INTERNAL
+  FOLLOW_UP
+}
+
+model LeadEvent {
+  id     String   @id @default(cuid())
+  leadId String
+  lead   Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type   String
+  at     DateTime @default(now())
+  meta   Json?
+
+  @@index([leadId])
+}
+
+model LeadTask {
+  id        String       @id @default(cuid())
+  leadId    String
+  lead      Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  title     String
+  dueAt     DateTime?
+  done      Boolean      @default(false)
+  priority  TaskPriority @default(MEDIUM)
+  createdAt DateTime     @default(now())
+
+  @@index([leadId])
+  @@index([done])
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+// ─── CHAT SESSION ────────────────────────────────────────────────────────────
+model ChatSession {
+  id          String       @id @default(cuid())
+  sessionId   String       @unique
+  mode        ChatMode     @default(INTRO)
+  messages    ChatMessage[]
+  summary     String?
+  leadScore   Int          @default(0)
+  // metadata stored as JSON
+  intent      String?
+  service     String?
+  budget      String?
+  urgency     String?
+  contactName  String?
+  contactEmail String?
+  contactPhone String?
+  isConverted Boolean      @default(false)
+  isClosed    Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([sessionId])
+  @@index([isConverted])
+  @@index([createdAt])
+}
+
+enum ChatMode {
+  INTRO
+  DISCOVER
+  QA
+  QUALIFY
+  CONVERT
+  CAPTURE
+  EXIT
+}
+
+model ChatMessage {
+  id            String      @id @default(cuid())
+  chatSessionId String
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  role          MessageRole
+  content       String
+  timestamp     DateTime    @default(now())
+
+  @@index([chatSessionId])
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+// ─── CONTENT DRAFT ───────────────────────────────────────────────────────────
+model ContentDraft {
+  id                 String    @id @default(cuid())
+  type               DraftType @default(OTHER)
+  promptKey          String
+  title              String?
+  content            String
+  variables          Json      @default("{}")
+  modelName          String?
+  workflowRunId      String?
+  workflowKey        String?
+  workflowStepId     String?
+  workflowStepIndex  Int?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([promptKey])
+  @@index([workflowRunId])
+  @@index([workflowKey])
+  @@index([createdAt])
+}
+
+enum DraftType {
+  BLOG
+  LANDING
+  SEO
+  INTERNAL_LINKS
+  EMAIL
+  SOCIAL
+  OTHER
+}
+
+// ─── AUDIT LOG ───────────────────────────────────────────────────────────────
+model AuditLog {
+  id          String      @id @default(cuid())
+  userId      String?
+  userEmail   String?
+  action      AuditAction
+  resource    String?
+  resourceId  String?
+  ip          String?
+  userAgent   String?
+  success     Boolean     @default(true)
+  error       String?
+  metadata    Json?
+  createdAt   DateTime    @default(now())
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}
+
+enum AuditAction {
+  LOGIN_SUCCESS
+  LOGIN_FAILED
+  LOGOUT
+  VIEW_DASHBOARD
+  VIEW_LEADS
+  VIEW_LEAD_DETAIL
+  VIEW_CHATS
+  VIEW_DRAFTS
+  VIEW_WORKFLOW_RUNS
+  RUN_AI_PROMPT
+  RUN_AI_WORKFLOW
+  CREATE_DRAFT
+  UPDATE_BRANDING
+  UPDATE_SETTINGS
+  EXPORT_DATA
+}
+
+// ─── NOTIFICATION ─────────────────────────────────────────────────────────────
+model Notification {
+  id        String           @id @default(cuid())
+  type      NotificationType
+  title     String
+  body      String
+  read      Boolean          @default(false)
+  userId    String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([userId])
+  @@index([read, createdAt])
+}
+
+enum NotificationType {
+  SYSTEM
+  ALERT
+  INFO
+  WARNING
+}
+
+// ─── SETTING (key-value store) ────────────────────────────────────────────────
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([key])
+}

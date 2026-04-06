@@ -1,140 +1,10 @@
 "use server";
 
-import { connectToDatabase } from "@/lib/db";
-import { Lead } from "@/lib/models/lead";
-import { ChatSession } from "@/lib/models/chat";
-import { ContentDraft } from "@/lib/models/content-draft";
-import { Setting } from "@/lib/models/setting";
+import { prisma, connectToDatabase } from "@/lib/db";
 
-const EMPTY_PIPELINE: Record<"NEW" | "CONTACTED" | "QUALIFIED" | "PROPOSAL" | "WON", number> = {
-  NEW: 0,
-  CONTACTED: 0,
-  QUALIFIED: 0,
-  PROPOSAL: 0,
-  WON: 0,
+const EMPTY_PIPELINE = {
+  NEW: 0, CONTACTED: 0, QUALIFIED: 0, PROPOSAL: 0, WON: 0,
 };
-
-export async function getDashboardStats() {
-  try {
-    // Quick development mode check
-    if (!process.env.MONGODB_URI) {
-      return {
-        leadCount: 0,
-        hotLeads: 0,
-        chatCount: 0,
-        draftCount: 0,
-        statusPipeline: { ...EMPTY_PIPELINE },
-        brandingConfig: { siteName: "Digi Web Crew" },
-        recentLeads: [],
-        recentEvents: [
-          { title: "Database connection disabled in development", time: "Just now", type: "info" }
-        ]
-      };
-    }
-
-    const db = await connectToDatabase();
-    
-    // If no database connection, return mock data for development
-    if (!db) {
-      return {
-        leadCount: 0,
-        hotLeads: 0,
-        chatCount: 0,
-        draftCount: 0,
-        statusPipeline: { ...EMPTY_PIPELINE },
-        brandingConfig: { siteName: "Digi Web Crew" },
-        recentLeads: [],
-        recentEvents: [
-          { title: "Database connection unavailable", time: "Just now", type: "warning" }
-        ]
-      };
-    }
-
-    const [leadCount, chatCount, draftCount, branding, pipeline] = await Promise.all([
-      Lead.countDocuments(),
-      ChatSession.countDocuments(),
-      ContentDraft.countDocuments(),
-      Setting.findOne({ key: "admin.branding" }).lean(),
-      Lead.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
-    ]);
-
-    const hotLeads = await Lead.countDocuments({ leadTier: "HOT" });
-
-    const recentLeads = await Lead.find()
-      .sort({ createdAt: -1 })
-      .limit(3)
-      .select({ fullName: 1, industry: 1, budgetRange: 1, leadTier: 1, createdAt: 1 })
-      .lean();
-
-    const recentChats = await ChatSession.find()
-      .sort({ createdAt: -1 })
-      .limit(3)
-      .select({ sessionId: 1, createdAt: 1, leadScore: 1 })
-      .lean();
-
-    const recentDrafts = await ContentDraft.find()
-      .sort({ createdAt: -1 })
-      .limit(3)
-      .select({ promptKey: 1, workflowRunId: 1, createdAt: 1 })
-      .lean();
-
-    const recentEvents = [
-      ...(recentLeads.map((l: any) => ({
-        title: `New lead: ${l.fullName || "Unknown"}`,
-        time: timeAgo(l.createdAt),
-        type: "success",
-      })) || []),
-      ...(recentChats.map((c: any) => ({
-        title: `Chat session started`,
-        time: timeAgo(c.createdAt),
-        type: "system",
-      })) || []),
-      ...(recentDrafts.map((d: any) => ({
-        title: `Draft generated: ${d.promptKey}`,
-        time: timeAgo(d.createdAt),
-        type: d.workflowRunId ? "system" : "success",
-      })) || []),
-    ]
-      .sort((a, b) => b.time.localeCompare(a.time))
-      .slice(0, 4);
-
-    const brandingConfig = (branding?.value as any) || {};
-    const statusPipeline = { ...EMPTY_PIPELINE };
-    for (const entry of pipeline as Array<{ _id?: string; count?: number }>) {
-      if (entry?._id && entry._id in statusPipeline) {
-        statusPipeline[entry._id as keyof typeof statusPipeline] = entry.count || 0;
-      }
-    }
-
-    return {
-      leadCount,
-      hotLeads,
-      chatCount,
-      draftCount,
-      statusPipeline,
-      brandingConfig,
-      recentLeads: recentLeads.map((l: any) => ({
-        id:       String(l._id),
-        name:     l.fullName || "Unknown",
-        industry: l.industry || "Other",
-        budget:   l.budgetRange || "TBD",
-        intent:   l.leadTier || "COLD",
-      })),
-      recentEvents,
-    };
-  } catch {
-    return {
-      leadCount: 0,
-      hotLeads: 0,
-      chatCount: 0,
-      draftCount: 0,
-      statusPipeline: { ...EMPTY_PIPELINE },
-      brandingConfig: {},
-      recentLeads: [],
-      recentEvents: [],
-    };
-  }
-}
 
 function timeAgo(date: Date | string): string {
   const d = new Date(date);
@@ -143,10 +13,88 @@ function timeAgo(date: Date | string): string {
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
-
   if (diffMins < 2) return "1 min ago";
   if (diffMins < 60) return `${diffMins} min ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
   return `${diffDays}d ago`;
 }
 
+export async function getDashboardStats() {
+  try {
+    if (!process.env.DATABASE_URL) {
+      return {
+        leadCount: 0, hotLeads: 0, chatCount: 0, draftCount: 0,
+        statusPipeline: { ...EMPTY_PIPELINE },
+        brandingConfig: { siteName: "Digi Web Crew" },
+        recentLeads: [],
+        recentEvents: [{ title: "Database not configured", time: "Just now", type: "info" }],
+      };
+    }
+
+    const db = await connectToDatabase();
+    if (!db) {
+      return {
+        leadCount: 0, hotLeads: 0, chatCount: 0, draftCount: 0,
+        statusPipeline: { ...EMPTY_PIPELINE },
+        brandingConfig: { siteName: "Digi Web Crew" },
+        recentLeads: [], recentEvents: [],
+      };
+    }
+
+    const [leadCount, hotLeads, chatCount, draftCount, branding, pipeline, recentLeads, recentChats, recentDrafts] =
+      await Promise.all([
+        prisma.lead.count(),
+        prisma.lead.count({ where: { leadTier: "HOT" } }),
+        prisma.chatSession.count(),
+        prisma.contentDraft.count(),
+        prisma.setting.findUnique({ where: { key: "admin.branding" } }),
+        prisma.lead.groupBy({ by: ["status"], _count: { id: true } }),
+        prisma.lead.findMany({
+          orderBy: { createdAt: "desc" }, take: 3,
+          select: { id: true, fullName: true, budgetRange: true, leadTier: true, createdAt: true },
+        }),
+        prisma.chatSession.findMany({
+          orderBy: { createdAt: "desc" }, take: 3,
+          select: { sessionId: true, createdAt: true },
+        }),
+        prisma.contentDraft.findMany({
+          orderBy: { createdAt: "desc" }, take: 3,
+          select: { promptKey: true, workflowRunId: true, createdAt: true },
+        }),
+      ]);
+
+    const statusPipeline = { ...EMPTY_PIPELINE };
+    for (const row of pipeline) {
+      const key = row.status as keyof typeof statusPipeline;
+      if (key in statusPipeline) statusPipeline[key] = row._count.id;
+    }
+
+    const recentEvents = [
+      ...recentLeads.map((l) => ({ title: `New lead: ${l.fullName}`, time: timeAgo(l.createdAt), type: "success" })),
+      ...recentChats.map((c) => ({ title: "Chat session started", time: timeAgo(c.createdAt), type: "system" })),
+      ...recentDrafts.map((d) => ({ title: `Draft generated: ${d.promptKey}`, time: timeAgo(d.createdAt), type: d.workflowRunId ? "system" : "success" })),
+    ]
+      .sort((a, b) => b.time.localeCompare(a.time))
+      .slice(0, 4);
+
+    return {
+      leadCount, hotLeads, chatCount, draftCount, statusPipeline,
+      brandingConfig: (branding?.value as any) || {},
+      recentLeads: recentLeads.map((l) => ({
+        id: l.id,
+        name: l.fullName,
+        industry: "Other",
+        budget: l.budgetRange || "TBD",
+        intent: l.leadTier,
+      })),
+      recentEvents,
+    };
+  } catch (err) {
+    console.error("[DASHBOARD_STATS_ERROR]:", err);
+    return {
+      leadCount: 0, hotLeads: 0, chatCount: 0, draftCount: 0,
+      statusPipeline: { ...EMPTY_PIPELINE },
+      brandingConfig: {}, recentLeads: [], recentEvents: [],
+    };
+  }
+}

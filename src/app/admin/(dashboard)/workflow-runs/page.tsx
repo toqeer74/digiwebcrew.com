@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import Link from "next/link";
 import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
 import { PageHeader } from "@/components/admin/page-header";
@@ -17,27 +16,45 @@ export default async function WorkflowRunsPage({ searchParams }: { searchParams:
 
   const { q, page } = await searchParams;
   const pageNum = Math.max(1, Number(page || "1"));
-  const db = await connectToDatabase();
+  await connectToDatabase();
 
-  const match: any = { workflowRunId: { $exists: true, $ne: null } };
-  if (q) match.$or = [
-    { workflowRunId: { $regex: q, $options: "i" } },
-    { workflowKey: { $regex: q, $options: "i" } },
-    { promptKey: { $regex: q, $options: "i" } },
-  ];
+  const where: any = { workflowRunId: { not: null } };
+  if (q) {
+    where.OR = [
+      { workflowRunId: { contains: q, mode: "insensitive" } },
+      { workflowKey: { contains: q, mode: "insensitive" } },
+      { promptKey: { contains: q, mode: "insensitive" } },
+    ];
+  }
 
-  const [grouped, totalRuns] = await Promise.all([
-    db ? ContentDraft.aggregate([
-      { $match: match },
-      { $group: { _id: "$workflowRunId", workflowKey: { $first: "$workflowKey" }, createdAt: { $min: "$createdAt" }, updatedAt: { $max: "$updatedAt" }, steps: { $sum: 1 }, maxStepIndex: { $max: "$workflowStepIndex" } } },
-      { $sort: { updatedAt: -1 } },
-      { $skip: (pageNum - 1) * PAGE_SIZE }, { $limit: PAGE_SIZE },
-    ]) : [],
-    db ? ContentDraft.aggregate([{ $match: match }, { $group: { _id: "$workflowRunId" } }, { $count: "count" }]) : [],
+  const [groupedRaw, totalResult] = await Promise.all([
+    prisma.contentDraft.groupBy({
+      by: ['workflowRunId', 'workflowKey'],
+      where,
+      _min: { createdAt: true },
+      _max: { updatedAt: true, workflowStepIndex: true },
+      _count: { _all: true },
+      orderBy: { _max: { updatedAt: 'desc' } },
+      skip: (pageNum - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+    }),
+    prisma.contentDraft.groupBy({
+      by: ['workflowRunId'],
+      where,
+    }),
   ]);
 
-  const total = totalRuns[0]?.count || 0;
+  const total = totalResult.length;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  const grouped = groupedRaw.map(g => ({
+    _id: g.workflowRunId,
+    workflowKey: g.workflowKey,
+    createdAt: g._min?.createdAt,
+    updatedAt: g._max?.updatedAt,
+    steps: g._count?._all || 0,
+    maxStepIndex: g._max?.workflowStepIndex
+  }));
 
   const pageLink = (t: number) => {
     const p = new URLSearchParams(); if (q) p.set("q", q); p.set("page", String(t)); return `?${p.toString()}`;

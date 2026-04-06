@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import Link from "next/link";
 import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
 import { DraftDeleteButton } from "@/components/admin/draft-delete-button";
@@ -30,13 +29,25 @@ export default async function DraftsPage({ searchParams }: { searchParams: Searc
   if (!session) redirect("/admin/login");
 
   const { q, type } = await searchParams;
-  const db = await connectToDatabase();
-  const query: Record<string, any> = {};
-  if (q) query.$or = [{ title: { $regex: q, $options: "i" } }, { promptKey: { $regex: q, $options: "i" } }, { modelName: { $regex: q, $options: "i" } }];
-  if (type && type !== "all") query.type = type;
+  await connectToDatabase();
+  
+  const where: any = {};
+  if (q) {
+    where.OR = [
+      { title: { contains: q, mode: "insensitive" } },
+      { promptKey: { contains: q, mode: "insensitive" } },
+      { modelName: { contains: q, mode: "insensitive" } },
+    ];
+  }
+  if (type && type !== "all") {
+    where.type = type.toUpperCase();
+  }
 
-  const drafts = db ? await ContentDraft.find(query).sort({ createdAt: -1 }).limit(100)
-    .select({ type: 1, promptKey: 1, title: 1, modelName: 1, createdAt: 1, workflowRunId: 1, workflowStepIndex: 1, content: 1 }).lean() : [];
+  const drafts = await prisma.contentDraft.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    take: 100,
+  });
 
   return (
     <div className="admin-page-stack w-full pb-8">

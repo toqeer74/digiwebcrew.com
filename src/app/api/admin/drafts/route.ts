@@ -1,31 +1,26 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
 
   try {
     const db = await connectToDatabase();
-    if (!db) {
-      return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
-    }
+    if (!db) return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
 
-    const drafts = await ContentDraft.find({})
-      .sort({ createdAt: -1 })
-      .limit(100)
-      .select({ type: 1, promptKey: 1, title: 1, modelName: 1, createdAt: 1, updatedAt: 1 })
-      .lean();
+    const drafts = await prisma.contentDraft.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 100,
+      select: { id: true, type: true, promptKey: true, title: true, modelName: true, createdAt: true, updatedAt: true },
+    });
 
     return NextResponse.json({
       success: true,
-      drafts: drafts.map((d: any) => ({
-        id: d._id.toString(),
+      drafts: drafts.map((d) => ({
+        id: d.id,
         type: d.type,
         promptKey: d.promptKey,
         title: d.title || "",
@@ -38,4 +33,3 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Failed to load drafts" }, { status: 500 });
   }
 }
-

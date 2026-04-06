@@ -2,10 +2,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
 import { Search, HelpCircle } from "lucide-react";
+
 import { PageTransition } from "@/components/ui/page-transition";
 import { SidebarNav } from "@/components/admin/sidebar-nav";
 import { SidebarLogo } from "@/components/admin/sidebar-logo";
 import { NotificationPopover } from "@/components/admin/notification-popover";
+import { UserProfilePopover } from "@/components/admin/user-profile-popover";
 import { Toaster } from "sonner";
 import { Geist } from "next/font/google";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
@@ -48,32 +50,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           className="px-5 py-5"
           style={{ borderBottom: "1.5px solid var(--adm-sidebar-border)", flexShrink: 0 }}
         >
-          <SidebarLogo branding={branding} />
+          <SidebarLogo branding={branding} isCompressed={true} />
         </div>
 
-        {/* Search */}
-        <div
-          className="px-4 py-3"
-          style={{ borderBottom: "1px solid var(--adm-border)", flexShrink: 0 }}
-        >
-          <div className="relative">
-            <Search
-              size={13}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ color: "var(--adm-text-muted)" }}
-            />
-            <input
-              type="text"
-              placeholder="Search…"
-              className="admin-sidebar-search-input"
-              style={{ paddingLeft: 30 }}
-            />
-          </div>
-        </div>
+
 
         {/* Nav */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-2 custom-scrollbar">
-          <SidebarNav isCompressed={false} userName={userName} userEmail={userEmail} />
+          <SidebarNav isCompressed={true} userName={userName} userEmail={userEmail} />
         </div>
       </aside>
 
@@ -109,12 +93,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <button className="admin-icon-btn" title="Help">
               <HelpCircle size={16} />
             </button>
-            <div
-              className="admin-topbar-avatar grid place-items-center text-xs font-black text-white select-none"
-              title={userName}
-            >
-              {initials}
-            </div>
+            <UserProfilePopover userName={userName} userEmail={userEmail} initials={initials} />
           </div>
         </header>
 

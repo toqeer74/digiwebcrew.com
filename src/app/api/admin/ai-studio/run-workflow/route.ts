@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import { requireAdminSession } from "@/lib/auth-middleware";
 import { logAudit } from "@/lib/audit";
 import fs from "fs";
@@ -64,10 +63,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Workflow has no steps" }, { status: 400 });
     }
 
-    const db = await connectToDatabase();
-    if (!db) {
-      return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
-    }
+    await connectToDatabase();
 
     const workflowRunId = uuidv4();
     const outputs: Record<string, string> = {};
@@ -124,19 +120,21 @@ export async function POST(req: NextRequest) {
       const outputKey = step.output ? String(step.output) : `step_${idx + 1}`;
       outputs[outputKey] = content;
 
-      const draft = await ContentDraft.create({
-        type: "other",
-        promptKey,
-        content,
-        variables: mergedVariables,
-        modelName: model,
-        workflowRunId,
-        workflowKey: body.workflowKey,
-        workflowStepId: step.action ? String(step.action) : undefined,
-        workflowStepIndex: idx + 1,
+      const draft = await prisma.contentDraft.create({
+        data: {
+          type: "OTHER",
+          promptKey,
+          content,
+          variables: mergedVariables as any,
+          modelName: model,
+          workflowRunId,
+          workflowKey: body.workflowKey,
+          workflowStepId: step.action ? String(step.action) : undefined,
+          workflowStepIndex: idx + 1,
+        },
       });
 
-      createdDraftIds.push(draft._id.toString());
+      createdDraftIds.push(draft.id);
     }
 
     return NextResponse.json({

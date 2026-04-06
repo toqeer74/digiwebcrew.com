@@ -1,21 +1,35 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import ChatSession from "@/lib/models/chat";
+import { prisma, connectToDatabase } from "@/lib/db";
 import { ChatsClient } from "@/components/admin/chats-client";
 
 type SearchParams = Promise<{ session?: string }>;
 
 async function getSessions() {
   await connectToDatabase();
-  const sessions = await ChatSession.find({}, { sessionId:1, mode:1, leadScore:1, isConverted:1, isClosed:1, metadata:1, createdAt:1, updatedAt:1, messages:{ $slice:-1 } }).sort({ updatedAt:-1 }).lean();
+  const sessions = await prisma.chatSession.findMany({
+    orderBy: { updatedAt: "desc" },
+    include: {
+      messages: {
+        take: 1,
+        orderBy: { timestamp: "desc" },
+      },
+    },
+  });
   return JSON.parse(JSON.stringify(sessions));
 }
 
 async function getSessionById(sessionId: string) {
   await connectToDatabase();
-  const session = await ChatSession.findOne({ sessionId }).lean();
+  const session = await prisma.chatSession.findUnique({
+    where: { sessionId },
+    include: {
+      messages: {
+        orderBy: { timestamp: "asc" },
+      },
+    },
+  });
   return session ? JSON.parse(JSON.stringify(session)) : null;
 }
 

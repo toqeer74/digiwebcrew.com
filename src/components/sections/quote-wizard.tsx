@@ -250,7 +250,7 @@ export function QuoteWizard({ isRtl, locale, preselectedService }: QuoteWizardPr
     setIsSubmitting(false);
 
     if (!result.success) {
-      alert(result.message);
+      alert(result.error || "Failed to submit quote");
       return;
     }
 

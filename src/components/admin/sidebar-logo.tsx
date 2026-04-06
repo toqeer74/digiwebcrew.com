@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
 import { BrandingConfig } from "@/lib/branding-shared";
+import { cn } from "@/lib/utils";
 
-export function SidebarLogo({ branding }: { branding: BrandingConfig }) {
+export function SidebarLogo({ branding, isCompressed = false }: { branding: BrandingConfig; isCompressed?: boolean }) {
   const initials = branding.siteName
     .split(/\s+/).filter(Boolean).map((p) => p[0]).join("").slice(0, 2).toUpperCase() || "DW";
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={cn("flex flex-col items-center gap-2.5", !isCompressed && "flex-row")}>
       {branding.logoDataUrl ? (
         <div
           className="relative overflow-hidden rounded-xl shrink-0"
@@ -27,10 +28,12 @@ export function SidebarLogo({ branding }: { branding: BrandingConfig }) {
           {initials}
         </div>
       )}
-      <div className="min-w-0">
-        <p className="admin-logo-name truncate">{branding.siteName}</p>
-        <p className="admin-logo-tag">Admin Control</p>
-      </div>
+      {!isCompressed && (
+        <div className="min-w-0">
+          <p className="admin-logo-name truncate">{branding.siteName}</p>
+          <p className="admin-logo-tag">Admin Control</p>
+        </div>
+      )}
     </div>
   );
 }

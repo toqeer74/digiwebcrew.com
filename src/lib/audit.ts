@@ -1,6 +1,8 @@
 import { headers } from "next/headers";
-import { AuditLog, IAuditLog, AuditAction } from "@/lib/models/audit-log";
-import { connectToDatabase } from "./db";
+import { prisma, connectToDatabase } from "@/lib/db";
+import { AuditAction } from "../generated/prisma";
+
+export type { AuditAction };
 
 export async function logAudit(params: {
   action: AuditAction;
@@ -15,19 +17,18 @@ export async function logAudit(params: {
   try {
     await connectToDatabase();
     const headersList = await headers();
-    const ip = headersList.get("x-forwarded-for") || 
-              headersList.get("x-real-ip") || 
-              "unknown";
+    const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || "unknown";
     const userAgent = headersList.get("user-agent") || "unknown";
 
-    await AuditLog.create({
-      ...params,
-      success: params.success ?? true,
-      ip,
-      userAgent,
+    await prisma.auditLog.create({
+      data: {
+        ...params,
+        success: params.success ?? true,
+        ip,
+        userAgent,
+      },
     });
   } catch (e) {
-    // Silently fail to avoid breaking main flow
     console.error("Failed to log audit:", e);
   }
 }
@@ -41,20 +42,17 @@ export async function getAuditLogs(filters?: {
 }) {
   try {
     await connectToDatabase();
-    const query: any = {};
-    if (filters?.userId) query.userId = filters.userId;
-    if (filters?.action) query.action = filters.action;
-    if (filters?.resource) query.resource = filters.resource;
-
-    const logs = await AuditLog.find(query)
-      .sort({ createdAt: -1 })
-      .limit(filters?.limit || 100)
-      .skip(filters?.offset || 0)
-      .lean();
-
-    return logs;
+    return prisma.auditLog.findMany({
+      where: {
+        ...(filters?.userId ? { userId: filters.userId } : {}),
+        ...(filters?.action ? { action: filters.action } : {}),
+        ...(filters?.resource ? { resource: filters.resource } : {}),
+      },
+      orderBy: { createdAt: "desc" },
+      take: filters?.limit || 100,
+      skip: filters?.offset || 0,
+    });
   } catch {
     return [];
   }
 }
-

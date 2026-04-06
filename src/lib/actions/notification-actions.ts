@@ -1,36 +1,29 @@
 "use server";
 
-import { connectToDatabase } from "@/lib/db";
-import { Notification } from "@/lib/models/notification";
+import { prisma, connectToDatabase } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
 export async function getNotifications() {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Unauthorized");
-
-  // Quick development mode check
-  if (!process.env.MONGODB_URI) {
-    return [];
-  }
+  if (!process.env.DATABASE_URL) return [];
 
   const db = await connectToDatabase();
-  if (!db) {
-    return [];
-  }
+  if (!db) return [];
 
-  const notifications = await Notification.find()
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .lean();
+  const notifications = await prisma.notification.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 10,
+  });
 
-  return notifications.map(notification => ({
-    id: notification._id.toString(),
-    type: notification.type,
-    title: notification.title,
-    body: notification.body,
-    time: notification.createdAt,
-    read: notification.read,
+  return notifications.map((n) => ({
+    id: n.id,
+    type: n.type,
+    title: n.title,
+    body: n.body,
+    time: n.createdAt,
+    read: n.read,
   }));
 }
 
@@ -39,8 +32,7 @@ export async function markNotificationAsRead(notificationId: string) {
   if (!session) throw new Error("Unauthorized");
 
   await connectToDatabase();
-
-  await Notification.findByIdAndUpdate(notificationId, { read: true });
+  await prisma.notification.update({ where: { id: notificationId }, data: { read: true } });
 }
 
 export async function createNotification(type: string, title: string, body: string) {
@@ -48,16 +40,7 @@ export async function createNotification(type: string, title: string, body: stri
   if (!session) throw new Error("Unauthorized");
 
   await connectToDatabase();
-
-  const notification = new Notification({
-    type,
-    title,
-    body,
-    read: false,
+  return prisma.notification.create({
+    data: { type: type as any, title, body, read: false },
   });
-
-  await notification.save();
-
-  return notification;
 }
-

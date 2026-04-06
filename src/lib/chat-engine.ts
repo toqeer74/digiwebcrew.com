@@ -1,164 +1,165 @@
 import OpenAI from "openai";
-import { IChatSession, IChatMessage, ChatMode } from "./models/chat";
+import { prisma } from "@/lib/db";
 import { generateSystemPrompt } from "./prompts";
-import { Lead } from "./models/lead";
 
 function getOpenAIClient() {
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-        throw new Error("OPENAI_API_KEY is not configured");
-    }
-    return new OpenAI({ apiKey });
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("OPENAI_API_KEY is not configured");
+  return new OpenAI({ apiKey });
 }
 
-export async function processChatMessage(session: IChatSession, userMessage: string) {
-    // 1. Log user message
-    session.messages.push({
-        role: "user",
-        content: userMessage,
-        timestamp: new Date()
+// session is a Prisma ChatSession with included messages[]
+export async function processChatMessage(session: any, userMessage: string) {
+  const sessionId = session.sessionId;
+
+  // 1. Save user message
+  await prisma.chatMessage.create({
+    data: { chatSessionId: session.id, role: "USER", content: userMessage },
+  });
+
+  // 2. Extract signals & compute score delta
+  const { scoreDelta, updates } = extractSignals(session, userMessage);
+
+  // 3. Update mode
+  const newMode = updateChatMode(session, userMessage, updates);
+
+  // 4. Fetch last 10 messages for context
+  const history = await prisma.chatMessage.findMany({
+    where: { chatSessionId: session.id },
+    orderBy: { timestamp: "asc" },
+    take: 10,
+  });
+
+  const systemPrompt = generateSystemPrompt(newMode, {
+    service: updates.service ?? session.service,
+    leadScore: session.leadScore + scoreDelta,
+    intent: updates.intent ?? session.intent,
+  });
+
+  // 5. Get AI reply
+  let assistantReply = "I'm sorry, I'm having trouble processing that right now.";
+  try {
+    const openai = getOpenAIClient();
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...history.map((m) => ({ role: m.role.toLowerCase() as any, content: m.content })),
+      ],
+      max_tokens: 150,
+      temperature: 0.7,
     });
+    assistantReply = response.choices[0].message.content || assistantReply;
+  } catch (err) {
+    console.error("OpenAI Chat Completion Error:", err);
+    throw err;
+  }
 
-    // 2. Simple Rule-based intent/signal extraction (The "Hybrid" part)
-    extractSignals(session, userMessage);
+  // 6. Save assistant message
+  await prisma.chatMessage.create({
+    data: { chatSessionId: session.id, role: "ASSISTANT", content: assistantReply },
+  });
 
-    // 3. Mode Transition Logic (Simplified for now)
-    updateChatMode(session, userMessage);
+  // 7. Persist state updates
+  const newScore = Math.min(100, session.leadScore + scoreDelta);
+  const contactEmail = updates.contactEmail;
 
-    // 4. Generate AI Response
-    const systemPrompt = generateSystemPrompt(session.mode, {
-        service: session.metadata.service,
-        leadScore: session.leadScore,
-        intent: session.metadata.intent
+  const updatedSession = await prisma.chatSession.update({
+    where: { id: session.id },
+    data: {
+      mode: newMode as any,
+      leadScore: newScore,
+      ...(updates.service ? { service: updates.service } : {}),
+      ...(updates.intent ? { intent: updates.intent } : {}),
+      ...(updates.budget ? { budget: updates.budget } : {}),
+      ...(updates.urgency ? { urgency: updates.urgency } : {}),
+      ...(contactEmail ? { contactEmail } : {}),
+    },
+  });
+
+  // 8. Auto-convert to lead if in CAPTURE mode with email
+  if (newMode === "CAPTURE" && contactEmail && !session.isConverted) {
+    await syncToLeads(updatedSession);
+    await prisma.chatSession.update({ where: { id: session.id }, data: { isConverted: true } });
+  }
+
+  return assistantReply;
+}
+
+async function syncToLeads(session: any) {
+  try {
+    if (!session.contactEmail) return;
+    const { calculateLeadScore } = await import("./lead-scoring");
+
+    const payload = {
+      fullName: session.contactName || "AI Chat Lead",
+      email: session.contactEmail,
+      serviceCategory: session.service || "Uncategorized AI Inquiry",
+      serviceInterest: `Inquiry from Chat Session: ${session.sessionId}`,
+      projectType: session.service || "Software Development",
+      budgetRange: session.budget || "TBD (AI Discovery)",
+      timeline: session.urgency === "HIGH" ? "Urgent" : "Discovery Phase",
+      message: `Auto-captured from AI Chat. Lead Score: ${session.leadScore}. Mode: ${session.mode}`,
+      source: "AI Chatbot",
+    };
+
+    const scored = calculateLeadScore(payload);
+    await prisma.lead.create({
+      data: {
+        ...payload,
+        company: "",
+        leadScore: scored.score,
+        leadTier: scored.tier as any,
+        status: "NEW",
+        events: {
+          create: [{ type: "LeadCreated", meta: { source: "chat-conversion", sessionId: session.sessionId } }],
+        },
+      },
     });
-
-    // Get last 10 messages for context
-    const history = session.messages.slice(-10).map(m => ({
-        role: m.role,
-        content: m.content
-    }));
-
-    let assistantReply = "I'm sorry, I'm having trouble processing that right now.";
-    try {
-        const openai = getOpenAIClient();
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // Cost-effective & fast
-            messages: [
-                { role: "system", content: systemPrompt },
-                ...history as any
-            ],
-            max_tokens: 150,
-            temperature: 0.7,
-        });
-
-        assistantReply = response.choices[0].message.content || assistantReply;
-    } catch (err) {
-        console.error("OpenAI Chat Completion Error:", err);
-        throw err;
-    }
-
-    // 5. Log assistant message
-    session.messages.push({
-        role: "assistant",
-        content: assistantReply,
-        timestamp: new Date()
-    });
-
-    // 6. Final state cleanup & Lead Conversion
-    if (session.mode === "CAPTURE" && (userMessage.includes("@") || session.metadata.contactInfo?.email)) {
-        if (!session.isConverted) {
-            session.isConverted = true;
-            await syncToLeads(session);
-        }
-    }
-
-    session.updatedAt = new Date();
-    await session.save();
-
-    return assistantReply;
+  } catch (err) {
+    console.error("Lead Sync Error:", err);
+  }
 }
 
-async function syncToLeads(session: IChatSession) {
-    try {
-        const contact = session.metadata.contactInfo;
-        if (!contact?.email) return;
+function extractSignals(session: any, text: string) {
+  const t = text.toLowerCase();
+  let scoreDelta = 0;
+  const updates: Record<string, string> = {};
 
-        // Create a official lead from AI session
-        await Lead.create({
-            fullName: contact.name || "AI Chat Lead",
-            email: contact.email,
-            serviceCategory: session.metadata.service || "Uncategorized AI Inquiry",
-            serviceInterest: `Inquiry from Chat Session: ${session.sessionId}`,
-            projectType: session.metadata.service || "Software Development",
-            budgetRange: session.metadata.budget || "TBD (AI Discovery)",
-            timeline: session.metadata.urgency === "HIGH" ? "Urgent" : "Discovery Phase",
-            message: `Automatically captured from AI Chat. Lead Score: ${session.leadScore}. Last Mode: ${session.mode}`,
-            source: "AI Chatbot",
-            leadScore: session.leadScore,
-            leadTier: session.leadScore > 40 ? "HOT" : session.leadScore > 20 ? "WARM" : "COLD",
-            status: "NEW"
-        });
-    } catch (err) {
-        console.error("Lead Sync Error:", err);
+  if (t.includes("$") || t.includes("budget") || t.includes("cost") || t.includes("price")) {
+    scoreDelta += 5;
+    if (["5000", "10000", "10k", "5k"].some((w) => t.includes(w))) {
+      scoreDelta += 10;
+      updates.budget = "Project Value Detected";
     }
+  }
+  if (["urgent", "asap", "immediately", "deadline"].some((w) => t.includes(w))) {
+    scoreDelta += 10;
+    updates.urgency = "HIGH";
+  }
+  if (["website", "nextjs", "design"].some((w) => t.includes(w))) updates.service = "Web Development";
+  if (["app", "mobile", "ios"].some((w) => t.includes(w))) updates.service = "Mobile App";
+  if (["automation", "n8n", "workflow"].some((w) => t.includes(w))) updates.service = "Automation";
+
+  const emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+  if (emailMatch) {
+    updates.contactEmail = emailMatch[0];
+    scoreDelta += 20;
+  }
+
+  return { scoreDelta, updates };
 }
 
-function extractSignals(session: IChatSession, text: string) {
-    const t = text.toLowerCase();
+function updateChatMode(session: any, text: string, updates: Record<string, string>) {
+  const t = text.toLowerCase();
+  const currentMode: string = session.mode;
+  const service = updates.service || session.service;
+  const newScore = session.leadScore + (updates.contactEmail ? 20 : 0);
 
-    // Budget signals
-    if (t.includes("$") || t.includes("budget") || t.includes("cost") || t.includes("price")) {
-        session.leadScore += 5;
-        if (t.includes("5000") || t.includes("10000") || t.includes("10k") || t.includes("5k")) {
-            session.leadScore += 10;
-            session.metadata.budget = "Project Value Detected";
-        }
-    }
-
-    // Urgency signals
-    if (t.includes("urgent") || t.includes("asap") || t.includes("immediately") || t.includes("deadline")) {
-        session.leadScore += 10;
-        session.metadata.urgency = "HIGH";
-    }
-
-    // Service detection
-    if (t.includes("website") || t.includes("nextjs") || t.includes("design")) session.metadata.service = "Web Development";
-    if (t.includes("app") || t.includes("mobile") || t.includes("ios")) session.metadata.service = "Mobile App";
-    if (t.includes("automation") || t.includes("n8n") || t.includes("workflow")) session.metadata.service = "Automation";
-
-    // Contact info
-    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-    const emailMatch = t.match(emailRegex);
-    if (emailMatch) {
-        session.metadata.contactInfo = { ...session.metadata.contactInfo, email: emailMatch[0] };
-        session.leadScore += 20;
-    }
+  if (currentMode === "INTRO") return "DISCOVER";
+  if (currentMode === "DISCOVER" && service) return "QUALIFY";
+  if (newScore >= 30 && !["CONVERT", "CAPTURE"].includes(currentMode)) return "CONVERT";
+  if (currentMode === "CONVERT" && ["yes", "sure", "ok", "quote"].some((w) => t.includes(w))) return "CAPTURE";
+  if (["question", "how", "what is"].some((w) => t.includes(w))) return "QA";
+  return currentMode;
 }
-
-function updateChatMode(session: IChatSession, text: string) {
-    const t = text.toLowerCase();
-    const currentMode = session.mode;
-
-    // Jump from INTRO to DISCOVER
-    if (currentMode === "INTRO") {
-        session.mode = "DISCOVER";
-    }
-    // Jump to QUALIFY if they mention service/need
-    else if (currentMode === "DISCOVER" && session.metadata.service) {
-        session.mode = "QUALIFY";
-    }
-    // Jump to CONVERT if lead score is high
-    else if (session.leadScore >= 30 && currentMode !== "CONVERT" && currentMode !== "CAPTURE") {
-        session.mode = "CONVERT";
-    }
-    // Jump to CAPTURE if in CONVERT and they say yes
-    else if (currentMode === "CONVERT" && (t.includes("yes") || t.includes("sure") || t.includes("ok") || t.includes("quote"))) {
-        session.mode = "CAPTURE";
-    }
-
-    // Common fallback
-    if (t.includes("question") || t.includes("how") || t.includes("what is")) {
-        session.mode = "QA";
-    }
-}
-

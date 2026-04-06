@@ -1,6 +1,5 @@
 import { cache } from "react";
-import { connectToDatabase } from "@/lib/db";
-import { Setting } from "@/lib/models/setting";
+import { prisma, connectToDatabase } from "@/lib/db";
 import {
   BrandingConfig,
   DEFAULT_BRANDING_CONFIG,
@@ -13,7 +12,7 @@ export { DEFAULT_BRANDING_CONFIG, deriveBrandingVars } from "@/lib/branding-shar
 export const getPublicBrandingConfig = cache(async (): Promise<BrandingConfig> => {
   try {
     await connectToDatabase();
-    const doc = await Setting.findOne({ key: "admin.branding" }).lean();
+    const doc = await prisma.setting.findUnique({ where: { key: "admin.branding" } });
     const value = (doc?.value || {}) as Partial<BrandingConfig>;
 
     return {
@@ -25,4 +24,3 @@ export const getPublicBrandingConfig = cache(async (): Promise<BrandingConfig> =
     return DEFAULT_BRANDING_CONFIG;
   }
 });
-

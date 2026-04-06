@@ -11,8 +11,14 @@ import { MessageSquare, User, ArrowRight } from "lucide-react";
 
 interface ChatMessage { role: string; content: string; timestamp?: string; }
 interface ChatSessionLite {
-  sessionId: string; mode?: string; leadScore?: number; isConverted?: boolean;
-  updatedAt?: string; metadata?: any; messages?: ChatMessage[];
+  sessionId: string;
+  mode?: string;
+  leadScore?: number;
+  isConverted?: boolean;
+  isClosed?: boolean;
+  updatedAt?: string;
+  metadata?: any;
+  messages?: ChatMessage[];
 }
 
 function relTime(v?: string) {

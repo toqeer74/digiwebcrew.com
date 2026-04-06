@@ -67,89 +67,101 @@ export default async function DashboardPage() {
         })}
       </section>
 
-      {/* ── Lead Pipeline ── */}
-      <ACard>
-        <ACardHeader>
-          <ACardTitle>Lead Status Pipeline</ACardTitle>
-          <span className="adm-badge adm-badge-primary">Live</span>
-        </ACardHeader>
-        <ACardBody>
-          <div className="adm-pipeline-grid">
-            {PIPELINE_KEYS.map((key) => (
-              <div key={key} className="adm-pipeline-col">
-                <p style={{ fontSize: 9.5, fontWeight: 800, textTransform: "uppercase", letterSpacing: 1, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)", marginBottom: 6 }}>{key}</p>
-                <p style={{ fontSize: 28, fontWeight: 800, color: PIPELINE_COLORS[key] }}>{data.statusPipeline?.[key] || 0}</p>
-              </div>
-            ))}
-          </div>
-        </ACardBody>
-      </ACard>
-
-      {/* ── Recent Leads + Activity ── */}
+      {/* ── Two-column layout: LEFT = Pipeline + Recent Leads | RIGHT = Activity + Quick Actions ── */}
       <div className="adm-col-2">
-        <ACard>
-          <ACardHeader>
-            <ACardTitle>Recent Leads</ACardTitle>
-            <Link href="/admin/leads" className="adm-btn adm-btn-ghost adm-btn-sm inline-flex items-center gap-1">
-              View all <ArrowRight size={13} />
-            </Link>
-          </ACardHeader>
-          <ACardBody style={{ padding: 0 }}>
-            {!(data.recentLeads || []).length ? (
-              <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--adm-text-muted)", fontSize: 13 }}>No recent leads.</div>
-            ) : (
-              <table className="admin-table">
-                <thead><tr><th>Name</th><th>Industry</th><th>Budget</th><th>Intent</th></tr></thead>
-                <tbody>
-                  {(data.recentLeads || []).map((lead: any) => (
-                    <tr key={lead.id || lead.name}>
-                      <td>
-                        <Link href={`/admin/leads/${lead.id}`} style={{ fontWeight: 600, color: "var(--adm-primary)" }}>{lead.name}</Link>
-                        <div style={{ fontSize: 11.5, color: "var(--adm-text-muted)", marginTop: 1 }}>{lead.industry}</div>
-                      </td>
-                      <td style={{ color: "var(--adm-text-dim)" }}>{lead.industry || "General"}</td>
-                      <td style={{ fontFamily: "var(--adm-mono)", fontSize: 12 }}>{lead.budget || "TBD"}</td>
-                      <td>
-                        <span className={`adm-badge ${lead.intent==="HOT"?"adm-badge-danger":lead.intent==="WARM"?"adm-badge-warning":"adm-badge-muted"}`}>
-                          {lead.intent || "COLD"}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </ACardBody>
-        </ACard>
 
-        <ACard>
-          <ACardHeader>
-            <ACardTitle>Activity Feed</ACardTitle>
-            <span className="adm-badge adm-badge-muted">Today</span>
-          </ACardHeader>
-          <ACardBody>
-            {!(data.recentEvents || []).length ? (
-              <p style={{ fontSize: 13, color: "var(--adm-text-muted)" }}>No recent activity.</p>
-            ) : (
-              (data.recentEvents || []).map((event: any, i: number) => (
-                <div key={`${event.title}-${i}`} className="adm-activity-item">
-                  <div className={`adm-activity-dot${event.type === "warning" ? " warning" : event.type === "danger" ? " danger" : ""}`} />
-                  <div>
-                    <p style={{ fontSize: 13.5, fontWeight: 600, color: "var(--adm-text)" }}>{event.title}</p>
-                    <p style={{ fontSize: 11.5, color: "var(--adm-text-muted)", marginTop: 2, fontFamily: "var(--adm-mono)" }}>{event.time}</p>
+        {/* LEFT COLUMN */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+
+          {/* Pipeline */}
+          <ACard>
+            <ACardHeader>
+              <ACardTitle>Lead Status Pipeline</ACardTitle>
+              <span className="adm-badge adm-badge-primary">Live</span>
+            </ACardHeader>
+            <ACardBody>
+              <div className="adm-pipeline-grid">
+                {PIPELINE_KEYS.map((key) => (
+                  <div key={key} className="adm-pipeline-col">
+                    <p style={{ fontSize: 9.5, fontWeight: 800, textTransform: "uppercase", letterSpacing: 1, color: "var(--adm-text-muted)", fontFamily: "var(--adm-mono)", marginBottom: 6 }}>{key}</p>
+                    <p style={{ fontSize: 28, fontWeight: 800, color: PIPELINE_COLORS[key] }}>{data.statusPipeline?.[key] || 0}</p>
                   </div>
-                </div>
-              ))
-            )}
-          </ACardBody>
-        </ACard>
-      </div>
+                ))}
+              </div>
+            </ACardBody>
+          </ACard>
 
-      {/* ── Quick Actions ── */}
-      <ACard>
-        <ACardHeader><ACardTitle>Quick Actions</ACardTitle></ACardHeader>
-        <DashboardQuickActions />
-      </ACard>
+          {/* Recent Leads */}
+          <ACard>
+            <ACardHeader>
+              <ACardTitle>Recent Leads</ACardTitle>
+              <Link href="/admin/leads" className="adm-btn adm-btn-ghost adm-btn-sm inline-flex items-center gap-1">
+                View all <ArrowRight size={13} />
+              </Link>
+            </ACardHeader>
+            <ACardBody style={{ padding: 0 }}>
+              {!(data.recentLeads || []).length ? (
+                <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--adm-text-muted)", fontSize: 13 }}>No recent leads.</div>
+              ) : (
+                <table className="admin-table">
+                  <thead><tr><th>Name</th><th>Industry</th><th>Budget</th><th>Intent</th></tr></thead>
+                  <tbody>
+                    {(data.recentLeads || []).map((lead: any) => (
+                      <tr key={lead.id || lead.name}>
+                        <td>
+                          <Link href={`/admin/leads/${lead.id}`} style={{ fontWeight: 600, color: "var(--adm-primary)" }}>{lead.name}</Link>
+                          <div style={{ fontSize: 11.5, color: "var(--adm-text-muted)", marginTop: 1 }}>{lead.industry}</div>
+                        </td>
+                        <td style={{ color: "var(--adm-text-dim)" }}>{lead.industry || "General"}</td>
+                        <td style={{ fontFamily: "var(--adm-mono)", fontSize: 12 }}>{lead.budget || "TBD"}</td>
+                        <td>
+                          <span className={`adm-badge ${lead.intent==="HOT"?"adm-badge-danger":lead.intent==="WARM"?"adm-badge-warning":"adm-badge-muted"}`}>
+                            {lead.intent || "COLD"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </ACardBody>
+          </ACard>
+        </div>
+
+        {/* RIGHT COLUMN */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+
+          {/* Activity Feed */}
+          <ACard>
+            <ACardHeader>
+              <ACardTitle>Activity Feed</ACardTitle>
+              <span className="adm-badge adm-badge-muted">Today</span>
+            </ACardHeader>
+            <ACardBody>
+              {!(data.recentEvents || []).length ? (
+                <p style={{ fontSize: 13, color: "var(--adm-text-muted)" }}>No recent activity.</p>
+              ) : (
+                (data.recentEvents || []).map((event: any, i: number) => (
+                  <div key={`${event.title}-${i}`} className="adm-activity-item">
+                    <div className={`adm-activity-dot${event.type === "warning" ? " warning" : event.type === "danger" ? " danger" : ""}`} />
+                    <div>
+                      <p style={{ fontSize: 13.5, fontWeight: 600, color: "var(--adm-text)" }}>{event.title}</p>
+                      <p style={{ fontSize: 11.5, color: "var(--adm-text-muted)", marginTop: 2, fontFamily: "var(--adm-mono)" }}>{event.time}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </ACardBody>
+          </ACard>
+
+          {/* Quick Actions */}
+          <ACard>
+            <ACardHeader><ACardTitle>Quick Actions</ACardTitle></ACardHeader>
+            <DashboardQuickActions />
+          </ACard>
+        </div>
+
+      </div>
     </div>
   );
 }

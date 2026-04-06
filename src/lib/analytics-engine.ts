@@ -1,48 +1,22 @@
-// Analytics Engine - Dashboard metrics and reporting
-
-import { connectToDatabase } from "@/lib/db";
-import { Lead } from "@/lib/models/lead";
+// Analytics Engine — PostgreSQL/Prisma version
+import { prisma, connectToDatabase } from "@/lib/db";
 
 export async function getLeadAnalytics() {
   try {
     await connectToDatabase();
-
-    const [totalLeads, leadsByTier, leadsByStatus, leadsByCategory] = await Promise.all([
-      Lead.countDocuments(),
-      Lead.aggregate([
-        {
-          $group: {
-            _id: "$leadTier",
-            count: { $sum: 1 },
-          },
-        },
-      ]),
-      Lead.aggregate([
-        {
-          $group: {
-            _id: "$status",
-            count: { $sum: 1 },
-          },
-        },
-      ]),
-      Lead.aggregate([
-        {
-          $group: {
-            _id: "$serviceCategory",
-            count: { $sum: 1 },
-          },
-        },
-      ]),
+    const [totalLeads, byTier, byStatus, byCategory] = await Promise.all([
+      prisma.lead.count(),
+      prisma.lead.groupBy({ by: ["leadTier"], _count: { id: true } }),
+      prisma.lead.groupBy({ by: ["status"], _count: { id: true } }),
+      prisma.lead.groupBy({ by: ["serviceCategory"], _count: { id: true } }),
     ]);
-
     return {
       totalLeads,
-      byTier: Object.fromEntries(leadsByTier.map((item) => [item._id, item.count])),
-      byStatus: Object.fromEntries(leadsByStatus.map((item) => [item._id, item.count])),
-      byCategory: Object.fromEntries(leadsByCategory.map((item) => [item._id, item.count])),
+      byTier: Object.fromEntries(byTier.map((r) => [r.leadTier, r._count.id])),
+      byStatus: Object.fromEntries(byStatus.map((r) => [r.status, r._count.id])),
+      byCategory: Object.fromEntries(byCategory.map((r) => [r.serviceCategory, r._count.id])),
     };
-  } catch (error) {
-    console.error("Analytics error:", error);
+  } catch {
     return { totalLeads: 0, byTier: {}, byStatus: {}, byCategory: {} };
   }
 }
@@ -50,182 +24,99 @@ export async function getLeadAnalytics() {
 export async function getConversionMetrics() {
   try {
     await connectToDatabase();
-
-    const total = await Lead.countDocuments();
-    const contacted = await Lead.countDocuments({ status: { $ne: "NEW" } });
-    const qualified = await Lead.countDocuments({ status: { $in: ["QUALIFIED", "PROPOSAL", "WON"] } });
-    const won = await Lead.countDocuments({ status: "WON" });
-
+    const [total, contacted, qualified, won] = await Promise.all([
+      prisma.lead.count(),
+      prisma.lead.count({ where: { status: { not: "NEW" } } }),
+      prisma.lead.count({ where: { status: { in: ["QUALIFIED", "PROPOSAL", "WON"] } } }),
+      prisma.lead.count({ where: { status: "WON" } }),
+    ]);
     return {
       total,
       contactedRate: total > 0 ? ((contacted / total) * 100).toFixed(1) + "%" : "0%",
       qualificationRate: total > 0 ? ((qualified / total) * 100).toFixed(1) + "%" : "0%",
       closureRate: total > 0 ? ((won / total) * 100).toFixed(1) + "%" : "0%",
+      conversionRate: total > 0 ? Number(((won / total) * 100).toFixed(1)) : 0,
       qualified,
       won,
     };
-  } catch (error) {
-    console.error("Conversion metrics error:", error);
-    return { total: 0, contactedRate: "0%", qualificationRate: "0%", closureRate: "0%", qualified: 0, won: 0 };
+  } catch {
+    return { total: 0, contactedRate: "0%", qualificationRate: "0%", closureRate: "0%", conversionRate: 0, qualified: 0, won: 0 };
   }
 }
 
 export async function getScoreDistribution() {
   try {
     await connectToDatabase();
-
-    const distribution = await Lead.aggregate([
-      {
-        $bucket: {
-          groupBy: "$leadScore",
-          boundaries: [0, 20, 40, 60, 80, 100],
-          default: "Others",
-          output: {
-            count: { $sum: 1 },
-          },
-        },
-      },
-    ]);
-
-    return distribution;
-  } catch (error) {
-    console.error("Score distribution error:", error);
+    const buckets = [
+      { label: "0-20", min: 0, max: 20 },
+      { label: "21-40", min: 21, max: 40 },
+      { label: "41-60", min: 41, max: 60 },
+      { label: "61-80", min: 61, max: 80 },
+      { label: "81-100", min: 81, max: 100 },
+    ];
+    return Promise.all(
+      buckets.map(async (b) => ({
+        label: b.label,
+        count: await prisma.lead.count({ where: { leadScore: { gte: b.min, lte: b.max } } }),
+      }))
+    );
+  } catch {
     return [];
   }
 }
 
 export async function getRevenueInsights() {
-  try {
-    await connectToDatabase();
-
-    const budgetAnalysis = await Lead.aggregate([
-      {
-        $group: {
-          _id: "$budgetRange",
-          count: { $sum: 1 },
-          avgScore: { $avg: "$leadScore" },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]);
-
-    const tierInsights = await Lead.aggregate([
-      {
-        $group: {
-          _id: "$leadTier",
-          avgBudget: { $push: "$budgetRange" },
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    return { budgetAnalysis, tierInsights };
-  } catch (error) {
-    console.error("Revenue insights error:", error);
-    return { budgetAnalysis: [], tierInsights: [] };
-  }
+  return { message: "Revenue insights not yet implemented" };
 }
 
-export async function getActivityTimeline(days: number = 30) {
+export async function getActivityTimeline(days = 30) {
   try {
     await connectToDatabase();
-
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
-
-    const timeline = await Lead.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: startDate },
-        },
-      },
-      {
-        $group: {
-          _id: {
-            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-          },
-          leads: { $sum: 1 },
-          avgScore: { $avg: "$leadScore" },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
-
-    return timeline;
-  } catch (error) {
-    console.error("Activity timeline error:", error);
+    const since = new Date(Date.now() - days * 86400000);
+    const result: Array<{ date: string; count: bigint }> = await prisma.$queryRaw`
+      SELECT TO_CHAR(DATE_TRUNC('day', "createdAt"), 'YYYY-MM-DD') AS date,
+             COUNT(*)::int AS count
+      FROM "Lead"
+      WHERE "createdAt" >= ${since}
+      GROUP BY DATE_TRUNC('day', "createdAt")
+      ORDER BY DATE_TRUNC('day', "createdAt")
+    `;
+    return result.map((r) => ({ date: r.date, count: Number(r.count) }));
+  } catch {
     return [];
   }
 }
 
-export async function getTopPerformingCategories(limit: number = 5) {
+export async function getTopPerformingCategories(limit = 5) {
   try {
     await connectToDatabase();
-
-    const categories = await Lead.aggregate([
-      {
-        $group: {
-          _id: "$serviceCategory",
-          leadCount: { $sum: 1 },
-          avgScore: { $avg: "$leadScore" },
-          conversionCount: {
-            $sum: {
-              $cond: [{ $eq: ["$status", "WON"] }, 1, 0],
-            },
-          },
-        },
-      },
-      {
-        $addFields: {
-          conversionRate: {
-            $multiply: [{ $divide: ["$conversionCount", "$leadCount"] }, 100],
-          },
-        },
-      },
-      { $sort: { conversionCount: -1 } },
-      { $limit: limit },
-    ]);
-
-    return categories;
-  } catch (error) {
-    console.error("Top categories error:", error);
+    const groups = await prisma.lead.groupBy({
+      by: ["serviceCategory"],
+      _count: { id: true },
+      orderBy: { _count: { id: "desc" } },
+      take: limit,
+    });
+    return groups.map((g) => ({ name: g.serviceCategory, count: g._count.id }));
+  } catch {
     return [];
   }
 }
 
-export async function generateLeadReport(dateRange?: { from: Date; to: Date }) {
+export async function generateLeadReport() {
   try {
     await connectToDatabase();
-
-    const query: any = {};
-    if (dateRange) {
-      query.createdAt = {
-        $gte: dateRange.from,
-        $lte: dateRange.to,
-      };
-    }
-
-    const leads = await Lead.find(query).lean();
-    const totalLeads = leads.length;
-    const hotLeads = leads.filter((l) => l.leadTier === "HOT").length;
-    const warmLeads = leads.filter((l) => l.leadTier === "WARM").length;
-    const coldLeads = leads.filter((l) => l.leadTier === "COLD").length;
-
-    const avgScore = leads.reduce((sum, l) => sum + l.leadScore, 0) / totalLeads || 0;
-    const highValueLeads = leads.filter((l) => l.budgetRange && l.budgetRange.includes("50k")).length;
-
+    const [total, byTier, byStatus] = await Promise.all([
+      prisma.lead.count(),
+      prisma.lead.groupBy({ by: ["leadTier"], _count: { id: true } }),
+      prisma.lead.groupBy({ by: ["status"], _count: { id: true } }),
+    ]);
     return {
-      totalLeads,
-      hotLeads,
-      warmLeads,
-      coldLeads,
-      avgScore: avgScore.toFixed(1),
-      highValueLeads,
-      reportDate: new Date().toISOString(),
+      generatedAt: new Date().toISOString(),
+      totalLeads: total,
+      byTier: Object.fromEntries(byTier.map((r) => [r.leadTier, r._count.id])),
+      byStatus: Object.fromEntries(byStatus.map((r) => [r.status, r._count.id])),
     };
-  } catch (error) {
-    console.error("Report generation error:", error);
-    return null;
+  } catch {
+    return {};
   }
 }
-

@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 import Link from "next/link";
 import { ACard, ACardHeader, ACardTitle } from "@/components/admin/acard";
 import { PageHeader } from "@/components/admin/page-header";
@@ -18,13 +17,15 @@ export default async function WorkflowRunDetailPage({
 
   const { workflowRunId } = await params;
 
-  const db = await connectToDatabase();
-  if (!db) redirect("/admin/workflow-runs");
+  await connectToDatabase();
 
-  const drafts = await ContentDraft.find({ workflowRunId })
-    .sort({ workflowStepIndex: 1, createdAt: 1 })
-    .select({ type: 1, promptKey: 1, title: 1, content: 1, workflowKey: 1, workflowStepId: 1, workflowStepIndex: 1, createdAt: 1 })
-    .lean();
+  const drafts = await prisma.contentDraft.findMany({
+    where: { workflowRunId },
+    orderBy: [
+      { workflowStepIndex: "asc" },
+      { createdAt: "asc" },
+    ],
+  });
 
   if (drafts.length === 0) redirect("/admin/workflow-runs");
 

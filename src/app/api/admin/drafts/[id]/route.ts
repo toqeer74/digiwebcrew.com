@@ -1,68 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { ContentDraft } from "@/lib/models/content-draft";
+import { prisma, connectToDatabase } from "@/lib/db";
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
 
   const { id } = await params;
+  const db = await connectToDatabase();
+  if (!db) return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
 
-  try {
-    const db = await connectToDatabase();
-    if (!db) {
-      return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
-    }
+  const draft = await prisma.contentDraft.findUnique({ where: { id } });
+  if (!draft) return NextResponse.json({ success: false, error: "Not found" }, { status: 404 });
 
-    const draft = await ContentDraft.findById(id).lean();
-    if (!draft) {
-      return NextResponse.json({ success: false, error: "Not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({
-      success: true,
-      draft: {
-        id: (draft as any)._id.toString(),
-        type: (draft as any).type,
-        promptKey: (draft as any).promptKey,
-        title: (draft as any).title || "",
-        content: (draft as any).content || "",
-        variables: (draft as any).variables || {},
-        modelName: (draft as any).modelName || "",
-        createdAt: (draft as any).createdAt,
-        updatedAt: (draft as any).updatedAt,
-      },
-    });
-  } catch {
-    return NextResponse.json({ success: false, error: "Failed to load draft" }, { status: 500 });
-  }
+  return NextResponse.json({
+    success: true,
+    draft: { id: draft.id, type: draft.type, promptKey: draft.promptKey, title: draft.title || "", content: draft.content, modelName: draft.modelName || "", workflowRunId: draft.workflowRunId || "", createdAt: draft.createdAt, updatedAt: draft.updatedAt },
+  });
 }
 
 export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
 
   const { id } = await params;
-
-  try {
-    const db = await connectToDatabase();
-    if (!db) {
-      return NextResponse.json({ success: false, error: "Database unavailable" }, { status: 503 });
-    }
-
-    const deleted = await ContentDraft.findByIdAndDelete(id).lean();
-    if (!deleted) {
-      return NextResponse.json({ success: false, error: "Not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ success: false, error: "Failed to delete draft" }, { status: 500 });
-  }
+  await connectToDatabase();
+  await prisma.contentDraft.delete({ where: { id } });
+  return NextResponse.json({ success: true });
 }

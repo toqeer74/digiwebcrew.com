@@ -1,7 +1,6 @@
 import { ACard, ACardHeader, ACardTitle, ACardBody } from "@/components/admin/acard";
 import { Activity, User, Shield, Download, CheckCircle, AlertCircle, Database, Zap } from "lucide-react";
-import { AuditLog } from "@/lib/models/audit-log";
-import { connectToDatabase } from "@/lib/db";
+import { prisma, connectToDatabase } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { AuditAutoRefresh } from "@/components/admin/audit-auto-refresh";
@@ -45,14 +44,21 @@ export default async function AuditPage({ searchParams }: { searchParams: AuditS
 
   await connectToDatabase();
 
-  const query: Record<string, any> = {};
-  if (group !== "all" && GROUP_ACTIONS[group]) query.action = { $in: GROUP_ACTIONS[group] };
-  if (success === "1") query.success = true;
-  if (success === "0") query.success = false;
+  const where: any = {};
+  if (group !== "all" && GROUP_ACTIONS[group]) {
+    where.action = { in: GROUP_ACTIONS[group] };
+  }
+  if (success === "1") where.success = true;
+  if (success === "0") where.success = false;
 
   const [logs, total] = await Promise.all([
-    AuditLog.find(query).sort({ createdAt: -1 }).skip((pageNum-1)*PAGE_SIZE).limit(PAGE_SIZE).lean(),
-    AuditLog.countDocuments(query),
+    prisma.auditLog.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip: (pageNum - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+    }),
+    prisma.auditLog.count({ where }),
   ]);
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 

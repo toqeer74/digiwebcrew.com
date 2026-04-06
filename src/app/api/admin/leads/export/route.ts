@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { connectToDatabase } from "@/lib/db";
-import { Lead } from "@/lib/models/lead";
+import { prisma, connectToDatabase } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   await connectToDatabase();
 
@@ -17,35 +14,26 @@ export async function GET(request: NextRequest) {
   const status = params.get("status") || "ALL";
   const tier = params.get("tier") || "ALL";
 
-  const query: any = {};
+  const where: any = {};
   if (q) {
-    query.$or = [
-      { fullName: { $regex: q, $options: "i" } },
-      { email: { $regex: q, $options: "i" } },
-      { company: { $regex: q, $options: "i" } },
+    where.OR = [
+      { fullName: { contains: q, mode: "insensitive" } },
+      { email: { contains: q, mode: "insensitive" } },
+      { company: { contains: q, mode: "insensitive" } },
     ];
   }
-  if (status !== "ALL") query.status = status;
-  if (tier !== "ALL") query.leadTier = tier;
+  if (status !== "ALL") where.status = status;
+  if (tier !== "ALL") where.leadTier = tier;
 
-  const leads = await Lead.find(query)
-    .sort({ createdAt: -1 })
-    .select({ fullName: 1, email: 1, company: 1, status: 1, leadTier: 1, serviceCategory: 1, budgetRange: 1, createdAt: 1 })
-    .lean();
+  const leads = await prisma.lead.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    select: { fullName: true, email: true, company: true, status: true, leadTier: true, serviceCategory: true, budgetRange: true, createdAt: true },
+  });
 
   const header = ["Name", "Email", "Company", "Status", "Tier", "Service", "Budget", "Created At"];
-  const rows = leads.map((lead: any) => [
-    lead.fullName || "",
-    lead.email || "",
-    lead.company || "",
-    lead.status || "",
-    lead.leadTier || "",
-    lead.serviceCategory || "",
-    lead.budgetRange || "",
-    lead.createdAt ? new Date(lead.createdAt).toISOString() : "",
-  ]);
-
-  const esc = (value: string) => `"${String(value).replace(/"/g, '""')}"`;
+  const rows = leads.map((l) => [l.fullName, l.email, l.company || "", l.status, l.leadTier, l.serviceCategory, l.budgetRange || "", l.createdAt.toISOString()]);
+  const esc = (v: string) => `"${String(v).replace(/"/g, '""')}"`;
   const csv = [header, ...rows].map((row) => row.map(esc).join(",")).join("\n");
 
   return new NextResponse(csv, {
@@ -56,5 +44,3 @@ export async function GET(request: NextRequest) {
     },
   });
 }
-
-
