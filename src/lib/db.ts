@@ -1,19 +1,23 @@
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
 // Prevent multiple Prisma instances in development (hot reload)
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+const globalForPrisma = globalThis as unknown as { 
+  prisma: PrismaClient;
+  pool: pg.Pool;
+};
 
-import { Pool } from "pg";
+const connectionString = process.env.DATABASE_URL;
 
-function createPrismaClient() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-  const adapter = new PrismaPg(pool);
-  return new PrismaClient({ adapter });
-}
+// Use a singleton for the pool as well to prevent "too many clients" errors during HMR
+const pool = globalForPrisma.pool ?? new pg.Pool({ connectionString });
+if (process.env.NODE_ENV !== "production") globalForPrisma.pool = pool;
 
-export const prisma: PrismaClient =
-  globalForPrisma.prisma ?? createPrismaClient();
+const adapter = new PrismaPg(pool);
+
+export const prisma =
+  globalForPrisma.prisma ?? new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 

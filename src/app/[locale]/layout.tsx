@@ -89,27 +89,11 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={isRtl ? 'rtl' : 'ltr'}
-      className="scroll-smooth"
+      className="dark scroll-smooth"
       suppressHydrationWarning
-      style={brandingVars as CSSProperties}
+      style={{ ...brandingVars, colorScheme: 'dark' } as CSSProperties}
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(() => {
-              try {
-                const savedTheme = localStorage.getItem("theme");
-                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
-                const html = document.documentElement;
-                html.classList.toggle("dark", isDark);
-                html.classList.toggle("light", !isDark);
-                html.setAttribute("data-theme", isDark ? "dark" : "light");
-                html.style.colorScheme = isDark ? "dark" : "light";
-              } catch {}
-            })();`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

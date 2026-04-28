@@ -154,7 +154,7 @@ export default async function AuditPage({ searchParams }: { searchParams: AuditS
               const iconCls = getIconCls(log.action);
               const IconComp = log.action.includes("LOGIN") ? Shield : log.action.startsWith("RUN_AI") ? Activity : User;
               return (
-                <div key={String(log._id)} className="adm-audit-item">
+                <div key={log.id} className="adm-audit-item">
                   <div className={`adm-audit-icon ${iconCls}`}><IconComp size={15} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 4 }}>

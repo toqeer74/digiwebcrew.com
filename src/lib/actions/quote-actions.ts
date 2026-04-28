@@ -2,6 +2,7 @@
 
 import { prisma, connectToDatabase } from "@/lib/db";
 import { QuoteSchema, QuoteFormData } from "@/types/quote";
+import { ZodError } from "zod";
 import { sendEmail, templateNewLeadNotification, templateQuoteConfirmation } from "@/lib/email-service";
 import { calculateLeadScore } from "@/lib/lead-scoring";
 
@@ -69,8 +70,24 @@ export async function submitQuote(data: QuoteFormData) {
     ]);
 
     return { success: true, leadId: lead.id };
-  } catch (error) {
-    console.error("[submitQuote] Error:", error);
-    return { success: false, error: "Failed to submit quote" };
+  } catch (error: any) {
+    console.error("[submitQuote] Detailed Error:", error);
+    
+    // Handle Zod validation errors safely
+    if (error instanceof ZodError) {
+      const messages = error.issues.map((e) => `${e.path.join(".")}: ${e.message}`).join(", ");
+      return { success: false, error: `Validation Error: ${messages}` };
+    }
+    
+    // Fallback for objects that look like ZodErrors but aren't instances
+    if (error.issues || error.errors) {
+      const issues = error.issues || error.errors;
+      if (Array.isArray(issues)) {
+        const messages = issues.map((e: any) => `${e.path?.join(".") || "field"}: ${e.message}`).join(", ");
+        return { success: false, error: `Validation Error: ${messages}` };
+      }
+    }
+
+    return { success: false, error: error.message || "Failed to submit quote" };
   }
 }

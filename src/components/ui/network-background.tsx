@@ -26,14 +26,14 @@ interface Particle {
 }
 
 const SERVICE_NODES = [
-  { label: "Custom Websites", color: "#6ea3e6", size: 10 },
-  { label: "AI Automation", color: "#818cf8", size: 12 },
-  { label: "Funnels", color: "#6366f1", size: 9 },
-  { label: "SEO & Growth", color: "#38bdf8", size: 9 },
-  { label: "DevOps", color: "#94a3b8", size: 8 },
-  { label: "E-Commerce", color: "#818cf8", size: 8 },
-  { label: "Analytics", color: "#c084fc", size: 7 },
-  { label: "API Dev", color: "#6ea3e6", size: 7 },
+  { label: "Custom Websites", color: "#6ea3e6", size: 17 },
+  { label: "AI Automation", color: "#818cf8", size: 20 },
+  { label: "Funnels", color: "#6366f1", size: 15 },
+  { label: "SEO & Growth", color: "#38bdf8", size: 16 },
+  { label: "DevOps", color: "#94a3b8", size: 14 },
+  { label: "E-Commerce", color: "#818cf8", size: 14 },
+  { label: "Analytics", color: "#c084fc", size: 13 },
+  { label: "API Dev", color: "#6ea3e6", size: 13 },
 ];
 
 const COLORS = ["#6ea3e6", "#818cf8", "#6366f1", "#38bdf8"];
@@ -103,8 +103,8 @@ export function NetworkBackground() {
         });
       });
 
-      // Create balanced node density (Reduced from 180 to 125 for better spacing)
-      for (let i = 0; i < 125; i++) {
+      // Minimal background nodes for a clean, focused look
+      for (let i = 0; i < 20; i++) {
         const bx = padX * 0.5 + Math.random() * (W - padX);
         const by = 30 + Math.random() * (H - 60);
         nodes.push({

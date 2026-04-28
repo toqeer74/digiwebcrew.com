@@ -153,7 +153,7 @@ export function Hero({ locale }: HeroProps) {
             </span>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 lg:gap-16">
+          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12 lg:gap-16">
             {/* Headline column */}
             <div className="space-y-1 lg:flex-1">
               <motion.span 
@@ -198,11 +198,10 @@ export function Hero({ locale }: HeroProps) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:max-w-md w-full"
+              className="lg:max-w-md w-full lg:pt-16"
             >
-              <div className="hidden lg:block w-full h-[1px] bg-white/12 mb-8" />
               
-              <div className="flex flex-row items-center gap-3 lg:mt-4">
+              <div className="flex flex-row items-center gap-3">
                 <Link href={localePath(locale, "/quote")}>
                   <Button variant="primary" size="lg" className="px-6 py-3 whitespace-nowrap">
                     Start Your Project

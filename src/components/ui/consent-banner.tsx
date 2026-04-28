@@ -79,11 +79,11 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                     className
                 )}
             >
-                <div className="max-w-4xl mx-auto bg-white dark:bg-midnight-900 rounded-2xl dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-midnight-700 overflow-hidden">
+                <div className="max-w-2xl mx-auto bg-white dark:bg-midnight-900 rounded-2xl dark:shadow-[0_-20px_60px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-midnight-700 overflow-hidden">
                     {/* Header */}
-                    <div className="p-6 pb-4 flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-raly-accent/20 flex items-center justify-center text-raly-primary shrink-0">
-                            <Cookie size={24} />
+                    <div className="p-5 pb-3 flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-raly-accent/20 flex items-center justify-center text-raly-primary shrink-0">
+                            <Cookie size={20} />
                         </div>
                         <div className="flex-1">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
@@ -96,9 +96,9 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                         </div>
                         <button
                             onClick={() => setIsVisible(false)}
-                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors pt-1"
                         >
-                            <X size={20} />
+                            <X size={18} />
                         </button>
                     </div>
 
@@ -167,7 +167,7 @@ export function ConsentBanner({ className }: ConsentBannerProps) {
                     </AnimatePresence>
 
                     {/* Actions */}
-                    <div className="p-4 pt-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <div className="p-4 pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                         <button
                             onClick={() => setShowDetails(!showDetails)}
                             className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"

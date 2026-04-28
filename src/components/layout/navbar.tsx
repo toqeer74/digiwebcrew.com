@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Moon, Sun, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { 
   PiGlobeDuotone, 
   PiMagicWandDuotone, 
@@ -18,7 +18,7 @@ import {
 } from "react-icons/pi";
 import { FaLinkedin, FaXTwitter, FaGithub } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/providers/theme-provider";
+
 import { localePath } from "@/lib/locale-path";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -33,7 +33,7 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
+
   const pathname = usePathname();
   let leaveTimeout: NodeJS.Timeout;
 
@@ -291,13 +291,7 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
 
         {/* Desktop right actions */}
         <div className="hidden lg:flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition-colors dark:border-white/10 dark:bg-transparent dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-foreground"
-            aria-label="Toggle theme"
-          >
-            {isDark ? <Sun size={14} /> : <Moon size={14} />}
-          </button>
+
           <a href="#" className="text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-foreground">
             <FaLinkedin size={14} />
           </a>
@@ -385,16 +379,7 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
             )}
           </div>
           <div className="pt-6 space-y-2 border-t border-white/10 mt-6">
-            <button
-              onClick={() => {
-                toggleTheme();
-                setMobileOpen(false);
-              }}
-              className="w-full px-4 py-2 rounded-md border border-slate-200 dark:border-white/10 text-muted-foreground hover:text-slate-950 dark:hover:text-foreground hover:bg-slate-50 dark:hover:bg-white/5 text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
-            >
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
-              {isDark ? "Light Mode" : "Dark Mode"}
-            </button>
+
             <Link
               href={localePath(locale, "/book-consultation")}
               className="block w-full px-4 py-2 rounded-full bg-[var(--site-primary)] text-white text-sm text-center font-semibold"
