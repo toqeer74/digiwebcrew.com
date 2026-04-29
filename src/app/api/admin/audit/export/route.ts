@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
   const logs = await prisma.auditLog.findMany({ where, orderBy: { createdAt: "desc" }, take: 5000 });
 
   const header = ["Action", "Success", "User Email", "Resource", "Resource ID", "IP", "Created At", "Error"];
-  const rows = logs.map((l) => [l.action, l.success ? "true" : "false", l.userEmail || "", l.resource || "", l.resourceId || "", l.ip || "", l.createdAt.toISOString(), l.error || ""]);
+  const rows = logs.map((l: any) => [l.action, l.success ? "true" : "false", l.userEmail || "", l.resource || "", l.resourceId || "", l.ip || "", l.createdAt.toISOString(), l.error || ""]);
   const esc = (v: string) => `"${String(v).replace(/"/g, '""')}"`;
   const csv = [header, ...rows].map((row) => row.map(esc).join(",")).join("\n");
 
