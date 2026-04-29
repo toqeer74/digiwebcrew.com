@@ -75,7 +75,7 @@ export async function submitQuote(data: QuoteFormData) {
     
     // Handle Zod validation errors safely
     if (error instanceof ZodError) {
-      const messages = error.issues.map((e) => `${e.path.join(".")}: ${e.message}`).join(", ");
+      const messages = error.issues.map((e: any) => `${e.path.join(".")}: ${e.message}`).join(", ");
       return { success: false, error: `Validation Error: ${messages}` };
     }
     

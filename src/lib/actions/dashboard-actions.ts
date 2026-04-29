@@ -70,9 +70,9 @@ export async function getDashboardStats() {
     }
 
     const recentEvents = [
-      ...recentLeads.map((l) => ({ title: `New lead: ${l.fullName}`, time: timeAgo(l.createdAt), type: "success" })),
-      ...recentChats.map((c) => ({ title: "Chat session started", time: timeAgo(c.createdAt), type: "system" })),
-      ...recentDrafts.map((d) => ({ title: `Draft generated: ${d.promptKey}`, time: timeAgo(d.createdAt), type: d.workflowRunId ? "system" : "success" })),
+      ...recentLeads.map((l: any) => ({ title: `New lead: ${l.fullName}`, time: timeAgo(l.createdAt), type: "success" })),
+      ...recentChats.map((c: any) => ({ title: "Chat session started", time: timeAgo(c.createdAt), type: "system" })),
+      ...recentDrafts.map((d: any) => ({ title: `Draft generated: ${d.promptKey}`, time: timeAgo(d.createdAt), type: d.workflowRunId ? "system" : "success" })),
     ]
       .sort((a, b) => b.time.localeCompare(a.time))
       .slice(0, 4);
@@ -80,7 +80,7 @@ export async function getDashboardStats() {
     return {
       leadCount, hotLeads, chatCount, draftCount, statusPipeline,
       brandingConfig: (branding?.value as any) || {},
-      recentLeads: recentLeads.map((l) => ({
+      recentLeads: recentLeads.map((l: any) => ({
         id: l.id,
         name: l.fullName,
         industry: "Other",

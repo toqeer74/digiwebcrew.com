@@ -17,7 +17,7 @@ export async function getNotifications() {
     take: 10,
   });
 
-  return notifications.map((n) => ({
+  return notifications.map((n: any) => ({
     id: n.id,
     type: n.type,
     title: n.title,

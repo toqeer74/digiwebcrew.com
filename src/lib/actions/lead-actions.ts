@@ -268,7 +268,7 @@ export async function convertChatToLead(sessionId: string) {
 
   const transcript = chat.messages
     .slice(-6)
-    .map((m) => `${m.role}: ${m.content}`)
+    .map((m: any) => `${m.role}: ${m.content}`)
     .join("\n")
     .slice(0, 2000);
 

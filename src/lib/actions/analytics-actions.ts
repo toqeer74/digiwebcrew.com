@@ -36,7 +36,7 @@ export async function getDashboardStats() {
 
   const avgHotScore =
     hotLeadsData.length > 0
-      ? Math.round(hotLeadsData.reduce((acc, l) => acc + (l.leadScore || 0), 0) / hotLeadsData.length)
+      ? Math.round(hotLeadsData.reduce((acc: number, l: any) => acc + (l.leadScore || 0), 0) / hotLeadsData.length)
       : 0;
 
   const conversionRate = totalLeads > 0 ? Number(((wonLeads / totalLeads) * 100).toFixed(1)) : 0;
@@ -95,7 +95,7 @@ export async function getLeadTrends(range: 7 | 30 | 90 = 30) {
     ORDER BY DATE_TRUNC('day', "createdAt")
   `;
 
-  const countMap = new Map(result.map((r) => [r.date, Number(r.count)]));
+  const countMap = new Map(result.map((r: any) => [r.date, Number(r.count)]));
 
   return Array.from({ length: range }).map((_, i) => {
     const date = format(subDays(new Date(), range - 1 - i), "yyyy-MM-dd");
@@ -117,7 +117,7 @@ export async function getCategoryDistribution() {
     orderBy: { _count: { id: "desc" } },
   });
 
-  return groups.map((g) => ({
+  return groups.map((g: any) => ({
     name: (g.serviceCategory || "Other").replace(/-/g, " ").toUpperCase(),
     value: g._count.id,
   }));
@@ -140,9 +140,9 @@ export async function getLeadAnalyticsData() {
 
   return {
     totalLeads: total,
-    byTier: Object.fromEntries(byTier.map((r) => [r.leadTier, r._count.id])),
-    byStatus: Object.fromEntries(byStatus.map((r) => [r.status, r._count.id])),
-    byCategory: Object.fromEntries(byCategory.map((r) => [r.serviceCategory, r._count.id])),
+    byTier: Object.fromEntries(byTier.map((r: any) => [r.leadTier, r._count.id])),
+    byStatus: Object.fromEntries(byStatus.map((r: any) => [r.status, r._count.id])),
+    byCategory: Object.fromEntries(byCategory.map((r: any) => [r.serviceCategory, r._count.id])),
   };
 }
 
@@ -163,7 +163,7 @@ export async function getScoreDistributionData() {
   ];
 
   return Promise.all(
-    buckets.map(async (b) => ({
+    buckets.map(async (b: any) => ({
       label: b.label,
       count: await prisma.lead.count({ where: { leadScore: { gte: b.min, lte: b.max } } }),
     }))
