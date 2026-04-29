@@ -19,7 +19,7 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      drafts: drafts.map((d) => ({
+      drafts: drafts.map((d: any) => ({
         id: d.id,
         type: d.type,
         promptKey: d.promptKey,

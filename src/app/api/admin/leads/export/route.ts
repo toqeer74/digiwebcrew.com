@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   });
 
   const header = ["Name", "Email", "Company", "Status", "Tier", "Service", "Budget", "Created At"];
-  const rows = leads.map((l) => [l.fullName, l.email, l.company || "", l.status, l.leadTier, l.serviceCategory, l.budgetRange || "", l.createdAt.toISOString()]);
+  const rows = leads.map((l: any) => [l.fullName, l.email, l.company || "", l.status, l.leadTier, l.serviceCategory, l.budgetRange || "", l.createdAt.toISOString()]);
   const esc = (v: string) => `"${String(v).replace(/"/g, '""')}"`;
   const csv = [header, ...rows].map((row) => row.map(esc).join(",")).join("\n");
 
