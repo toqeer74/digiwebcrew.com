@@ -84,9 +84,9 @@ export default function ServiceDomainsOverview({ dict, locale }: { dict: any; lo
 
         {/* Premium CTA Section */}
         <AnimatedSection>
-          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 shadow-[0_20px_44px_-28px_rgba(15,23,42,0.18)] dark:border-indigo-500/20 dark:bg-gradient-to-br dark:from-indigo-900/40 dark:to-violet-900/30 md:p-20">
+          <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 shadow-[0_20px_44px_-28px_rgba(15,23,42,0.18)] dark:border-[var(--site-primary)]/20 dark:bg-gradient-to-br dark:from-[var(--site-primary)]/10 dark:to-violet-900/30 md:p-20">
             {/* Decorative orb */}
-            <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] opacity-50 blur-[100px] transition-opacity duration-700 group-hover:opacity-70 dark:bg-indigo-600/10" />
+            <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] opacity-50 blur-[100px] transition-opacity duration-700 group-hover:opacity-70 dark:bg-[var(--site-primary)]/10" />
 
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
               <div className="max-w-2xl">

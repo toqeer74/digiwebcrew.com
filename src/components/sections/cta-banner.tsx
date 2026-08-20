@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { Container } from "../layout/layout-primitives";
+import { Button } from "@/components/ui/button";
 import { localePath } from "@/lib/locale-path";
 
 interface CtaBannerProps {
@@ -19,14 +19,14 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 text-center shadow-none md:p-16 dark:border-[var(--site-primary)]/20 dark:bg-gradient-to-br dark:from-midnight dark:to-[#11152c]"
+          className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(241,245,249,0.98))] p-12 text-center shadow-none md:p-16 dark:border-[var(--site-primary)]/20 dark:bg-gradient-to-br dark:from-midnight dark:to-midnight-950"
         >
           {/* Decorative orb */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="hidden dark:block h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] dark:bg-indigo-600/10"
+              className="hidden dark:block h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] dark:bg-[rgba(var(--site-primary-rgb),0.1)]"
             />
           </div>
 
@@ -51,7 +51,7 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               className="mb-6 text-3xl font-display font-bold leading-tight text-foreground md:text-5xl"
             >
               Let's Build Something<br />
-              <span className="bg-gradient-to-r from-[var(--site-primary)] to-[#6ea3e6] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[var(--site-primary)] to-[var(--site-primary-soft)] bg-clip-text text-transparent">
                 Extraordinary Together
               </span>
             </motion.h2>
@@ -74,16 +74,13 @@ export function CtaBanner({ dict, locale }: CtaBannerProps) {
               transition={{ delay: 0.3 }}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <Link
-                href={localePath(locale, "/quote")}
-                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[var(--site-primary)] px-8 py-4 font-body font-semibold text-white transition-all duration-200 hover:bg-[var(--site-primary-hover)]"
-              >
+              <Button href={localePath(locale, "/quote")} variant="primary" size="lg">
                 Get Custom Scope
                 <ArrowRight size={20} />
-              </Link>
-              <button className="whitespace-nowrap rounded-full border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-white/80 px-8 py-4 font-body font-semibold text-slate-950 transition-all duration-200 hover:bg-[rgba(var(--site-primary-rgb),0.08)] dark:bg-transparent dark:text-white dark:hover:bg-[var(--site-primary)]/10">
+              </Button>
+              <Button href={localePath(locale, "/book-consultation")} variant="outline" size="lg">
                 Schedule Call
-              </button>
+              </Button>
             </motion.div>
           </div>
         </motion.div>

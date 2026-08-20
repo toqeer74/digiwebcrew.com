@@ -42,7 +42,7 @@ export const serviceDomains: ServiceDomain[] = [
     slug: "custom-software",
     description: "Enterprise-grade custom solutions engineered for complex business challenges.",
     icon: "Code2",
-    color: "from-indigo-500 to-blue-500",
+    color: "from-[var(--site-primary)] to-blue-500",
     categories: [
       {
         title: "Custom Software",

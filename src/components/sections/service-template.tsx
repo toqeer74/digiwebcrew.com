@@ -8,6 +8,8 @@ import { ArrowRight, CheckCircle2, FlaskConical, ExternalLink } from "lucide-rea
 import { cn } from "@/lib/utils";
 import { AIExecutiveSummary } from "../ui/ai-summary";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { SectionKicker } from "../ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 
 interface ServiceTemplateProps {
@@ -42,7 +44,7 @@ export function ServiceTemplate({
 }: ServiceTemplateProps) {
   // Extract data from subService/category if provided
   const displayTitle = subService?.title || title || "Specialized Service";
-  const displaySubtitle = category?.title || subtitle || "Engineering Lab";
+  const displaySubtitle = category?.title || subtitle || "Services";
   const displayDescription = subService?.description || description || "";
   const displayFeatures = subService?.features || features || [];
   const displayOutcomes = subService?.outcomes || outcomes || [];
@@ -68,19 +70,12 @@ export function ServiceTemplate({
         {/* Modern Centered Hero */}
         <div className="flex flex-col items-center text-center mb-24 max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-            <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
-            <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Focus: {displaySubtitle}</span>
+            <SectionKicker label={displaySubtitle} />
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -106,16 +101,16 @@ export function ServiceTemplate({
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
+              <Button href={localePath(locale, "/quote")} variant="secondary" size="xl" className="group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+              </Button>
+            <Button href={localePath(locale, "/book-consultation")} variant="primary" size="xl" className="group">
               <span>{ctaText}</span>
               <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </span>
-            </Link>
+            </Button>
           </motion.div>
         </div>
 

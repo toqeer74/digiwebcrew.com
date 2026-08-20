@@ -72,31 +72,25 @@ export function ProcessVisualization() {
     <section className="py-12 lg:py-16 bg-white dark:bg-midnight">
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:rgba(var(--site-primary-rgb),0.22)] bg-[rgba(var(--site-primary-rgb),0.08)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] animate-pulse dark:bg-[var(--site-primary-soft)]" />
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
             Our Methodology
-          </motion.div>
+          </p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-6 dark:text-white"
+            className="text-3xl md:text-5xl font-display font-black text-slate-900 tracking-tight mb-5 dark:text-white"
           >
             Engineering Excellence, <br />
-            <span className="text-[var(--site-primary-soft)]">By Design</span>
+            <span className="text-[var(--site-primary)]">By Design</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-slate-600 font-body font-medium dark:text-[#B7CADB]"
+            className="text-base text-slate-500 font-body font-medium dark:text-slate-400"
           >
             A proven 5-stage framework that transforms complex challenges into scalable, production-ready digital assets.
           </motion.p>
@@ -110,10 +104,8 @@ export function ProcessVisualization() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="relative mb-16 lg:mb-0"
           >
-            <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.16),transparent_55%),linear-gradient(180deg,#ffffff,rgba(248,250,252,0.75))] shadow-none dark:border-white/10 dark:bg-[radial-gradient(120%_140%_at_10%_0%,rgba(var(--site-primary-rgb),0.35),transparent_55%),linear-gradient(180deg,#1a1f38,#121826)] dark:shadow-[0_38px_90px_-56px_rgba(0,0,0,0.95)]">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] opacity-90" />
+            <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 dark:border-white/10 dark:bg-white/[0.03]">
               <div className="aspect-[4/3] w-full" />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.9),transparent_55%)] dark:bg-[linear-gradient(90deg,rgba(15,23,42,0.9),transparent_55%)]" />
               <div className="absolute inset-0 p-7 sm:p-10">
                 <div className="max-w-[270px]">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
@@ -237,7 +229,7 @@ export function ProcessVisualization() {
             <p className="text-sm font-body font-bold text-slate-600 dark:text-slate-300 text-center sm:text-left">
               Ready to initiate the first stage?
             </p>
-            <button className="rounded-xl border border-[color:rgba(var(--site-primary-rgb),0.3)] bg-[var(--site-primary)] px-7 py-3 text-sm font-display font-extrabold uppercase tracking-widest text-white transition-all shadow-none hover:bg-[var(--site-primary-hover)] active:scale-95 dark:border-[var(--site-primary-soft)]/30 dark:shadow-[0_14px_34px_-18px_rgba(var(--site-primary-rgb),0.62)] whitespace-nowrap">
+            <button className="rounded-md bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 whitespace-nowrap">
               Start Discovery Phase
             </button>
           </div>

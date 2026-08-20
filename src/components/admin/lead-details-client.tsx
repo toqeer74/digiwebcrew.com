@@ -70,7 +70,7 @@ export function LeadDetailsClient({ leadId, initialStatus, initialNotes, initial
 
   const onDeleteLead = () => {
     startTransition(async () => {
-      try { await deleteLead(leadId); toast.success("Lead deleted"); router.push("/admin/leads"); }
+      try { await deleteLead(leadId); toast.success("Lead deleted"); router.push("/digiadmin/leads"); }
       catch { toast.error("Failed to delete lead"); }
     });
   };

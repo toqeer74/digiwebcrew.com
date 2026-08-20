@@ -7,15 +7,19 @@ import { cn } from "@/lib/utils";
 interface AnimatedSectionProps {
   children: React.ReactNode;
   className?: string;
+  id?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right";
+  style?: React.CSSProperties;
 }
 
 export function AnimatedSection({
   children,
   className,
+  id,
   delay = 0,
   direction = "up",
+  style,
 }: AnimatedSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-20px" });
@@ -30,6 +34,7 @@ export function AnimatedSection({
   return (
     <motion.div
       ref={ref}
+      id={id}
       initial={{ 
         opacity: 0, 
         ...directions[direction] 
@@ -45,6 +50,7 @@ export function AnimatedSection({
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
       className={cn(className)}
+      style={style}
     >
       {children}
     </motion.div>

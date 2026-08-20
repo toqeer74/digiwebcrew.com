@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes('.') || 
     pathname.startsWith('/_next') || 
     pathname.startsWith('/api') ||
-    pathname.startsWith('/admin') // Admin usually stays non-localized or custom
+    pathname.startsWith('/digiadmin') // Admin usually stays non-localized or custom
   ) {
     return NextResponse.next();
   }

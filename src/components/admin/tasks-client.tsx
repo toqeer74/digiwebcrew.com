@@ -101,7 +101,7 @@ export function TasksClient({ initialTasks, leadOptions }: { initialTasks:TaskIt
       <PageHeader
         title="Tasks"
         subtitle="Track and complete lead follow-up tasks."
-        breadcrumb={[{ label: "Dashboard", href: "/admin/dashboard" }, { label: "Tasks" }]}
+        breadcrumb={[{ label: "Dashboard", href: "/digiadmin/dashboard" }, { label: "Tasks" }]}
         actions={
           <button onClick={onAdd} disabled={isPending||!leadId||!title.trim()||!dueAt} className="adm-btn adm-btn-primary inline-flex items-center gap-2">
             <Plus size={15}/> New Task
@@ -162,7 +162,7 @@ export function TasksClient({ initialTasks, leadOptions }: { initialTasks:TaskIt
                       <div className="adm-wf-meta" style={{ display:"flex", alignItems:"center", gap:8 }}>
                         <span style={{ color: overdue?"var(--adm-danger)":"inherit" }}>{formatDue(task.dueAt)}</span>
                         <span>•</span>
-                        <Link href={`/admin/leads/${task.leadId}`} style={{ color:"var(--adm-primary)", fontWeight:600 }}>{task.leadName}</Link>
+                        <Link href={`/digiadmin/leads/${task.leadId}`} style={{ color:"var(--adm-primary)", fontWeight:600 }}>{task.leadName}</Link>
                       </div>
                     </div>
                     <div style={{ display:"flex", gap:8, alignItems:"center", flexShrink:0 }}>

@@ -39,6 +39,10 @@ type StackGroup = {
   items: StackItem[];
 };
 
+// Icons whose brand color is near-black/white — render with currentColor so
+// they stay legible in both light and dark themes.
+const MONO_ICONS = new Set(["Next.js", "OpenAI"]);
+
 const stackGroups: StackGroup[] = [
   {
     id: "web",
@@ -51,7 +55,7 @@ const stackGroups: StackGroup[] = [
     icon: Monitor,
     items: [
       { name: "React", icon: SiReact, color: "#61DAFB" },
-      { name: "Next.js", icon: SiNextdotjs, color: "#E5E7EB" },
+      { name: "Next.js", icon: SiNextdotjs, color: "#0F172A" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
       { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
     ],
@@ -82,7 +86,7 @@ const stackGroups: StackGroup[] = [
     glowColor: "rgba(167,139,250,0.4)",
     icon: Cpu,
     items: [
-      { name: "OpenAI", icon: SiOpenai, color: "#E5E7EB" },
+      { name: "OpenAI", icon: SiOpenai, color: "#0F172A" },
       { name: "Zapier", icon: SiZapier, color: "#FF4A00" },
       { name: "HubSpot", icon: SiHubspot, color: "#FF7A59" },
       { name: "Stripe", icon: SiStripe, color: "#6772E5" },
@@ -101,7 +105,7 @@ const stackGroups: StackGroup[] = [
       { name: "Docker", icon: SiDocker, color: "#2496ED" },
       { name: "AWS", icon: SiAmazonwebservices, color: "#FF9900" },
       { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
-      { name: "Next.js", icon: SiNextdotjs, color: "#E5E7EB" },
+      { name: "Next.js", icon: SiNextdotjs, color: "#0F172A" },
     ],
   },
 ];
@@ -154,11 +158,11 @@ function OrbitingIcon({
   startAngle,
   speed,
   direction,
-  size = 20,
 }: OrbitingIconProps) {
   const [angle, setAngle] = useState(startAngle);
   const rafRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number | undefined>(undefined);
+  const mono = MONO_ICONS.has(name);
 
   useEffect(() => {
     const animate = (time: number) => {
@@ -196,13 +200,15 @@ function OrbitingIcon({
       }}
       title={name}
     >
-      <div
-        className="group flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
-      >
-        <div className="flex items-center justify-center h-10 w-10">
-           <Icon size={24} style={{ color }} className="mb-0.5 filter dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
+      <div className="group flex flex-col items-center justify-center transition-all duration-300 hover:scale-110">
+        <div className="flex h-10 w-10 items-center justify-center">
+          <Icon
+            size={24}
+            color={mono ? undefined : color}
+            className={mono ? "text-slate-900 dark:text-white" : undefined}
+          />
         </div>
-        <span className="text-[9px] font-bold uppercase tracking-[0.1em] text-white/80 transition-colors leading-none group-hover:text-white mt-1.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+        <span className="mt-1.5 text-[9px] font-bold uppercase leading-none tracking-[0.1em] text-slate-500 transition-colors group-hover:text-slate-900 dark:text-white/70 dark:group-hover:text-white">
           {name.length > 7 ? name.slice(0, 7) : name}
         </span>
       </div>
@@ -226,7 +232,7 @@ function OrbitalRing({ radius }: { radius: number }) {
         rx={rx}
         ry={ry}
         fill="none"
-        className="stroke-slate-300/70 dark:stroke-white/22"
+        className="stroke-slate-200 dark:stroke-white/15"
         strokeWidth="1"
         strokeDasharray="5 10"
       />
@@ -250,46 +256,27 @@ export function StackSlider() {
   const distributed = useMemo(() => distributeIcons(displayItems), [displayItems]);
 
   return (
-    <section className="relative isolate overflow-hidden border-y border-slate-200 bg-white py-16 text-slate-900 shadow-sm dark:border-white/5 dark:bg-midnight dark:text-white/90">
-      {/* Decorative Background Curves */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Large Concentric Circles/Curves */}
-        <div className="absolute left-[50%] top-[50%] h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2">
-           <svg className="h-full w-full opacity-10" viewBox="0 0 1000 1000" fill="none">
-             <circle cx="500" cy="500" r="480" stroke="currentColor" strokeWidth="0.5" strokeDasharray="8 12" className="animate-[spin_180s_linear_infinite]" />
-             <circle cx="500" cy="500" r="400" stroke="currentColor" strokeWidth="0.5" strokeDasharray="8 12" className="animate-[spin_150s_linear_infinite_reverse]" />
-             <circle cx="500" cy="500" r="320" stroke="currentColor" strokeWidth="0.5" strokeDasharray="8 12" className="animate-[spin_120s_linear_infinite]" />
-             <circle cx="500" cy="500" r="240" stroke="currentColor" strokeWidth="0.5" strokeDasharray="8 12" className="animate-[spin_90s_linear_infinite_reverse]" />
-           </svg>
-        </div>
-        
-        {/* Glow Spots */}
-        <div className="absolute left-1/4 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6366F1]/10 blur-[120px]" />
-        <div className="absolute right-1/4 top-1/3 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
-      </div>
-
+    <section className="relative isolate overflow-hidden border-y border-slate-200 bg-white py-20 text-slate-900 dark:border-white/10 dark:bg-midnight dark:text-white/90">
       <Container>
-        <div className="mx-auto max-w-6xl relative z-10">
+        <div className="relative z-10 mx-auto max-w-7xl">
           <div className="mb-10 text-center">
-            <span className="mb-4 inline-block rounded-full border border-indigo-400/30 bg-indigo-500/10 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-300">
+            <span className="mb-4 inline-block rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
               Technology Ecosystem
             </span>
             <h2 className="font-display text-3xl font-black tracking-tight text-slate-900 dark:text-white md:text-5xl">
               Service-Aligned{" "}
-              <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-indigo-300 bg-clip-text text-transparent">
-                Technology Stack
-              </span>
+              <span className="text-[var(--site-primary)]">Technology Stack</span>
             </h2>
           </div>
 
-          <div className="mb-12 flex flex-wrap items-center justify-center gap-3">
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-2.5">
             <button
               type="button"
               onClick={() => setActiveGroupId("all")}
-              className={`rounded-full border px-6 py-2.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-300 ${
+              className={`rounded-full border px-5 py-2 text-[11px] font-bold uppercase tracking-widest transition-all ${
                 activeGroupId === "all"
-                  ? "border-indigo-400/60 bg-indigo-500/20 text-white shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)]"
-                  : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  ? "border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-slate-900"
+                  : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
               }`}
             >
               All Stacks
@@ -299,21 +286,11 @@ export function StackSlider() {
                 key={group.id}
                 type="button"
                 onClick={() => setActiveGroupId(group.id)}
-                className={`rounded-full border px-6 py-2.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                className={`rounded-full border px-5 py-2 text-[11px] font-bold uppercase tracking-widest transition-all ${
                   activeGroupId === group.id
-                    ? "border-white/20 bg-white/10 text-white shadow-[0_0_30px_-5px_rgba(255,255,255,0.1)]"
-                    : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:bg-white/10 hover:text-white"
+                    ? "border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-slate-900"
+                    : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
-                style={
-                  activeGroupId === group.id
-                    ? {
-                        borderColor: `${group.color}60`,
-                        backgroundColor: `${group.color}20`,
-                        color: "#fff",
-                        boxShadow: `0 0 30px -5px ${group.color}40`,
-                      }
-                    : {}
-                }
               >
                 {group.shortLabel}
               </button>
@@ -326,12 +303,14 @@ export function StackSlider() {
                 <OrbitalRing key={i} radius={ring.radius} />
               ))}
 
-              <div
-                className="absolute left-1/2 top-1/2 z-20 flex h-[84px] w-[84px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white dark:border-white/20 dark:bg-midnight shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_-10px_rgba(0,0,0,0.5)]"
-              >
+              <div className="absolute left-1/2 top-1/2 z-20 flex h-[84px] w-[84px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white shadow-[0_8px_30px_-10px_rgba(15,23,42,0.15)] dark:border-white/20 dark:bg-midnight">
                 <div className="text-center">
-                  <div className="text-[9px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Digital</div>
-                  <div className="mt-0.5 text-[8px] font-bold uppercase tracking-widest text-slate-900 dark:text-white/50 leading-tight">Web Crew</div>
+                  <div className="text-[9px] font-black uppercase tracking-widest text-slate-900 dark:text-white">
+                    Digital
+                  </div>
+                  <div className="mt-0.5 text-[8px] font-bold uppercase leading-tight tracking-widest text-slate-400 dark:text-white/50">
+                    Web Crew
+                  </div>
                 </div>
               </div>
 
@@ -351,7 +330,7 @@ export function StackSlider() {
                         key={`${activeGroupId}-${item.name}-${i}`}
                         icon={item.icon}
                         name={item.name}
-                        color={item.name === "Next.js" || item.name === "OpenAI" ? "#fff" : item.color}
+                        color={item.color}
                         ringRadius={ring.radius}
                         startAngle={startAngle}
                         speed={ring.speed}
@@ -382,45 +361,56 @@ export function StackSlider() {
                       >
                         {activeGroup.shortLabel} Stack
                       </div>
-                      <h3 className="font-display text-4xl font-black leading-tight text-white">
+                      <h3 className="font-display text-4xl font-black leading-tight text-slate-900 dark:text-white">
                         {activeGroup.label}
                       </h3>
                     </div>
 
-                    <div className="space-y-5 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md shadow-2xl">
+                    <div className="space-y-5 rounded-3xl border border-slate-200 bg-slate-50 p-8 dark:border-white/10 dark:bg-white/5">
                       <div>
-                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/40">Use Case</p>
-                        <p className="text-lg font-medium leading-relaxed text-slate-900 dark:text-white/90">
+                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-white/40">
+                          Use Case
+                        </p>
+                        <p className="text-lg font-medium leading-relaxed text-slate-700 dark:text-white/90">
                           {activeGroup.useCase}
                         </p>
                       </div>
-                      <div className="h-px bg-white/10" />
+                      <div className="h-px bg-slate-200 dark:bg-white/10" />
                       <div>
-                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/40">Business Benefit</p>
-                        <p className="text-lg font-medium leading-relaxed text-slate-900 dark:text-white/90">
+                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-white/40">
+                          Business Benefit
+                        </p>
+                        <p className="text-lg font-medium leading-relaxed text-slate-700 dark:text-white/90">
                           {activeGroup.benefit}
                         </p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-4 gap-4">
-                      {activeGroup.items.map((item) => (
-                        <div
-                          key={item.name}
-                          className="flex flex-col items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 dark:border-white/5 dark:bg-white/5 p-5 transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1 group"
-                        >
-                          <item.icon size={32} color={item.name === "Next.js" || item.name === "OpenAI" ? "#fff" : item.color} className="transition-transform group-hover:scale-110" />
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-white/60 transition-colors group-hover:text-white">
-                            {item.name}
-                          </span>
-                        </div>
-                      ))}
+                      {activeGroup.items.map((item) => {
+                        const mono = MONO_ICONS.has(item.name);
+                        return (
+                          <div
+                            key={item.name}
+                            className="group flex flex-col items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-white/5 dark:bg-white/5 dark:hover:border-white/20 dark:hover:bg-white/10"
+                          >
+                            <item.icon
+                              size={32}
+                              color={mono ? undefined : item.color}
+                              className={mono ? "text-slate-900 dark:text-white" : "transition-transform group-hover:scale-110"}
+                            />
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 transition-colors group-hover:text-slate-900 dark:text-white/60 dark:group-hover:text-white">
+                              {item.name}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </>
                 ) : (
                   <>
                     <div>
-                      <div className="mb-2 text-[12px] font-bold uppercase tracking-[0.4em] text-indigo-400">
+                      <div className="mb-2 text-[12px] font-bold uppercase tracking-[0.4em] text-[var(--site-primary)]">
                         Full Stack
                       </div>
                       <h3 className="font-display text-4xl font-black leading-tight text-slate-900 dark:text-white">
@@ -428,11 +418,11 @@ export function StackSlider() {
                       </h3>
                     </div>
 
-                    <div className="space-y-5 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md shadow-2xl">
-                      <p className="text-lg font-medium leading-relaxed text-slate-900 dark:text-white/90">
-                        We deploy a full-spectrum technology arsenal - from modern web frameworks and SEO tooling to AI engines and cloud infrastructure.
+                    <div className="space-y-5 rounded-3xl border border-slate-200 bg-slate-50 p-8 dark:border-white/10 dark:bg-white/5">
+                      <p className="text-lg font-medium leading-relaxed text-slate-700 dark:text-white/90">
+                        We deploy a full-spectrum technology arsenal — from modern web frameworks and SEO tooling to AI engines and cloud infrastructure.
                       </p>
-                      <p className="text-lg font-medium leading-relaxed text-slate-900 dark:text-white/90">
+                      <p className="text-lg font-medium leading-relaxed text-slate-700 dark:text-white/90">
                         Click any stack above to explore the specific tools powering each service.
                       </p>
                     </div>
@@ -443,17 +433,10 @@ export function StackSlider() {
                           key={g.id}
                           type="button"
                           onClick={() => setActiveGroupId(g.id)}
-                          className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-5 text-left transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:-translate-y-1"
+                          className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:border-white/5 dark:bg-white/5 dark:hover:border-white/20 dark:hover:bg-white/10"
                         >
-                          <g.icon 
-                            size={20} 
-                            style={{ 
-                              color: g.color,
-                              filter: `drop-shadow(0 0 12px ${g.color}60)`
-                            }} 
-                            className="flex-shrink-0"
-                          />
-                          <span className="text-[12px] font-bold uppercase tracking-wider text-white/50 transition-colors group-hover:text-white">
+                          <g.icon size={20} style={{ color: g.color }} className="flex-shrink-0" />
+                          <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500 transition-colors group-hover:text-slate-900 dark:text-white/50 dark:group-hover:text-white">
                             {g.shortLabel}
                           </span>
                         </button>
@@ -469,4 +452,3 @@ export function StackSlider() {
     </section>
   );
 }
-

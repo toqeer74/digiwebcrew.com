@@ -35,7 +35,7 @@ export function GlobalDecorativeBackground() {
       </div>
 
       {/* Global Glow Accents */}
-      <div className="absolute left-[10%] top-[20%] h-[500px] w-[500px] rounded-full bg-indigo-500/5 blur-[120px]" />
+      <div className="absolute left-[10%] top-[20%] h-[500px] w-[500px] rounded-full bg-[rgba(var(--site-primary-rgb),0.05)] blur-[120px]" />
       <div className="absolute right-[15%] bottom-[30%] h-[600px] w-[600px] rounded-full bg-blue-600/5 blur-[140px]" />
       <div className="absolute left-[40%] bottom-[10%] h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-[100px]" />
     </div>

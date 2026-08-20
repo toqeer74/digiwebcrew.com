@@ -1,117 +1,58 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/layout-primitives";
+import { QuoteWizard } from "@/components/sections/quote-wizard";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { Accordion } from "@/components/ui/accordion";
-import { ServiceProcessSteps } from "@/components/sections/service-process-steps";
 import { localePath } from "@/lib/locale-path";
+import { 
+  ArrowRight,
+  CheckCircle2,
+  Search,
+  MapPin,
+  TrendingUp,
+  Settings2,
+  Activity,
+  Layers,
+  ShieldCheck,
+  LineChart
+} from "lucide-react";
+
+// SEO Specific Data
+const coreFeatures = [
+  "On-Page Optimization",
+  "Technical SEO Foundations",
+  "Local Search Visibility",
+  "Content Refinement",
+];
 
 const supportingPoints = [
-  "Built for long-term visibility and growth",
-  "Focused on search, structure, and ongoing improvement",
-  "Designed to support websites after launch",
-  "Suitable for local and service-based businesses",
+  "Built for long-term search dominance",
+  "Continuous technical health monitoring",
+  "Data-driven content updates",
+  "Focused on high-intent buyer keywords",
 ];
 
-const whoFor = [
-  "law firms that want stronger local and service-related visibility",
-  "clinics, dental practices, and med spas that need better search presence and local discovery",
-  "home service businesses that rely on local searches and service pages",
-  "consultants, coaches, and agencies improving authority and inbound leads",
-  "businesses that launched a new site and need continued support",
-  "companies that want ongoing improvements without rebuilding from scratch",
-  "businesses that want search growth tied to real service pages and user experience",
+const legacyFeatures = [
+  "Metadata Architecture",
+  "Internal Link Structuring",
+  "Performance & Core Web Vitals",
+  "Ongoing Keyword Strategy",
 ];
 
-const serviceAreas = [
-  "On-page SEO",
-  "Local SEO",
-  "Technical SEO",
-  "Content optimization",
-  "Page improvements",
-  "Internal linking improvements",
-  "Metadata updates",
-  "Performance checks",
-  "Website updates",
-  "Reporting and review",
+const legacyTechStack = ["Semrush", "Ahrefs", "Google Analytics", "Search Console"];
+
+const legacyOutcomes = [
+  "Higher Search Rankings",
+  "Increased Organic Traffic",
+  "Stronger Local Presence",
+  "Optimized Service Pages",
 ];
 
-const included = [
-  ["On-page SEO improvements", "Better page structure, headings, metadata, and content alignment across key pages."],
-  ["Local SEO support", "Improvements that help location-based businesses appear more clearly for relevant local searches."],
-  ["Technical SEO foundations", "Support for crawlability, indexing health, structure, and other technical details that affect visibility."],
-  ["Content refinement", "Updates that improve clarity, keyword alignment, usefulness, and page quality over time."],
-  ["Website updates", "Ongoing adjustments to keep pages current, accurate, and aligned with changing offers or business goals."],
-  ["Performance review", "Checks on site quality, usability, and areas that may be affecting results."],
-  ["Growth-focused recommendations", "Practical direction on where the site can improve next based on what matters most."],
-  ["Reporting and support", "Regular visibility into what is being worked on and where improvements are being made."],
-];
-
-const problems = [
-  "weak search visibility",
-  "poor local presence",
-  "service pages that are not structured well",
-  "missing or weak metadata",
-  "outdated content",
-  "technical issues affecting search performance",
-  "no clear internal linking strategy",
-  "no consistent website improvements after launch",
-  "low traffic to important pages",
-  "no plan for continued digital growth",
-];
-
-const bestUseCases = [
-  "improving local search visibility",
-  "strengthening service pages after launch",
-  "updating weak or outdated content",
-  "fixing technical SEO issues",
-  "improving page structure and internal linking",
-  "supporting a new site with ongoing search work",
-  "combining updates, optimization, and ongoing support in one retainer",
-  "maintaining growth momentum without needing a full rebuild",
-];
-
-const relatedServices = [
-  "Custom Website Development",
-  "Conversion Funnels and Landing Pages",
-  "Technical SEO",
-  "Local SEO",
-  "Website Maintenance and Support",
-  "AI Chatbots and Automation",
-];
-
-const faqItems = [
-  {
-    value: "faq-1",
-    title: "Do you offer SEO as a standalone service?",
-    content:
-      "Yes, depending on fit. In some cases SEO works best as part of a broader website or growth engagement, but standalone support can also make sense.",
-  },
-  {
-    value: "faq-2",
-    title: "What kind of SEO do you provide?",
-    content:
-      "We support on-page SEO, local SEO, technical SEO, and content-focused improvements based on the needs of the site.",
-  },
-  {
-    value: "faq-3",
-    title: "Do you only work on websites you built?",
-    content:
-      "No. We can also work on existing websites if the project is a good fit and the site allows for meaningful improvement.",
-  },
-  {
-    value: "faq-4",
-    title: "Will this include website updates too?",
-    content:
-      "Yes. Depending on the retainer scope, website updates and ongoing improvements can be part of the service.",
-  },
-  {
-    value: "faq-5",
-    title: "How long should a business stay on SEO support?",
-    content:
-      "That depends on the business, market, and goals. SEO and growth support usually works best as an ongoing effort rather than a one-time task.",
-  },
+const webDevRelatedServices = [
+  { label: "Conversion Funnels", href: "/services/conversion-funnels", icon: Activity },
+  { label: "Custom Software", href: "/services/custom-software", icon: Layers },
+  { label: "Maintenance & Support", href: "/services/maintenance-support", icon: ShieldCheck },
 ];
 
 export default async function SEOGrowthRetainersPage({
@@ -120,242 +61,328 @@ export default async function SEOGrowthRetainersPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
+  const dict = (await getDictionary(locale)) as any;
   const isRtl = locale === "ar" || locale === "ur";
 
   return (
-    <main className="flex-1 pt-32 pb-24">
-      <Container>
-        <div className="max-w-5xl mx-auto space-y-8">
-          <AnimatedSection className="text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Growth Lab</span>
-            </div>
+    <main className="flex-1 -mt-28 overflow-x-hidden pt-28 relative">
+      {/* Background Visuals */}
+      <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/15 via-[var(--site-primary)]/5 to-background" />
+        <div className="absolute top-0 left-0 right-0 h-[1000px] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
-              SEO & <span className="text-[var(--site-primary)]">Growth</span> Support <br className="hidden md:block" /> for Continued Performance.
-            </h1>
-            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
-              We help businesses improve search visibility, strengthen website performance, and keep their digital systems moving forward through ongoing SEO and optimization.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
-              {supportingPoints.map((point) => (
-                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400 relative overflow-hidden group">
-                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
-                  {point}
+      <Container className="relative z-10">
+        <div className="max-w-7xl mx-auto space-y-6 pt-12 pb-24">
+          
+          {/* 1. HERO SECTION */}
+          <AnimatedSection className="pt-0 pb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-4 items-center relative">
+              
+              {/* LEFT: Typography & Graphic */}
+              <div className="relative z-10 text-center lg:text-left">
+                {/* Background Scribble Graphic */}
+                <div className="absolute top-1/2 left-1/2 lg:-left-20 -translate-x-1/2 lg:translate-x-0 -translate-y-[45%] w-[110%] lg:w-[130%] h-[300px] opacity-15 dark:opacity-20 pointer-events-none -rotate-3 z-0 mix-blend-multiply dark:mix-blend-screen max-w-[800px]">
+                  <svg viewBox="-50 -50 500 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round">
+                    <defs>
+                      <linearGradient id="heroStripeGradientSEO" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#10b981" />
+                        <stop offset="100%" stopColor="#06b6d4" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M-40 120 C 20 -60, 140 -40, 160 100 C 180 260, 260 260, 300 140 C 340 20, 420 20, 460 120" stroke="url(#heroStripeGradientSEO)" />
+                  </svg>
                 </div>
-              ))}
+
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 mb-5 shadow-sm backdrop-blur-md mx-auto lg:mx-0">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-600 dark:bg-emerald-400" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+                      Visibility Operations
+                    </span>
+                  </div>
+                  
+                  <h1 className="text-[3rem] md:text-[4rem] font-black font-display text-slate-900 dark:text-white tracking-tight mb-4 leading-[1.05] text-balance drop-shadow-sm">
+                    Search Authority <br className="hidden md:block" /> 
+                    <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Built for Growth.</span>
+                  </h1>
+                  
+                  <p className="text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 drop-shadow-sm">
+                    We help businesses improve search visibility, strengthen website performance, and maintain momentum through strategic, ongoing SEO optimization.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start items-center">
+                    <Button href="#seo-scope" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-500/20 rounded-full px-6 h-10 flex items-center gap-2 group transition-all text-[13px] font-bold border-0">
+                      <span>Start Scope</span>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
+                        <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </Button>
+                    <Button href={localePath(locale, "/book-consultation")} className="bg-slate-900 hover:bg-slate-800 text-white shadow-md rounded-full px-6 h-10 flex items-center gap-2 group transition-all text-[13px] font-bold dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
+                      <span>Book Consultation</span>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1 dark:bg-slate-900/10">
+                        <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT: Floating Badges / Visuals */}
+              <div className="hidden lg:flex flex-col gap-4 pl-12 relative z-10 h-full justify-center">
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-48 h-48 bg-emerald-400/20 blur-[80px] rounded-full pointer-events-none" />
+                
+                <div className="bg-white/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-3 w-56 ml-auto transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+                  <div className="h-10 w-10 rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <MapPin size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-foreground leading-tight">Local Dominance</p>
+                    <p className="text-[11px] text-muted-foreground font-medium">Map pack rankings</p>
+                  </div>
+                </div>
+
+                <div className="bg-white/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-3 w-64 transform translate-x-10 rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="h-10 w-10 rounded-full bg-teal-100 text-teal-600 dark:bg-teal-500/20 dark:text-teal-400 flex items-center justify-center shrink-0">
+                    <Settings2 size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-foreground leading-tight">Technical Health</p>
+                    <p className="text-[11px] text-muted-foreground font-medium">Error-free indexing</p>
+                  </div>
+                </div>
+
+                <div className="bg-white/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-3 w-56 ml-auto transform -rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="h-10 w-10 rounded-full bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                    <TrendingUp size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-foreground leading-tight">Growth Ops</p>
+                    <p className="text-[11px] text-muted-foreground font-medium">Continuous tracking</p>
+                  </div>
+                </div>
+              </div>
+              
             </div>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </AnimatedSection>
+
+
+          {/* 2. CORE CAPABILITIES (Bento 1/3 - 2/3) */}
+          <AnimatedSection className="site-card overflow-hidden relative flex flex-col lg:flex-row gap-8 justify-between p-8 lg:p-12 border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/5 dark:bg-white/5 transition-all duration-700 hover:border-emerald-500/30">
+            <div className="lg:w-1/3">
+              <span className="mb-4 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Core Capabilities</span>
+              <h2 className="mb-4 text-3xl font-display font-black text-foreground leading-tight tracking-tight">
+                Search <br /> Architecture.
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground font-medium mb-6">
+                We combine technical foundations, on-page optimization, and strategic content updates to keep your site growing.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-2 border-t border-slate-200 dark:border-white/10 pt-4">
+                {legacyTechStack.map((item) => (
+                  <span key={item} className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-white/5">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            <div className="lg:w-2/3">
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 ml-1">Workflow Focus</h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-500 dark:text-slate-400">
+                {legacyFeatures.map((item) => (
+                  <li key={item} className="flex items-start gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 dark:border-white/5 dark:bg-white/5 transition-all duration-300 hover:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-500/10">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 mt-0.5">
+                      <LineChart size={12} />
+                    </div>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300 leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </AnimatedSection>
+
+
+          {/* 3. RELIABILITY PROTOCOL (Bento 1/3 - 2/3) */}
+          <AnimatedSection className="site-card overflow-hidden relative flex flex-col lg:flex-row gap-8 justify-between p-8 lg:p-12 border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/5 dark:bg-white/5 transition-all duration-700 hover:border-teal-500/30">
+            <div className="lg:w-1/3">
+              <span className="mb-4 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-teal-600 dark:text-teal-400">Growth Protocol</span>
+              <h2 className="mb-4 text-3xl font-display font-black text-foreground leading-tight tracking-tight">
+                Designed for <br /> Stability.
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground font-medium mb-6">
+                Ongoing systems to ensure your traffic compounds over time without breaking technical constraints.
+              </p>
+              <p className="text-[13px] font-semibold text-slate-500 dark:text-slate-400 leading-relaxed italic border-l-2 border-teal-500/50 pl-4">
+                A practical approach to search visibility—no vanity metrics, just real performance.
+              </p>
+            </div>
+            
+            <div className="lg:w-2/3">
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 ml-1">Foundation Pillars</h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-500 dark:text-slate-400">
+                {supportingPoints.map((s, i) => (
+                  <li key={i} className="flex items-start gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 dark:border-white/5 dark:bg-white/5 transition-all duration-300 hover:border-teal-500/30 hover:bg-teal-50 dark:hover:bg-teal-500/10">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400 mt-0.5">
+                      <CheckCircle2 size={12} />
+                    </div>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300 leading-snug">{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </AnimatedSection>
+
+
+          {/* 4. EXPECTED OUTCOMES & TECH EXCELLENCE (Combined Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 mt-16 mb-6">
+            <AnimatedSection className="md:col-span-8 site-card p-6 lg:p-8 relative overflow-hidden border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/5 dark:bg-white/5 flex flex-col justify-center">
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
+              <h2 className="text-2xl lg:text-3xl font-display font-black text-slate-950 dark:text-foreground mb-5 tracking-tight">Optimization Protocol</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10">
+                {coreFeatures.map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-slate-50/50 dark:border-white/5 dark:bg-white/5 transition-colors hover:bg-emerald-50/50 hover:border-emerald-500/30 dark:hover:bg-white/10">
+                    <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-700 dark:text-slate-300">{f}</span>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className="md:col-span-4 site-card p-6 lg:p-8 relative overflow-hidden border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/5 dark:bg-white/5">
+               <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Outcomes</span>
+               <h3 className="text-xl font-display font-black text-slate-950 dark:text-foreground mb-4">What to Expect</h3>
+               <div className="space-y-3">
+                 {legacyOutcomes.map((item) => (
+                   <div key={item} className="flex items-start gap-2.5">
+                     <div className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-teal-500/10 flex items-center justify-center border border-teal-500/20">
+                       <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                     </div>
+                     <span className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-snug">{item}</span>
+                   </div>
+                 ))}
+               </div>
+            </AnimatedSection>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+             {[
+               { 
+                 icon: (
+                   <svg viewBox="0 0 24 24" width="24" height="24" className="text-emerald-600 dark:text-emerald-400">
+                     <path fill="currentColor" fillOpacity="0.2" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                     <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                   </svg>
+                 ), 
+                 title: "Semantic Content", 
+                 desc: "Topic cluster driven" 
+               },
+               { 
+                 icon: (
+                   <svg viewBox="0 0 24 24" width="24" height="24" className="text-emerald-600 dark:text-emerald-400">
+                     <path fill="currentColor" fillOpacity="0.2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                     <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                   </svg>
+                 ), 
+                 title: "Clean Code", 
+                 desc: "Indexable frameworks" 
+               },
+               { 
+                 icon: (
+                   <svg viewBox="0 0 24 24" width="24" height="24" className="text-emerald-600 dark:text-emerald-400">
+                     <path fill="currentColor" fillOpacity="0.2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                     <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                   </svg>
+                 ), 
+                 title: "Local Signals", 
+                 desc: "Map pack authority" 
+               },
+               { 
+                 icon: (
+                   <svg viewBox="0 0 24 24" width="24" height="24" className="text-emerald-600 dark:text-emerald-400">
+                     <path fill="currentColor" fillOpacity="0.2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                     <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                   </svg>
+                 ), 
+                 title: "Rank Tracking", 
+                 desc: "Transparent reporting" 
+               }
+             ].map((item, i) => (
+               <AnimatedSection key={i} className="site-card p-4 lg:p-5 flex flex-col gap-2.5 items-center text-center border border-slate-200 bg-white/85 dark:border-white/5 dark:bg-white/5 hover:border-emerald-500/30 transition-all group">
+                  <div className="h-10 w-10 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-[15px] font-display font-black text-slate-950 dark:text-foreground leading-tight">{item.title}</h3>
+                  <p className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">{item.desc}</p>
+               </AnimatedSection>
+             ))}
+          </div>
+
+
+          {/* 6. RELATED SERVICES */}
+          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/5 dark:bg-white/5 mt-16">
+            <h3 className="text-2xl font-display font-black text-slate-950 dark:text-foreground mb-2">Related Engineering Ecosystem</h3>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-8 max-w-2xl font-medium">
+              Explore specialized solutions that integrate seamlessly with your organic growth infrastructure.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {webDevRelatedServices.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <Link
+                    key={service.href}
+                    href={localePath(locale, service.href)}
+                    className="group flex items-start gap-4 rounded-xl border border-slate-200 bg-slate-50/50 p-4 transition-all hover:border-emerald-500/40 hover:bg-white hover:shadow-md dark:border-white/5 dark:bg-white/[0.02] dark:hover:bg-white/[0.05]"
+                  >
+                    <div className="mt-0.5 text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      <Icon size={20} strokeWidth={2} />
+                    </div>
+                    <div className="flex-1">
+                      <span className="block text-sm font-bold text-slate-950 transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 dark:text-white">
+                        {service.label}
+                      </span>
+                      <div className="mt-1 flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                        View <ArrowRight size={10} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="text-center">
+              <Link 
+                href={localePath(locale, "/services")}
+                className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
+              >
+                Explore Full Catalog <ArrowRight size={14} />
+              </Link>
+            </div>
+          </AnimatedSection>
+
+
+          {/* 7. FINAL CTA / WIZARD */}
+          <div id="seo-scope" className="pt-8">
+            <AnimatedSection className="relative overflow-hidden rounded-[20px] border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/80 p-8 text-center md:p-10 shadow-sm dark:border-white/10 dark:from-white/5 dark:to-transparent mb-8">
+              <div className="relative z-10">
+                <span className="mb-2 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
+                  Project Scope
                 </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </AnimatedSection>
-
-
-          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-6 tracking-tight">Launch Is Only the Start</h2>
-            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-4xl">
-              <p>
-                A website can look strong on day one and still underperform over time if no one is improving it.
-              </p>
-              <p>
-                Digital Web Crew offers ongoing SEO and growth support for businesses that want better visibility, stronger page structure, and continued improvement after launch.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 lg:p-12 border border-slate-200 dark:border-white/10 rounded-xl relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-emerald-500 opacity-50" />
-            <h2 className="text-2xl font-bold text-foreground mb-6 tracking-tight">A More Practical Growth Retainer</h2>
-            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-4xl">
-              <p>
-                This service is not built around vague monthly activity or inflated promises.
-              </p>
-              <p>
-                It is meant for businesses that want real website improvement, stronger visibility, and ongoing support tied to how the site actually performs and develops over time. That means focusing on useful updates, search structure, content quality, and the parts of the website that support trust and lead generation.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6 tracking-tight">Who This Service Is Built For</h2>
-            <p className="text-muted-foreground mb-10 max-w-3xl leading-relaxed">
-              SEO and growth support is a strong fit for businesses that depend on search visibility, local presence, service discovery, or ongoing website performance.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-              {whoFor.map((item) => (
-                <div key={item} className="flex items-center gap-3 text-left p-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)]" />
-                  <span className="text-slate-700 dark:text-slate-400 text-[15px] font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6 tracking-tight">Core Growth Pillars</h2>
-            <p className="text-muted-foreground mb-10 max-w-3xl leading-relaxed">
-              SEO and growth support can cover a mix of visibility work, content improvements, technical fixes, and ongoing website updates.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-              {serviceAreas.map((item) => (
-                <div key={item} className="site-card flex items-center justify-center p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-400 bg-slate-50/50 dark:bg-white/5">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-8 tracking-tight">What&apos;s Included</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-              {included.map(([title, desc]) => (
-                <div key={title} className="site-card p-8 flex flex-col items-center text-center bg-slate-50/50 dark:bg-white/5 border-2 border-transparent hover:border-[var(--site-primary)]/10 transition-all">
-                  <h3 className="font-display font-black text-xl text-foreground mb-4">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6 tracking-tight">What Growth Support Can Fix</h2>
-            <p className="text-muted-foreground mb-10 max-w-3xl leading-relaxed">
-              Many businesses have a decent website but still struggle with visibility, weak service pages, or outdated content.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full mb-8">
-              {problems.map((item) => (
-                <div key={item} className="flex items-center gap-3 text-left">
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500/50 shrink-0" />
-                  <span className="text-muted-foreground text-sm font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
-            <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">Strategy-First Optimization</h2>
-            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-4xl">
-              <p>We start by looking at the current state of the site.</p>
-              <p>
-                That means reviewing page structure, service presentation, search-readiness, content quality, and the areas most likely to affect visibility. We keep the work practical and tied to real business results.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6 tracking-tight">Best Use Cases</h2>
-            <p className="text-muted-foreground mb-10 max-w-3xl leading-relaxed">
-              This service works especially well for businesses that want their website to improve steadily instead of staying static.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-              {bestUseCases.map((item) => (
-                <div key={item} className="flex items-center gap-3 text-left">
-                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/50 shrink-0" />
-                  <span className="text-muted-foreground text-sm font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-10 lg:p-12 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
-            <h2 className="text-2xl font-display font-black text-foreground mb-6">Related Protocol Support</h2>
-            <p className="text-muted-foreground mb-10 max-w-2xl leading-relaxed">Growth work becomes stronger when the website, page structure, and lead flow are built properly.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-              {relatedServices.map((item) => (
-                <div key={item} className="site-card p-4 rounded-xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-700 dark:text-slate-400 text-center">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <ServiceProcessSteps
-              title="What the Process Looks Like"
-              steps={[
-                { title: "Review", description: "We assess the current website, page quality, structure, and the main visibility or performance gaps." },
-                { title: "Prioritize", description: "We identify what should be improved first based on impact, business goals, and current weaknesses." },
-                { title: "Improve", description: "We implement updates across SEO, content, structure, and website performance as needed." },
-                { title: "Monitor and Refine", description: "We continue improving over time based on progress, opportunities, and changing business needs." },
-              ]}
-              ctaHref={localePath(locale, "/process")}
-              ctaLabel="View Full Process"
+                <h2 className="mb-3 text-2xl md:text-4xl font-display font-black text-foreground leading-tight">
+                  Scale Your Traffic
+                </h2>
+                <p className="mx-auto max-w-2xl text-sm md:text-base leading-relaxed text-muted-foreground font-medium">
+                  Use the form below to share your current website, competitors, and growth bottlenecks so we can architect the perfect SEO strategy.
+                </p>
+              </div>
+            </AnimatedSection>
+            
+            <QuoteWizard 
+              dict={dict} 
+              isRtl={isRtl} 
+              locale={locale} 
+              preselectedService="SEO" 
+              allowedHelpOptions={["SEO", "Website Design or Redesign", "Not Sure Yet"]}
             />
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-12 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-display font-black text-foreground mb-6 tracking-tight">Starting Investment</h2>
-            <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
-              SEO and growth retainers vary based on website size, current condition, and the level of support required.
-            </p>
-            <div className="site-card p-8 mb-10 bg-slate-50/50 dark:bg-white/5 border-[var(--site-primary)]/20 border-2 w-full max-w-xl">
-              <p className="text-2xl md:text-3xl font-display font-black text-foreground tracking-tight">SEO & Growth Support starting at $1,000 per month</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-6">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About SEO and Growth Support</h2>
-            <Accordion items={faqItems} />
-          </AnimatedSection>
-
-          <AnimatedSection className="site-card p-12 text-center flex flex-col items-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl font-display font-black text-foreground mb-6 leading-tight tracking-tight">Need Ongoing Support to Improve Visibility?</h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-3xl leading-relaxed">
-              If your website is live but not improving, the right growth support can help you strengthen visibility, refine key pages, and create better long-term performance. Book a consultation or get a custom project scope to move forward.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-            </div>
-          </AnimatedSection>
+          </div>
 
         </div>
       </Container>

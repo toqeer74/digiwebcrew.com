@@ -7,6 +7,7 @@ import Link from "next/link";
 import { localePath } from "@/lib/locale-path";
 import { NetworkBackground } from "@/components/ui/network-background";
 import { Button } from "@/components/ui/button";
+import { HeroUICards } from "./hero-ui-cards";
 
 interface HeroProps {
   locale: string;
@@ -33,9 +34,9 @@ const serviceLinks = [
   { 
     title: "AI AUTOMATION", 
     icon: Cpu, 
-    color: "#6366f1", 
+    color: "#114b97", 
     href: "/services/ai-integrations",
-    glow: "rgba(99, 102, 241, 0.15)"
+    glow: "rgba(17, 75, 151, 0.15)"
   },
   { 
     title: "SEO & GROWTH", 
@@ -128,9 +129,9 @@ export function Hero({ locale }: HeroProps) {
       {/* Interactive Network Background */}
       <div className="absolute inset-0 z-0">
         <NetworkBackground />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent opacity-40" />
       </div>
 
       {/* Scan line */}
@@ -153,9 +154,9 @@ export function Hero({ locale }: HeroProps) {
             </span>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center w-full">
             {/* Headline column */}
-            <div className="space-y-1 lg:flex-1">
+            <div className="space-y-1 flex flex-col justify-center">
               <motion.span 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -169,7 +170,7 @@ export function Hero({ locale }: HeroProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 className="block font-inter font-[900] italic leading-[0.82] tracking-tight text-[clamp(50px,8vw,110px)] text-transparent"
-                style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.9)" }}
+                style={{ WebkitTextStroke: "1px rgba(255,255,255,0.4)" }}
               >
                 DIGITAL
               </motion.span>
@@ -191,41 +192,50 @@ export function Hero({ locale }: HeroProps) {
               >
                 From high-performance custom websites to AI-powered sales automation — we engineer digital systems that convert visitors into revenue. 100+ systems built. 99.9% uptime.
               </motion.p>
+              
+              {/* CTA and Tags below description */}
+              <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full mt-10"
+              >
+                <div className="flex flex-row items-center gap-3">
+                  <Link href={localePath(locale, "/quote")}>
+                    <Button variant="primary" size="lg" className="px-6 py-3 whitespace-nowrap">
+                      Start Your Project
+                      <ArrowRight className="stroke-[3]" />
+                    </Button>
+                  </Link>
+                  <Link href={localePath(locale, "/case-studies")}>
+                    <Button variant="outline" size="lg" className="px-6 py-3 bg-white !text-black hover:bg-white/90 border-transparent whitespace-nowrap">
+                      View Our Work
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Tags section */}
+                <div className="flex flex-wrap items-center gap-2 mt-8 md:mt-10">
+                  {tags.map(tag => (
+                    <span 
+                      key={tag}
+                      className="text-[9px] md:text-[10px] tracking-widest uppercase font-semibold px-3.5 py-2 border border-white/12 rounded-full text-white/45 bg-white/5 transition-all hover:border-[var(--site-primary)]/40 hover:text-[var(--site-primary)] hover:bg-[var(--site-primary)]/5"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
             </div>
 
-            {/* CTA and Tags column */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:max-w-md w-full lg:pt-16"
+            {/* Right side - UI Cards */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden lg:flex justify-end items-center"
             >
-              
-              <div className="flex flex-row items-center gap-3">
-                <Link href={localePath(locale, "/quote")}>
-                  <Button variant="primary" size="lg" className="px-6 py-3 whitespace-nowrap">
-                    Start Your Project
-                    <ArrowRight className="stroke-[3]" />
-                  </Button>
-                </Link>
-                <Link href={localePath(locale, "/case-studies")}>
-                  <Button variant="outline" size="lg" className="px-6 py-3 bg-white !text-black hover:bg-white/90 border-transparent whitespace-nowrap">
-                    View Our Work
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Tags section */}
-              <div className="flex flex-wrap items-center gap-2 mt-8 md:mt-10">
-                {tags.map(tag => (
-                  <span 
-                    key={tag}
-                    className="text-[9px] md:text-[10px] tracking-widest uppercase font-semibold px-3.5 py-2 border border-white/12 rounded-full text-white/45 bg-white/5 transition-all hover:border-[var(--site-primary)]/40 hover:text-[var(--site-primary)] hover:bg-[var(--site-primary)]/5"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <HeroUICards />
             </motion.div>
           </div>
         </div>
@@ -242,30 +252,24 @@ export function Hero({ locale }: HeroProps) {
               <Link 
                 key={service.title}
                 href={localePath(locale, service.href)}
-                className="group relative flex flex-col items-center justify-center p-3 rounded-lg border border-white/5 bg-white/[0.01] transition-all hover:scale-[1.02] hover:bg-white/[0.04]"
+                className="group relative flex flex-col items-center justify-center p-4 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.08] hover:border-white/20"
               >
                 {/* Hover Glow */}
                 <div 
-                  className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity blur-xl z-0"
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl z-0"
                   style={{ background: service.glow }}
                 />
                 
                 <div className="relative z-10 flex flex-col items-center gap-3">
                   <service.icon 
-                    className="w-6 h-6 transition-transform group-hover:-translate-y-0.5" 
+                    className="w-7 h-7 transition-all duration-500 group-hover:scale-110" 
                     style={{ color: service.color }}
                     strokeWidth={1.5}
                   />
-                  <span className="text-[9px] tracking-[0.15em] font-plex font-bold text-white/70 group-hover:text-white transition-colors">
+                  <span className="text-[10px] tracking-[0.2em] font-plex font-bold text-white/50 group-hover:text-white transition-colors">
                     {service.title}
                   </span>
                 </div>
-
-                {/* Corner accent */}
-                <div 
-                  className="absolute top-2 right-2 w-1 h-1 rounded-full opacity-40 group-hover:opacity-100"
-                  style={{ background: service.color }}
-                />
               </Link>
             ))}
           </div>

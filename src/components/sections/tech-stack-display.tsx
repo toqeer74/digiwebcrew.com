@@ -87,7 +87,7 @@ export function TechStackDisplay() {
                 </div>
                 <div>
                   <p className="text-xs font-body font-semibold uppercase tracking-widest text-slate-500 dark:text-[#b7cadb]">1 in All Solutions</p>
-                  <p className="text-sm font-display font-bold text-foreground">DigiWebCrew</p>
+                  <p className="text-sm font-display font-bold text-foreground">Digi Web Crew</p>
                 </div>
               </div>
             </motion.div>
@@ -104,7 +104,7 @@ export function TechStackDisplay() {
                 transition={{ delay: idx * 0.05 }}
                 className="group flex items-center gap-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 p-5 text-left transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1"
               >
-                <tech.icon className={`flex-shrink-0 ${tech.color} drop-shadow-[0_0_8px_currentColor]`} size={24} />
+                <tech.icon className={`flex-shrink-0 ${tech.color}`} size={24} />
                 <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/50 transition-colors group-hover:text-slate-900 dark:group-hover:text-white">
                   {tech.name}
                 </span>

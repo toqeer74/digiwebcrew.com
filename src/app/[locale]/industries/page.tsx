@@ -1,66 +1,80 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Metadata } from "next";
+import { ArrowRight, Scale, Stethoscope, Wrench, Lightbulb, Building2, GraduationCap, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
+import { FluidBackground } from "@/components/sections/homepage-visuals";
+import { cn } from "@/lib/utils";
 
 const industrySections = [
   {
     heading: "Law Firms",
-    accent: "from-[var(--site-primary)] to-[#60A5FA]",
+    accent: "from-blue-500 to-cyan-400",
     badge: "Legal",
-    badgeColor: "bg-[rgba(var(--site-primary-rgb),0.08)] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]",
+    badgeColor: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+    icon: Scale,
     body: "Law firms need trust, clarity, and strong service presentation. A legal website has to communicate credibility quickly, explain practice areas clearly, and make it easy for potential clients to take the next step.",
-    points: ["Custom websites built for trust and structure", "Service and practice area pages", "Landing pages for focused campaigns", "Local and on-page SEO improvements", "Consultation-focused conversion paths", "Cleaner lead handling and intake support"],
-    closing: "A strong fit for firms that want a more professional online presence and better support for qualified consultations.",
+    points: ["Custom websites built for trust", "Service & practice area pages", "Local & on-page SEO improvements"],
+    stat: { label: "Client Conversion", value: "+45%" },
+    closing: "A strong fit for firms that want better support for qualified consultations.",
   },
   {
-    heading: "Dental, Medical & Med Spas",
-    accent: "from-[#34D399] to-[var(--site-primary)]",
+    heading: "Medical & Med Spas",
+    accent: "from-emerald-500 to-teal-400",
     badge: "Healthcare",
-    badgeColor: "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    body: "Healthcare and treatment-based businesses depend heavily on trust, local visibility, and a smooth path to booking or inquiry. The website needs to present services clearly and help visitors feel confident enough to take action.",
-    points: ["Professional websites with stronger patient-facing structure", "Treatment and service pages", "Booking-focused landing pages", "Local SEO support", "Conversion improvements", "Lead handling and response support"],
-    closing: "A strong fit for practices that want to improve presentation, visibility, and patient acquisition flow.",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    icon: Stethoscope,
+    body: "Healthcare businesses depend heavily on trust, local visibility, and a smooth path to booking. The website needs to present services clearly and help visitors feel confident to take action.",
+    points: ["Patient-facing architecture", "Booking-focused landing pages", "Local SEO & reviews support"],
+    stat: { label: "Booking Rate", value: "3x" },
+    closing: "A strong fit for practices wanting to improve patient acquisition flow.",
   },
   {
     heading: "Home Services",
-    accent: "from-[#F59E0B] to-[#34D399]",
+    accent: "from-amber-500 to-orange-400",
     badge: "Local",
-    badgeColor: "bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    body: "Home service businesses often depend on strong local visibility, fast lead flow, clear service pages, and a website that works well on mobile. Service-area structure, page clarity, and better inquiry flow can make a major difference.",
-    points: ["Custom service-focused websites", "Landing pages for local lead generation", "Stronger mobile experience", "Local SEO support", "Clearer service and location page structure", "Lead capture and follow-up systems"],
-    closing: "A strong fit for businesses that want more qualified local inquiries and a stronger digital foundation.",
+    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+    icon: Wrench,
+    body: "Home service businesses depend on strong local visibility, fast lead flow, clear service pages, and a website that works flawlessly on mobile devices out in the field.",
+    points: ["Local lead generation funnels", "Stronger mobile experience", "Clear service & location structure"],
+    stat: { label: "Lead Quality", value: "High" },
+    closing: "A strong fit for businesses wanting more qualified local inquiries.",
   },
   {
-    heading: "Consultants, Coaches & Agencies",
-    accent: "from-[#A78BFA] to-[#60A5FA]",
+    heading: "Consultants & Agencies",
+    accent: "from-violet-500 to-purple-400",
     badge: "Service B2B",
-    badgeColor: "bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400",
-    body: "Service-based businesses that sell through authority and consultations need a site that presents the offer clearly, builds trust, and gives potential clients a reason to move forward.",
-    points: ["Authority-focused websites", "Landing pages for services or offers", "Consultation-focused page flow", "Clearer service messaging structure", "Stronger conversion paths", "Support for ongoing growth and optimization"],
-    closing: "A strong fit for businesses that want better positioning and a clearer path from visitor to lead.",
+    badgeColor: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+    icon: Lightbulb,
+    body: "Service-based businesses that sell through authority need a site that presents the offer clearly, builds trust, and gives potential clients a reason to move forward.",
+    points: ["Authority-focused websites", "Consultation-focused page flow", "Clearer service messaging"],
+    stat: { label: "Authority Signal", value: "Max" },
+    closing: "A strong fit for businesses wanting a clearer path from visitor to lead.",
   },
   {
-    heading: "SaaS & B2B Service Companies",
-    accent: "from-[#60A5FA] to-[var(--site-primary)]",
+    heading: "SaaS & B2B Service",
+    accent: "from-indigo-500 to-blue-500",
     badge: "SaaS",
-    badgeColor: "bg-[rgba(var(--site-primary-rgb),0.08)] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]",
-    body: "SaaS and B2B businesses often need stronger front-end presentation, clearer messaging, and a site structure that supports both product understanding and lead generation.",
-    points: ["Modern front-end website builds", "Clearer website structure and messaging support", "Landing pages for campaigns or offers", "Conversion-focused user flow", "Technical website implementation", "Support for future growth and expansion"],
-    closing: "A strong fit for companies that need a cleaner and more capable digital presence to support growth.",
+    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+    icon: Building2,
+    body: "SaaS and B2B businesses need stronger front-end presentation, clearer messaging, and a site structure that supports both product understanding and lead generation.",
+    points: ["Modern front-end builds", "Conversion-focused user flow", "Technical website implementation"],
+    stat: { label: "ARR Impact", value: "Direct" },
+    closing: "A strong fit for companies needing a capable digital presence to support growth.",
   },
   {
-    heading: "Education, Training & eLearning",
-    accent: "from-[#34D399] to-[#A78BFA]",
+    heading: "Education & eLearning",
+    accent: "from-rose-500 to-pink-400",
     badge: "Education",
-    badgeColor: "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    body: "Education and training businesses often need structured content, clearer user journeys, stronger offer presentation, and a website that can support both information and action.",
-    points: ["Structured websites for education-focused content", "Landing pages for programs, offers, or campaigns", "Clearer page flow and navigation", "Support for growth and visibility", "Funnel support for lead generation", "Connected systems for better user experience"],
-    closing: "A strong fit for businesses that want a more organized and growth-ready digital setup.",
+    badgeColor: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+    icon: GraduationCap,
+    body: "Education and training businesses need structured content, clearer user journeys, stronger offer presentation, and a website that can support both information and action.",
+    points: ["Structured content frameworks", "Landing pages for programs", "Funnel support for enrollment"],
+    stat: { label: "Enrollments", value: "+60%" },
+    closing: "A strong fit for businesses that want a more organized, growth-ready setup.",
   },
 ];
 
@@ -72,115 +86,176 @@ const faqItems = [
   { value: "faq-5", title: "What if my business is not listed here?", content: "You can still reach out. If the project is a strong fit and the business need matches what we do well, we can still define the right direction." },
 ];
 
-const ctaPrimary = "inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]";
-const ctaSecondary = "inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10";
-
 export default async function IndustriesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale);
+  const sectionCardClass = "site-card overflow-hidden relative p-8 lg:p-10 border border-slate-200 bg-white/85 backdrop-blur-xl transition-all duration-700 dark:border-white/5 dark:bg-white/5";
+  const interactiveCardClass = "site-card site-card-interactive overflow-hidden relative p-6 lg:p-8 border border-slate-200 bg-white/85 backdrop-blur-xl transition-all duration-700 hover:border-[var(--site-primary)]/30 dark:border-white/5 dark:bg-white/5";
+  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
 
   return (
-    <main className="flex-1 pt-32 pb-24">
+    <main className="flex-1 pt-28 pb-16 overflow-hidden relative">
+      {/* Background Visuals */}
+      <div className="absolute top-0 left-0 w-full h-[600px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-background to-background pointer-events-none -z-10" />
+
       <Container>
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-6xl mx-auto space-y-24">
 
           {/* Hero */}
-          <AnimatedSection className="text-center flex flex-col items-center">
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Industry Clusters</span>
-            </div>
+          <AnimatedSection className="text-center flex flex-col items-center pt-8">
+            <SectionKicker label="Industries We Serve" />
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1]">
+            <h1 className="text-[3.25rem] md:text-[4.5rem] font-display font-black tracking-tight mb-6 text-foreground leading-[1.05] drop-shadow-sm text-balance">
               Built for Sectors Where <br className="hidden md:block" /> <span className="text-[var(--site-primary)]">Performance</span> Matters.
             </h1>
-            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed">
+            <p className="text-xl text-slate-600 dark:text-slate-300 font-medium mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-sm">
               We help growth-focused businesses build stronger websites, better conversion systems, improved search visibility, and cleaner lead handling tailored to their industrial requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
+              <Button href={localePath(locale, "/book-consultation")} variant="primary" size="xl" className="group">
                 <span>Book Consultation</span>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/50 dark:border-white/10 dark:bg-white/5 px-10 py-5 text-slate-700 dark:text-white font-bold transition-all hover:bg-slate-100 dark:hover:bg-white/10 group">
+              </Button>
+              <Button href={localePath(locale, "/quote")} variant="secondary" size="xl" className="group">
                 <span>Get Quote</span>
                 <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+              </Button>
             </div>
           </AnimatedSection>
 
-          {/* Intro */}
-          <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-2xl font-display font-black text-foreground mb-4">Why Industry Fit Changes the Right Solution</h2>
-            <p className="text-muted-foreground mb-3">A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company.</p>
-            <p className="text-muted-foreground">The right website, landing page, SEO, or automation setup depends on how the business sells, how customers search, what creates trust, and what action matters most. That is why the work should be shaped around the business model and the decision-making path behind it.</p>
-          </AnimatedSection>
+          {/* Intro - Visual Bento */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6">
+            <AnimatedSection className={cn(sectionCardClass, "md:col-span-8 flex flex-col justify-center min-h-[350px]")}>
+              <FluidBackground />
+              <div className="relative z-10">
+                <span className="mb-4 inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 shadow-sm">Adaptability</span>
+                <h2 className="text-3xl md:text-4xl font-display font-black text-foreground mb-4 tracking-tight">Why Industry Fit Changes the Solution</h2>
+                <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-xl">
+                  A law firm does not need the same structure as a med spa. A home service business does not need the same page flow as a SaaS company. The right digital setup depends entirely on how your specific customer searches, evaluates, and buys.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className={cn(sectionCardClass, "md:col-span-4 flex flex-col justify-center bg-slate-50/50 dark:bg-white/[0.02]")}>
+              {gradientTop}
+              <h3 className="text-xl font-display font-black text-foreground mb-6">What We Adapt</h3>
+              <ul className="space-y-4">
+                {[
+                  "Sales & Trust Logic",
+                  "Local vs Global SEO",
+                  "Lead Intake Velocity",
+                  "Compliance & Security"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-muted-foreground font-semibold">
+                    <CheckCircle2 size={16} className="text-[var(--site-primary)]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+          </div>
 
           {/* Industry Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             {industrySections.map((section, idx) => (
-              <AnimatedSection key={section.heading} delay={idx * 0.04} className="site-card site-card-interactive overflow-hidden relative flex flex-col p-8">
+              <AnimatedSection key={section.heading} delay={idx * 0.1} className={cn(interactiveCardClass, "group flex flex-col")}>
                 <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${section.accent}`} />
-                <span className={`mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${section.badgeColor}`}>{section.badge}</span>
-                <h2 className="text-xl font-display font-black text-foreground mb-3">{section.heading}</h2>
-                <p className="text-sm text-muted-foreground mb-4">{section.body}</p>
-                <ul className="space-y-2 mb-4">
+                
+                <div className="flex items-start justify-between mb-6">
+                  <div className={cn("flex h-12 w-12 items-center justify-center rounded-xl", section.badgeColor)}>
+                    <section.icon size={24} />
+                  </div>
+                  <span className={cn("inline-block rounded-full px-2 py-1 text-[10px] font-black uppercase tracking-widest", section.badgeColor)}>
+                    {section.badge}
+                  </span>
+                </div>
+
+                <h2 className="text-2xl font-display font-black text-foreground mb-3 group-hover:text-[var(--site-primary)] transition-colors">{section.heading}</h2>
+                <p className="text-sm text-muted-foreground font-medium mb-6 leading-relaxed flex-grow">{section.body}</p>
+                
+                <div className="bg-slate-50 dark:bg-white/5 rounded-xl p-4 mb-6">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">{section.stat.label}</div>
+                  <div className="text-xl font-black text-foreground">{section.stat.value}</div>
+                </div>
+
+                <ul className="space-y-2.5 mb-6">
                   {section.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{point}
+                    <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground font-medium">
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />
+                      <span className="leading-snug">{point}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-auto text-xs text-slate-400 dark:text-[#6B7E8E] italic">{section.closing}</p>
+                <p className="mt-auto text-xs font-semibold text-slate-400 dark:text-[#6B7E8E] italic bg-slate-50 dark:bg-white/5 px-3 py-2 rounded-lg">{section.closing}</p>
               </AnimatedSection>
             ))}
           </div>
 
           {/* Other Fit */}
-          <AnimatedSection className="site-card site-card-interactive overflow-hidden relative p-8">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] to-[#A78BFA]" />
-            <h2 className="text-2xl font-display font-black text-foreground mb-4">Other Strong-Fit Businesses</h2>
-            <p className="text-muted-foreground mb-3">While the industries above are our strongest fit, we can also work with other businesses where the project and business need are a strong match.</p>
-            <p className="text-muted-foreground mb-3">The best fit usually comes down to this:</p>
-            <ul className="space-y-2 mb-4">
-              {["The business values quality and clarity", "The website or digital setup plays a real role in growth", "There is a serious business need behind the project", "The scope and budget support custom work"].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--site-primary)]" />{item}
-                </li>
-              ))}
-            </ul>
-          </AnimatedSection>
+          <div className="max-w-4xl mx-auto">
+            <AnimatedSection className={sectionCardClass}>
+              {gradientTop}
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="md:w-1/2">
+                  <h2 className="text-3xl font-display font-black text-foreground mb-4">Other Strong-Fit Businesses</h2>
+                  <p className="text-muted-foreground font-medium leading-relaxed">
+                    While the industries above are our strongest fit, we can also work with other businesses where the project and business need are a strong match. The best fit usually comes down to shared values in quality and growth.
+                  </p>
+                </div>
+                <div className="md:w-1/2 w-full">
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      "The business values quality and clarity",
+                      "The digital setup plays a real role in growth",
+                      "There is a serious business need behind the project",
+                      "The scope and budget support custom work"
+                    ].map((item) => (
+                      <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5">
+                        <CheckCircle2 size={18} className="text-[var(--site-primary)] shrink-0" />
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
 
           {/* FAQ */}
-          <AnimatedSection>
-            <h2 className="text-2xl font-bold text-foreground mb-4">Questions About Industry Fit</h2>
-            <Accordion items={faqItems} />
-          </AnimatedSection>
+          <div className="space-y-8">
+            <h2 className="text-3xl font-display font-black text-foreground tracking-tight text-center">Questions About Industry Fit</h2>
+            <div className="max-w-4xl mx-auto">
+              <Accordion items={faqItems} />
+            </div>
+          </div>
 
           {/* CTA */}
-          <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-            <h2 className="text-2xl font-display font-black text-foreground mb-3">Need a Digital System Built Around Your Industry?</h2>
-            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className={ctaPrimary}>
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15"><ArrowRight className="h-4 w-4" /></span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className={ctaSecondary}>
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10"><ArrowRight className="h-4 w-4" /></span>
-              </Link>
+          <AnimatedSection className="site-card overflow-hidden relative text-center p-8 md:p-16 rounded-[20px] border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/80 shadow-sm dark:border-white/10 dark:from-white/5 dark:to-transparent">
+            {gradientTop}
+            <div className="relative z-10">
+              <span className="mb-2 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                Ready to define the project scope?
+              </span>
+              <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-6 tracking-tight">
+                Need a Digital System Built Around Your Industry?
+              </h2>
+              <p className="text-muted-foreground mb-12 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
+                If your business depends on trust, leads, consultations, bookings, or stronger digital performance, the next step is to define the right scope.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Button href={localePath(locale, "/book-consultation")} variant="primary" size="xl" className="group">
+                  <span>Book Consultation</span>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Button>
+                <Button href={localePath(locale, "/quote")} variant="secondary" size="xl" className="group">
+                  <span>Get Quote</span>
+                  <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </div>
             </div>
           </AnimatedSection>
 

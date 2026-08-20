@@ -7,9 +7,9 @@ import { AddLeadModal } from "@/components/admin/add-lead-modal";
 
 const actions = [
   { label: "Add Lead",       desc: "New prospect",   icon: Plus,       color: "var(--adm-primary)", dim: "var(--adm-primary-dim)", onClick: true  },
-  { label: "Analytics",     desc: "View trends",    icon: BarChart3,  color: "var(--adm-accent)",  dim: "var(--adm-accent-dim)",  href: "/admin/analytics" },
-  { label: "AI Assistant",  desc: "Generate copy",  icon: Sparkles,   color: "var(--adm-purple)",  dim: "var(--adm-purple-dim)",  href: "/admin/ai-assistant" },
-  { label: "Settings",      desc: "Configure",      icon: Settings,   color: "var(--adm-warning)", dim: "var(--adm-warning-dim)", href: "/admin/settings" },
+  { label: "Analytics",     desc: "View trends",    icon: BarChart3,  color: "var(--adm-accent)",  dim: "var(--adm-accent-dim)",  href: "/digiadmin/analytics" },
+  { label: "AI Assistant",  desc: "Generate copy",  icon: Sparkles,   color: "var(--adm-purple)",  dim: "var(--adm-purple-dim)",  href: "/digiadmin/ai-assistant" },
+  { label: "Settings",      desc: "Configure",      icon: Settings,   color: "var(--adm-warning)", dim: "var(--adm-warning-dim)", href: "/digiadmin/settings" },
 ];
 
 export function DashboardQuickActions() {

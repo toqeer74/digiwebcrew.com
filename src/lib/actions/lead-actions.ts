@@ -79,8 +79,8 @@ export async function updateLeadStatus(id: string, status: string) {
     }),
   ]);
 
-  revalidatePath("/admin/leads");
-  revalidatePath(`/admin/leads/${id}`);
+  revalidatePath("/digiadmin/leads");
+  revalidatePath(`/digiadmin/leads/${id}`);
   return serializeLead(lead);
 }
 
@@ -112,7 +112,7 @@ export async function addLeadNote(id: string, note: string) {
     where: { id },
     include: { notes: true, events: true, tasks: true },
   });
-  revalidatePath(`/admin/leads/${id}`);
+  revalidatePath(`/digiadmin/leads/${id}`);
   return lead ? serializeLead(lead) : null;
 }
 
@@ -139,7 +139,7 @@ export async function addTask(
     where: { id },
     include: { notes: true, events: true, tasks: true },
   });
-  revalidatePath(`/admin/leads/${id}`);
+  revalidatePath(`/digiadmin/leads/${id}`);
   return lead ? serializeLead(lead) : null;
 }
 
@@ -151,8 +151,8 @@ export async function completeTask(leadId: string, taskId: string) {
 
   await prisma.leadTask.update({ where: { id: taskId }, data: { done: true } });
 
-  revalidatePath(`/admin/leads/${leadId}`);
-  revalidatePath("/admin/tasks");
+  revalidatePath(`/digiadmin/leads/${leadId}`);
+  revalidatePath("/digiadmin/tasks");
 
   const lead = await prisma.lead.findUnique({
     where: { id: leadId },
@@ -183,8 +183,8 @@ export async function updateLeadScore(id: string, newScore: number, reason?: str
     }),
   ]);
 
-  revalidatePath(`/admin/leads/${id}`);
-  revalidatePath("/admin/analytics");
+  revalidatePath(`/digiadmin/leads/${id}`);
+  revalidatePath("/digiadmin/analytics");
   return serializeLead(lead);
 }
 
@@ -231,8 +231,8 @@ export async function createLead(data: any) {
     include: { notes: true, events: true, tasks: true },
   });
 
-  revalidatePath("/admin/leads");
-  revalidatePath("/admin/analytics");
+  revalidatePath("/digiadmin/leads");
+  revalidatePath("/digiadmin/analytics");
   return serializeLead(lead);
 }
 
@@ -242,8 +242,8 @@ export async function deleteLead(id: string) {
 
   await connectToDatabase();
   await prisma.lead.delete({ where: { id } });
-  revalidatePath("/admin/leads");
-  revalidatePath("/admin/analytics");
+  revalidatePath("/digiadmin/leads");
+  revalidatePath("/digiadmin/analytics");
   return { ok: true };
 }
 
@@ -307,9 +307,9 @@ export async function convertChatToLead(sessionId: string) {
     prisma.chatSession.update({ where: { sessionId }, data: { isConverted: true } }),
   ]);
 
-  revalidatePath("/admin/chats");
-  revalidatePath("/admin/leads");
-  revalidatePath("/admin/analytics");
+  revalidatePath("/digiadmin/chats");
+  revalidatePath("/digiadmin/leads");
+  revalidatePath("/digiadmin/analytics");
   return serializeLead(lead);
 }
 

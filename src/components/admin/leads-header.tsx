@@ -46,7 +46,7 @@ export function LeadsHeader() {
       <PageHeader
         title="Leads"
         subtitle="Manage, filter, and convert inbound leads."
-        breadcrumb={[{ label: "Dashboard", href: "/admin/dashboard" }, { label: "Leads" }]}
+        breadcrumb={[{ label: "Dashboard", href: "/digiadmin/dashboard" }, { label: "Leads" }]}
         actions={
           <div className="flex items-center gap-2">
             <a href={exportHref}>

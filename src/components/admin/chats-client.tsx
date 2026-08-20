@@ -52,7 +52,7 @@ export function ChatsClient({ sessions, selected }: { sessions: ChatSessionLite[
       <PageHeader
         title="Chats"
         subtitle="Live visitor conversations and transcripts."
-        breadcrumb={[{ label:"Dashboard", href:"/admin/dashboard" }, { label:"Chats" }]}
+        breadcrumb={[{ label:"Dashboard", href:"/digiadmin/dashboard" }, { label:"Chats" }]}
         actions={<span className="adm-badge adm-badge-success">{liveCount} live</span>}
       />
 

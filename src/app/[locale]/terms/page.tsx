@@ -15,16 +15,16 @@ export default async function TermsPage({ params }: { params: Promise<{ locale: 
                             <h1 className="text-4xl md:text-7xl mb-8 tracking-tighter">Terms of <span className="text-[var(--site-primary)]">Service.</span></h1>
                             <p className="lead text-xl mb-12 font-bold opacity-60">Last updated: February 2026</p>
                             
-                            <p className="mb-8">By engaging with the Digi Web Crew digital environment, you agree to the following terms and operational protocols.</p>
-        
-                            <h2 className="text-2xl mt-12 mb-6">1. Engagement Protocol</h2>
-                            <p>All laboratory briefs are subject to technical review. Digi Web Crew reserves the right to decline projects that do not align with our engineering standards or ethical guidelines.</p>
-        
+                            <p className="mb-8">By working with Digi Web Crew, you agree to the following terms.</p>
+
+                            <h2 className="text-2xl mt-12 mb-6">1. Project Engagement</h2>
+                            <p>All project requests are subject to review. Digi Web Crew reserves the right to decline projects that do not align with our engineering standards or ethical guidelines.</p>
+
                             <h2 className="text-2xl mt-12 mb-6">2. Intellectual Property</h2>
-                            <p>Upon final project delivery and full investment allocation, all custom code assets transfer to the client, unless otherwise specified in the project roadmap.</p>
-        
+                            <p>Upon final project delivery and full payment, all custom code assets transfer to the client, unless otherwise specified in the project agreement.</p>
+
                             <h2 className="text-2xl mt-12 mb-6">3. Liability Limits</h2>
-                            <p>Digi Web Crew provides industrial-grade solutions but is not liable for indirect losses resulting from system usage beyond the scope defined in the technical agreement.</p>
+                            <p>Digi Web Crew provides professional development services but is not liable for indirect losses resulting from system usage beyond the scope defined in the project agreement.</p>
                         </div>
                     </div>
                 </div>

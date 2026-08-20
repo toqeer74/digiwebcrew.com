@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Users, MessageSquare, FileText, Settings, Palette,
-  FileStack, Shield, BarChart3, Sparkles, CheckSquare,
+  FileStack, Shield, BarChart3, Sparkles, CheckSquare, Tag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,27 +14,28 @@ const sections: Array<{ label: string; items: NavItemConfig[] }> = [
   {
     label: "Main",
     items: [
-      { name: "Dashboard",     href: "/admin/dashboard",    icon: LayoutDashboard },
-      { name: "Analytics",     href: "/admin/analytics",    icon: BarChart3, badge: "↑12%", badgeVariant: "success" },
-      { name: "Leads",         href: "/admin/leads",        icon: Users, badge: "24" },
-      { name: "Chats",         href: "/admin/chats",        icon: MessageSquare, badge: "7", badgeVariant: "warning" },
-      { name: "Tasks",         href: "/admin/tasks",        icon: CheckSquare, badge: "5" },
+      { name: "Dashboard",     href: "/digiadmin/dashboard",    icon: LayoutDashboard },
+      { name: "Analytics",     href: "/digiadmin/analytics",    icon: BarChart3, badge: "↑12%", badgeVariant: "success" },
+      { name: "Leads",         href: "/digiadmin/leads",        icon: Users, badge: "24" },
+      { name: "Chats",         href: "/digiadmin/chats",        icon: MessageSquare, badge: "7", badgeVariant: "warning" },
+      { name: "Tasks",         href: "/digiadmin/tasks",        icon: CheckSquare, badge: "5" },
     ],
   },
   {
     label: "Content",
     items: [
-      { name: "AI Assistant",  href: "/admin/ai-assistant",  icon: Sparkles },
-      { name: "Drafts",        href: "/admin/drafts",        icon: FileText },
-      { name: "Workflow Runs", href: "/admin/workflow-runs", icon: FileStack },
+      { name: "AI Assistant",  href: "/digiadmin/ai-assistant",  icon: Sparkles },
+      { name: "Drafts",        href: "/digiadmin/drafts",        icon: FileText },
+      { name: "Workflow Runs", href: "/digiadmin/workflow-runs", icon: FileStack },
+      { name: "Pricing",       href: "/digiadmin/pricing",       icon: Tag },
     ],
   },
   {
     label: "System",
     items: [
-      { name: "Branding",  href: "/admin/branding", icon: Palette },
-      { name: "Audit",     href: "/admin/audit",    icon: Shield },
-      { name: "Settings",  href: "/admin/settings", icon: Settings },
+      { name: "Branding",  href: "/digiadmin/branding", icon: Palette },
+      { name: "Audit",     href: "/digiadmin/audit",    icon: Shield },
+      { name: "Settings",  href: "/digiadmin/settings", icon: Settings },
     ],
   },
 ];

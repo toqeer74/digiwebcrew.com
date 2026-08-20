@@ -10,7 +10,6 @@ import { ChatbotUI } from "@/components/chatbot/chatbot-ui";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ConsentBanner } from "@/components/ui/consent-banner";
-import { ThemeProvider } from "@/providers/theme-provider";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
 import { localePath } from "@/lib/locale-path";
 import { GlobalDecorativeBackground } from "@/components/GlobalDecorativeBackground";
@@ -93,9 +92,9 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={isRtl ? 'rtl' : 'ltr'}
-      className={`${inter.variable} ${plex.variable} ${dmSans.variable} dark scroll-smooth`}
+      className={`${inter.variable} ${plex.variable} ${dmSans.variable} scroll-smooth`}
       suppressHydrationWarning
-      style={{ ...brandingVars, colorScheme: 'dark' } as CSSProperties}
+      style={{ ...brandingVars, colorScheme: 'light' } as CSSProperties}
     >
       <head>
         <script
@@ -105,8 +104,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="bg-background text-foreground font-sans font-medium antialiased transition-colors duration-300 pt-16">
-        <ThemeProvider>
+      <body className="bg-[#f7f7f8] text-foreground font-sans font-medium antialiased transition-colors duration-300 pt-28">
           <GlobalDecorativeBackground />
           <Navbar dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
           <MotionProvider>
@@ -118,7 +116,6 @@ export default async function RootLayout({
             <ChatbotUI />
           </MotionProvider>
           <Footer dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
-        </ThemeProvider>
         <ConsentBanner />
       </body>
     </html>

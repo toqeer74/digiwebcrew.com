@@ -31,12 +31,12 @@ export function HomePageCards({ locale, homepageData, homePricingData }: HomePag
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Row 1 - Work + Process */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(var(--site-primary-rgb),0.3)] dark:border-white/10 hover:border-[var(--site-primary)]/30">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#60A5FA] z-20 opacity-50" />
-          <div className="hidden dark:block absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[80px] group-hover:bg-[rgba(var(--site-primary-rgb),0.15)] transition-all duration-1000" />
+        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(var(--site-primary-rgb),0.2)] dark:border-white/5 hover:border-[var(--site-primary)]/20">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent z-20 opacity-30" />
+          <div className="hidden dark:block absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[rgba(var(--site-primary-rgb),0.05)] blur-[100px] group-hover:bg-[rgba(var(--site-primary-rgb),0.12)] transition-all duration-1000" />
           
           <div className="relative z-10 mb-8">
-            <span className="mb-4 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] border border-[var(--site-primary)]/20 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--site-primary)]">{homepageData.selectedWork.eyebrow}</span>
+            <span className="mb-4 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{homepageData.selectedWork.eyebrow}</span>
             <div className="grid grid-cols-2 gap-4 mt-6">
               {mockProjects.slice(0, 2).map((p, i) => (
                 <ProjectPreview key={p.title} {...p} index={i} />
@@ -52,11 +52,11 @@ export function HomePageCards({ locale, homepageData, homePricingData }: HomePag
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(167,139,250,0.25)] dark:border-white/10 hover:border-violet-500/30">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#A78BFA] via-violet-500 to-[#A78BFA] z-20 opacity-50" />
+        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(167,139,250,0.2)] dark:border-white/5 hover:border-violet-500/20">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent z-20 opacity-30" />
           
           <div className="relative z-10 mb-8">
-            <span className="mb-4 inline-block rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400">Our Process</span>
+            <span className="mb-4 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Our Process</span>
             <h2 className="mb-8 text-2xl font-display font-black tracking-tight leading-tight text-slate-950 dark:text-white">{homepageData.methodology.title}</h2>
             
             <div className="relative flex justify-between items-start px-2 py-8 mt-4">
@@ -76,12 +76,12 @@ export function HomePageCards({ locale, homepageData, homePricingData }: HomePag
 
       {/* Row 2 - Capabilities + Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 lg:p-10 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(var(--site-primary-rgb),0.2)] dark:border-white/10 hover:border-[var(--site-primary)]/30">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA] z-20 opacity-50" />
+        <AnimatedSection className="site-card site-card-interactive group overflow-hidden relative flex flex-col justify-between p-8 lg:p-10 transition-all duration-700 dark:hover:shadow-[0_40px_80px_-20px_rgba(var(--site-primary-rgb),0.15)] dark:border-white/5 hover:border-[var(--site-primary)]/20">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--site-primary)] via-emerald-500/50 to-transparent z-20 opacity-30" />
           
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
             <div className="space-y-5">
-              <span className="inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] border border-[var(--site-primary)]/20 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--site-primary)]">Our Stack</span>
+              <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Our Stack</span>
               <h2 className="text-3xl font-display font-black leading-tight tracking-tight text-slate-950 dark:text-white">{homepageData.capabilitiesSection.title}</h2>
               <p className="text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-400">{homepageData.capabilitiesSection.description}</p>
             </div>
@@ -98,8 +98,8 @@ export function HomePageCards({ locale, homepageData, homePricingData }: HomePag
           </div>
         </AnimatedSection>
 
-        <AnimatedSection className="site-card group overflow-hidden relative flex flex-col justify-between p-8 lg:p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.15),rgba(52,211,153,0.08))] border-white/5">
-          <div className="hidden dark:block absolute -right-20 -bottom-20 h-80 w-80 rounded-full bg-[rgba(var(--site-primary-rgb),0.12)] blur-[100px] group-hover:scale-125 transition-transform duration-1000" />
+        <AnimatedSection className="site-card group overflow-hidden relative flex flex-col justify-between p-8 lg:p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.1),rgba(52,211,153,0.05))] border-white/5">
+          <div className="hidden dark:block absolute -right-20 -bottom-20 h-80 w-80 rounded-full bg-[rgba(var(--site-primary-rgb),0.08)] blur-[120px] group-hover:scale-125 transition-transform duration-1000" />
           
           <div className="grid grid-cols-2 gap-5 relative z-10">
             {homepageData.proofStats.map((stat: any, i: number) => (

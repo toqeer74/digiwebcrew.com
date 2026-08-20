@@ -38,7 +38,7 @@ export const authOptions: NextAuthOptions = {
     }
   },
   pages: {
-    signIn: "/admin/login",
+    signIn: "/digiadmin/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

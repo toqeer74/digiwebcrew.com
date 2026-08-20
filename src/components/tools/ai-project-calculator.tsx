@@ -16,6 +16,8 @@ interface CalculatorInputs {
   apiIntegrations: number;
 }
 
+const complexitySteps = [1.0, 1.3, 1.5, 1.8, 2.0, 2.3, 2.5];
+
 export function AIProjectCalculator() {
   const params = useParams();
   const locale = typeof params?.locale === "string" ? params.locale : "en";
@@ -63,52 +65,54 @@ export function AIProjectCalculator() {
     alert("PDF generation functionality is being developed. Your estimate: " + hours + " hours, " + weeks + " weeks, $" + estimatedCost.toLocaleString());
   };
 
-  const sliderTrack = "#dbe4f0";
-  const sliderTrackDark = "#1B2C3D";
+  const complexityIndex = complexitySteps.indexOf(inputs.complexity);
 
   return (
-    <div className="relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-500 hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.5)] md:p-10 lg:p-12">
-      {/* Decorative Top Bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#818CF8] to-[#60A5FA] opacity-90" />
-      
+    <div className="relative h-full flex flex-col overflow-hidden rounded-[20px] border border-slate-200/80 bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-xl p-6 md:p-8 shadow-sm transition-all duration-500 hover:border-slate-300 hover:shadow-md dark:border-white/10 dark:from-slate-900/40 dark:to-slate-900/80">
       {/* Background Decorative Blur */}
       <div className="hidden dark:block absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[var(--site-primary)]/5 blur-[80px] pointer-events-none" />
 
-      <div className="flex items-center gap-4 mb-10">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--site-primary)]/20 bg-[var(--site-primary)]/5 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_8px_16px_-6px_rgba(0,0,0,0.3)]">
-          <Calculator size={24} className="text-[var(--site-primary)]" />
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-50 border border-slate-200/80 dark:bg-white/5 dark:border-white/10 shadow-sm">
+          <Calculator size={18} className="text-slate-800 dark:text-white" strokeWidth={1.75} />
         </div>
         <div>
-          <h3 className="text-2xl font-display font-black tracking-tight text-foreground leading-tight">AI Project Calculator</h3>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mt-1">Get an instant scope estimate</p>
+          <h3 className="text-xl md:text-2xl font-display font-black tracking-tight text-slate-950 dark:text-white leading-tight">AI Project Calculator</h3>
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400 mt-0.5">Get an instant scope estimate</p>
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 flex-1 flex flex-col justify-center">
+        {/* Platform Choice */}
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Platform Choice</label>
-          <div className="grid grid-cols-3 gap-3">
-            {(["Web", "Mobile", "Both"] as const).map((platform) => (
-              <button
-                key={platform}
-                onClick={() => setInputs({ ...inputs, platform })}
-                className={cn(
-                  "px-4 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all border",
-                  inputs.platform === platform
-                    ? "border-[var(--site-primary)] bg-[var(--site-primary)] text-white dark:shadow-[0_8px_16px_-6px_rgba(var(--site-primary-rgb),0.4)] shadow-none"
-                    : "border-slate-200 bg-slate-50/50 text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-white/20 dark:hover:bg-white/10"
-                )}
-              >
-                {platform}
-              </button>
-            ))}
+          <label className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Platform Choice</label>
+          <div className="relative grid grid-cols-3 gap-1 rounded-xl bg-slate-100/80 p-1 dark:bg-white/5 border border-slate-200/40 dark:border-white/5">
+            {(["Web", "Mobile", "Both"] as const).map((platform) => {
+              const isSelected = inputs.platform === platform;
+              return (
+                <button
+                  key={platform}
+                  type="button"
+                  onClick={() => setInputs({ ...inputs, platform })}
+                  className={cn(
+                    "relative py-2.5 rounded-lg font-extrabold text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer text-center",
+                    isSelected
+                      ? "bg-white text-slate-950 shadow-[0_2px_8px_rgba(15,23,42,0.08)] dark:bg-white/10 dark:text-white"
+                      : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+                  )}
+                >
+                  {platform}
+                </button>
+              );
+            })}
           </div>
         </div>
 
+        {/* Total Views / Screens Slider */}
         <div className="space-y-4">
           <div className="flex justify-between items-end">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Total Views / Screens</label>
-            <span className="text-2xl font-display font-black text-foreground leading-none">{inputs.pages}</span>
+            <label className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Total Views / Screens</label>
+            <span className="text-2xl font-display font-black text-slate-950 dark:text-white leading-none">{inputs.pages}</span>
           </div>
           <input
             type="range"
@@ -116,38 +120,51 @@ export function AIProjectCalculator() {
             max="100"
             value={inputs.pages}
             onChange={(e) => setInputs({ ...inputs, pages: parseInt(e.target.value) })}
-            className="w-full h-1.5 appearance-none rounded-full bg-slate-200 dark:bg-white/10 cursor-pointer slider"
+            className="w-full h-1.5 appearance-none rounded-full cursor-pointer slider [--bg-unfilled:#e2e8f0] dark:[--bg-unfilled:rgba(255,255,255,0.1)]"
             style={{ 
-              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${inputs.pages}%, transparent ${inputs.pages}%, transparent 100%)` 
+              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${inputs.pages}%, var(--bg-unfilled) ${inputs.pages}%, var(--bg-unfilled) 100%)` 
             }}
           />
-          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest"><span>01</span><span>50</span><span>100</span></div>
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest">
+            <span className={cn(inputs.pages <= 20 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>01</span>
+            <span className={cn(inputs.pages > 40 && inputs.pages < 60 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>50</span>
+            <span className={cn(inputs.pages >= 80 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>100</span>
+          </div>
         </div>
 
+        {/* Project Complexity Slider */}
         <div className="space-y-4">
           <div className="flex justify-between items-end">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Project Complexity</label>
-            <span className="text-xs font-black uppercase tracking-widest text-[var(--site-primary)]">{complexityLabels[inputs.complexity]}</span>
+            <label className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Project Complexity</label>
+            <span className="text-xs font-black uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">{complexityLabels[inputs.complexity]}</span>
           </div>
           <input
             type="range"
-            min="1.0"
-            max="2.5"
-            step="0.3"
-            value={inputs.complexity}
-            onChange={(e) => setInputs({ ...inputs, complexity: parseFloat(e.target.value) })}
-            className="w-full h-1.5 appearance-none rounded-full bg-slate-200 dark:bg-white/10 cursor-pointer slider"
+            min="0"
+            max="6"
+            step="1"
+            value={complexityIndex}
+            onChange={(e) => {
+              const idx = parseInt(e.target.value);
+              setInputs({ ...inputs, complexity: complexitySteps[idx] });
+            }}
+            className="w-full h-1.5 appearance-none rounded-full cursor-pointer slider [--bg-unfilled:#e2e8f0] dark:[--bg-unfilled:rgba(255,255,255,0.1)]"
             style={{ 
-              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${((inputs.complexity - 1) / 1.5) * 100}%, transparent ${((inputs.complexity - 1) / 1.5) * 100}%, transparent 100%)` 
+              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${(complexityIndex / 6) * 100}%, var(--bg-unfilled) ${(complexityIndex / 6) * 100}%, var(--bg-unfilled) 100%)` 
             }}
           />
-          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest"><span>SIMPLE</span><span>STANDARD</span><span>ENTERPRISE</span></div>
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest">
+            <span className={cn(inputs.complexity <= 1.3 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>SIMPLE</span>
+            <span className={cn(inputs.complexity >= 1.5 && inputs.complexity <= 2.0 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>STANDARD</span>
+            <span className={cn(inputs.complexity >= 2.3 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>ENTERPRISE</span>
+          </div>
         </div>
 
+        {/* AI / API Modules Slider */}
         <div className="space-y-4">
           <div className="flex justify-between items-end">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">AI / API Modules</label>
-            <span className="text-2xl font-display font-black text-foreground leading-none">{inputs.apiIntegrations}</span>
+            <label className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">AI / API Modules</label>
+            <span className="text-2xl font-display font-black text-slate-950 dark:text-white leading-none">{inputs.apiIntegrations}</span>
           </div>
           <input
             type="range"
@@ -155,12 +172,16 @@ export function AIProjectCalculator() {
             max="20"
             value={inputs.apiIntegrations}
             onChange={(e) => setInputs({ ...inputs, apiIntegrations: parseInt(e.target.value) })}
-            className="w-full h-1.5 appearance-none rounded-full bg-slate-200 dark:bg-white/10 cursor-pointer slider"
+            className="w-full h-1.5 appearance-none rounded-full cursor-pointer slider [--bg-unfilled:#e2e8f0] dark:[--bg-unfilled:rgba(255,255,255,0.1)]"
             style={{ 
-              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${(inputs.apiIntegrations / 20) * 100}%, transparent ${(inputs.apiIntegrations / 20) * 100}%, transparent 100%)` 
+              background: `linear-gradient(to right, var(--site-primary) 0%, var(--site-primary) ${(inputs.apiIntegrations / 20) * 100}%, var(--bg-unfilled) ${(inputs.apiIntegrations / 20) * 100}%, var(--bg-unfilled) 100%)` 
             }}
           />
-          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest"><span>0</span><span>10</span><span>20</span></div>
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest">
+            <span className={cn(inputs.apiIntegrations <= 3 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>0</span>
+            <span className={cn(inputs.apiIntegrations > 7 && inputs.apiIntegrations < 13 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>10</span>
+            <span className={cn(inputs.apiIntegrations >= 17 && "text-[var(--site-primary)] dark:text-[var(--site-primary-soft)] transition-colors")}>20</span>
+          </div>
         </div>
 
         <button
@@ -171,61 +192,86 @@ export function AIProjectCalculator() {
               trackCalculatorComplete({ estimatedHours: hours, platform: inputs.platform, complexity: inputs.complexity });
             }
           }}
-          className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-slate-950 px-8 py-5 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-slate-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+          className="group relative flex w-full items-center justify-center gap-3 rounded-full bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs uppercase tracking-widest py-4.5 transition-all dark:bg-white dark:text-slate-950 dark:hover:bg-slate-50 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98]"
         >
-          <div className="absolute inset-x-0 bottom-0 h-1 bg-[var(--site-primary)] transition-transform scale-x-0 group-hover:scale-x-100" />
           {showResults ? "Refine Parameters" : "Calculate Scope"}
-          <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </button>
       </div>
 
       {showResults && (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6 border-t border-slate-700 pt-8">
-          <div className="rounded-2xl border border-slate-200 bg-white/96 p-6 dark:shadow-[0_18px_36px_-24px_rgba(0,0,0,0.12)] dark:border-[#3A6FB833] dark:bg-[linear-gradient(180deg,rgba(22,36,52,0.98),rgba(12,20,32,0.99))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_40px_-30px_rgba(17,75,151,0.18)]">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6 border-t border-slate-200 dark:border-white/10 pt-8">
+          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/40 p-6 dark:border-white/10 dark:bg-white/[0.01]">
             <div className="text-center mb-6">
-              <p className="text-sm font-body font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">Estimated Build Time</p>
-              <div className="flex items-baseline justify-center gap-2"><span className="text-5xl font-black text-[var(--site-primary)] dark:text-[#6EA3E6]">{hours}</span><span className="text-2xl font-display font-bold text-foreground">hours</span></div>
-              <p className="text-lg font-display font-bold text-slate-500 dark:text-slate-400 mt-2">~ {weeks} weeks at 40h/week</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2">Estimated Build Time</p>
+              <div className="flex items-baseline justify-center gap-2">
+                <span className="text-5xl font-black text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">{hours}</span>
+                <span className="text-2xl font-display font-bold text-slate-950 dark:text-white">hours</span>
+              </div>
+              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-2">~ {weeks} weeks at 40h/week</p>
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Code size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Pages</p><p className="text-lg font-black text-foreground">{inputs.pages * 12}h</p></div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><ArrowRight size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">Complexity</p><p className="text-lg font-black text-foreground">{Math.round(inputs.complexity * 40)}h</p></div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-800/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><Server size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[#6EA3E6]" /><p className="mb-1 text-xs font-body font-bold uppercase tracking-wider text-slate-500 dark:text-[#BFD1EA]">APIs</p><p className="text-lg font-black text-foreground">{inputs.apiIntegrations * 15}h</p></div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3 text-center dark:border-white/8 dark:bg-white/5 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <Code size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]" />
+                <p className="mb-1 text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#BFD1EA]">Pages</p>
+                <p className="text-sm font-black text-slate-900 dark:text-white">{inputs.pages * 12}h</p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3 text-center dark:border-white/8 dark:bg-white/5 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <ArrowRight size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]" />
+                <p className="mb-1 text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#BFD1EA]">Complexity</p>
+                <p className="text-sm font-black text-slate-900 dark:text-white">{Math.round(inputs.complexity * 40)}h</p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3 text-center dark:border-white/8 dark:bg-white/5 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <Server size={20} className="mx-auto mb-2 text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]" />
+                <p className="mb-1 text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#BFD1EA]">APIs</p>
+                <p className="text-sm font-black text-slate-900 dark:text-white">{inputs.apiIntegrations * 15}h</p>
+              </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 py-4 text-center dark:border-[#123040] dark:bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-              <p className="text-xs font-body font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">Estimated Investment</p>
-              <p className="text-3xl font-black text-foreground">${estimatedCost.toLocaleString()}</p>
-              <p className="text-xs font-body text-slate-500 dark:text-slate-400 mt-1">Based on $75/hour average rate</p>
+            <div className="rounded-xl border border-slate-200/80 bg-white py-4 text-center dark:border-white/8 dark:bg-white/5 shadow-sm">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Estimated Investment</p>
+              <p className="text-3xl font-black text-slate-950 dark:text-white">${estimatedCost.toLocaleString()}</p>
+              <p className="text-[9px] text-slate-400 dark:text-slate-500 mt-1 font-bold">Based on $75/hour average rate</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
-            <button onClick={handleDownloadPDF} className="flex w-full items-center justify-center gap-3 rounded-full border border-[#123040] bg-[linear-gradient(180deg,rgba(20,33,48,0.98),rgba(11,19,31,0.98))] py-4 text-sm font-display font-black uppercase tracking-wider text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all hover:border-[#4A86C8] hover:bg-[linear-gradient(180deg,rgba(24,38,54,0.98),rgba(12,21,34,0.98))]">
-              <Download size={18} /> Download Tech Breakdown
+            <button onClick={handleDownloadPDF} className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-200 bg-white py-4 text-xs font-bold uppercase tracking-wider text-slate-800 transition-all hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 cursor-pointer shadow-sm active:scale-[0.98]">
+              <Download size={16} /> Download Tech Breakdown
             </button>
 
-            <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full border border-[var(--site-primary)] bg-[var(--site-primary)] py-4 text-sm font-display font-black uppercase tracking-wider text-white transition-all dark:shadow-sm hover:bg-[var(--site-primary-hover)] active:scale-95">
+            <Link href={localePath(locale, "/quote")} className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[var(--site-primary-hover)] active:scale-95 shadow-sm">
               Request Industrial Quote
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </Link>
           </div>
 
-          <p className="text-xs text-center font-body text-slate-500 dark:text-slate-400">This is an AI-generated estimate. Actual scope may vary based on specific requirements.</p>
+          <p className="text-[10px] text-center font-bold text-slate-400 dark:text-slate-500">This is an AI-generated estimate. Actual scope may vary based on specific requirements.</p>
         </motion.div>
       )}
 
       <style jsx>{`
+        .slider {
+          outline: none;
+        }
+        .slider::-webkit-slider-runnable-track {
+          border: none;
+          background: transparent;
+        }
+        .slider::-moz-range-track {
+          border: none;
+          background: transparent;
+        }
         .slider::-webkit-slider-thumb {
           appearance: none;
           width: 18px;
           height: 18px;
           border-radius: 50%;
           background: white;
-          border: 3px solid var(--site-primary);
+          border: 4px solid var(--site-primary);
           cursor: pointer;
-          box-shadow: none;
+          box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2);
           transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .slider::-webkit-slider-thumb:hover {
@@ -236,13 +282,14 @@ export function AIProjectCalculator() {
           height: 14px;
           border-radius: 50%;
           background: white;
-          border: 3px solid var(--site-primary);
+          border: 4px solid var(--site-primary);
           cursor: pointer;
-          box-shadow: none;
+          box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2);
         }
       `}</style>
     </div>
   );
 }
+
 
 

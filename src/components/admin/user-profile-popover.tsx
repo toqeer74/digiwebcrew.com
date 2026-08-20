@@ -85,7 +85,7 @@ export function UserProfilePopover({ userName, userEmail, initials }: UserProfil
             style={{ borderTop: "1px solid var(--adm-border)", background: "var(--adm-bg)" }}
           >
             <button
-              onClick={() => signOut({ callbackUrl: "/admin/login" })}
+              onClick={() => signOut({ callbackUrl: "/digiadmin/login" })}
               className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-bold text-red-600 transition-all hover:bg-red-50 outline-none"
             >
               <LogOut size={16} />

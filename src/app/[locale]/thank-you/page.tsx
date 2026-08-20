@@ -1,9 +1,10 @@
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { localePath } from "@/lib/locale-path";
 
 export default async function ThankYouPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -56,7 +57,7 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
     {
       value: "faq-5",
       title: "Can I explore the site while waiting?",
-      content: "Yes. You can review services, pricing, process, and other pages to get a better sense of how Digital Web Crew works.",
+      content: "Yes. You can review services, pricing, process, and other pages to get a better sense of how Digi Web Crew works.",
     },
   ];
 
@@ -66,16 +67,6 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Hero Section */}
           <AnimatedSection className="text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 mb-8 animate-in fade-in zoom-in duration-700">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-              <span className="w-px h-3 bg-emerald-500/30 mx-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Success</span>
-            </div>
-
             <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Submission <span className="text-emerald-500">Received.</span> <br className="hidden md:block" /> Thank You.
             </h1>
@@ -86,7 +77,7 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
               {supportingPoints.map((point) => (
                 <div key={point} className="site-card p-4 flex items-center justify-center text-center text-xs font-bold text-slate-700 dark:text-slate-400 relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
-                  {point}
+                  <span className="relative z-10">{point}</span>
                 </div>
               ))}
             </div>
@@ -108,15 +99,12 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
                     </div>
                   ))}
                 </div>
-                <Link
-                  href={localePath(locale, "/book-consultation")}
-                  className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group"
-                >
+                <Button href={localePath(locale, "/book-consultation")} variant="primary" size="xl" className="group">
                   <span>Book Consultation</span>
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </span>
-                </Link>
+                </Button>
              </AnimatedSection>
 
              <AnimatedSection className="md:col-span-12 lg:col-span-5 site-card p-10 lg:p-12 relative overflow-hidden flex flex-col justify-center border-emerald-500/10 hover:border-emerald-500/20">
@@ -151,12 +139,12 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
                We're looking forward to reviewing your project brief. In the meantime, feel free to explore our latest case studies.
             </p>
             <div className="flex justify-center pt-4">
-               <Link href={localePath(locale, "/case-studies")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-12 py-6 text-lg text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] group">
+               <Button href={localePath(locale, "/case-studies")} variant="primary" size="xl" className="group text-lg">
                   <span>View Case Studies</span>
                   <span className="grid h-10 w-10 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
                     <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </span>
-                </Link>
+                </Button>
             </div>
           </AnimatedSection>
         </div>

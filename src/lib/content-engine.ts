@@ -74,17 +74,39 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     }
 }
 
+/** Headline number shown in the case-study metrics band. */
+export type CaseStudyMetric = {
+  value: string;
+  label: string;
+};
+
+export type CaseStudyTestimonial = {
+  quote: string;
+  author: string;
+  role?: string;
+};
+
 export type CaseStudy = {
   slug: string;
   title: string;
   client: string;
   industry: string;
+  /** Optional extra tags shown on the Work index; falls back to [industry]. */
+  categories?: string[];
   year: string;
   excerpt: string;
   outcomes: string[];
   techStack: string[];
   content: string;
   coverImage?: string;
+  /** Headline results shown as large figures under the hero. */
+  metrics?: CaseStudyMetric[];
+  /** Optional client quote rendered mid-page. */
+  testimonial?: CaseStudyTestimonial;
+  /** Supporting imagery rendered between narrative sections. */
+  gallery?: string[];
+  /** One-line framing of the engagement, shown beside the hero meta. */
+  role?: string;
 };
 
 export type ReviewBadge = {
@@ -230,11 +252,16 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
                 title: data.title,
                 client: data.client,
                 industry: data.industry,
+                categories: data.categories,
                 year: data.year,
                 excerpt: data.excerpt,
                 outcomes: data.outcomes || [],
                 techStack: data.techStack || [],
                 coverImage: data.coverImage,
+                metrics: data.metrics,
+                testimonial: data.testimonial,
+                gallery: data.gallery,
+                role: data.role,
                 content,
             };
         });
@@ -253,11 +280,16 @@ export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
             title: data.title,
             client: data.client,
             industry: data.industry,
+            categories: data.categories,
             year: data.year,
             excerpt: data.excerpt,
             outcomes: data.outcomes || [],
             techStack: data.techStack || [],
             coverImage: data.coverImage,
+            metrics: data.metrics,
+            testimonial: data.testimonial,
+            gallery: data.gallery,
+            role: data.role,
             content,
         };
     } catch {
@@ -312,7 +344,7 @@ export async function getClientLogosData(locale?: string): Promise<ClientLogosDa
 export async function getTeamData(locale?: string): Promise<TeamData> {
     const filePath = resolveContentFilePath("team.json", locale);
     const fallback: TeamData = {
-        heading: "Meet the Team Behind DigiWebCrew",
+        heading: "Meet the Team Behind Digi Web Crew",
         members: [],
     };
 

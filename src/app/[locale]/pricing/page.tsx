@@ -1,90 +1,44 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import {
+  ArrowRight,
+  ShieldCheck,
+  Layers,
+  Handshake,
+  SlidersHorizontal,
+  Compass,
+  FileSignature,
+  Smartphone,
+  Gauge,
+  LineChart,
+  Headphones,
+} from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
-import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { localePath } from "@/lib/locale-path";
+import { PricingTiers } from "@/components/sections/pricing-tiers";
+import { getPublicPricingConfig } from "@/lib/pricing";
+import { PricingComparison } from "@/components/sections/pricing-comparison";
+import { PricingDrivers } from "@/components/sections/pricing-drivers";
+import { PricingJourney } from "@/components/sections/pricing-journey";
+import { PricingFit } from "@/components/sections/pricing-fit";
 
 const supportPoints = [
-  "Clear starting prices",
-  "Custom scope for larger builds",
-  "Built for serious business projects",
-  "Flexible across single and multi-service work",
+  { icon: ShieldCheck, title: "Clear starting prices", desc: "Published numbers, no discovery fee to see them." },
+  { icon: SlidersHorizontal, title: "Custom scope for larger builds", desc: "Priced around depth, not a rigid package." },
+  { icon: Layers, title: "Built for serious projects", desc: "Engineered systems, not template assembly." },
+  { icon: Handshake, title: "Single or multi-service", desc: "Take one workstream or combine several." },
 ];
 
-const tiers = [
-  {
-    title: "Custom Website Development",
-    price: "$3,500",
-    desc: "Best for businesses that need a stronger website foundation, better presentation, clearer structure, and a more professional digital presence.",
-    factors: ["Number of pages", "Content complexity", "Custom design depth", "CMS needs", "Integrations", "Technical requirements"],
-    cta: "Explore Website Development",
-    href: "/services/custom-software",
-    badge: "Most Popular",
-  },
-  {
-    title: "Conversion Funnels and Landing Pages",
-    price: "$2,000",
-    desc: "Best for businesses that need a focused page system for lead generation, service promotion, campaign traffic, bookings, or consultations.",
-    factors: ["Single page or multi-step funnel", "Offer complexity", "Copy and messaging needs", "Form or booking integration", "Tracking setup", "Follow-up flow requirements"],
-    cta: "Explore Funnels and Landing Pages",
-    href: "/services/conversion-funnels",
-    badge: "Lead Focused",
-  },
-  {
-    title: "AI Chatbots and Automation",
-    price: "$2,500",
-    desc: "Best for businesses that want faster lead handling, better inquiry routing, reduced manual follow-up, and smarter connected workflows.",
-    factors: ["Number of workflows", "Tool integrations", "CRM requirements", "Channel setup", "Qualification logic", "Follow-up complexity"],
-    cta: "Explore AI Chatbots and Automation",
-    href: "/services/ai-chatbots-automation",
-    badge: "Automation Ready",
-  },
-  {
-    title: "SEO and Growth Retainers",
-    price: "$1,000 per month",
-    desc: "Best for businesses that need ongoing search visibility improvements, content refinement, website updates, and continued performance support after launch.",
-    factors: ["Website size", "Current SEO condition", "Content needs", "Local competition", "Update frequency", "Level of monthly support"],
-    cta: "Explore SEO and Growth Retainers",
-    href: "/services/seo-growth-retainers",
-    badge: "Ongoing Growth",
-  },
-];
-
-const customExamples = [
-  "Large multi-page websites",
-  "Multi-service systems",
-  "Advanced automation setups",
-  "Full funnel ecosystems",
-  "Web applications",
-  "Mobile application projects",
-  "DevOps-heavy builds",
-  "Complex integrations",
-  "Broader growth infrastructure projects",
-];
-
-const priceFactors = [
-  "number of pages",
-  "design depth",
-  "content structure",
-  "custom functionality",
-  "CMS requirements",
-  "integrations with forms, CRM, booking, or other tools",
-  "automation logic",
-  "technical setup",
-  "timeline and urgency",
-  "level of ongoing support needed",
-];
-
-const bestFit = [
-  "rely on qualified leads, calls, bookings, or consultations",
-  "need stronger trust and presentation online",
-  "want custom work instead of a generic template setup",
-  "value clear process and professional implementation",
-  "are investing in growth, not just a basic online presence",
-  "may need support beyond just one website page",
+const alwaysIncluded = [
+  { icon: Compass, label: "Discovery & scoping workshop" },
+  { icon: FileSignature, label: "Fixed-price written proposal" },
+  { icon: Smartphone, label: "Mobile-first responsive build" },
+  { icon: Gauge, label: "Core Web Vitals performance pass" },
+  { icon: LineChart, label: "Analytics & tracking wired up" },
+  { icon: Headphones, label: "30 days post-launch support" },
 ];
 
 const faqItems = [
@@ -120,225 +74,332 @@ const faqItems = [
   },
 ];
 
+function SectionHeading({
+  kicker,
+  title,
+  accent,
+  suffix,
+  description,
+}: {
+  kicker: string;
+  title: string;
+  accent?: string;
+  suffix?: string;
+  description?: string;
+}) {
+  return (
+    <AnimatedSection className="mx-auto mb-14 max-w-3xl text-center">
+      <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-white/5 dark:backdrop-blur-sm">
+        <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shadow-[0_0_8px_rgba(var(--site-primary-rgb),0.8)]" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
+          {kicker}
+        </span>
+      </div>
+
+      <h2 className="mb-5 text-balance font-display text-3xl font-black tracking-tight text-slate-900 dark:text-white md:text-5xl">
+        {title}
+        {accent && (
+          <>
+            {" "}
+            <span className="bg-gradient-to-r from-[var(--site-primary)] via-emerald-500 to-sky-500 bg-clip-text text-transparent">
+              {accent}
+            </span>
+          </>
+        )}
+        {suffix ? ` ${suffix}` : ""}
+      </h2>
+
+      {description && (
+        <p className="text-pretty text-base leading-relaxed text-slate-500 dark:text-slate-400 md:text-lg">{description}</p>
+      )}
+    </AnimatedSection>
+  );
+}
+
 export default async function PricingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
-  const sectionCardClass = "site-card overflow-hidden relative p-8 lg:p-10";
-  const gradientTop = <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />;
+  const pricing = await getPublicPricingConfig();
 
   return (
-    <main className="flex-1 pt-32 pb-24">
-      <Container>
-        <div className="max-w-6xl mx-auto space-y-24">
-          {/* Hero Section */}
-          <AnimatedSection className="text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Pricing & Investment</span>
-            </div>
+    <main className="flex-1 -mt-28 overflow-x-hidden pt-28 relative">
+      {/* Background Visuals */}
+      <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--site-primary)]/15 via-[var(--site-primary)]/5 to-background" />
+        <div className="absolute top-0 left-0 right-0 h-[1000px] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      </div>
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
-              Clear Starting <span className="text-[var(--site-primary)]">Pricing</span> for <br className="hidden md:block" /> <span className="text-foreground">Custom Digital Work.</span>
-            </h1>
-            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
-              Every project is shaped around your goals, scope, and technical requirements. We provide starting prices for our core services while keeping room for the right level of customization.
-            </p>
-
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 w-full">
-              {supportPoints.map((point) => (
-                <div key={point} className="site-card p-4 flex items-center justify-center text-center text-sm font-bold text-slate-700 dark:text-slate-400 relative overflow-hidden group">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
-                  {point}
+      <Container className="relative z-10">
+        <div className="max-w-7xl mx-auto space-y-6 pt-12 pb-16">
+          
+          {/* 1. HERO SECTION */}
+          <AnimatedSection className="pt-0 pb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-4 items-center relative">
+              
+              {/* LEFT: Typography & Graphic */}
+              <div className="relative z-10 text-center lg:text-left">
+                {/* Background Scribble Graphic */}
+                <div className="absolute top-1/2 left-1/2 lg:-left-20 -translate-x-1/2 lg:translate-x-0 -translate-y-[45%] w-[110%] lg:w-[130%] h-[300px] opacity-15 dark:opacity-20 pointer-events-none -rotate-3 z-0 mix-blend-multiply dark:mix-blend-screen max-w-[800px]">
+                  <svg viewBox="-50 -50 500 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round">
+                    <defs>
+                      <linearGradient id="heroStripeGradientPricing" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="var(--site-primary)" />
+                        <stop offset="100%" stopColor="#10b981" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M-40 120 C 20 -60, 140 -40, 160 100 C 180 260, 260 260, 300 140 C 340 20, 420 20, 460 120" stroke="url(#heroStripeGradientPricing)" />
+                  </svg>
                 </div>
-              ))}
-            </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-10 py-5 transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-            </div>
-          </AnimatedSection>
-
-          {/* Pricing Factors - Alternating Bento */}
-          <div className="space-y-24">
-            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-              <div className="md:col-span-6 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Structure & Scope
-                </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
-                  Pricing That Filters for Fit and Leaves Room for Scope
-                </h2>
-                <div className="space-y-4">
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    Not every project needs the same level of work. A focused landing page is not priced like a custom multi-page website.
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[var(--site-primary)]/30 bg-[var(--site-primary)]/10 px-3.5 py-1 mb-5 shadow-sm backdrop-blur-md mx-auto lg:mx-0">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--site-primary)] dark:bg-[var(--site-primary-soft)]" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
+                      Pricing &amp; Investment
+                    </span>
+                  </div>
+                  
+                  <h1 className="text-[3rem] md:text-[4rem] font-black font-display tracking-tight mb-4 leading-[1.05] text-balance drop-shadow-sm bg-gradient-to-r from-[#1746A2] via-blue-500 to-blue-400 bg-clip-text text-transparent">
+                    Transparent pricing for <br className="hidden md:block" /> 
+                    serious digital work.
+                  </h1>
+                  
+                  <p className="text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 drop-shadow-sm">
+                    Every system is scoped around your growth goals and technical requirements. We publish honest starting points, then price the real work once the scope is clear.
                   </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    We use starting prices to make the investment level more transparent while keeping each project tailored to the real business need.
-                  </p>
-                </div>
-              </div>
-              <div className="md:col-span-6">
-                <div className={cn(sectionCardClass, "border-2 border-[var(--site-primary)]/10")}>
-                  {gradientTop}
-                  <h3 className="text-xl font-bold mb-6 text-foreground">Custom Quote Factors</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {priceFactors.map((factor) => (
-                      <div key={factor} className="flex items-start gap-3">
-                        <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shrink-0" />
-                        <span className="text-sm text-muted-foreground capitalize">{factor}</span>
-                      </div>
-                    ))}
+
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start items-center">
+                    <Button href={localePath(locale, "/quote")} className="bg-[var(--site-primary)] hover:brightness-110 text-white shadow-xl shadow-[var(--site-primary)]/20 rounded-full px-6 h-10 flex items-center gap-2 group transition-all text-[13px] font-bold border-0">
+                      <span>Get a Custom Quote</span>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
+                        <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </Button>
+                    <Button href={localePath(locale, "/book-consultation")} className="bg-slate-900 hover:bg-slate-800 text-white shadow-md rounded-full px-6 h-10 flex items-center gap-2 group transition-all text-[13px] font-bold dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
+                      <span>Book Scoping Call</span>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1 dark:bg-slate-900/10">
+                        <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </Button>
                   </div>
                 </div>
               </div>
-            </AnimatedSection>
 
-            {/* Investment Levels */}
-            <AnimatedSection className="space-y-12">
-              <div className="text-center max-w-3xl mx-auto space-y-4">
-                <h2 className="text-3xl md:text-6xl font-display font-black text-foreground tracking-tight">Starting Investment Levels</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  These starting prices reflect the base level for our core services, built on premium engineering foundations.
-                </p>
+              {/* RIGHT: Floating Badges / Visuals */}
+              <div className="hidden lg:flex flex-col gap-4 pl-12 relative z-10 h-full justify-center">
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-48 h-48 bg-[var(--site-primary)]/20 blur-[80px] rounded-full pointer-events-none" />
+                
+                {supportPoints.map((point, idx) => {
+                  const Icon = point.icon;
+                  // Alternate rotation and positioning for the floating aesthetic
+                  let transformClass = "";
+                  if (idx === 0) transformClass = "transform -rotate-2 hover:rotate-0 translate-x-4";
+                  else if (idx === 1) transformClass = "transform rotate-1 hover:rotate-0 -translate-x-4";
+                  else if (idx === 2) transformClass = "transform -rotate-1 hover:rotate-0 translate-x-2";
+                  else transformClass = "transform rotate-2 hover:rotate-0 -translate-x-2";
+                  
+                  return (
+                    <div key={idx} className={`bg-white/90 dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-4 w-72 ml-auto transition-transform duration-500 ${transformClass}`}>
+                      <div className="h-10 w-10 rounded-full bg-[var(--site-primary)]/10 text-[var(--site-primary)] flex items-center justify-center shrink-0">
+                        <Icon size={18} strokeWidth={2} />
+                      </div>
+                      <div>
+                        <p className="text-[13px] font-bold text-foreground leading-tight">{point.title}</p>
+                        <p className="text-[11px] text-muted-foreground font-medium mt-0.5">{point.desc}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {tiers.map((tier) => (
-                  <div key={tier.title} className="site-card site-card-interactive p-8 lg:p-10 flex flex-col relative overflow-hidden group border-2 border-transparent">
-                    {gradientTop}
-                    <div className="flex justify-between items-start mb-8">
-                      <div className="inline-block px-3 py-1 rounded-full bg-[var(--site-primary)]/10 text-[10px] font-bold uppercase tracking-wider text-[var(--site-primary)]">
-                        {tier.badge}
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[2.5rem] md:text-[3.5rem] font-display font-black leading-none text-foreground tracking-tighter">{tier.price}</p>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Starting from</p>
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-2xl md:text-3xl font-display font-black mb-4 text-foreground tracking-tight leading-tight">{tier.title}</h3>
-                    <p className="text-muted-foreground mb-10 leading-relaxed italic text-[16px]">
-                      {tier.desc}
-                    </p>
-
-                    <div className="space-y-6 mb-12">
-                      <div className="flex items-center gap-2">
-                        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/20 whitespace-nowrap">Key Factors</p>
-                        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4">
-                        {tier.factors.map((factor) => (
-                          <div key={factor} className="flex items-center gap-3">
-                            <CheckCircle2 size={18} className="text-[var(--site-primary)] shrink-0" />
-                            <span className="text-sm font-bold text-slate-700 dark:text-slate-400">{factor}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-auto">
-                      <Link href={localePath(locale, tier.href)} className="flex items-center justify-between w-full group/btn relative overflow-hidden rounded-2xl bg-slate-100 dark:bg-white/5 p-5 transition-all border-2 border-transparent hover:border-[var(--site-primary)]/20 group">
-                        <span className="font-bold relative z-10 transition-colors group-hover/btn:text-white">{tier.cta}</span>
-                        <ArrowRight size={22} className="relative z-10 transition-all group-hover/btn:translate-x-1 group-hover/btn:text-white" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--site-primary)] to-[var(--site-primary-soft)] opacity-0 group-hover/btn:opacity-100 transition-all duration-300" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-
-            {/* Who This Pricing Is For - Alternating Bento */}
-            <AnimatedSection className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-              <div className="md:col-span-6 md:order-2 space-y-6">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Ideal Partner Fit
-                </div>
-                <h2 className="text-3xl md:text-5xl font-display font-black text-foreground leading-tight">
-                  Built for Businesses Investing in Growth
-                </h2>
-                <div className="space-y-4">
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    Digital Web Crew is designed for businesses that understand the value of stronger digital presentation, better lead flow, and cleaner systems.
-                  </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed italic">
-                    If your priority is business value, clarity, and a stronger long-term system, this pricing model is built for you.
-                  </p>
-                </div>
-              </div>
-              <div className="md:col-span-6 md:order-1">
-                <div className={cn(sectionCardClass, "border-2 border-emerald-500/10")}>
-                  {gradientTop}
-                  <h3 className="text-xl font-bold mb-6 text-foreground">Who This Fits Best</h3>
-                  <div className="space-y-4">
-                    {bestFit.map((item) => (
-                      <div key={item} className="flex items-start gap-4 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 group-hover:border-[var(--site-primary)]/20 transition-colors">
-                        <CheckCircle2 size={18} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="text-sm text-muted-foreground leading-tight">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-
-          <AnimatedSection className={cn(sectionCardClass, "text-center bg-slate-50 dark:bg-transparent border-2 border-[var(--site-primary)]/10")}>
-            {gradientTop}
-            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-8 tracking-tight text-center">Questions About Pricing</h2>
-            <div className="max-w-4xl mx-auto text-left">
-              <Accordion items={faqItems} />
-            </div>
-          </AnimatedSection>
-
-
-          <AnimatedSection className="site-card p-12 lg:p-16 text-center space-y-8 relative overflow-hidden border-2 border-[var(--site-primary)]/20">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--site-primary)] to-transparent" />
-            <div className="max-w-3xl mx-auto space-y-6">
-              <h2 className="text-3xl md:text-6xl font-display font-black text-foreground leading-tight">
-                Ready to Scope the Right Project?
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Whether you need a website, automation support, or ongoing SEO work, the next step is to define the right scope.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-12 py-6 text-lg text-white font-bold transition-all duration-300 hover:bg-[var(--site-primary-hover)] shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.6)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white font-bold px-12 py-6 text-lg transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                </span>
-              </Link>
             </div>
           </AnimatedSection>
         </div>
       </Container>
-    </main>
 
+      {/* ───────────────────────── 2. INVESTMENT TIERS ───────────────────────── */}
+      <section className="relative border-y border-slate-200/80 bg-slate-50/60 py-20 shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] md:py-28 dark:border-white/10 dark:bg-white/[0.015] dark:shadow-none">
+        <Container className="relative z-10">
+          <SectionHeading
+            kicker="Investment Tiers"
+            title="Starting points, priced by"
+            accent="scope"
+            description="Four core engagements, each with a published floor. Where you land inside a tier depends on the depth of the build — never on how many hours we happen to log."
+          />
+
+          <PricingTiers locale={locale} tiers={pricing.tiers} />
+
+          {/* Always included strip */}
+          <AnimatedSection
+            delay={0.1}
+            className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-sm md:p-8 dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none dark:backdrop-blur-sm"
+          >
+            <div className="mb-6 flex flex-col gap-1 border-b border-slate-100 pb-5 sm:flex-row sm:items-end sm:justify-between dark:border-white/8">
+              <div>
+                <span className="mb-1.5 block text-[10px] font-bold uppercase tracking-[0.24em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
+                  No matter the tier
+                </span>
+                <h3 className="font-display text-xl font-black tracking-tight text-slate-900 dark:text-white">
+                  Included in every engagement
+                </h3>
+              </div>
+              <p className="text-[13px] font-medium text-slate-400 dark:text-slate-500">
+                Baseline standards, never billed as extras.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+              {alwaysIncluded.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.label} className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/12 dark:text-emerald-400">
+                      <Icon size={15} strokeWidth={1.9} />
+                    </span>
+                    <span className="text-[13.5px] font-semibold text-slate-700 dark:text-slate-300">{item.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </AnimatedSection>
+        </Container>
+      </section>
+
+      {/* ───────────────────────── 3. COMPARISON MATRIX ───────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <SectionHeading
+            kicker="Side by Side"
+            title="Compare what each engagement"
+            accent="delivers"
+            description="A clear view of what ships as standard, what is available as an add-on, and what simply does not apply — so you can pick the right starting point before we ever talk numbers."
+          />
+
+          <PricingComparison />
+
+          <AnimatedSection delay={0.1} className="mt-8 text-center">
+            <p className="text-[13.5px] font-medium text-slate-500 dark:text-slate-400">
+              Not sure which column is yours?{" "}
+              <Link
+                href={localePath(locale, "/quote")}
+                className="font-bold text-[var(--site-primary)] underline-offset-4 hover:underline dark:text-[var(--site-primary-soft)]"
+              >
+                Run the custom scope flow
+              </Link>{" "}
+              and we will point you at the right one.
+            </p>
+          </AnimatedSection>
+        </Container>
+      </section>
+
+      {/* ───────────────────────── 4. COST DRIVERS ───────────────────────── */}
+      <section className="relative border-y border-slate-200/80 bg-slate-50/60 py-20 shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] md:py-28 dark:border-white/10 dark:bg-white/[0.015] dark:shadow-none">
+        <Container className="relative z-10">
+          <SectionHeading
+            kicker="Cost Drivers"
+            title="Ten variables that shape your"
+            accent="estimate"
+            description="No black box. These are the exact factors we weigh when scoping a project, ranked by how much each one typically moves the final number."
+          />
+
+          <PricingDrivers />
+        </Container>
+      </section>
+
+      {/* ───────────────────────── 5. HOW PRICING WORKS ───────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <SectionHeading
+            kicker="How Pricing Works"
+            title="From first call to fixed"
+            accent="proposal"
+            description="Four steps between your first message and a signed scope — with a real number in your hands before any commitment."
+          />
+
+          <PricingJourney />
+        </Container>
+      </section>
+
+      {/* ───────────────────────── 6. PARTNER FIT ───────────────────────── */}
+      <section className="relative border-y border-slate-200/80 bg-slate-50/60 py-20 shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] md:py-28 dark:border-white/10 dark:bg-white/[0.015] dark:shadow-none">
+        <Container className="relative z-10">
+          <SectionHeading
+            kicker="Partner Fit"
+            title="Honest about who we work"
+            accent="best with"
+            description="Great engagements start with a match. Here is where our process creates the most value — and where it probably will not."
+          />
+
+          <PricingFit />
+        </Container>
+      </section>
+
+      {/* ───────────────────────── 7. FAQ + FINAL CTA ───────────────────────── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="mx-auto max-w-7xl space-y-6">
+            <AnimatedSection>
+              <div className="mb-8 text-center">
+                <span className="mb-3 inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">
+                  Common Questions
+                </span>
+                <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 dark:text-white md:text-4xl">
+                  Frequently Asked Questions
+                </h2>
+              </div>
+
+              <div className="mx-auto max-w-3xl">
+                <Accordion items={faqItems} />
+                <div className="mt-6 text-center">
+                  <Link
+                    href={localePath(locale, "/faqs")}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--site-primary)] underline-offset-4 hover:underline dark:text-[var(--site-primary-soft)]"
+                  >
+                    View All FAQs <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className="relative mt-16 overflow-hidden rounded-[20px] border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/80 p-8 text-center shadow-sm md:p-10 dark:border-white/10 dark:from-white/5 dark:to-transparent">
+              <div className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[560px] -translate-x-1/2 rounded-full bg-[var(--site-primary)]/10 blur-[90px]" />
+
+              <div className="relative z-10">
+                <span className="mb-2 inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                  Ready to take the next step?
+                </span>
+                <h2 className="mb-3 font-display text-2xl font-black leading-tight text-slate-900 dark:text-white md:text-4xl">
+                  Ready to scope the right project?
+                </h2>
+                <p className="mx-auto mb-6 max-w-2xl text-sm font-medium leading-relaxed text-muted-foreground md:text-base">
+                  Whether you need a website, automation support, or ongoing SEO work, the next step is defining the
+                  right scope. We&apos;ll audit your current setup and identify the biggest growth levers.
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <Link
+                    href={localePath(locale, "/book-consultation")}
+                    className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-md dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                  >
+                    Book Consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href={localePath(locale, "/quote")}
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 transition-all hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+                  >
+                    Get Custom Quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href={localePath(locale, "/quote")}
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-emerald-200 bg-emerald-50/50 px-5 py-2.5 text-sm font-semibold text-emerald-700 transition-all hover:border-emerald-300 hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20"
+                  >
+                    Get Free Website Audit <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </Container>
+      </section>
+    </main>
   );
 }

@@ -8,6 +8,7 @@
 @theme {
   --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-inter);
 
   /* Temporal-style fonts: Syne for display, DM Sans for body */
   --font-body: 'DM Sans', "Helvetica Neue", Arial, sans-serif;
@@ -86,11 +87,11 @@
 @layer base {
   :root {
     color-scheme: light;
-    --site-primary: #114b97;
-    --site-primary-hover: #0e4287;
-    --site-primary-soft: #6ea3e6;
-    --site-primary-border: #3a6fb8;
-    --site-primary-rgb: 17, 75, 151; 
+    --site-primary: #266fea;
+    --site-primary-hover: #1e5cd4;
+    --site-primary-soft: #8eb7f5;
+    --site-primary-border: #4d8df0;
+    --site-primary-rgb: 38, 111, 234; 
     --site-primary-contrast: #ffffff;
     --site-primary-dark-text: #08131c;
     --site-cta-shadow: none;
@@ -108,7 +109,7 @@
     --card-foreground: 0 0% 33.3%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 33.3%;
-    --primary: 209 97% 29%;
+    --primary: 217 82% 53%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 40% 96%;
     --secondary-foreground: 240 10% 10%;
@@ -193,7 +194,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 217 33% 17%;
     
-    --primary: 227 100% 62%; /* #6366F1 - Indigo accent */
+    --primary: 214 80% 33%; /* #114b97 - Brand primary blue */
     --primary-foreground: 210 5% 97%;
     
     --secondary: 0 0% 97.3%;
@@ -202,7 +203,7 @@
     --muted: 215 16% 47%; /* Slate 500 */
     --muted-foreground: 215 16% 47%; /* Slate 500 - Secondary color for p */
     
-    --accent: 227 100% 62%; /* #6366F1 - Primary accent */
+    --accent: 214 80% 33%; /* #114b97 - Brand primary blue */
     --accent-foreground: 210 5% 97%;
     
     --destructive: 0 62.8% 30.6%;
@@ -210,7 +211,7 @@
     
     --border: 220 13% 91%; /* Light border */
     --input: 220 13% 91%;
-    --ring: 227 100% 62%;
+    --ring: 214 80% 33%;
   }
 
   p {
@@ -229,7 +230,7 @@
 
   .dark h1, .dark h2, .dark h3, .dark h4 {
     color: #ffffff;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
 }
 

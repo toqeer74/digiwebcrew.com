@@ -57,9 +57,10 @@ export function StatCube({ label, value, delay = 0 }: StatCubeProps) {
           rotateY, 
           transformStyle: "preserve-3d" 
         }}
-        className="relative h-full w-full rounded-2xl border border-slate-200 bg-white/80 p-4 transition-all hover:bg-white dark:border-white/10 dark:bg-slate-900/40 dark:hover:bg-slate-900/60 dark:hover:shadow-[0_0_30px_rgba(var(--site-primary-rgb),0.2)]"
+        className="relative h-full w-full rounded-2xl border border-slate-200 bg-white/80 p-4 transition-all hover:bg-white dark:border-white/10 dark:bg-white/[0.03] backdrop-blur-xl dark:hover:bg-white/[0.08]"
       >
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--site-primary)]/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--site-primary)]/10 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center text-center translate-z-20">
           <span className="text-3xl font-black text-foreground">{value}</span>
           <span className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-white">{label}</span>
@@ -98,7 +99,7 @@ export function Hexagon({ children, className, index = 0 }: HexagonProps) {
       <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full dark:filter dark:drop-shadow-[0_0_8px_rgba(var(--site-primary-rgb),0.3)]">
         <path
           d="M50 2L95 25V75L50 98L5 75V25L50 2Z"
-          className="fill-slate-100 stroke-[var(--site-primary)] stroke-[1.5] transition-all group-hover:fill-[var(--site-primary)]/30 group-hover:stroke-2 dark:fill-slate-900/90 shadow-none border-none"
+          className="fill-slate-100 stroke-[var(--site-primary)]/40 stroke-[1] transition-all group-hover:fill-[var(--site-primary)]/20 group-hover:stroke-[var(--site-primary)] group-hover:stroke-2 dark:fill-white/[0.03] dark:stroke-white/10 dark:group-hover:stroke-[var(--site-primary-soft)]"
         />
       </svg>
       <div className="relative z-10 flex h-full items-center justify-center text-slate-700 scale-90 transition-transform group-hover:scale-100 dark:text-white">
@@ -128,12 +129,12 @@ export function MethodologyNode({ label, icon, isActive }: NodeProps) {
           )}
         />
         <motion.div
-          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileHover={{ scale: 1.05 }}
           className={cn(
-            "relative h-12 w-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-md shadow-none",
+            "relative h-14 w-14 rounded-2xl border flex items-center justify-center transition-all backdrop-blur-xl shadow-none",
             isActive 
-              ? "border-[var(--site-primary)] bg-white text-slate-900 dark:bg-slate-900/80 dark:text-white dark:shadow-[0_0_15px_rgba(var(--site-primary-rgb),0.3)]"
-              : "border-slate-300 bg-slate-100/80 text-slate-500 dark:border-slate-800 dark:bg-slate-900/40"
+              ? "border-[var(--site-primary)]/50 bg-white text-slate-950 dark:bg-white/[0.08] dark:text-white dark:shadow-[0_0_20px_rgba(var(--site-primary-rgb),0.2)]"
+              : "border-slate-200 bg-slate-50/50 text-slate-400 dark:border-white/5 dark:bg-white/[0.02]"
           )}
         >
           {icon}
@@ -152,22 +153,22 @@ export function MethodologyNode({ label, icon, isActive }: NodeProps) {
 // --- Process Flow Line ---
 export function ProcessFlowLine() {
   return (
-    <div className="absolute top-1/2 left-0 w-full h-[2px] -translate-y-[22px] z-0 overflow-hidden px-10">
+    <div className="absolute top-1/2 left-0 w-full h-[1px] -translate-y-[28px] z-0 px-12">
       <svg className="w-full h-full" preserveAspectRatio="none">
-        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="4 4" />
         <motion.line
           x1="0"
           y1="50%"
           x2="100%"
           y2="50%"
           stroke="var(--site-primary)"
-          strokeWidth="2"
-          strokeDasharray="10, 150"
+          strokeWidth="1.5"
+          strokeDasharray="20, 180"
           animate={{
-            strokeDashoffset: [0, -160],
+            strokeDashoffset: [0, -200],
           }}
           transition={{
-            duration: 3,
+            duration: 4,
             repeat: Infinity,
             ease: "linear",
           }}

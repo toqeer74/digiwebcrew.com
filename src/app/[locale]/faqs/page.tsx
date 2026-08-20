@@ -1,16 +1,17 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 
 const groups = [
   {
     heading: "General",
     items: [
-      ["What does Digital Web Crew do?", "Digital Web Crew helps businesses build stronger digital systems through custom websites, conversion funnels, SEO support, and chatbot or automation setups."],
+      ["What does Digi Web Crew do?", "Digi Web Crew helps businesses build stronger digital systems through custom websites, conversion funnels, SEO support, and chatbot or automation setups."],
       ["What kind of businesses do you work with?", "We work with growth-focused businesses that depend on trust, leads, calls, bookings, or consultations. Our strongest fit includes law firms, clinics, home services, consultants, SaaS, and education-related businesses."],
       ["Do you only build websites?", "No. Website development is one part of the service model. We also build landing pages, funnels, SEO support systems, and automation setups depending on what the business needs."],
       ["Do you work with clients in the US and Canada?", "Yes. Those are the main target markets, along with other strong-fit opportunities where the project and budget make sense."],
@@ -99,53 +100,37 @@ export default async function FAQsPage({
   const isRtl = locale === "ar" || locale === "ur";
 
   return (
-    <main className="flex-1 pt-32 pb-24">
+    <main className="flex-1 pt-6 pb-24 overflow-hidden relative">
+      {/* Background Visuals */}
+      <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/15 via-[var(--site-primary)]/5 to-background" />
+        <div className="absolute top-0 left-0 right-0 h-[1000px] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      </div>
+
       <Container>
-        <div className="max-w-5xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8 md:space-y-12 pt-8">
           {/* Hero Section */}
           <AnimatedSection className="text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--site-primary)]/10 border border-[var(--site-primary)]/20 text-[var(--site-primary)] mb-8 animate-in fade-in zoom-in duration-700">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--site-primary)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--site-primary)]"></span>
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider">Engineering Lab</span>
-              <span className="w-px h-3 bg-[var(--site-primary)]/30 mx-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Knowledge Base</span>
-            </div>
+            <SectionKicker label="FAQ" />
 
-            <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
-              Frequently Asked <span className="text-[var(--site-primary)]">Questions.</span>
+            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight mb-6 text-foreground leading-[1.1] text-balance">
+              Frequently Asked <span className="bg-gradient-to-r from-[var(--site-primary)] to-[#3b82f6] bg-clip-text text-transparent">Questions.</span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-12 max-w-3xl leading-relaxed mx-auto">
-              Answers to common questions about services, pricing, process, fit, and what it is like to work with Digital Web Crew.
+            <p className="text-slate-600 dark:text-slate-400 font-medium text-lg leading-relaxed max-w-2xl mx-auto">
+              Answers to common questions about services, pricing, process, fit, and what it is like to work with Digi Web Crew.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-10 py-5 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)] group">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-10 py-5 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10 group">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-            </div>
           </AnimatedSection>
 
 
-          <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 border-2 border-[var(--site-primary)]/10">
+          <AnimatedSection className="site-card overflow-hidden relative p-6 md:p-8 bg-white/85 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl shadow-sm">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-            <h2 className="text-3xl font-display font-black text-foreground mb-6">Clear Answers for Businesses Comparing the Right Next Step</h2>
-            <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+            <h2 className="text-2xl font-display font-black text-foreground mb-4 tracking-tight">Clear Answers for Businesses Comparing the Right Next Step</h2>
+            <div className="space-y-3 text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-medium">
               <p>Choosing the right digital partner usually comes with a lot of questions.</p>
               <p>
                 You may want to know what services make the most sense, how pricing works, whether your business is a good fit, or what happens after you reach out.
               </p>
-              <p>
+              <p className="border-l-2 border-[var(--site-primary)]/50 pl-4 mt-4 italic text-slate-500 dark:text-slate-400">
                 If you still need help after reviewing the answers below, the next best step is to book a consultation or submit a custom project scope.
               </p>
             </div>
@@ -166,25 +151,34 @@ export default async function FAQsPage({
             </AnimatedSection>
           ))}
 
-          <AnimatedSection className="site-card overflow-hidden relative text-center p-10 bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.08),rgba(52,211,153,0.06))] dark:bg-[linear-gradient(135deg,rgba(var(--site-primary-rgb),0.14),rgba(52,211,153,0.04))]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#60A5FA] via-[var(--site-primary)] to-[#34D399]" />
-            <h2 className="text-2xl font-display font-black text-foreground mb-3">Still Have Questions About the Right Next Step?</h2>
-            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              If you need help deciding what fits your business, the next step is simple. Book a consultation or submit your project scope and move forward with more clarity.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={localePath(locale, "/book-consultation")} className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--site-primary)] px-8 py-4 font-bold text-white shadow-[0_26px_60px_-36px_rgba(var(--site-primary-rgb),0.5)] transition-all hover:bg-[var(--site-primary-hover)]">
-                <span>Book Consultation</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-white/16 ring-1 ring-white/15">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
-              <Link href={localePath(locale, "/quote")} className="inline-flex items-center justify-center gap-3 rounded-full border border-slate-300 bg-white/90 px-8 py-4 font-bold text-slate-950 dark:border-white/15 dark:bg-white/5 dark:text-white transition-all hover:bg-white dark:hover:bg-white/10">
-                <span>Get Quote</span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-black/5 ring-1 ring-black/10 dark:bg-white/5 dark:ring-white/10">
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </Link>
+          {/* Consistent Compressed Final CTA */}
+          <AnimatedSection className="site-card overflow-hidden relative text-center p-6 md:p-8 rounded-3xl border border-slate-200 bg-white/85 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 shadow-lg shadow-[var(--site-primary)]/5 mt-16">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-[var(--site-primary)]/5 via-transparent to-transparent pointer-events-none" />
+            
+            <div className="relative z-10">
+              <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 dark:bg-white/5 text-blue-700 dark:text-blue-400 shadow-sm ring-1 ring-slate-100 dark:ring-white/10">
+                <ArrowRight size={18} />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-display font-black text-slate-900 dark:text-white mb-3 tracking-tight max-w-lg mx-auto leading-tight">
+                Still Have Questions?
+              </h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-6 max-w-sm mx-auto leading-relaxed">
+                If you need help deciding what fits your business, the next step is simple. Let's talk.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button href={localePath(locale, "/book-consultation")} className="bg-[#1746A2] hover:bg-[#123680] text-white shadow-md rounded-full px-5 h-11 flex items-center gap-2 group transition-all">
+                  <span className="font-semibold text-sm">Book Consultation</span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                  </span>
+                </Button>
+                <Button href={localePath(locale, "/quote")} className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-sm rounded-full px-5 h-11 flex items-center gap-2 group transition-all dark:bg-white/5 dark:text-white dark:border-white/10 dark:hover:bg-white/10">
+                  <span className="font-semibold text-sm">Get Quote</span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-transform duration-300 group-hover:translate-x-1 dark:bg-white/10 dark:text-slate-300">
+                    <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                  </span>
+                </Button>
+              </div>
             </div>
           </AnimatedSection>
         </div>

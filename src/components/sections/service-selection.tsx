@@ -17,7 +17,7 @@ const services = [
     title: "Custom Software Development",
     description: "Enterprise-grade web applications built with modern technology stack",
     icon: Code2,
-    color: "from-indigo-500 to-purple-500",
+    color: "from-[var(--site-primary)] to-purple-500",
     features: ["Full-Stack Next.js", "Custom Architecture", "Scalable Design"],
     href: "/services/custom-software"
   },
@@ -90,7 +90,7 @@ export function ServiceSelection({ locale }: ServiceSelectionProps) {
                 <div className="space-y-2 mb-4">
                   {service.features.slice(0, 2).map((feature, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground font-body">
-                      <div className="w-1 h-1 rounded-full bg-[#6366F1]" />
+                      <div className="w-1 h-1 rounded-full bg-[var(--site-primary)]" />
                       {feature}
                     </div>
                   ))}
@@ -98,12 +98,12 @@ export function ServiceSelection({ locale }: ServiceSelectionProps) {
 
                 {/* Arrow */}
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-body font-medium text-[#6366F1] group-hover:translate-x-1 transition-transform">
+                  <span className="text-sm font-body font-medium text-[var(--site-primary)] group-hover:translate-x-1 transition-transform">
                     Get Custom Quote
                   </span>
                   <ChevronRight 
                     size={16} 
-                    className="text-[#6366F1] group-hover:translate-x-1 transition-transform" 
+                    className="text-[var(--site-primary)] group-hover:translate-x-1 transition-transform" 
                   />
                 </div>
 
@@ -111,7 +111,7 @@ export function ServiceSelection({ locale }: ServiceSelectionProps) {
                 {hoveredService === service.id && (
                   <motion.div
                     layoutId="serviceHover"
-                    className="absolute inset-0 rounded-2xl border-2 border-[#6366F1]/20 pointer-events-none"
+                    className="absolute inset-0 rounded-2xl border-2 border-[var(--site-primary)]/20 pointer-events-none"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -134,7 +134,7 @@ export function ServiceSelection({ locale }: ServiceSelectionProps) {
         </p>
         <Link
           href={localePath(locale, "/contact")}
-          className="inline-flex items-center gap-2 px-6 py-2 bg-[#6366F1] text-foreground rounded-lg hover:bg-[#6366F1]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-[var(--site-primary)] text-foreground rounded-lg hover:bg-[var(--site-primary)]/90 transition-colors"
         >
           Get Consultation
           <ChevronRight size={16} />

@@ -54,52 +54,40 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
     const filtered = items.filter(cs => cs.category === activeCategory);
 
     return (
-        <section className="py-24 bg-transparent border-b border-white/10">
-            <Container>
-                <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-                    <div className="max-w-2xl">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 border border-[#6366F1]/30 mb-4"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
-                            <span className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1]">
-                                Industrial Proof
-                            </span>
-                        </motion.div>
-                        <h2 className="text-4xl md:text-5xl font-display font-black text-foreground tracking-tight leading-tight">
-                            Selected Works & <br />
-                            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Engineering Outcomes</span>
-                        </h2>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                        {categories.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setActiveCategory(cat)}
-                                className={`px-4 py-2 rounded-lg text-xs font-body font-semibold uppercase tracking-wider transition-all border ${activeCategory === cat
-                                    ? "bg-[#6366F1] border-[#6366F1] text-white"
-                                    : "bg-slate-100 dark:bg-midnight border-slate-200 dark:border-white/10 text-muted-foreground hover:border-[#6366F1]/30 hover:text-slate-900 dark:hover:text-white"
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
+        <div className="bg-transparent flex flex-col h-full min-h-[500px]">
+            {/* Compact Header & Filters */}
+            <div className="p-6 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]">
+                <div className="flex items-center gap-2 mb-4">
+                    <Search size={14} className="text-[var(--site-primary)]" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Project Explorer</span>
                 </div>
+                <div className="flex flex-wrap gap-1.5">
+                    {categories.map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => setActiveCategory(cat)}
+                            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all border ${activeCategory === cat
+                                ? "bg-[var(--site-primary)] border-[var(--site-primary)] text-white shadow-md shadow-[var(--site-primary)]/20"
+                                : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 hover:border-[var(--site-primary)]/30 hover:text-slate-900 dark:hover:text-white"
+                                }`}
+                        >
+                            {cat}
+                        </button>
+                    ))}
+                </div>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Scrollable Results Grid */}
+            <div className="flex-1 p-6 overflow-y-auto max-h-[600px] custom-scrollbar">
+                <div className="grid grid-cols-1 gap-6">
                     {filtered.map((cs, idx) => (
                         <motion.div
                             key={cs.title}
                             layout
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="group cursor-pointer"
+                            transition={{ delay: idx * 0.05 }}
+                            className="group cursor-pointer block rounded-2xl bg-white dark:bg-midnight border border-slate-100 dark:border-white/5 overflow-hidden hover:border-[var(--site-primary)]/30 transition-all shadow-sm"
                         >
                             <Link
                                 href={localePath(locale, `/case-studies/${cs.slug}`)}
@@ -112,55 +100,60 @@ export function CaseStudiesLibrary({ studies }: { studies: CaseStudy[] }) {
                                 }}
                                 className="block"
                             >
-                            <div className="relative aspect-[16/10] bg-slate-100 dark:bg-midnight rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 mb-8 transition-all group-hover:border-[#6366F1]/50 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end p-12">
-                                    <div className="text-white">
-                                        <p className="text-xs font-body font-semibold uppercase tracking-widest text-[#6366F1] mb-2">KPI METRIC</p>
-                                        <p className="text-4xl font-display font-bold">{cs.metrics}</p>
-                                    </div>
-                                </div>
-
-                                {cs.image ? (
-                                    <Image
-                                        src={cs.image}
-                                        alt={cs.title}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                ) : (
-                                     <div className="absolute inset-0 flex items-center justify-center bg-slate-100 dark:bg-midnight transition-transform duration-700 group-hover:scale-110">
-                                        <div className="flex flex-col items-center gap-4 opacity-30">
-                                            <Search size={64} className="text-muted-foreground" />
-                                            <p className="font-body font-semibold uppercase tracking-widest text-sm text-muted-foreground">Project Snapshot</p>
+                                <div className="relative aspect-[16/9] bg-slate-100 dark:bg-white/5 overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end p-4">
+                                        <div className="text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                            <p className="text-[9px] font-bold uppercase tracking-widest text-emerald-400 mb-1">KPI METRIC</p>
+                                            <p className="text-lg font-display font-black">{cs.metrics || "View Project"}</p>
                                         </div>
                                     </div>
-                                )}
 
-                                <div className="absolute top-8 right-8 z-20">
-                                    <div className="w-12 h-12 rounded-lg bg-[#6366F1]/20 backdrop-blur-md flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300">
-                                        <ArrowUpRight size={20} />
+                                    {cs.image ? (
+                                        <Image
+                                            src={cs.image}
+                                            alt={cs.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                         <div className="absolute inset-0 flex items-center justify-center bg-slate-50 dark:bg-white/5 transition-transform duration-700 group-hover:scale-105">
+                                            <div className="flex flex-col items-center gap-2 opacity-30">
+                                                <Search size={32} className="text-muted-foreground" />
+                                                <p className="font-bold uppercase tracking-widest text-[10px] text-muted-foreground">Snapshot</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="absolute top-3 right-3 z-20">
+                                        <div className="w-8 h-8 rounded-full bg-[var(--site-primary)]/90 backdrop-blur-sm flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300 shadow-md">
+                                            <ArrowUpRight size={14} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
                             </Link>
 
-                            <div className="px-4 space-y-4">
-                                <div className="flex gap-2 flex-wrap">
-                                    {cs.tags.map(tag => (
-                                         <span key={tag} className="text-[10px] font-body font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-slate-200 dark:border-white/10 px-2 py-0.5 rounded bg-slate-50 dark:bg-white/5">
+                            <div className="p-4 space-y-3">
+                                <div className="flex gap-1.5 flex-wrap">
+                                    {cs.tags.slice(0,3).map(tag => (
+                                         <span key={tag} className="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-slate-200 dark:border-white/10 px-1.5 py-0.5 rounded-md bg-slate-50 dark:bg-white/5">
                                             {tag}
                                         </span>
                                     ))}
                                 </div>
-                                 <h3 className="text-2xl font-display font-black text-foreground group-hover:text-[#6366F1] transition-colors">{cs.title}</h3>
-                                 <p className="text-muted-foreground font-body leading-relaxed max-w-lg">{cs.description}</p>
+                                <div>
+                                    <h3 className="text-sm font-display font-black text-foreground group-hover:text-[var(--site-primary)] transition-colors leading-tight mb-1">{cs.title}</h3>
+                                    <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-2">{cs.description}</p>
+                                </div>
                             </div>
                         </motion.div>
                     ))}
+                    {filtered.length === 0 && (
+                        <div className="text-center py-12 text-slate-400 text-xs font-medium">
+                            No projects found in this category.
+                        </div>
+                    )}
                 </div>
-            </Container>
-        </section>
+            </div>
+        </div>
     );
 }
 

@@ -1,14 +1,15 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { TeamData } from "@/lib/content-engine";
 import { localePath } from "@/lib/locale-path";
+import { Container } from "@/components/layout/layout-primitives";
+import { Button } from "@/components/ui/button";
 
-export function TeamSection({ locale, data }: { locale: string; data: TeamData }) {
-  const teamData = data || { heading: "Meet the Team Behind DigiWebCrew", members: [] };
+export function TeamSection({ locale, data, showLink = true }: { locale: string; data: TeamData; showLink?: boolean }) {
+  const teamData = data || { heading: "Meet the Team Behind Digi Web Crew", members: [] };
   return (
     <section className="border-y border-slate-200 bg-slate-50 dark:bg-midnight py-20 transition-colors">
-      <div className="container px-6 md:px-12">
-        <div className="mx-auto max-w-6xl">
+      <Container className="px-6 md:px-12">
+        <div className="mx-auto max-w-7xl">
           <div className="mb-8 text-center">
             <span className="mb-3 inline-block rounded-full bg-[rgba(var(--site-primary-rgb),0.1)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
               Team
@@ -40,16 +41,15 @@ export function TeamSection({ locale, data }: { locale: string; data: TeamData }
             ))}
           </div>
 
-          <div className="mt-8 text-center">
-            <Link
-              href={localePath(locale, "/about")}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--site-primary)] hover:underline dark:text-[var(--site-primary-soft)]"
-            >
-              Learn More About the Team <ArrowRight size={14} />
-            </Link>
-          </div>
+          {showLink && (
+            <div className="mt-8 text-center">
+              <Button href={localePath(locale, "/about")} variant="ghost" size="sm" className="!px-0 !h-auto normal-case tracking-normal hover:underline">
+                Learn More About the Team <ArrowRight size={14} />
+              </Button>
+            </div>
+          )}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

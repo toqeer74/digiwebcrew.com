@@ -3,20 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { 
-  PiGlobeDuotone, 
-  PiMagicWandDuotone, 
-  PiBracketsCurlyDuotone, 
-  PiChartLineUpDuotone, 
-  PiTrendUpDuotone, 
-  PiLightningDuotone, 
-  PiToolboxDuotone, 
-  PiShieldCheckDuotone, 
-  PiShoppingCartDuotone, 
-  PiStackDuotone 
-} from "react-icons/pi";
-import { FaLinkedin, FaXTwitter, FaGithub } from "react-icons/fa6";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Code2,
+  Zap,
+  ShoppingCart,
+  TrendingUp,
+  Target,
+  Wrench,
+  Server,
+  FolderOpen,
+  BookOpen,
+  ArrowRight,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { localePath } from "@/lib/locale-path";
@@ -58,96 +59,85 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
     { label: "Contact", href: localePath(locale, "/contact") },
   ];
 
-  // Left column — Main Services (icon + title + description)
+  // Main Services list
   const mainServices = [
     {
-      icon: PiGlobeDuotone,
-      color: "#6366F1",
-      bg: "#EEF2FF",
+      icon: Code2,
       title: "Custom Software",
       desc: "Bespoke platforms, web apps, and high-performance websites built to scale.",
       href: localePath(locale, "/services/custom-software"),
     },
     {
-      icon: PiLightningDuotone,
-      color: "#D97706",
-      bg: "#FFFBEB",
+      icon: Zap,
       title: "AI Chatbots & Automation",
       desc: "Intelligent systems to automate workflows and enhance customer support.",
       href: localePath(locale, "/services/ai-chatbots-automation"),
     },
     {
-      icon: PiShoppingCartDuotone,
-      color: "#DC2626",
-      bg: "#FFF1F2",
+      icon: ShoppingCart,
       title: "E-Commerce Solutions",
       desc: "High-conversion storefronts from custom platforms to Shopify.",
       href: localePath(locale, "/services/ecommerce"),
     },
     {
-      icon: PiChartLineUpDuotone,
-      color: "#059669",
-      bg: "#ECFDF5",
+      icon: TrendingUp,
       title: "SEO & Growth",
       desc: "Compound rankings and organic traffic month over month.",
       href: localePath(locale, "/services/seo-growth-retainers"),
     },
     {
-      icon: PiTrendUpDuotone,
-      color: "#7C3AED",
-      bg: "#F5F3FF",
+      icon: Target,
       title: "Conversion Funnels",
       desc: "High-converting funnels that turn visitors into buyers.",
       href: localePath(locale, "/services/conversion-funnels"),
     },
   ];
 
-  // Right column — Additional Services (icon + title only)
+  // Additional Services list
   const additionalServices = [
     {
-      icon: PiToolboxDuotone,
-      color: "#0369A1",
-      bg: "#F0F9FF",
+      icon: Wrench,
       title: "Internal Tools",
+      desc: "Tailored digital dashboards and portals to streamline operations.",
       href: localePath(locale, "/services/automation-internal-tools"),
     },
     {
-      icon: PiShieldCheckDuotone,
-      color: "#2563EB",
-      bg: "#EFF6FF",
+      icon: Server,
       title: "DevOps & Cloud",
+      desc: "Secure hosting, database scaling, and automated deployment pipelines.",
       href: localePath(locale, "/services/devops-cloud"),
     },
     {
-      icon: PiStackDuotone,
-      color: "#9333EA",
-      bg: "#FAF5FF",
+      icon: FolderOpen,
       title: "Case Studies",
+      desc: "Read about our client success stories and project walkthroughs.",
       href: localePath(locale, "/case-studies"),
     },
   ];
 
   const allServiceItems = [...mainServices, ...additionalServices];
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-transparent">
-      <div className="container mx-auto h-full px-6 md:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <Link href={localePath(locale, "/")} className="flex items-center gap-2">
-          {logoDataUrl ? (
-            <img src={logoDataUrl} alt={siteName || "Logo"} className="h-8 w-auto object-contain" />
-          ) : (
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--site-primary)] to-[var(--site-primary-soft)] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">{siteName ? siteName.charAt(0) : "D"}</span>
-            </div>
-          )}
-          <span className="font-display font-bold text-foreground hidden sm:inline">
-            {siteName || "Digital Web Crew"}
-          </span>
-        </Link>
+  const linkBase =
+    "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors";
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-6">
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-5">
+      {/* Backdrop overlay to dim background and focus on dropdown */}
+      <AnimatePresence>
+        {servicesOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[-1] bg-slate-900/15 dark:bg-black/50 backdrop-blur-[1.5px] pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="relative flex w-full max-w-5xl items-center justify-center">
+        {/* Centered pill */}
+        <nav className="hidden lg:flex items-center gap-0.5 rounded-full border border-slate-200/80 bg-white/90 px-1.5 py-1.5 shadow-[0_2px_12px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06]">
           {navLinks.map((link) =>
             link.dropdown ? (
               <div
@@ -160,114 +150,64 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
                   type="button"
                   onClick={() => setServicesOpen((v) => !v)}
                   className={cn(
-                    "inline-flex items-center gap-1.5 py-6 text-sm font-semibold transition-all hover:text-[var(--site-primary)]",
+                    linkBase,
+                    "inline-flex items-center gap-1",
                     pathname.startsWith(link.href) || servicesOpen
-                      ? "text-[var(--site-primary)]"
-                      : "text-muted-foreground"
+                      ? "bg-slate-100 text-slate-900 dark:bg-white/10 dark:text-white"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                   )}
                 >
                   <span>{link.label}</span>
                   <ChevronDown
-                    size={14}
+                    size={13}
                     className={cn("transition-transform duration-300", servicesOpen && "rotate-180")}
                     aria-hidden="true"
                   />
                 </button>
 
-                {/* ── Classic two-column dropdown card ── */}
+                {/* ── Single-grid layout clean dropdown card ── */}
                 <AnimatePresence>
                   {servicesOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                      transition={{ duration: 0.18, ease: "easeOut" }}
-                      className="absolute left-1/2 -translate-x-1/2 top-[calc(100%-12px)] w-[660px] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1f38] shadow-xl shadow-slate-200/60 dark:shadow-black/60 overflow-hidden"
+                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                      transition={{ type: "spring", damping: 22, stiffness: 320 }}
+                      className="absolute left-1/2 top-[calc(100%+14px)] w-[540px] -translate-x-1/2 overflow-hidden rounded-[20px] border border-slate-200 bg-white/98 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(15,23,42,0.12)] dark:border-white/10 dark:bg-midnight/98 dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)]"
                     >
-                      {/* Top colour bar */}
-                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[var(--site-primary)] via-[#34D399] to-[#60A5FA]" />
-
-                      <div className="grid grid-cols-[1fr_auto_1fr]">
-                        {/* LEFT — Main Services */}
-                        <div className="p-5">
-                          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-                            Main Services
-                          </p>
-                          <div className="space-y-0.5">
-                            {mainServices.map((svc) => {
-                              const Icon = svc.icon;
-                              return (
-                                <Link
-                                  key={svc.title}
-                                  href={svc.href}
-                                  onClick={() => setServicesOpen(false)}
-                                  className="flex items-start gap-3 rounded-xl p-2 transition-colors hover:bg-slate-50 dark:hover:bg-white/5 group"
-                                >
-                                  <span
-                                    className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                                    style={{ background: svc.bg }}
-                                  >
-                                    <Icon size={15} style={{ color: svc.color }} />
-                                  </span>
-                                  <span>
-                                    <span className="block text-[13px] font-semibold text-slate-800 dark:text-white group-hover:text-[var(--site-primary)] transition-colors leading-snug">
-                                      {svc.title}
-                                    </span>
-                                    <span className="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
-                                      {svc.desc}
-                                    </span>
-                                  </span>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="w-px bg-slate-100 dark:bg-white/8 my-5" />
-
-                        {/* RIGHT — Additional Services */}
-                        <div className="p-5">
-                          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-                            Additional Services
-                          </p>
-                          <div className="space-y-0.5 mb-4">
-                            {additionalServices.map((svc) => {
-                              const Icon = svc.icon;
-                              return (
-                                <Link
-                                  key={svc.title}
-                                  href={svc.href}
-                                  onClick={() => setServicesOpen(false)}
-                                  className="flex items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-slate-50 dark:hover:bg-white/5 group"
-                                >
-                                  <span
-                                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                                    style={{ background: svc.bg }}
-                                  >
-                                    <Icon size={15} style={{ color: svc.color }} />
-                                  </span>
-                                  <span className="text-[13px] font-semibold text-slate-800 dark:text-white group-hover:text-[var(--site-primary)] transition-colors">
-                                    {svc.title}
-                                  </span>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                          <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-relaxed px-2">
-                            Complete your project with expert automation, cloud infrastructure, and e-commerce solutions.
-                          </p>
-                        </div>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 p-5 bg-transparent">
+                        {allServiceItems.map((svc) => {
+                          const Icon = svc.icon;
+                          return (
+                            <Link
+                              key={svc.title}
+                              href={svc.href}
+                              onClick={() => setServicesOpen(false)}
+                              className="group flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-slate-100/50 dark:hover:bg-white/[0.03]"
+                            >
+                              <div className="mt-0.5 text-slate-500 group-hover:text-[var(--site-primary)] dark:text-slate-400 group-hover:dark:text-[var(--site-primary-soft)] transition-colors">
+                                <Icon size={16} strokeWidth={2} />
+                              </div>
+                              <div className="flex-1">
+                                <span className="block text-[13px] font-bold text-slate-950 transition-colors group-hover:text-[var(--site-primary)] dark:text-white dark:group-hover:text-[var(--site-primary-soft)] leading-tight">
+                                  {svc.title}
+                                </span>
+                                <span className="mt-0.5 block text-[11px] leading-snug text-slate-600 dark:text-slate-400 font-medium">
+                                  {svc.desc}
+                                </span>
+                              </div>
+                            </Link>
+                          );
+                        })}
                       </div>
-
-                      {/* Footer link */}
-                      <div className="border-t border-slate-100 dark:border-white/8 bg-slate-50/70 dark:bg-white/[0.02]">
+                      <div className="border-t border-slate-200/60 bg-slate-50/80 p-4 dark:border-white/8 dark:bg-white/[0.02] backdrop-blur-md">
                         <Link
                           href={localePath(locale, "/services")}
                           onClick={() => setServicesOpen(false)}
-                          className="block py-2.5 text-center text-xs font-bold tracking-wide text-slate-500 dark:text-slate-400 hover:text-[var(--site-primary)] dark:hover:text-[var(--site-primary)] transition-colors"
+                          className="flex items-center justify-center gap-2 text-xs font-bold text-slate-700 transition-colors hover:text-[var(--site-primary)] dark:text-slate-200 dark:hover:text-white group"
                         >
-                          View all services →
+                          <BookOpen size={14} className="text-slate-400 group-hover:text-[var(--site-primary)] dark:text-slate-500 transition-colors" />
+                          <span>Learn more about our services & build process →</span>
                         </Link>
                       </div>
                     </motion.div>
@@ -279,55 +219,60 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  "text-sm text-slate-600 hover:text-slate-950 transition-colors dark:text-slate-400 dark:hover:text-foreground",
-                  pathname === link.href && "text-foreground"
+                  linkBase,
+                  pathname === link.href
+                    ? "bg-slate-100 text-slate-900 dark:bg-white/10 dark:text-white"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 )}
               >
                 {link.label}
               </Link>
             )
           )}
-        </nav>
-
-        {/* Desktop right actions */}
-        <div className="hidden lg:flex items-center gap-3">
-
-          <a href="#" className="text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-foreground">
-            <FaLinkedin size={14} />
-          </a>
-          <a href="#" className="text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-foreground">
-            <FaXTwitter size={14} />
-          </a>
-          <a href="#" className="text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-foreground">
-            <FaGithub size={14} />
-          </a>
+          {/* Separator & CTA buttons inside the pill */}
+          <div className="h-4 w-[1px] bg-slate-200 dark:bg-white/10 mx-2" />
+          
           <Link
             href={localePath(locale, "/book-consultation")}
-            className="px-4 py-2 rounded-full bg-[var(--site-primary)] text-white text-sm font-semibold hover:bg-[var(--site-primary-hover)] dark:shadow-[0_10px_20px_-10px_rgba(var(--site-primary-rgb),0.4)] transition-all"
+            className="rounded-full bg-slate-900 px-4 py-1.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 flex items-center gap-1.5"
           >
-            Book Consultation
+            <span>Book Consultation</span>
+            <ArrowRight size={11} />
           </Link>
-        </div>
+          <Link
+            href={localePath(locale, "/quote")}
+            className="rounded-full bg-[var(--site-primary)] px-4 py-1.5 text-xs font-bold text-white shadow-sm transition-all hover:brightness-110 active:scale-[0.98] flex items-center gap-1.5 ml-1"
+          >
+            <span>Get Custom Quote</span>
+            <ArrowRight size={11} />
+          </Link>
+        </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="lg:hidden text-foreground p-2"
-        >
-          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        {/* Mobile pill */}
+        <div className="flex w-full items-center justify-between rounded-full border border-slate-200/80 bg-white/90 px-3 py-2 shadow-[0_2px_12px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06] lg:hidden">
+          <Link href={localePath(locale, "/")} className="px-2 text-sm font-bold text-slate-900 dark:text-white">
+            Digi Web Crew
+          </Link>
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            className="grid h-9 w-9 place-items-center rounded-full text-slate-700 dark:text-slate-200"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       {/* ── Mobile menu ── */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1f38] px-6 py-6 overflow-y-auto">
+        <div className="fixed inset-x-0 top-24 bottom-0 overflow-y-auto border-t border-slate-200 bg-white px-6 py-6 dark:border-white/10 dark:bg-midnight lg:hidden">
           <div className="space-y-4">
             {navLinks.map((link) =>
               link.dropdown ? (
                 <div key={link.label} className="space-y-2">
                   <button
                     onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                    className="flex items-center justify-between w-full py-3 text-lg font-bold text-slate-900 dark:text-white"
+                    className="flex w-full items-center justify-between py-3 text-lg font-bold text-slate-900 dark:text-white"
                   >
                     <span>{link.label}</span>
                     <ChevronDown
@@ -341,7 +286,7 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden space-y-1 pl-4 border-l-2 border-slate-100 dark:border-white/5"
+                        className="space-y-1 overflow-hidden border-l-2 border-slate-100 pl-4 dark:border-white/5"
                       >
                         {allServiceItems.map((item) => {
                           const Icon = item.icon;
@@ -349,16 +294,11 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
                             <Link
                               key={item.title}
                               href={item.href}
-                              className="flex items-center gap-2.5 py-2.5 text-sm text-muted-foreground hover:text-slate-900 dark:hover:text-white transition-colors"
+                              className="flex items-center gap-3 py-3 text-sm text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                               onClick={() => setMobileOpen(false)}
                             >
-                              <span
-                                className="flex h-6 w-6 items-center justify-center rounded-md"
-                                style={{ background: item.bg }}
-                              >
-                                <Icon size={12} style={{ color: item.color }} />
-                              </span>
-                              {item.title}
+                              <Icon size={18} className="text-slate-400 dark:text-slate-500" />
+                              <span>{item.title}</span>
                             </Link>
                           );
                         })}
@@ -378,14 +318,20 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
               )
             )}
           </div>
-          <div className="pt-6 space-y-2 border-t border-white/10 mt-6">
-
+          <div className="mt-6 border-t border-slate-200 pt-6 dark:border-white/10 space-y-3">
             <Link
               href={localePath(locale, "/book-consultation")}
-              className="block w-full px-4 py-2 rounded-full bg-[var(--site-primary)] text-white text-sm text-center font-semibold"
+              className="block w-full rounded-full bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
               onClick={() => setMobileOpen(false)}
             >
               Book Consultation
+            </Link>
+            <Link
+              href={localePath(locale, "/quote")}
+              className="block w-full rounded-full bg-[var(--site-primary)] px-4 py-2.5 text-center text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Get Custom Quote
             </Link>
           </div>
         </div>
@@ -393,4 +339,3 @@ export function Navbar({ locale, siteName, logoDataUrl }: NavbarProps) {
     </header>
   );
 }
-

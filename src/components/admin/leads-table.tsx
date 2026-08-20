@@ -73,7 +73,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : "—"}
                 </td>
                 <td style={{ textAlign: "right" }}>
-                  <Link href={`/admin/leads/${lead._id}`} className="adm-btn adm-btn-secondary adm-btn-sm">
+                  <Link href={`/digiadmin/leads/${lead._id}`} className="adm-btn adm-btn-secondary adm-btn-sm">
                     View →
                   </Link>
                 </td>
