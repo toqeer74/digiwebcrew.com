@@ -52,6 +52,7 @@ function newTier(): PricingTier {
   return {
     id: `tier-${Date.now()}`,
     name: "New package",
+    shortName: "New",
     price: "$0",
     unit: "starting",
     timeline: "TBD",
@@ -289,6 +290,13 @@ export default function AdminPricingPage() {
                   className="adm-input"
                   value={tier.name}
                   onChange={(e) => patchTier(index, { name: e.target.value })}
+                />
+              </Field>
+              <Field label="Short name" hint="comparison table column, e.g. Website">
+                <input
+                  className="adm-input"
+                  value={tier.shortName}
+                  onChange={(e) => patchTier(index, { shortName: e.target.value })}
                 />
               </Field>
               <Field label="Price" hint="e.g. $3,500">

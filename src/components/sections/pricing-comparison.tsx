@@ -3,15 +3,36 @@
 import { motion } from "framer-motion";
 import { Check, Plus, Minus, Code2, Zap, Bot, Search, MoveHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { AccentKey, IconKey, PricingTier } from "@/lib/pricing-shared";
 
 type Cell = "yes" | "addon" | "no";
 
-const columns = [
-  { label: "Website", icon: Code2, from: "from-[var(--site-primary)]", to: "to-emerald-400", price: "$3,500+" },
-  { label: "Funnels", icon: Zap, from: "from-violet-500", to: "to-indigo-400", price: "$2,000+", popular: true },
-  { label: "AI & Automation", icon: Bot, from: "from-amber-500", to: "to-orange-400", price: "$2,500+" },
-  { label: "SEO Retainer", icon: Search, from: "from-sky-500", to: "to-cyan-400", price: "$1,000/mo" },
-];
+const ICONS: Record<IconKey, typeof Code2> = {
+  code: Code2,
+  zap: Zap,
+  bot: Bot,
+  search: Search,
+};
+
+/** Gradient pair per palette slot, matching this table's original columns. */
+const ACCENTS: Record<AccentKey, { from: string; to: string }> = {
+  blue: { from: "from-[var(--site-primary)]", to: "to-emerald-400" },
+  violet: { from: "from-violet-500", to: "to-indigo-400" },
+  amber: { from: "from-amber-500", to: "to-orange-400" },
+  teal: { from: "from-sky-500", to: "to-cyan-400" },
+};
+
+/**
+ * The tier stores the figure and its qualifier separately ("$1,000" + "per
+ * month"); this column is too narrow for the words, so it uses the table's own
+ * shorthand: "/mo" for a recurring price, "+" for a starting one. A price that
+ * already carries its own period (e.g. "$1,000/mo") is left alone.
+ */
+function formatColumnPrice(price: string, unit: string): string {
+  if (price.includes("/")) return price;
+  if (/month|\bmo\b|monthly/i.test(unit)) return `${price}/mo`;
+  return `${price}+`;
+}
 
 const rows: { label: string; cells: Cell[] }[] = [
   { label: "Discovery & scoping session", cells: ["yes", "yes", "yes", "yes"] },
@@ -58,7 +79,18 @@ const legend = [
   { mark: "no" as Cell, label: "Not applicable" },
 ];
 
-export function PricingComparison() {
+export function PricingComparison({ tiers }: { tiers: PricingTier[] }) {
+  // Columns follow the admin-managed tiers, so an edited price or renamed
+  // package shows up here as well as on the tier cards above.
+  const columns = tiers.map((tier) => ({
+    key: tier.id,
+    label: tier.shortName,
+    price: formatColumnPrice(tier.price, tier.unit),
+    icon: ICONS[tier.icon] ?? Code2,
+    accent: ACCENTS[tier.accent] ?? ACCENTS.blue,
+    popular: tier.popular,
+  }));
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -88,14 +120,14 @@ export function PricingComparison() {
                 const Icon = col.icon;
                 return (
                   <th
-                    key={col.label}
+                    key={col.key}
                     className={cn(
                       "px-4 py-5 text-center align-bottom",
                       col.popular && "bg-[var(--site-primary)]/[0.04] dark:bg-[var(--site-primary)]/10"
                     )}
                   >
                     <div className="flex flex-col items-center gap-2">
-                      <span className={cn("inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br p-0.5", col.from, col.to)}>
+                      <span className={cn("inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br p-0.5", col.accent.from, col.accent.to)}>
                         <span className="flex h-full w-full items-center justify-center rounded-[7px] bg-white dark:bg-slate-900">
                           <Icon size={15} className="text-slate-700 dark:text-white" strokeWidth={1.75} />
                         </span>
@@ -126,15 +158,23 @@ export function PricingComparison() {
                 >
                   {row.label}
                 </th>
-                {row.cells.map((cell, ci) => (
+                {/*
+                  Driven by the columns, not by row.cells: the tier list is
+                  admin-editable, and indexing the other way would read
+                  columns[ci] as undefined once a tier was removed. The feature
+                  matrix is authored for the four default tiers, so a newly
+                  added tier has no data yet and reads as "not applicable"
+                  until the row is filled in.
+                */}
+                {columns.map((col, ci) => (
                   <td
-                    key={columns[ci].label}
+                    key={col.key}
                     className={cn(
                       "px-4 py-4 text-center",
-                      columns[ci].popular && "bg-[var(--site-primary)]/[0.04] dark:bg-[var(--site-primary)]/[0.07]"
+                      col.popular && "bg-[var(--site-primary)]/[0.04] dark:bg-[var(--site-primary)]/[0.07]"
                     )}
                   >
-                    <CellMark value={cell} />
+                    <CellMark value={row.cells[ci] ?? "no"} />
                   </td>
                 ))}
               </tr>

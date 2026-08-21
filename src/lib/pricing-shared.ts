@@ -18,6 +18,11 @@ export type PricingTier = {
   id: string;
   /** Tier name, e.g. "Custom Website Development". */
   name: string;
+  /**
+   * Terse label for the comparison-table column, e.g. "Website". The full
+   * `name` is too long for a 4-column matrix, so the table needs its own.
+   */
+  shortName: string;
   /** Headline figure, e.g. "$3,500". Free text so currency/symbol is editable. */
   price: string;
   /** Qualifier shown next to the price, e.g. "starting" or "per month". */
@@ -58,6 +63,7 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
     {
       id: "web",
       name: "Custom Website Development",
+      shortName: "Website",
       price: "$3,500",
       unit: "starting",
       timeline: "4–8 weeks",
@@ -74,6 +80,7 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
     {
       id: "funnels",
       name: "Funnels & Landing Pages",
+      shortName: "Funnels",
       price: "$2,000",
       unit: "starting",
       timeline: "2–4 weeks",
@@ -95,6 +102,7 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
     {
       id: "ai",
       name: "AI Chatbots & Automation",
+      shortName: "AI & Automation",
       price: "$2,500",
       unit: "starting",
       timeline: "3–6 weeks",
@@ -111,6 +119,7 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
     {
       id: "seo",
       name: "SEO & Growth Retainers",
+      shortName: "SEO Retainer",
       price: "$1,000",
       unit: "per month",
       timeline: "Ongoing",
@@ -178,6 +187,7 @@ function normalizeTier(raw: unknown, index: number): PricingTier {
   return {
     id: str(value.id, base.id, 60),
     name: str(value.name, base.name, LIMITS.short),
+    shortName: str(value.shortName, base.shortName, 40),
     price: str(value.price, base.price, 40),
     unit: str(value.unit, base.unit, 40),
     timeline: str(value.timeline, base.timeline, 60),

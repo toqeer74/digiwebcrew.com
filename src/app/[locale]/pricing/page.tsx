@@ -289,7 +289,7 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
             description="A clear view of what ships as standard, what is available as an add-on, and what simply does not apply — so you can pick the right starting point before we ever talk numbers."
           />
 
-          <PricingComparison />
+          <PricingComparison tiers={pricing.tiers} />
 
           <AnimatedSection delay={0.1} className="mt-8 text-center">
             <p className="text-[13.5px] font-medium text-slate-500 dark:text-slate-400">
