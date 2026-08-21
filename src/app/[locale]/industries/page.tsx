@@ -115,7 +115,7 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
         <div className="max-w-6xl mx-auto space-y-24">
 
           {/* Hero */}
-          <AnimatedSection className="text-center flex flex-col items-center pt-8">
+          <AnimatedSection immediate className="text-center flex flex-col items-center pt-8">
             <SectionKicker label="Industries We Serve" />
 
             <h1 className="text-[3.25rem] md:text-[4.5rem] font-display font-black tracking-tight mb-6 text-foreground leading-[1.05] drop-shadow-sm text-balance">

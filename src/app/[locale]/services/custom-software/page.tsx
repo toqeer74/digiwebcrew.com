@@ -111,7 +111,7 @@ export default async function CustomSoftwarePage({
         <div className="max-w-7xl mx-auto space-y-6 pt-12 pb-24">
           
           {/* 1. HERO SECTION (Aligned with Quote Page but Compressed) */}
-          <AnimatedSection className="pt-0 pb-8">
+          <AnimatedSection immediate className="pt-0 pb-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-4 items-center relative">
               
               {/* LEFT: Typography & Graphic */}

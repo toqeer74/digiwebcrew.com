@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <article>
         <Container className="max-w-4xl">
           {/* Header */}
-          <AnimatedSection>
+          <AnimatedSection immediate>
             <header className="mb-12">
               <Breadcrumbs
                 className="mb-6"

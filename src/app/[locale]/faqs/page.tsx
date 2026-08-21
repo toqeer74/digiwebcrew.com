@@ -139,7 +139,7 @@ export default async function FAQsPage({
       <Container>
         <div className="max-w-4xl mx-auto space-y-8 md:space-y-12 pt-8">
           {/* Hero Section */}
-          <AnimatedSection className="text-center flex flex-col items-center">
+          <AnimatedSection immediate className="text-center flex flex-col items-center">
             <SectionKicker label="FAQ" />
 
             <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight mb-6 text-foreground leading-[1.1] text-balance">

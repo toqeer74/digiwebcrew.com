@@ -98,7 +98,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
               <div className="hidden dark:block absolute -inset-20 bg-[var(--site-primary)]/5 blur-[120px] pointer-events-none rounded-full" />
 
-              <AnimatedSection className="site-card overflow-hidden relative p-8 lg:p-10 border border-slate-200 bg-white/85 backdrop-blur-xl transition-all duration-700 hover:border-[var(--site-primary)]/20 dark:border-white/5 dark:bg-white/5">
+              <AnimatedSection immediate className="site-card overflow-hidden relative p-8 lg:p-10 border border-slate-200 bg-white/85 backdrop-blur-xl transition-all duration-700 hover:border-[var(--site-primary)]/20 dark:border-white/5 dark:bg-white/5">
                 <div className="hidden dark:block absolute -left-10 -top-10 h-64 w-64 rounded-full bg-[rgba(52,211,153,0.1)] blur-[80px]" />
                 <div className="grid grid-cols-1 gap-4 relative z-10">
                   {homepageData.industries.map((i: string, idx: number) => {

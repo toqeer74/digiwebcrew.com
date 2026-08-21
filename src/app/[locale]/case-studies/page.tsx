@@ -64,7 +64,7 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
       <Container>
         <div className="mx-auto max-w-7xl">
           {/* Header */}
-          <AnimatedSection className="relative pb-14 pt-6">
+          <AnimatedSection immediate className="relative pb-14 pt-6">
             {/* Decorative flourish, mirrors the reference layout's right-side squiggle. */}
             <div
               className="pointer-events-none absolute -top-2 right-0 hidden w-[400px] lg:block"

@@ -121,7 +121,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-12">
 
           {/* Professional Hero Section */}
-          <AnimatedSection className="pt-4 pb-8">
+          <AnimatedSection immediate className="pt-4 pb-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center relative">
               {/* LEFT: Typography */}
               <div className="relative z-10 text-center lg:text-left">

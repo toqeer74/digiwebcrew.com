@@ -97,7 +97,7 @@ export default async function CaseStudyPage({
         </Link>
 
         {/* Title block */}
-        <AnimatedSection className="mx-auto mt-12 max-w-4xl text-center">
+        <AnimatedSection immediate className="mx-auto mt-12 max-w-4xl text-center">
           <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">
             {study.client}
           </p>

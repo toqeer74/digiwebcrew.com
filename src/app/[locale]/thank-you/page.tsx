@@ -79,7 +79,7 @@ export default async function ThankYouPage({ params }: { params: Promise<{ local
       <Container>
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Hero Section */}
-          <AnimatedSection className="text-center flex flex-col items-center">
+          <AnimatedSection immediate className="text-center flex flex-col items-center">
             <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">
               Submission <span className="text-emerald-500">Received.</span> <br className="hidden md:block" /> Thank You.
             </h1>

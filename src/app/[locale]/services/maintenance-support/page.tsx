@@ -58,7 +58,7 @@ export default async function MaintenanceSupportPage({ params }: { params: Promi
         <div className="max-w-6xl mx-auto space-y-24">
           
           {/* Hero Section */}
-          <AnimatedSection className="text-center flex flex-col items-center">
+          <AnimatedSection immediate className="text-center flex flex-col items-center">
             <SectionKicker label="Maintenance & Support" />
 
             <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight mb-8 text-foreground leading-[1.1] text-balance">

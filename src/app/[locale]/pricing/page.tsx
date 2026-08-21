@@ -92,7 +92,7 @@ function SectionHeading({
   description?: string;
 }) {
   return (
-    <AnimatedSection className="mx-auto mb-14 max-w-3xl text-center">
+    <AnimatedSection immediate className="mx-auto mb-14 max-w-3xl text-center">
       <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-white/5 dark:backdrop-blur-sm">
         <span className="h-1.5 w-1.5 rounded-full bg-[var(--site-primary)] shadow-[0_0_8px_rgba(var(--site-primary-rgb),0.8)]" />
         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
