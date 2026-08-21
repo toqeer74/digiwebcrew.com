@@ -36,10 +36,15 @@ export async function middleware(request: NextRequest) {
   }
 
   // 4. If no locale, redirect to default locale (en) without prefix
-  // For App Router, we need to rewrite to the [locale] folder
-  return NextResponse.rewrite(
-    new URL(`/${defaultLocale}${pathname}`, request.url)
-  );
+  // For App Router, we need to rewrite to the [locale] folder.
+  //
+  // Clone rather than `new URL(path, request.url)`: that constructor keeps only
+  // the pathname, so every query string was silently dropped on prefixless URLs
+  // (which is every default-locale page). It left /blog?cat=… rendering the
+  // unfiltered list.
+  const url = request.nextUrl.clone();
+  url.pathname = `/${defaultLocale}${pathname}`;
+  return NextResponse.rewrite(url);
 }
 
 export const config = {

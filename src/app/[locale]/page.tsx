@@ -165,8 +165,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <HomepagePricing data={pricingConfig} locale={locale} />
 
             {/* AI project Calculator & Service Configurator moved lower */}
-            <AnimatedSection className="py-10 bg-slate-50/50 border-y border-slate-200/80 shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] dark:bg-transparent dark:border-white/10">
-              <div className="max-w-4xl mx-auto text-center space-y-1.5 mb-6">
+            <AnimatedSection className="py-8 bg-slate-50/50 border-y border-slate-200/80 shadow-[inset_0_4px_20px_rgba(0,0,0,0.02)] dark:bg-transparent dark:border-white/10">
+              <div className="max-w-4xl mx-auto text-center space-y-1.5 mb-5">
                 <h2 className="text-2xl xl:text-4xl font-black text-slate-950 tracking-tight leading-tight dark:text-white">
                   {homepageData.enterpriseBlock.titlePrefix}{" "}
                   <span className="text-[var(--site-primary)]">{homepageData.enterpriseBlock.titleAccent}</span>{" "}
