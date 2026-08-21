@@ -9,6 +9,8 @@ import { localePath } from "@/lib/locale-path";
 import { ArrowRight, MonitorSmartphone, MousePointerClick, Bot, TrendingUp, LayoutTemplate, Layers, Zap, Search, Cog, Shield, ArrowUpRight } from "lucide-react";
 import { FluidBackground } from "@/components/sections/homepage-visuals";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const coreServices = [
   { 
@@ -85,6 +87,17 @@ const faq = [
   { value: "3", title: "Can you combine website, funnel, SEO, and automation work in one project?", content: "Yes. In many cases, that creates the strongest outcome because the system is planned together rather than built in disconnected parts." },
   { value: "4", title: "Do you offer ongoing support?", content: "Yes. We can provide maintenance, SEO, optimization, and ongoing improvement support after launch." },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services",
+    title: "Software Development & AI Automation Services",
+    description: "Custom software, ecommerce, AI chatbots, DevOps, and SEO growth retainers, delivered by senior engineers for US and UK companies.",
+    keywords: ["software development services", "AI automation services", "web development services"],
+  });
+}
 
 export default async function ServicesHub({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

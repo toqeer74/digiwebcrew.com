@@ -23,6 +23,8 @@ import {
   Layers
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const coreFeatures = [
   "Server-Side Rendering",
@@ -63,6 +65,17 @@ const webDevRelatedServices = [
   { label: "AI Chatbots & Automation", href: "/services/ai-chatbots-automation", icon: Bot },
   { label: "SEO & Growth Retainers", href: "/services/seo-growth-retainers", icon: Search },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/custom-software",
+    title: "Custom Software Development Company",
+    description: "Bespoke web applications, internal platforms, and APIs built in Next.js and TypeScript. Fixed scope, senior engineers, production-ready delivery.",
+    keywords: ["custom software development company", "bespoke software development", "Next.js development agency"],
+  });
+}
 
 export default async function CustomSoftwarePage({
   params,

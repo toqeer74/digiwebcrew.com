@@ -21,6 +21,19 @@ import { getPublicBrandingConfig } from "@/lib/branding";
 import { getDictionary } from "@/lib/get-dictionary";
 import { localePath } from "@/lib/locale-path";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/",
+    title: "Custom Software & AI Automation Agency | Digi Web Crew",
+    description: "We build custom software, high-performance websites, and AI automation for US and UK companies. Senior engineers, fixed scope, measurable results.",
+    keywords: ["custom software development", "AI automation agency", "Next.js development company", "web development agency"],
+  });
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

@@ -7,6 +7,19 @@ import { getCaseStudies } from "@/lib/content-engine";
 import { getWorkVisual } from "@/lib/work-visuals";
 import { getDictionary } from "@/lib/get-dictionary";
 import { localePath } from "@/lib/locale-path";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/case-studies",
+    title: "Client Work & Case Studies",
+    description: "Real projects with measurable outcomes: faster sites, higher conversion, and automated operations for clients across six industries.",
+    keywords: ["software development case studies", "web design portfolio", "development agency work"],
+  });
+}
 
 export default async function WorkPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

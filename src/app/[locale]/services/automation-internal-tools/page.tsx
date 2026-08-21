@@ -17,6 +17,8 @@ import {
   Bot,
   Workflow
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // Automation & Internal Tools Specific Data
 const coreFeatures = [
@@ -54,6 +56,17 @@ const webDevRelatedServices = [
   { label: "Custom Software", href: "/services/custom-software", icon: Layers },
   { label: "E-Commerce", href: "/services/ecommerce", icon: Activity },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/automation-internal-tools",
+    title: "Internal Tools & Process Automation",
+    description: "Custom dashboards, admin panels, and back-office automation that replace spreadsheets and manual steps for operations teams.",
+    keywords: ["internal tools development", "business process automation", "custom admin dashboard"],
+  });
+}
 
 export default async function AutomationPage({
   params,

@@ -11,6 +11,8 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 import { FluidBackground } from "@/components/sections/homepage-visuals";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const discussionPoints = [
   { text: "What your business needs help with", icon: Briefcase },
@@ -81,6 +83,17 @@ const faqItems = [
       "No. It can work for focused projects as well, as long as there is a real business need and a serious interest in moving forward.",
   },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/book-consultation",
+    title: "Book a Free Consultation",
+    description: "Book a free 30-minute call with a senior engineer to scope your project, pressure-test the approach, and map out the right next step.",
+    keywords: ["free development consultation", "book software consultation"],
+  });
+}
 
 export default async function BookConsultationPage({
   params,

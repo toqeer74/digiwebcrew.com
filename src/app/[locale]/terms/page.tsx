@@ -1,5 +1,17 @@
 import { Container } from "@/components/layout/layout-primitives";
 import { getDictionary } from "@/lib/get-dictionary";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/terms",
+    title: "Terms of Service",
+    description: "The terms that apply when you engage Digi Web Crew for development, automation, or ongoing support services.",
+  });
+}
 
 export default async function TermsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;

@@ -12,21 +12,26 @@ import { getCaseStudies, getCaseStudy } from "@/lib/content-engine";
 import { getWorkVisual, splitMarkdownSections } from "@/lib/work-visuals";
 import { Metadata } from "next";
 import { localePath } from "@/lib/locale-path";
+import { buildPageMetadata, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const study = await getCaseStudy(slug);
   if (!study) return {};
 
-  return {
-    title: `${study.client} | ${study.title}`,
+  return buildPageMetadata({
+    locale,
+    path: `/case-studies/${study.slug}`,
+    title: `${study.client} Case Study`,
     description: study.excerpt,
-    openGraph: { title: `${study.client} | ${study.title}`, description: study.excerpt, type: "website" },
-  };
+    ogImage: study.coverImage,
+    keywords: study.categories,
+  });
 }
 
 export async function generateStaticParams() {

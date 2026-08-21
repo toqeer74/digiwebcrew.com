@@ -5,6 +5,8 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const coreFeatures = [
   "24/7 System Monitoring",
@@ -21,6 +23,17 @@ const outcomes = [
   "Continuous Security Compliance",
   "Predictive Resource Scaling",
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/maintenance-support",
+    title: "Website Maintenance & Support Plans",
+    description: "Proactive maintenance, security patching, uptime monitoring, and a named engineer on call. Keep your site fast, secure, and online.",
+    keywords: ["website maintenance services", "web support retainer", "website security monitoring"],
+  });
+}
 
 export default async function MaintenanceSupportPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

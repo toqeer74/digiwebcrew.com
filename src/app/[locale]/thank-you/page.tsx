@@ -6,6 +6,19 @@ import Link from "next/link";
 import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { localePath } from "@/lib/locale-path";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/thank-you",
+    title: "Thank You",
+    description: "Thanks for getting in touch. We'll reply within one business day.",
+    noIndex: true,
+  });
+}
 
 export default async function ThankYouPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

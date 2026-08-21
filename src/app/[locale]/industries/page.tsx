@@ -8,6 +8,8 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 import { FluidBackground } from "@/components/sections/homepage-visuals";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const industrySections = [
   {
@@ -85,6 +87,17 @@ const faqItems = [
   { value: "faq-4", title: "Do you tailor the website or funnel structure by industry?", content: "Yes. The way a site or funnel is built should reflect how that type of business earns trust, explains services, and moves people toward action." },
   { value: "faq-5", title: "What if my business is not listed here?", content: "You can still reach out. If the project is a strong fit and the business need matches what we do well, we can still define the right direction." },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/industries",
+    title: "Industries We Serve",
+    description: "Software, ecommerce, and automation built for legal, healthcare, property, fitness, SaaS, and retail teams with domain-specific requirements.",
+    keywords: ["industry software solutions", "vertical software development"],
+  });
+}
 
 export default async function IndustriesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

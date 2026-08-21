@@ -1,14 +1,28 @@
 import { Container } from "@/components/layout/layout-primitives";
 import { getBlogPosts } from "@/lib/content-engine";
 import Link from "next/link";
+import Image from "next/image";
 import { format } from "date-fns";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import { Calendar, User, ArrowRight, Clock } from "lucide-react";
 import { getDictionary } from "@/lib/get-dictionary";
 import { cn } from "@/lib/utils";
 import { localePath } from "@/lib/locale-path";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SectionKicker } from "@/components/ui/section-kicker";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/blog",
+    title: "Insights on Software, AI & Growth",
+    description: "Practical guides on custom software, AI automation, technical SEO, and conversion, written by the engineers who build and ship them.",
+    keywords: ["software development blog", "AI automation guides", "technical SEO blog"],
+  });
+}
 
 export default async function BlogPage({
   params,
@@ -73,10 +87,19 @@ export default async function BlogPage({
                 className="site-card site-card-interactive group flex h-full flex-col overflow-hidden p-0"
               >
                 <div className="aspect-[16/10] bg-[rgba(var(--site-primary-rgb),0.06)] relative overflow-hidden">
-                  {/* Placeholder for real images */}
-                  <div className="absolute inset-0 flex items-center justify-center text-[var(--site-primary)]/10 font-bold text-4xl select-none">
-                    BLOG
-                  </div>
+                  {post.coverImage ? (
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-[var(--site-primary)]/10 font-bold text-4xl select-none">
+                      BLOG
+                    </div>
+                  )}
                 </div>
                 <div className="p-8 flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-4">
@@ -86,6 +109,10 @@ export default async function BlogPage({
                     <div className="site-card-muted flex items-center gap-1.5 text-xs font-medium">
                       <Calendar size={12} />
                       {format(new Date(post.date), "MMM dd, yyyy")}
+                    </div>
+                    <div className="site-card-muted flex items-center gap-1.5 text-xs font-medium">
+                      <Clock size={12} />
+                      {post.readingTime} min
                     </div>
                   </div>
                   <h3 className="site-card-title text-xl font-bold mb-3 group-hover:text-[var(--site-primary)] transition-colors leading-tight">

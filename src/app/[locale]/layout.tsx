@@ -13,6 +13,8 @@ import { ConsentBanner } from "@/components/ui/consent-banner";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
 import { localePath } from "@/lib/locale-path";
 import { GlobalDecorativeBackground } from "@/components/GlobalDecorativeBackground";
+import { JsonLd } from "@/components/seo/json-ld";
+import { SITE_URL, absoluteUrl, organizationSchema, websiteSchema } from "@/lib/seo";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plex = IBM_Plex_Mono({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-plex" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body" });
@@ -30,11 +32,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     keywords: ["software agency", "custom software", "next.js", "premium design", "automation", "AI automation", "Digi Web Crew", "Toqeer Shafique"],
     authors: [{ name: "Toqeer Shafique" }],
     creator: "Digi Web Crew",
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://digiwebcrew.com'),
+    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: dict.meta.ogTitle,
       description: dict.meta.ogDesc,
-      url: localePath(locale, "/"),
+      url: absoluteUrl(localePath(locale, "/")),
       siteName: "Digi Web Crew",
       locale: locale,
       type: "website",
@@ -53,14 +55,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: dict.meta.ogDesc,
       images: ['/og-image.png'],
     },
-    alternates: {
-      canonical: localePath(locale, "/"),
-      languages: {
-        en: localePath("en", "/"),
-        ur: localePath("ur", "/"),
-        ar: localePath("ar", "/"),
-      },
-    },
+    // NOTE: no `alternates` here on purpose. Layout metadata is inherited by
+    // every page, so a canonical set at this level pointed all 27 pages at "/"
+    // and Google collapsed them as duplicates. Each page now sets its own via
+    // buildPageMetadata(); the homepage's lives in ./page.tsx.
     robots: {
       index: true,
       follow: true,
@@ -97,12 +95,7 @@ export default async function RootLayout({
       style={{ ...brandingVars, colorScheme: 'light' } as CSSProperties}
     >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: '{"@context":"https://schema.org","@type":"Organization","name":"Digi Web Crew","url":"https://digiwebcrew.com/","logo":"https://digiwebcrew.com/logo.png","founder":{"@type":"Person","name":"Toqeer Shafique","sameAs":["https://pk.linkedin.com/in/toqeer-shafique","https://github.com/toqeer74","https://www.upwork.com/freelancers/toqeer","https://www.fiverr.com/toqeer486","https://www.freelancer.pk/u/toqeer74"]},"description":"Specialized development of high-performance web applications and technical SEO strategies."}'
-          }}
-        />
+        <JsonLd schema={[organizationSchema(), websiteSchema()]} />
       </head>
       <body className="bg-[#f7f7f8] text-foreground font-sans font-medium antialiased transition-colors duration-300 pt-28">
           <GlobalDecorativeBackground />

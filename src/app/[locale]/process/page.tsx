@@ -8,6 +8,8 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { localePath } from "@/lib/locale-path";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const steps = [
   {
@@ -89,6 +91,17 @@ const faqItems = [
   { value: "faq-4", title: "Do you provide support after launch?", content: "Yes. Post-launch support can include updates, SEO, maintenance, improvements, and future expansion work." },
   { value: "faq-5", title: "How long does the process take?", content: "That depends on the scope, complexity, and timeline of the project. Smaller projects move faster, while larger builds need more planning and implementation time." },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/process",
+    title: "Our Development Process",
+    description: "How we scope, design, build, and launch: a transparent process with fixed milestones, weekly demos, and no surprise invoices.",
+    keywords: ["software development process", "agency development workflow"],
+  });
+}
 
 export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

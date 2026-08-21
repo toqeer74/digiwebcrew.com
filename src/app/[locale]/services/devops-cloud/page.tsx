@@ -17,6 +17,8 @@ import {
   Bot,
   Workflow
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // DevOps & Cloud Specific Data
 const coreFeatures = [
@@ -54,6 +56,17 @@ const webDevRelatedServices = [
   { label: "Internal Automation", href: "/services/automation-internal-tools", icon: Workflow },
   { label: "E-Commerce Ops", href: "/services/ecommerce", icon: Activity },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/devops-cloud",
+    title: "DevOps & Cloud Infrastructure Services",
+    description: "CI/CD pipelines, containerisation, and cloud infrastructure that ship safely. Reduce deploy risk, cut hosting spend, and scale with confidence.",
+    keywords: ["DevOps consulting", "cloud infrastructure services", "CI/CD pipeline setup"],
+  });
+}
 
 export default async function DevOpsCloudPage({
   params,

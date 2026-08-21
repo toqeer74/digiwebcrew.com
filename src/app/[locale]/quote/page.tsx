@@ -10,6 +10,8 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Accordion } from "@/components/ui/accordion";
 import { localePath } from "@/lib/locale-path";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const heroMeta = [
   { icon: Clock3, label: "About 2 minutes" },
@@ -86,6 +88,17 @@ function SectionHeading({
       )}
     </AnimatedSection>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/quote",
+    title: "Get a Custom Project Quote",
+    description: "Tell us your scope and get a tailored quote with timeline and budget range. No obligation, and answered by an engineer rather than a salesperson.",
+    keywords: ["software project quote", "web development quote", "custom software cost estimate"],
+  });
 }
 
 export default async function QuotePage({ params }: { params: Promise<{ locale: string }> }) {

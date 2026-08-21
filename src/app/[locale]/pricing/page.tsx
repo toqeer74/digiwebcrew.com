@@ -24,6 +24,8 @@ import { PricingComparison } from "@/components/sections/pricing-comparison";
 import { PricingDrivers } from "@/components/sections/pricing-drivers";
 import { PricingJourney } from "@/components/sections/pricing-journey";
 import { PricingFit } from "@/components/sections/pricing-fit";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const supportPoints = [
   { icon: ShieldCheck, title: "Clear starting prices", desc: "Published numbers, no discovery fee to see them." },
@@ -114,6 +116,17 @@ function SectionHeading({
       )}
     </AnimatedSection>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/pricing",
+    title: "Pricing & Engagement Models",
+    description: "Transparent project and retainer pricing for custom software, ecommerce, and AI automation. See typical budgets and what shapes a quote.",
+    keywords: ["software development pricing", "web development cost", "development retainer pricing"],
+  });
 }
 
 export default async function PricingPage({ params }: { params: Promise<{ locale: string }> }) {

@@ -17,6 +17,8 @@ import {
   Bot,
   MousePointerClick
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // Conversion Funnels Specific Data
 const coreFeatures = [
@@ -54,6 +56,17 @@ const webDevRelatedServices = [
   { label: "Custom Software", href: "/services/custom-software", icon: Layers },
   { label: "AI Chatbot", href: "/services/ai-chatbots-automation", icon: Bot },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/conversion-funnels",
+    title: "Conversion Funnel Design & CRO",
+    description: "Landing pages and funnels engineered to convert paid and organic traffic. Research, build, and A/B testing that raise qualified lead volume.",
+    keywords: ["conversion rate optimisation agency", "landing page design", "CRO services"],
+  });
+}
 
 export default async function ConversionFunnelsPage({
   params,

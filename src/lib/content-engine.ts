@@ -24,7 +24,49 @@ export type BlogPost = {
   content: string;
   category: string;
   coverImage?: string;
+  /** Last substantive edit. Drives sitemap lastModified and the "Updated" line. */
+  updated?: string;
+  /** SEO title when it should differ from the on-page H1. */
+  metaTitle?: string;
+  /** Meta description; falls back to excerpt. */
+  metaDescription?: string;
+  keywords?: string[];
+  /** Shown in the author box for E-E-A-T. */
+  authorRole?: string;
+  /** Minutes, computed from content at load time. */
+  readingTime?: number;
+  featured?: boolean;
 };
+
+/** ~225 wpm is the usual reading speed for technical prose. */
+function readingTimeOf(content: string): number {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 225));
+}
+
+function mapBlogFrontmatter(
+  slug: string,
+  data: Record<string, unknown>,
+  content: string
+): BlogPost {
+  return {
+    slug,
+    title: data.title as string,
+    date: data.date as string,
+    author: data.author as string,
+    excerpt: data.excerpt as string,
+    category: data.category as string,
+    coverImage: data.coverImage as string | undefined,
+    updated: data.updated as string | undefined,
+    metaTitle: data.metaTitle as string | undefined,
+    metaDescription: data.metaDescription as string | undefined,
+    keywords: (data.keywords as string[] | undefined) ?? undefined,
+    authorRole: data.authorRole as string | undefined,
+    featured: (data.featured as boolean | undefined) ?? false,
+    readingTime: readingTimeOf(content),
+    content,
+  };
+}
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
     const blogDir = path.join(CONTENT_PATH, "blog");
@@ -37,17 +79,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
             const filePath = path.join(blogDir, file);
             const fileContent = fs.readFileSync(filePath, "utf-8");
             const { data, content } = matter(fileContent);
-            
-            return {
-                slug: file.replace(".md", ""),
-                title: data.title,
-                date: data.date,
-                author: data.author,
-                excerpt: data.excerpt,
-                category: data.category,
-                coverImage: data.coverImage,
-                content,
-            };
+
+            return mapBlogFrontmatter(file.replace(".md", ""), data, content);
         });
 
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -59,16 +92,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
         const fileContent = fs.readFileSync(filePath, "utf-8");
         const { data, content } = matter(fileContent);
 
-        return {
-            slug,
-            title: data.title,
-            date: data.date,
-            author: data.author,
-            excerpt: data.excerpt,
-            category: data.category,
-            coverImage: data.coverImage,
-            content,
-        };
+        return mapBlogFrontmatter(slug, data, content);
     } catch {
         return null;
     }

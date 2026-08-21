@@ -16,6 +16,8 @@ import { ContactHowItWorks } from "@/components/sections/contact-how-it-works";
 import { createLead } from "@/lib/actions/lead-actions";
 import { localePath } from "@/lib/locale-path";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const timelineSteps = [
   {
@@ -102,6 +104,17 @@ const faqItems = [
       "Yes. Ongoing support can include SEO, updates, maintenance, optimization, and further expansion work depending on the project.",
   },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/contact",
+    title: "Contact Digi Web Crew",
+    description: "Talk to a senior engineer about your project. Get a response within one business day, with scoping guidance and clear next steps.",
+    keywords: ["contact web development agency", "hire software developers"],
+  });
+}
 
 export default async function ContactPage({
   params,

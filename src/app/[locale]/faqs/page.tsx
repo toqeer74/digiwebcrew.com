@@ -6,6 +6,9 @@ import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
+import type { Metadata } from "next";
+import { buildPageMetadata, faqSchema, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 const groups = [
   {
@@ -90,6 +93,17 @@ const groups = [
   },
 ];
 
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/faqs",
+    title: "Frequently Asked Questions",
+    description: "Answers on pricing, timelines, code ownership, support, and how we work with US and UK clients across time zones.",
+    keywords: ["software development FAQ", "web agency questions"],
+  });
+}
+
 export default async function FAQsPage({
   params,
 }: {
@@ -99,8 +113,23 @@ export default async function FAQsPage({
   const dict = await getDictionary(locale);
   const isRtl = locale === "ar" || locale === "ur";
 
+  // Every Q&A below is rendered on the page, so it is eligible for FAQ rich
+  // results. Never emit this markup for answers that are not visible.
+  const faqs = groups.flatMap((group) =>
+    group.items.map(([question, answer]) => ({ question, answer }))
+  );
+
   return (
     <main className="flex-1 pt-6 pb-24 overflow-hidden relative">
+      <JsonLd
+        schema={[
+          faqSchema(faqs),
+          breadcrumbSchema(locale, [
+            { name: "Home", path: "/" },
+            { name: "FAQs", path: "/faqs" },
+          ]),
+        ]}
+      />
       {/* Background Visuals */}
       <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/15 via-[var(--site-primary)]/5 to-background" />

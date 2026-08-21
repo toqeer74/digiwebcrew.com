@@ -17,6 +17,8 @@ import {
   ShieldCheck,
   LineChart
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // SEO Specific Data
 const coreFeatures = [
@@ -54,6 +56,17 @@ const webDevRelatedServices = [
   { label: "Custom Software", href: "/services/custom-software", icon: Layers },
   { label: "Maintenance & Support", href: "/services/maintenance-support", icon: ShieldCheck },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/seo-growth-retainers",
+    title: "Technical SEO & Growth Retainers",
+    description: "Ongoing technical SEO, Core Web Vitals, and content programs that compound. Monthly retainers with transparent reporting on rankings and pipeline.",
+    keywords: ["technical SEO agency", "SEO retainer", "Core Web Vitals optimisation"],
+  });
+}
 
 export default async function SEOGrowthRetainersPage({
   params,

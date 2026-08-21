@@ -16,6 +16,8 @@ import {
   Database,
   Workflow
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // AI Specific Data
 const coreFeatures = [
@@ -53,6 +55,17 @@ const webDevRelatedServices = [
   { label: "Custom Software", href: "/services/custom-software", icon: Layers },
   { label: "Maintenance & Support", href: "/services/maintenance-support", icon: Database },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/ai-chatbots-automation",
+    title: "AI Chatbot & Workflow Automation Development",
+    description: "Custom AI chatbots, RAG assistants, and workflow automation that cut manual work. Built on your own data with measurable time and cost savings.",
+    keywords: ["AI chatbot development", "workflow automation agency", "RAG chatbot", "business process automation"],
+  });
+}
 
 export default async function AIChatbotsAutomationPage({
   params,

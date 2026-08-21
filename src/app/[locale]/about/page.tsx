@@ -14,6 +14,8 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 import { FluidBackground } from "@/components/sections/homepage-visuals";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 const supportingPoints = [
   "Built for businesses that need more than a basic website",
@@ -61,6 +63,17 @@ const faqItems = [
   { value: "faq-4", title: "Are you focused on certain industries?", content: "Yes. We are especially well aligned with law firms, clinics, home services, consultants, SaaS, and education-related businesses." },
   { value: "faq-5", title: "Can I start with one service and expand later?", content: "Yes. Many projects begin with one focused service and grow into a broader digital system over time." },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/about",
+    title: "About Our Engineering Team",
+    description: "A senior engineering team building custom software and AI automation for US and UK companies. Who we are, and how we work.",
+    keywords: ["about digi web crew", "software development team"],
+  });
+}
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

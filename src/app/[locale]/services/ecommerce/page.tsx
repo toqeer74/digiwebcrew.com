@@ -16,6 +16,8 @@ import {
   Bot,
   Workflow
 } from "lucide-react";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 // Ecommerce Specific Data
 const coreFeatures = [
@@ -53,6 +55,17 @@ const webDevRelatedServices = [
   { label: "Custom Software", href: "/services/custom-software", icon: Layers },
   { label: "AI Chatbot", href: "/services/ai-chatbots-automation", icon: Bot },
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/services/ecommerce",
+    title: "Ecommerce Development Services",
+    description: "Fast, conversion-focused Shopify and headless commerce builds. Speed, checkout UX, and SEO engineered to lift revenue per visitor.",
+    keywords: ["ecommerce development services", "headless commerce agency", "Shopify development"],
+  });
+}
 
 export default async function EcommercePage({
   params,
