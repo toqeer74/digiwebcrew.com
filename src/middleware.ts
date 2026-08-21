@@ -12,7 +12,8 @@ export async function middleware(request: NextRequest) {
     pathname.includes('.') || 
     pathname.startsWith('/_next') || 
     pathname.startsWith('/api') ||
-    pathname.startsWith('/digiadmin') // Admin usually stays non-localized or custom
+    pathname.startsWith('/digiadmin') || // Admin usually stays non-localized or custom
+    pathname.startsWith('/og') // Generated social-card route; must not be localised
   ) {
     return NextResponse.next();
   }
@@ -44,6 +45,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    '/((?!_next|api|favicon.ico|admin).*)',
+    '/((?!_next|api|favicon.ico|digiadmin|og).*)',
   ],
 };

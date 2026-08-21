@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { serviceSchema } from "@/lib/seo";
 
 // Automation & Internal Tools Specific Data
 const coreFeatures = [
@@ -79,6 +81,15 @@ export default async function AutomationPage({
 
   return (
     <main className="flex-1 -mt-28 overflow-x-hidden pt-28 relative">
+      <JsonLd
+        schema={serviceSchema({
+          locale,
+          path: "/services/automation-internal-tools",
+          name: "Internal Tools & Process Automation",
+          description: "Custom dashboards, admin panels, and back-office automation for operations teams.",
+          serviceType: "BusinessProcessAutomation",
+        })}
+      />
       {/* Background Visuals */}
       <div className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-500/15 via-[var(--site-primary)]/5 to-background" />

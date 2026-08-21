@@ -13,14 +13,17 @@ import { ConsentBanner } from "@/components/ui/consent-banner";
 import { deriveBrandingVars, getPublicBrandingConfig } from "@/lib/branding";
 import { localePath } from "@/lib/locale-path";
 import { GlobalDecorativeBackground } from "@/components/GlobalDecorativeBackground";
+import { notFound } from "next/navigation";
+import { locales, type Locale } from "@/types/i18n";
 import { JsonLd } from "@/components/seo/json-ld";
-import { SITE_URL, absoluteUrl, organizationSchema, websiteSchema } from "@/lib/seo";
+import { SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl, organizationSchema, websiteSchema } from "@/lib/seo";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plex = IBM_Plex_Mono({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-plex" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body" });
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  if (!locales.includes(locale as Locale)) return {};
   const dict = await getDictionary(locale);
 
   return {
@@ -42,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: "website",
       images: [
         {
-          url: '/og-image.png',
+          url: DEFAULT_OG_IMAGE,
           width: 1200,
           height: 630,
           alt: 'Digi Web Crew Engineering'
@@ -53,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: dict.meta.ogTitle,
       description: dict.meta.ogDesc,
-      images: ['/og-image.png'],
+      images: [DEFAULT_OG_IMAGE],
     },
     // NOTE: no `alternates` here on purpose. Layout metadata is inherited by
     // every page, so a canonical set at this level pointed all 27 pages at "/"
@@ -81,6 +84,15 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
+  // The [locale] segment otherwise matches ANY first path segment, so requests
+  // the middleware skips (anything containing a dot, e.g. /og-image.png) used
+  // to render this layout with locale="og-image.png" and return a soft 404 —
+  // HTTP 200 on a not-found page, which Google will happily index.
+  if (!locales.includes(locale as Locale)) {
+    notFound();
+  }
+
   const dict = await getDictionary(locale);
   const isRtl = locale === 'ar' || locale === 'ur';
   const branding = await getPublicBrandingConfig();

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { format } from "date-fns";
-import { Calendar, User, Clock, ChevronLeft, ArrowRight, RefreshCw } from "lucide-react";
+import { Calendar, User, Clock, ArrowRight, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { getDictionary } from "@/lib/get-dictionary";
@@ -12,7 +12,8 @@ import { locales } from "@/types/i18n";
 import { getBlogPosts, getBlogPost } from "@/lib/content-engine";
 import { Metadata } from "next";
 import { localePath } from "@/lib/locale-path";
-import { buildPageMetadata, articleSchema, breadcrumbSchema } from "@/lib/seo";
+import { buildPageMetadata, articleSchema } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
 import { BlogCta } from "@/components/sections/blog-cta";
 
@@ -53,7 +54,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     getBlogPost(slug),
     getBlogPosts(),
   ]);
-  const isRtl = locale === "ar" || locale === "ur";
 
   if (!post) {
     notFound();
@@ -76,11 +76,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       authorName: post.author,
       image: post.coverImage,
     }),
-    breadcrumbSchema(locale, [
-      { name: "Home", path: "/" },
-      { name: "Blog", path: "/blog" },
-      { name: post.title, path: `/blog/${post.slug}` },
-    ]),
   ];
 
   return (
@@ -97,13 +92,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {/* Header */}
           <AnimatedSection>
             <header className="mb-12">
-              <Link
-                href={localePath(locale, "/blog")}
-                className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-[var(--site-primary)]"
-              >
-                <ChevronLeft size={16} className={isRtl ? "rotate-180" : ""} />
-                {dict.blog.back}
-              </Link>
+              <Breadcrumbs
+                className="mb-6"
+                locale={locale}
+                crumbs={[
+                  { name: "Home", path: "/" },
+                  { name: "Blog", path: "/blog" },
+                  { name: post.title, path: `/blog/${post.slug}` },
+                ]}
+              />
 
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <span className="rounded-md bg-[rgba(var(--site-primary-rgb),0.1)] px-2 py-1 text-xs font-bold uppercase tracking-wider text-[var(--site-primary)] dark:text-[var(--site-primary-soft)]">

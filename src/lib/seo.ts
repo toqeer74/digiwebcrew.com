@@ -14,7 +14,17 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Digi Web Crew";
-export const DEFAULT_OG_IMAGE = "/og-image.png";
+/**
+ * Social card. /og is a generated image route — the old /og-image.png was
+ * never a real file, so shared links rendered no preview.
+ */
+export function ogImageFor(title: string, kicker?: string) {
+  const params = new URLSearchParams({ title });
+  if (kicker) params.set("kicker", kicker);
+  return `/og?${params.toString()}`;
+}
+
+export const DEFAULT_OG_IMAGE = "/og";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/") {
@@ -63,7 +73,7 @@ export function buildPageMetadata({
   title,
   description,
   keywords,
-  ogImage = DEFAULT_OG_IMAGE,
+  ogImage,
   type = "website",
   noIndex = false,
   publishedTime,
@@ -71,6 +81,8 @@ export function buildPageMetadata({
   authors,
 }: PageSeoInput): Metadata {
   const canonical = absoluteUrl(localePath(locale, path));
+  // Fall back to a generated card showing this page's own title.
+  const image = ogImage || ogImageFor(title);
 
   return {
     title,
@@ -87,7 +99,7 @@ export function buildPageMetadata({
       siteName: SITE_NAME,
       locale,
       type,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
       ...(type === "article"
         ? {
             ...(publishedTime ? { publishedTime } : {}),
@@ -100,7 +112,7 @@ export function buildPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+      images: [image],
     },
     ...(noIndex
       ? { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }
@@ -128,7 +140,7 @@ export function organizationSchema(): Json {
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
     url: `${SITE_URL}/`,
-    logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
+    logo: { "@type": "ImageObject", url: absoluteUrl(DEFAULT_OG_IMAGE) },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     description:
       "Digi Web Crew builds custom software, high-performance websites, and AI automation for companies in the US and UK.",

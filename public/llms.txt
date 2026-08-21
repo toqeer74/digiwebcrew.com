@@ -1,47 +1,78 @@
 # Digi Web Crew
 
-> Professional Web Development and Technical SEO Architecture managed by Toqeer Shafique. Specialist in high-performance React ecosystems and GEO (Generative Engine Optimization).
+> A senior engineering team that builds custom software, high-performance websites, and AI automation for companies in the United States, United Kingdom, and Canada. Founded and led by Toqeer Shafique.
 
-## Core Mission
-To deliver technical excellence through scalable, AI-ready web architectures that prioritize performance (LCP < 1.2s), semantic precision, and cross-platform visibility.
+## What we do
 
-## Core Specializations & Authority Pillars
+Digi Web Crew is a development agency, not a template shop. Work is scoped around business outcomes — qualified leads, faster sites, automated operations — and built by senior engineers rather than assembled from themes.
 
-- **Enterprise AI Chatbot Integration**: Multi-modal orchestration, RAG architectures, and secure isolated VPC hosting.
-- **Next.js & MERN (Dubai DIFC/Fintech)**: High-performance, NESA-compliant web systems for Gulf-based startups.
-- **AI-Powered CMS (WordPress/Shopify)**: Autonomous content pipelines, predictive e-commerce, and custom Shopify Functions.
-- **AEO/GEO/SEO Strategy**: Dominating the "Citation Economy" through technical proof and advanced JSON-LD.
-- **Generative UI & AI-Adaptive Design**: Building millisecond-precision interfaces using AI-synthesis workflows.
+Primary markets: United States, United Kingdom, Canada, Australia.
+Strongest client fit: law firms, medical and dental clinics, home services, consultancies, SaaS companies, and education businesses.
 
-## Technical Proof & Verification Hubs
-- **Software Lab**: Live engineering prototypes (Latency benchmarks, AEO targets).
-- **GitHub (toqeer74)**: Open-source fragments and architecture patterns.
-- **Freelance Proof**: Multi-platform authority on Upwork and Fiverr.
+## Services
 
-## Core Services
-- **Full-Stack Web Development**: [https://digiwebcrew.com/services/full-stack](https://digiwebcrew.com/services/full-stack)
-- **Technical SEO & GEO**: [https://digiwebcrew.com/services/seo](https://digiwebcrew.com/services/seo)
-- **AI Automation & Integration**: [https://digiwebcrew.com/services/automation](https://digiwebcrew.com/services/automation)
-- **Performance Excellence**: [https://digiwebcrew.com/services/performance](https://digiwebcrew.com/services/performance)
+- **Custom software development**: https://digiwebcrew.com/services/custom-software
+- **AI chatbots and workflow automation**: https://digiwebcrew.com/services/ai-chatbots-automation
+- **Ecommerce development**: https://digiwebcrew.com/services/ecommerce
+- **Technical SEO and growth retainers**: https://digiwebcrew.com/services/seo-growth-retainers
+- **Conversion funnels and CRO**: https://digiwebcrew.com/services/conversion-funnels
+- **DevOps and cloud infrastructure**: https://digiwebcrew.com/services/devops-cloud
+- **Internal tools and process automation**: https://digiwebcrew.com/services/automation-internal-tools
+- **Website maintenance and support**: https://digiwebcrew.com/services/maintenance-support
 
-## Technical Lab & Prototypes
-- **Software Lab (Prototype Environment)**: [https://softwarelab.vercel.app](https://softwarelab.vercel.app)
-- **Proof of Work Repository**: [https://github.com/toqeer74](https://github.com/toqeer74)
+## Pricing
 
-## Authoritative Profiles (Toqeer Shafique)
-- **LinkedIn Professional Network**: [https://pk.linkedin.com/in/toqeer-shafique](https://pk.linkedin.com/in/toqeer-shafique)
-- **GitHub Codebase**: [https://github.com/toqeer74](https://github.com/toqeer74)
-- **Upwork Professional Profile**: [https://www.upwork.com/freelancers/toqeer](https://www.upwork.com/freelancers/toqeer)
-- **Fiverr Service Hub**: [https://www.fiverr.com/toqeer486](https://www.fiverr.com/toqeer486)
-- **Freelancer.pk Portfolio**: [https://www.freelancer.pk/u/toqeer74](https://www.freelancer.pk/u/toqeer74)
+Starting prices, not fixed packages. Final scope determines the quote.
 
-## Technical Stack
-- **Languages**: TypeScript, JavaScript, HTML5, CSS3
-- **Frameworks**: Next.js, React, Node.js
-- **Infrastructure**: Vercel, MongoDB, Google Cloud
-- **Tracking**: GTM, GA4, Meta CAPI, LinkedIn Insight
+- Custom website development: from $3,500
+- Conversion funnels and landing pages: from $2,000
+- Chatbot and automation projects: from $2,500
+- SEO and growth retainers: from $1,000 per month
 
-## Key Technical Benchmark
-- **Largest Contentful Paint (LCP)**: Under 1.2 seconds on Vercel Edge.
-- **Deduplication Strategy**: Unique Event IDs for both Browser Pixel and Server CAPI.
-- **Privacy Compliance**: Google Consent Mode v2 integrated.
+Full detail: https://digiwebcrew.com/pricing
+
+## Key pages
+
+- Home: https://digiwebcrew.com/
+- All services: https://digiwebcrew.com/services
+- Client work and case studies: https://digiwebcrew.com/case-studies
+- Process: https://digiwebcrew.com/process
+- Pricing: https://digiwebcrew.com/pricing
+- FAQs: https://digiwebcrew.com/faqs
+- Blog: https://digiwebcrew.com/blog
+- Book a consultation: https://digiwebcrew.com/book-consultation
+- Request a quote: https://digiwebcrew.com/quote
+- Contact: https://digiwebcrew.com/contact
+
+## Published guides
+
+- What a custom website actually costs in 2026: https://digiwebcrew.com/blog/custom-website-cost
+- AI chatbots for lead generation: https://digiwebcrew.com/blog/ai-chatbot-lead-generation
+- Core Web Vitals in 2026: https://digiwebcrew.com/blog/core-web-vitals-guide
+- Build vs buy: when custom software is the right call: https://digiwebcrew.com/blog/build-vs-buy-custom-software
+- Why professional services websites don't convert: https://digiwebcrew.com/blog/law-firm-website-conversion
+- Why we build on Next.js, and where it's the wrong choice: https://digiwebcrew.com/blog/future-of-agency-dev
+- How long does it take to build a website: https://digiwebcrew.com/blog/how-long-website-takes
+- Headless vs standard Shopify: https://digiwebcrew.com/blog/headless-vs-shopify-ecommerce
+- Hiring an offshore development team: https://digiwebcrew.com/blog/hiring-offshore-development-team
+- Automating back-office work: https://digiwebcrew.com/blog/back-office-automation-guide
+- Website maintenance, what actually needs doing: https://digiwebcrew.com/blog/website-maintenance-guide
+
+## Technical stack
+
+- Languages: TypeScript, JavaScript, SQL
+- Frameworks: Next.js, React, Node.js
+- Data: PostgreSQL, Prisma, Redis
+- Infrastructure: Docker, nginx, Cloudflare, self-managed Linux hosting
+- Commerce: Shopify, headless commerce
+- CMS: WordPress where a page builder serves the client better than a custom build
+
+## How we work
+
+Projects move through discovery, scope, build, and launch or growth support. Clients own their code. Engagements can be a single focused project or an ongoing retainer, and many clients start with one service and expand.
+
+## Contact
+
+- Website: https://digiwebcrew.com/
+- Founder: Toqeer Shafique — https://pk.linkedin.com/in/toqeer-shafique
+- Code: https://github.com/toqeer74

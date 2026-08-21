@@ -7,6 +7,8 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { localePath } from "@/lib/locale-path";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { serviceSchema } from "@/lib/seo";
 
 const coreFeatures = [
   "24/7 System Monitoring",
@@ -41,6 +43,15 @@ export default async function MaintenanceSupportPage({ params }: { params: Promi
 
   return (
     <main className="flex-1 pt-32 pb-24">
+      <JsonLd
+        schema={serviceSchema({
+          locale,
+          path: "/services/maintenance-support",
+          name: "Website Maintenance & Support",
+          description: "Proactive maintenance, security patching, uptime monitoring, and a named engineer on call.",
+          serviceType: "MaintenanceService",
+        })}
+      />
       <Container>
         <div className="max-w-6xl mx-auto space-y-24">
           
