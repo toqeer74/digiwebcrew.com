@@ -5,6 +5,8 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { ProjectsGrid, type WorkProject } from "@/components/sections/projects-grid";
 import { getCaseStudies } from "@/lib/content-engine";
 import { getWorkVisual } from "@/lib/work-visuals";
+import { itemListSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 import { getDictionary } from "@/lib/get-dictionary";
 import { localePath } from "@/lib/locale-path";
 import type { Metadata } from "next";
@@ -47,6 +49,12 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
 
   return (
     <main className="relative flex-1 overflow-hidden pt-28 pb-24">
+      <JsonLd
+        schema={itemListSchema(
+          locale,
+          projects.map((p) => ({ name: p.name, path: `/case-studies/${p.slug}` }))
+        )}
+      />
       {/* Ambient brand wash, consistent with the other top-level pages */}
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[720px]">
         <div className="absolute left-1/2 top-0 h-[720px] w-[130%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--site-primary)]/[0.10] via-[var(--site-primary)]/[0.03] to-transparent" />

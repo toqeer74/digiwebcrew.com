@@ -270,3 +270,25 @@ export function articleSchema(input: {
     inLanguage: input.locale,
   };
 }
+
+/**
+ * ItemList for index pages (blog, case studies).
+ *
+ * Tells Google the page is a curated collection and gives it the member URLs
+ * explicitly, rather than leaving it to infer them from markup.
+ */
+export function itemListSchema(
+  locale: Locale | string,
+  items: { name: string; path: string }[]
+): Json {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: absoluteUrl(localePath(locale, item.path)),
+    })),
+  };
+}

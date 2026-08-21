@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
-import { Suspense } from "react";
 import { Inter, IBM_Plex_Mono, DM_Sans } from "next/font/google";
 import "../globals.css";
 import { getDictionary } from "@/lib/get-dictionary";
@@ -114,9 +113,15 @@ export default async function RootLayout({
           <Navbar dict={dict} locale={locale} siteName={branding.siteName} logoDataUrl={branding.logoDataUrl} />
           <MotionProvider>
             <PageTransition>
-              <Suspense fallback={null}>
-                {children}
-              </Suspense>
+              {/*
+                No <Suspense fallback={null}> around children.
+
+                It flushed a shell of header + footer with an empty middle,
+                then streamed the page in and pushed the footer down ~17,800px.
+                That was measured as a single 0.867 layout shift — the entire
+                CLS score for the homepage, against a 0.1 target.
+              */}
+              {children}
             </PageTransition>
             <ChatbotUI />
           </MotionProvider>

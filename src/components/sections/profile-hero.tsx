@@ -31,10 +31,20 @@ export function ProfileHero({ locale, siteName, logoDataUrl, heading, descriptio
         {/* Strong Background Glow Effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1746A2]/20 via-blue-500/10 to-transparent blur-[80px]" />
         
-        <Image 
-          src="/images/hero-bg.png" 
-          alt="Hero background" 
-          fill 
+        {/*
+          Purely decorative: 20% opacity, overlay blend, under three gradient
+          washes. It was still the LCP element at ~20s on throttled mobile
+          because `fill` makes it the largest paint. It is empty alt (decorative,
+          not content), explicitly sized, and heavily compressed — at this
+          opacity the quality drop is not perceptible but the bytes are.
+        */}
+        <Image
+          src="/images/hero-bg.png"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          quality={45}
           className="object-cover object-center opacity-20 dark:opacity-60 mix-blend-overlay"
           priority
         />

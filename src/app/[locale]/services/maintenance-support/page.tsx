@@ -9,6 +9,8 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { serviceSchema } from "@/lib/seo";
+import { RelatedGuides } from "@/components/sections/related-guides";
+import { SERVICE_CLUSTERS } from "@/lib/content-clusters";
 
 const coreFeatures = [
   "24/7 System Monitoring",
@@ -114,6 +116,10 @@ export default async function MaintenanceSupportPage({ params }: { params: Promi
           </div>
         </div>
       </Container>
+      <RelatedGuides
+        locale={locale}
+        slugs={SERVICE_CLUSTERS["maintenance-support"]}
+      />
     </main>
   );
 }

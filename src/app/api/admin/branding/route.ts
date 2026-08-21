@@ -3,6 +3,8 @@ import { prisma, connectToDatabase } from "@/lib/db";
 import { requireAdminSession } from "@/lib/auth-middleware";
 import { logAudit } from "@/lib/audit";
 import { BrandingConfig, DEFAULT_BRANDING_CONFIG } from "@/lib/branding-shared";
+import { revalidateTag } from "next/cache";
+import { BRANDING_CACHE_TAG } from "@/lib/branding";
 
 async function getBrandingConfig(): Promise<BrandingConfig> {
   await connectToDatabase();
@@ -45,6 +47,10 @@ export async function POST(request: NextRequest) {
       update: { value: { ...existing, ...updated } },
       create: { key: "admin.branding", value: { ...existing, ...updated } },
     });
+
+    // Public pages read branding through a cross-request cache; flush it so
+    // the change is visible on the site immediately rather than in an hour.
+    revalidateTag(BRANDING_CACHE_TAG, { expire: 0 });
 
     return NextResponse.json({ success: true });
   } catch (error) {

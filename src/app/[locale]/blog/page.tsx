@@ -10,18 +10,26 @@ import { localePath } from "@/lib/locale-path";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SectionKicker } from "@/components/ui/section-kicker";
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, itemListSchema, SITE_URL } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  return buildPageMetadata({
+  const meta = buildPageMetadata({
     locale,
     path: "/blog",
     title: "Insights on Software, AI & Growth",
     description: "Practical guides on custom software, AI automation, technical SEO, and conversion, written by the engineers who build and ship them.",
     keywords: ["software development blog", "AI automation guides", "technical SEO blog"],
   });
+
+  // RSS autodiscovery, so feed readers and aggregators can find the feed.
+  meta.alternates = {
+    ...meta.alternates,
+    types: { "application/rss+xml": `${SITE_URL}/blog/rss.xml` },
+  };
+  return meta;
 }
 
 export default async function BlogPage({
@@ -46,6 +54,12 @@ export default async function BlogPage({
 
   return (
     <main className="flex-1 pt-32 pb-24">
+      <JsonLd
+        schema={itemListSchema(
+          locale,
+          filteredPosts.map((p) => ({ name: p.title, path: `/blog/${p.slug}` }))
+        )}
+      />
       <Container>
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Hero Section */}

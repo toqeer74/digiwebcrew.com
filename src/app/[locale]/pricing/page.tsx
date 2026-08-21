@@ -26,6 +26,8 @@ import { PricingJourney } from "@/components/sections/pricing-journey";
 import { PricingFit } from "@/components/sections/pricing-fit";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
+import { RelatedGuides } from "@/components/sections/related-guides";
+import { PRICING_CLUSTER } from "@/lib/content-clusters";
 
 const supportPoints = [
   { icon: ShieldCheck, title: "Clear starting prices", desc: "Published numbers, no discovery fee to see them." },
@@ -413,6 +415,12 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
           </div>
         </Container>
       </section>
+      <RelatedGuides
+        locale={locale}
+        slugs={PRICING_CLUSTER}
+        heading="Before you request a quote"
+        intro="Honest guides on what projects cost, how long they take, and how to judge a proposal."
+      />
     </main>
   );
 }

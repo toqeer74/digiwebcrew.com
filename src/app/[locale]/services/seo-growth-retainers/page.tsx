@@ -21,6 +21,8 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { serviceSchema } from "@/lib/seo";
+import { RelatedGuides } from "@/components/sections/related-guides";
+import { SERVICE_CLUSTERS } from "@/lib/content-clusters";
 
 // SEO Specific Data
 const coreFeatures = [
@@ -410,6 +412,10 @@ export default async function SEOGrowthRetainersPage({
 
         </div>
       </Container>
+      <RelatedGuides
+        locale={locale}
+        slugs={SERVICE_CLUSTERS["seo-growth-retainers"]}
+      />
     </main>
   );
 }
